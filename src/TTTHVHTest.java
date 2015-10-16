@@ -19,7 +19,7 @@ public class TTTHVHTest {
                         "[4][5][6]\n" +
                         "[7][8][9]\n\n" +
                         "Player1(X) please select a cell[1-9]:\n",
-                game.restartGame(new Board(3) ));
+                game.restartGame(new Board(3)));
         assertEquals(game.boardSize(), 9);
     }
 
@@ -42,6 +42,10 @@ public class TTTHVHTest {
                         "[7][8][9]\n\n" +
                         "Player2(Y) please select a cell[1-9]:\n",
                 game.playMove(1));
+    }
 
+    @Test
+    public void checkForWinAfterCounterIsPlayed() {
+        game.restartGame(new Board(3));
     }
 }

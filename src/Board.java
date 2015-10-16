@@ -10,6 +10,10 @@ public class Board {
         this.cells = new ArrayList<>(generateEmptyCells(dimension));
     }
 
+    public int size() {
+        return cells.size();
+    }
+
     private List<String> generateEmptyCells(int dimension) {
         List<String> initialCells = new ArrayList<>(dimension * dimension);
         for (int i = 0; i < dimension * dimension; i++) {
@@ -23,10 +27,6 @@ public class Board {
         cells.set(cellNumber, counter);
     }
 
-    public int size() {
-        return cells.size();
-    }
-
     public String boardAsString() {
         String output = "";
         for (int i = 0; i < cells.size(); i++) {
@@ -35,18 +35,10 @@ public class Board {
         return output;
     }
 
-    public String initialize() {
-        String output = "";
-        for (int i = 0; i < cells.size(); i++) {
-            output += convertRowToString(i, String.valueOf(i + 1));
-        }
-        return output;
-    }
-
     private String convertRowToString(int index, String cellValue) {
         String output = "";
         output += String.format("[%s]", cellValue);
-        if ((index+ 1) % dimension == 0) {
+        if ((index + 1) % dimension == 0) {
             output += "\n";
         }
         return output;

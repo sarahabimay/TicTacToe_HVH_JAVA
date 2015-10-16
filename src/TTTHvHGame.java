@@ -14,7 +14,7 @@ public class TTTHvHGame {
 
     public String restartGame(Board board) {
         this.board = board;
-        return String.format("%s\nPlayer1(X) please select a cell[1-%d]:\n", board.initialize(), board.size());
+        return String.format("%s\nPlayer1(X) please select a cell[1-%d]:\n", board.boardAsString(), board.size());
     }
 
     public String playMove(int cellNumber) {
