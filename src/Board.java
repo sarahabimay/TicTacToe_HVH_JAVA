@@ -10,6 +10,11 @@ public class Board {
         this.cells = new ArrayList<>(generateEmptyCells(dimension));
     }
 
+    public Board(List<String> cells) {
+        this.dimension = cells.size();
+        this.cells = cells;
+    }
+
     public int size() {
         return cells.size();
     }
@@ -42,5 +47,9 @@ public class Board {
             output += "\n";
         }
         return output;
+    }
+
+    public boolean findWin() {
+        
     }
 }

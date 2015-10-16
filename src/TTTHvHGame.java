@@ -4,12 +4,15 @@ public class TTTHvHGame {
     private final String X = "X";
     private final String Y = "Y";
     private String currentPlayer;
-    private String currentMarker;
     private Board board;
 
     public TTTHvHGame() {
         currentPlayer = PLAYER1;
-        currentMarker = X;
+    }
+
+    public TTTHvHGame(Board board, String currentPlayer) {
+        this.currentPlayer = currentPlayer;
+        this.board = board;
     }
 
     public String restartGame(Board board) {
@@ -41,5 +44,9 @@ public class TTTHvHGame {
 
     public int boardSize() {
         return board.size();
+    }
+
+    public boolean isGameOver() {
+        return board.findWin();
     }
 }

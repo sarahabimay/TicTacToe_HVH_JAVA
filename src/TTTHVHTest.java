@@ -1,6 +1,9 @@
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class TTTHVHTest {
@@ -46,6 +49,17 @@ public class TTTHVHTest {
 
     @Test
     public void checkForWinAfterCounterIsPlayed() {
-        game.restartGame(new Board(3));
+        String initialBoard[] = {"X", "2", "3", "4", "5", "6", "7", "8", "9"};
+        TTTHvHGame game = new TTTHvHGame(new Board(initializeBoard(initialBoard)), "Player2");
+        assertEquals(false, game.isGameOver());
+
+    }
+
+    private List<String> initializeBoard(String[] initialBoard) {
+        List<String> initialCells = new ArrayList<>(initialBoard.length);
+        for (int i = 0; i < initialBoard.length; i++) {
+            initialCells.add(String.valueOf(initialBoard[i]));
+        }
+        return initialCells;
     }
 }
