@@ -11,7 +11,7 @@ public class Board {
     }
 
     public Board(List<String> cells) {
-        this.dimension = cells.size();
+        this.dimension = (int)Math.round(Math.sqrt(cells.size()));
         this.cells = cells;
     }
 
@@ -50,27 +50,59 @@ public class Board {
     }
 
     public boolean findWin() {
-        boolean isColumnWin = getColumnWin();
-//        boolean isRowWin = getRowWin();
+        if( getRowWin()){
+            return true;
+        }
+        if (getColumnWin()){
+            return true;
+        }
 //        boolean isDiaganolWin = getDiaganolWin();
 
 //        return isColumnWin || isRowWin || isDiaganolWin;
-        return isColumnWin;
+        return false;
     }
 
     private boolean getColumnWin() {
-        for (int i = 0; i < dimension; i++) {
-            if (columnWin(i)){
+        for(int column = 0; column < (dimension); column++){
+            System.out.println("Columns Start Index: " + column);
+            if (columnWin(column)){
                 return true;
             }
         }
         return false;
     }
 
-    private boolean columnWin(int startIndex) {
-        String counter = cells.get(startIndex);
-        for (int i = 0; i < startIndex + dimension; i++) {
-            if (cells.get(i) != counter){
+    private boolean columnWin(int columnIndex) {
+        String counter = cells.get(columnIndex);
+        System.out.println("Searching For: " + counter + " in column: " + columnIndex);
+        for (int i = columnIndex; i < dimension*dimension; i+=dimension) {
+            System.out.println("Value in cell: " + cells.get(i));
+            if(cells.get(i) != counter ) {
+                System.out.println("No win in column: " + i);
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean getRowWin() {
+        for (int row = 0; row < dimension*dimension; row+=dimension) {
+            System.out.println("Row's Start Index: " + row);
+            if (rowWin(row)) {
+                System.out.println("Found a Win!");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean rowWin(int rowIndex) {
+        String counter = cells.get(rowIndex);
+        System.out.println("Searching For: " + counter + " in row: " + rowIndex);
+        for (int i = rowIndex; i < (rowIndex + dimension); i++) {
+            System.out.println(cells.get(i));
+            if (cells.get(i) != counter) {
+                System.out.println("No win in row: " + rowIndex);
                 return false;
             }
         }
