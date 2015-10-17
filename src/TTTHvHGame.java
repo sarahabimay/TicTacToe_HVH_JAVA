@@ -2,7 +2,7 @@ public class TTTHvHGame {
     private final String PLAYER1 = "Player1";
     private final String PLAYER2 = "Player2";
     private final String X = "X";
-    private final String Y = "Y";
+    private final String O = "O";
     private String currentPlayer;
     private Board board;
 
@@ -35,7 +35,7 @@ public class TTTHvHGame {
     }
 
     private String currentCounter() {
-        return currentPlayer == PLAYER1 ? X : Y;
+        return currentPlayer == PLAYER1 ? X : O;
     }
 
     private void switchCurrentPlayer() {

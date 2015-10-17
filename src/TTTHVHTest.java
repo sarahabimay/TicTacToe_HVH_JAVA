@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 
 public class TTTHVHTest {
 
-    private int dimension;
     private TTTHvHGame game;
 
     @Before
@@ -48,11 +47,24 @@ public class TTTHVHTest {
     }
 
     @Test
-    public void checkForWinAfterCounterIsPlayed() {
+    public void player1ThenPlayer2TakeATurnAndNewBoardDisplayed() {
+        game.restartGame(new Board(3));
+        game.playMove(2);
+        game.playMove(3);
+        game.playMove(4);
+        assertEquals("[O][X][O]\n" +
+                        "[X][5][6]\n" +
+                        "[7][8][9]\n\n" +
+                        "Player1(X) please select a cell[1-9]:\n",
+                game.playMove(1));
+
+    }
+
+    @Test
+    public void noWinAfterCounterIsPlayed() {
         String initialBoard[] = {"X", "2", "3", "4", "5", "6", "7", "8", "9"};
         TTTHvHGame game = new TTTHvHGame(new Board(initializeBoard(initialBoard)), "Player2");
         assertEquals(false, game.isGameOver());
-
     }
 
     private List<String> initializeBoard(String[] initialBoard) {

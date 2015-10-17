@@ -50,6 +50,30 @@ public class Board {
     }
 
     public boolean findWin() {
+        boolean isColumnWin = getColumnWin();
+//        boolean isRowWin = getRowWin();
+//        boolean isDiaganolWin = getDiaganolWin();
+
+//        return isColumnWin || isRowWin || isDiaganolWin;
+        return isColumnWin;
+    }
+
+    private boolean getColumnWin() {
+        for (int i = 0; i < dimension; i++) {
+            if (columnWin(i)){
+                return true;
+            }
+        }
         return false;
+    }
+
+    private boolean columnWin(int startIndex) {
+        String counter = cells.get(startIndex);
+        for (int i = 0; i < startIndex + dimension; i++) {
+            if (cells.get(i) != counter){
+                return false;
+            }
+        }
+        return true;
     }
 }
