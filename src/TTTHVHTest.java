@@ -111,14 +111,14 @@ public class TTTHVHTest {
 
     @Test
     public void foundDiaganolWin1() {
-        String initialBoard[] = {"X", "O", "O", "O", "X", "X","O","O","X"};
+        String initialBoard[] = {"X", "O", "O", "O", "X", "X", "O", "O", "X"};
         TTTHvHGame game = new TTTHvHGame(new Board(initializeBoard(initialBoard)), "Player2");
         assertEquals(true, game.isGameOver());
     }
 
     @Test
     public void foundDiagonalWin2() {
-        String initialBoard[] = {"O", "O", "X", "X", "X", "O","X","O","O"};
+        String initialBoard[] = {"O", "O", "X", "X", "X", "O", "X", "O", "O"};
         TTTHvHGame game = new TTTHvHGame(new Board(initializeBoard(initialBoard)), "Player2");
         assertEquals(true, game.isGameOver());
     }

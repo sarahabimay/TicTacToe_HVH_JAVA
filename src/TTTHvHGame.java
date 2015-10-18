@@ -21,7 +21,7 @@ public class TTTHvHGame {
     }
 
     public String playMove(int cellNumber) {
-        board.updateBoard(cellNumber - 1, currentCounter());
+        board.setCellValue(cellNumber - 1, currentCounter());
         switchCurrentPlayer();
         return nextPlayPrompt();
     }
