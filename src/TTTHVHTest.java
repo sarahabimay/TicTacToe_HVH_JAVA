@@ -109,6 +109,20 @@ public class TTTHVHTest {
         assertEquals(true, game.isGameOver());
     }
 
+    @Test
+    public void foundDiaganolWin1() {
+        String initialBoard[] = {"X", "O", "O", "O", "X", "X","O","O","X"};
+        TTTHvHGame game = new TTTHvHGame(new Board(initializeBoard(initialBoard)), "Player2");
+        assertEquals(true, game.isGameOver());
+    }
+
+    @Test
+    public void foundDiagonalWin2() {
+        String initialBoard[] = {"O", "O", "X", "X", "X", "O","X","O","O"};
+        TTTHvHGame game = new TTTHvHGame(new Board(initializeBoard(initialBoard)), "Player2");
+        assertEquals(true, game.isGameOver());
+    }
+
     private List<String> initializeBoard(String[] initialBoard) {
         List<String> initialCells = new ArrayList<>(initialBoard.length);
         for (int i = 0; i < initialBoard.length; i++) {
