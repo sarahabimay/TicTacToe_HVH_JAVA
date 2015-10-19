@@ -7,6 +7,9 @@ public class Game {
     }
 
     public String startGame() {
-        return "[1][2][3][4][5][6][7][8][9]";
+        return "[1][2][3]\n" +
+                "[4][5][6]\n" +
+                "[7][8][9]\n\n" +
+        "Player 1 (X) please enter your position [1-9]:";
     }
 }
