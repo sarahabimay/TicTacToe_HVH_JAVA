@@ -30,16 +30,20 @@ public class Board {
         return initialCells;
     }
 
+    public int getDimension() {
+        return dimension;
+    }
+
+    public List<Counter> getCells() {
+        return cells;
+    }
+
     public int boardSize() {
         return dimension * dimension;
     }
 
     public Counter cellValue(int startIndex) {
         return cells.get(startIndex);
-    }
-
-    public int getDimension() {
-        return dimension;
     }
 
     public void resetBoard() {
@@ -54,8 +58,14 @@ public class Board {
         return this;
     }
 
-    private boolean cellIsOccupied(int cellIndex) {
-        return cells.get(cellIndex) == Counter.X || cells.get(cellIndex) == Counter.O;
+    public Counter isWinner() {
+        if (findWin(Counter.X)) {
+            return Counter.X;
+        }
+        if (findWin(Counter.O)) {
+            return Counter.O;
+        }
+        return Counter.EMPTY;
     }
 
     public boolean findWin() {
@@ -70,7 +80,7 @@ public class Board {
 
     public boolean findRowWin(Counter searchCounter) {
         for (int row = 0; row < boardSize(); row += dimension) {
-            if (rowWin(row,searchCounter)) {
+            if (rowWin(row, searchCounter)) {
                 return true;
             }
         }
@@ -92,14 +102,14 @@ public class Board {
 
     public boolean findColumnWin(Counter searchCounter) {
         for (int column = 0; column < dimension; column++) {
-            if (columnWin(column,searchCounter)) {
+            if (columnWin(column, searchCounter)) {
                 return true;
             }
         }
         return false;
     }
 
-    private boolean columnWin(int columnIndex,Counter searchCounter) {
+    private boolean columnWin(int columnIndex, Counter searchCounter) {
         Counter counter = cellValue(columnIndex);
         if (counter == searchCounter) {
             for (int i = columnIndex; i < boardSize(); i += dimension) {
@@ -140,8 +150,8 @@ public class Board {
         return cellValue(indexToCompare) == counterToMatch;
     }
 
-    public List<Counter> getCells() {
-        return cells;
+    private boolean cellIsOccupied(int cellIndex) {
+        return cells.get(cellIndex) == Counter.X || cells.get(cellIndex) == Counter.O;
     }
 
     public ArrayList<String> findPositions(Counter counter) {
@@ -156,15 +166,5 @@ public class Board {
 
     public int numberOfOpenPositions() {
         return boardSize() - (findPositions(Counter.X).size() + findPositions(Counter.O).size());
-    }
-
-    public Counter isWinner() {
-        if (findWin(Counter.X)) {
-            return Counter.X;
-        }
-        if (findWin(Counter.O)) {
-            return Counter.O;
-        }
-        return Counter.EMPTY;
     }
 }

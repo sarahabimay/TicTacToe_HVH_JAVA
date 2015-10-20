@@ -56,7 +56,7 @@ public class GameTest {
 
     @Test
     public void playWinningMove() {
-        Counter currentBoard[] = {X, X, EMPTY,
+        Counter currentBoard[] = {X, X, X,
                 O, O, EMPTY,
                 EMPTY, EMPTY, EMPTY};
 

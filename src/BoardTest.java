@@ -89,7 +89,7 @@ public class BoardTest {
                 X, X, O, O,
                 X, O, O, O};
         Board playerXDiagonalWin = new Board(4, arrayToList(currentBoard));
-        assertEquals(true, playerXDiagonalWin.findWin());
+        assertEquals(true, playerXDiagonalWin.findWin(X));
     }
 
     @Test

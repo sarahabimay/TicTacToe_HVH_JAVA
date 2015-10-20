@@ -4,7 +4,6 @@ import java.util.Map;
 public class Game {
     private Board board;
     private static final int POSITIVE_OFFSET = 1;
-    private static final int NEGATIVE_OFFSET = -1;
     private Counter currentMarker;
     private Map<Counter, Player> players = new HashMap<Counter, Player>();
 
@@ -15,8 +14,20 @@ public class Game {
         this.players.put(Counter.O, player2);
     }
 
+    public Counter getCurrentMarker() {
+        return currentMarker;
+    }
+
     public void resetBoard() {
         board.resetBoard();
+    }
+
+    public boolean foundWin() {
+        return board.findWin();
+    }
+
+    public String requestNextMove() {
+        return String.format("Player(%s) please choose a position:\n", currentMarker);
     }
 
     public String displayBoard() {
@@ -27,9 +38,29 @@ public class Game {
         return output;
     }
 
+    public void playNextMove(int position) {
+        Player currentPlayer = players.get(currentMarker);
+        board = currentPlayer.playTurn(board, position);
+        currentMarker = currentPlayer.opponentMarker();
+    }
+
+    public void play() {
+        playUntilGameOver();
+        displayBoard();
+//        displayResult();
+    }
+
+    private void playUntilGameOver() {
+        Player currentPlayer = players.get(Counter.X);
+        while (!board.findWin()) {
+            board = currentPlayer.playTurn(board);
+            currentPlayer = players.get(currentPlayer.opponentMarker());
+        }
+    }
+
     private String convertRowToString(int index, Counter cellValue) {
-        String cellValueAsString = cellValue.isEmpty() ? String.valueOf(index + POSITIVE_OFFSET) : cellValue.name();
-        String output = String.format("[%s]", cellValueAsString);
+        String cellForDisplay = cellValue.counterForDisplay(index);
+        String output = String.format("[%s]", cellForDisplay);
         if (isEndOfRow(index)) {
             output += "\n";
         }
@@ -40,38 +71,5 @@ public class Game {
         return (index + POSITIVE_OFFSET) % board.getDimension() == 0;
     }
 
-    public void playNextMove(int position) {
-        board.playCounterInPosition(position, currentMarker);
-        currentMarker = opponentMarker(currentMarker);
-    }
 
-    private Counter opponentMarker(Counter currentMarker) {
-        return currentMarker == Counter.X ? Counter.O : Counter.X;
-    }
-
-    public String requestNextMove() {
-        return String.format("Player(%s) please choose a position:\n", currentMarker);
-    }
-
-    public Counter getCurrentMarker() {
-        return currentMarker;
-    }
-
-    public boolean foundWin() {
-        return board.findWin();
-    }
-
-    public void play() {
-        playUntilGameOver();
-        displayBoard();
-//        displayResult();
-    }
-
-    private void playUntilGameOver() {
-        Player currentPlayer = players.get(currentMarker);
-        while(!board.findWin()){
-            board = currentPlayer.playTurn(board);
-            currentPlayer = players.get(currentPlayer.opponentMarker());
-        }
-    }
 }

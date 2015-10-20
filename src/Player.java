@@ -20,4 +20,9 @@ public class Player {
         board.playCounterInPosition(nextPosition, counter);
         return board;
     }
+
+    public Board playTurn(Board board, int position) {
+        board.playCounterInPosition(position, counter);
+        return board;
+    }
 }
