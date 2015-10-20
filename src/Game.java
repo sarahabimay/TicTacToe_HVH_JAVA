@@ -69,10 +69,8 @@ public class Game {
 
     private void playUntilGameOver() {
         Player currentPlayer = players.get(currentMarker);
-        System.out.println("Board before move: "+ displayBoard());
         while(!board.findWin()){
             board = currentPlayer.playTurn(board);
-            System.out.println("board: "+ displayBoard());
             currentPlayer = players.get(currentPlayer.opponentMarker());
         }
     }
