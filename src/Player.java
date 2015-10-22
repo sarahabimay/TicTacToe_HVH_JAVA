@@ -1,28 +1,24 @@
 public class Player {
     private Counter counter;
+    private UserInterface userInterface;
 
-    public Player(Counter counter) {
+    public Player(Counter counter, UserInterface userInterface) {
         this.counter = counter;
+        this.userInterface = userInterface;
     }
 
     public Counter opponentMarker() {
-        if (counter == Counter.X){
+        if (counter == Counter.X) {
             return Counter.O;
         }
-        if (counter == Counter.O){
+        if (counter == Counter.O) {
             return Counter.X;
         }
         return Counter.EMPTY;
     }
 
     public Board playTurn(Board board) {
-        int nextPosition = 3;
-        board.playCounterInPosition(nextPosition, counter);
-        return board;
-    }
-
-    public Board playTurn(Board board, int position) {
-        board.playCounterInPosition(position, counter);
-        return board;
+        int nextPosition = userInterface.requestNextPosition();
+        return board.playCounterInPosition(nextPosition, counter);
     }
 }

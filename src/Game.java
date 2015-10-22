@@ -2,74 +2,52 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Game {
+    private UserInterface userInterface;
     private Board board;
-    private static final int POSITIVE_OFFSET = 1;
-    private Counter currentMarker;
     private Map<Counter, Player> players = new HashMap<Counter, Player>();
 
-    public Game(Board board, Player player1, Player player2) {
+    public Game(UserInterface userInterface, Board board, Player player1, Player player2) {
+        this.userInterface = userInterface;
         this.board = board;
-        this.currentMarker = Counter.X;
         this.players.put(Counter.X, player1);
         this.players.put(Counter.O, player2);
     }
 
-    public Counter getCurrentMarker() {
-        return currentMarker;
+    public void play() {
+        do {
+            clearBoard();
+            playUntilGameOver();
+            displayBoard();
+            displayResult();
+        } while (playAgain());
     }
 
-    public void resetBoard() {
-        board.resetBoard();
+    private void clearBoard() {
+        board.clearBoard();
     }
 
-    public boolean foundWin() {
-        return board.findWin();
-    }
-
-    public String requestNextMove() {
-        return String.format("Player(%s) please choose a position:\n", currentMarker);
+    private boolean playAgain() {
+        return userInterface.requestPlayAgain();
     }
 
     public String displayBoard() {
-        String output = "";
-        for (int i = 0; i < board.boardSize(); i++) {
-            output += convertRowToString(i, board.cellValue(i));
-        }
-        return output;
+        return userInterface.displayBoard(board);
     }
 
-    public void playNextMove(int position) {
-        Player currentPlayer = players.get(currentMarker);
-        board = currentPlayer.playTurn(board, position);
-        currentMarker = currentPlayer.opponentMarker();
+    private void displayResult() {
+        userInterface.displayResult(getWinner());
     }
 
-    public void play() {
-        playUntilGameOver();
-        displayBoard();
-//        displayResult();
+    private Counter getWinner() {
+        return board.getWinner();
     }
 
     private void playUntilGameOver() {
         Player currentPlayer = players.get(Counter.X);
-        while (!board.findWin()) {
+        while (!board.gameOver()) {
+            userInterface.displayBoard(board);
             board = currentPlayer.playTurn(board);
             currentPlayer = players.get(currentPlayer.opponentMarker());
         }
     }
-
-    private String convertRowToString(int index, Counter cellValue) {
-        String cellForDisplay = cellValue.counterForDisplay(index);
-        String output = String.format("[%s]", cellForDisplay);
-        if (isEndOfRow(index)) {
-            output += "\n";
-        }
-        return output;
-    }
-
-    private boolean isEndOfRow(int index) {
-        return (index + POSITIVE_OFFSET) % board.getDimension() == 0;
-    }
-
-
 }

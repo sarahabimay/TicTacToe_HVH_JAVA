@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.function.IntPredicate;
 
 public class UserInterface {
     private BufferedReader readStream;
@@ -9,26 +10,41 @@ public class UserInterface {
         this.writeStream = new PrintStream(System.out);
     }
 
-    public int requestBoardSize() {
-        writeStream.println("Please provide the dimensions of the board:\n");
-        return readInput();
-    }
-
-    public String requestNextPosition() {
-        String prompt = "Please enter the position number for your next move:\n";
-        writeStream.println(prompt);
-        int nextPosition = readInput();
-        // want to return this to caller, which will pass to the game
-        return prompt;
-    }
-
-    private int readInput() {
-        try {
-            return Integer.parseInt(readStream.readLine());
-        } catch (IOException e) {
-            e.printStackTrace();
+    public Integer requestBoardSize() {
+        Integer dimension = 0;
+        while (!validate(dimension, this::validateDimension)) {
+            writeStream.println("Please provide the dimensions of the board:\n");
+            dimension = readInput();
         }
-        return 0;
+        return dimension;
+    }
+
+    public Integer requestNextPosition() {
+        Integer position = 0;
+        while (!validate(position, this::validPosition)) {
+            String prompt = "Please enter the position number for your next move:\n";
+            writeStream.println(prompt);
+            position = readInput();
+        }
+        return position;
+    }
+
+    public boolean requestPlayAgain() {
+        Integer instruction = 0;
+        while (!validate(instruction, this::validInstruction)) {
+            writeStream.println("Do you want to play again? Quit(1) or Replay(2) :\n");
+            instruction = readInput();
+        }
+        return doPlayAgain(instruction);
+    }
+
+
+    public void displayResult(Counter winner) {
+        if (winner.isEmpty()) {
+            announceDraw();
+        } else {
+            announceWinner(winner);
+        }
     }
 
     public String displayBoard(Board board) {
@@ -38,6 +54,37 @@ public class UserInterface {
         }
         writeStream.println(output);
         return output;
+    }
+
+    private Integer readInput() {
+        try {
+            return Integer.parseInt(readStream.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            return null;
+        }
+        return 0;
+    }
+
+    protected boolean validate(Integer choiceFromInput, IntPredicate isValidChoice) {
+        return choiceFromInput != null && isValidChoice.test(choiceFromInput);
+    }
+
+    protected boolean doPlayAgain(Integer instruction) {
+        return 2 == instruction;
+    }
+
+    private boolean validInstruction(int instruction) {
+        return 0 < instruction && instruction < 3;
+    }
+
+    protected boolean validateDimension(int dimension) {
+        return dimension >= 3;
+    }
+
+    protected boolean validPosition(int position) {
+        return position > 0;
     }
 
     private String convertRowToString(int index, Counter cellValue, Board board) {
@@ -51,5 +98,13 @@ public class UserInterface {
 
     private boolean isEndOfRow(int index, Board board) {
         return (index + 1) % board.getDimension() == 0;
+    }
+
+    private void announceWinner(Counter winner) {
+        writeStream.println(String.format("We have a Winner! Player: %s\n", winner.toString()));
+    }
+
+    private void announceDraw() {
+        writeStream.println("The game is a draw!");
     }
 }

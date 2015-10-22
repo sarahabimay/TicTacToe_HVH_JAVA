@@ -20,16 +20,37 @@ public class BoardTest {
     }
 
     @Test
-    public void fourByFourGameHasNineOpenPositions() {
+    public void fourByFourGameHasSixteenOpenPositions() {
         Board fourByFour = new Board(4);
         assertEquals(16, fourByFour.numberOfOpenPositions());
     }
 
     @Test
+    public void counterPlayedInAPosition() {
+        Board emptyBoard = new Board(3);
+        Board boardWithMove = emptyBoard.playCounterInPosition(1, X);
+        assertEquals(X, boardWithMove.cellValue(0));
+    }
+
+    @Test
+    public void counterPlayedInOccupiedPosition() {
+        Counter currentBoard[] = {X, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY};
+        Board board = new Board(3, arrayToList(currentBoard));
+        board = board.playCounterInPosition(1, O);
+        assertEquals(X, board.cellValue(0));
+        assertEquals(Arrays.asList(X, EMPTY, EMPTY,
+                        EMPTY, EMPTY, EMPTY,
+                        EMPTY, EMPTY, EMPTY),
+                board.getCells());
+    }
+
+    @Test
     public void foundRowWinInRow1_3x3Game() {
         Counter currentBoard[] = {X, X, X,
-                                  O, O, EMPTY,
-                                  EMPTY, EMPTY, EMPTY};
+                O, O, EMPTY,
+                EMPTY, EMPTY, EMPTY};
         Board playerXRowWin = new Board(3, arrayToList(currentBoard));
         assertEquals(true, playerXRowWin.findRowWin(X));
     }
@@ -37,9 +58,9 @@ public class BoardTest {
     @Test
     public void foundWinInRow3_4x4Game() {
         Counter currentBoard[] = {X, O, X, X,
-                                  X, O, O, O,
-                                  X, X, X, X,
-                                  O, O, X, X};
+                X, O, O, O,
+                X, X, X, X,
+                O, O, X, X};
         Board playerXRowWin = new Board(4, arrayToList(currentBoard));
         assertEquals(true, playerXRowWin.findRowWin(X));
     }
@@ -47,8 +68,8 @@ public class BoardTest {
     @Test
     public void foundWinInColumn1_3x3Game() {
         Counter currentBoard[] = {X, O, O,
-                                  X, O, X,
-                                  X, X, O};
+                X, O, X,
+                X, X, O};
         Board playerXColumnWin = new Board(3, arrayToList(currentBoard));
         assertEquals(true, playerXColumnWin.findColumnWin(X));
     }
@@ -56,9 +77,9 @@ public class BoardTest {
     @Test
     public void foundWinInColumn2_4X4Game() {
         Counter currentBoard[] = {O, X, O, X,
-                                  X, X, O, X,
-                                  O, X, X, O,
-                                  X, X, O, X};
+                X, X, O, X,
+                O, X, X, O,
+                X, X, O, X};
         Board playerXColumnWin = new Board(4, arrayToList(currentBoard));
         assertEquals(true, playerXColumnWin.findColumnWin(X));
     }
@@ -66,8 +87,8 @@ public class BoardTest {
     @Test
     public void foundDiagonalWin1() {
         Counter currentBoard[] = {X, O, O,
-                                  O, X, X,
-                                  O, O, X};
+                O, X, X,
+                O, O, X};
         Board playerXDiagonalWin = new Board(3, arrayToList(currentBoard));
         assertEquals(true, playerXDiagonalWin.findDiagonalWin(X));
     }
@@ -75,15 +96,15 @@ public class BoardTest {
     @Test
     public void foundDiagonalWin2_4x4Game() {
         Counter currentBoard[] = {O, O, X, X,
-                                  X, X, X, O,
-                                  X, X, O, O,
-                                  X, O, O, O};
+                X, X, X, O,
+                X, X, O, O,
+                X, O, O, O};
         Board playerXDiagonalWin = new Board(4, arrayToList(currentBoard));
         assertEquals(true, playerXDiagonalWin.findDiagonalWin(X));
     }
 
     @Test
-    public void findWinner() {
+    public void findCounterXWinner_4x4() {
         Counter currentBoard[] = {O, O, X, X,
                 X, X, X, O,
                 X, X, O, O,
@@ -93,43 +114,20 @@ public class BoardTest {
     }
 
     @Test
-    public void whoIsTheWinner() {
+    public void getWinner() {
         Counter currentBoard[] = {X, O, O,
                 O, X, X,
                 O, O, X};
         Board playerXDiagonalWin = new Board(3, arrayToList(currentBoard));
-        assertEquals(X, playerXDiagonalWin.isWinner());
+        assertEquals(X, playerXDiagonalWin.getWinner());
     }
 
-    @Test
-    public void playsCounterInAPosition() {
-        Board emptyBoard = new Board(3);
-        Board boardWithMove = emptyBoard.playCounterInPosition(1, X);
-        assertEquals(X, boardWithMove.cellValue(0));
-    }
 
     @Test
-    public void tryToMarkOccupiedPosition() {
-        Board board = new Board(3);
-        Board boardWithMove = board.playCounterInPosition(1, X);
-        assertEquals(Arrays.asList(X, EMPTY, EMPTY,
-                                   EMPTY, EMPTY, EMPTY,
-                                   EMPTY, EMPTY, EMPTY),
-                boardWithMove.getCells());
-
-        boardWithMove = board.playCounterInPosition(1, O);
-        assertEquals(X, boardWithMove.cellValue(0));
-        assertEquals(Arrays.asList(X, EMPTY, EMPTY,
-                                   EMPTY, EMPTY, EMPTY,
-                                   EMPTY, EMPTY, EMPTY),
-                boardWithMove.getCells());
-    }
-
-    @Test
-    public void noWinnerGameOver() {
+    public void itsADraw() {
         Counter currentBoard[] = {O, X, O,
-                                  O, O, X,
-                                  X, O, X};
+                O, O, X,
+                X, O, X};
         Board board = new Board(3, arrayToList(currentBoard));
         assertEquals(false, board.findWin());
     }

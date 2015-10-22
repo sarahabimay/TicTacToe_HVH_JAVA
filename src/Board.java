@@ -22,12 +22,8 @@ public class Board {
         this.cells = cells;
     }
 
-    private List<Counter> generateEmptyCells() {
-        List<Counter> initialCells = new ArrayList<>(boardSize());
-        for (int i = 0; i < boardSize(); i++) {
-            initialCells.add(Counter.EMPTY);
-        }
-        return initialCells;
+    public void clearBoard() {
+        this.cells = new ArrayList<>(generateEmptyCells());
     }
 
     public int getDimension() {
@@ -46,19 +42,34 @@ public class Board {
         return cells.get(startIndex);
     }
 
-    public void resetBoard() {
-        this.cells = new ArrayList<>(generateEmptyCells());
-    }
-
     public Board playCounterInPosition(int position, Counter counter) {
-        if (!cellIsOccupied(position + (NEGATIVE_OFFSET))) {
+        if (validPosition(position) && !cellIsOccupied(position + (NEGATIVE_OFFSET))) {
             cells.set(position + (NEGATIVE_OFFSET), counter);
             return new Board(cells);
         }
         return this;
     }
 
-    public Counter isWinner() {
+    private boolean validPosition(int position) {
+        return position >= 0 && position <= boardSize();
+    }
+
+    public ArrayList<String> findPositions(Counter counter) {
+        ArrayList<String> counterPositions = new ArrayList<>();
+        for (int i = 0; i < cells.size(); i++) {
+            if (cellValue(i) == counter) {
+                counterPositions.add(String.valueOf(i));
+            }
+        }
+        return counterPositions;
+    }
+
+    public boolean gameOver() {
+        return isAWinner() || noEmptyPositions();
+    }
+
+
+    public Counter getWinner() {
         if (findWin(Counter.X)) {
             return Counter.X;
         }
@@ -87,6 +98,44 @@ public class Board {
         return false;
     }
 
+    public boolean findColumnWin(Counter searchCounter) {
+        for (int column = 0; column < dimension; column++) {
+            if (columnWin(column, searchCounter)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean findDiagonalWin(Counter searchCounter) {
+        return checkDiagonalWin(searchCounter, 0, POSITIVE_OFFSET) ||
+                checkDiagonalWin(searchCounter, dimension - 1, NEGATIVE_OFFSET);
+    }
+
+    private boolean noEmptyPositions() {
+        return boardSize() == numberOfPositionsTaken();
+    }
+
+    public int numberOfOpenPositions() {
+        return boardSize() - numberOfPositionsTaken();
+    }
+
+    private int numberOfPositionsTaken() {
+        return findPositions(Counter.X).size() + findPositions(Counter.O).size();
+    }
+
+    private boolean isAWinner() {
+        return getWinner() != Counter.EMPTY;
+    }
+
+    private List<Counter> generateEmptyCells() {
+        List<Counter> initialCells = new ArrayList<>(boardSize());
+        for (int i = 0; i < boardSize(); i++) {
+            initialCells.add(Counter.EMPTY);
+        }
+        return initialCells;
+    }
+
     private boolean rowWin(int rowIndex, Counter searchCounter) {
         Counter counter = cellValue(rowIndex);
         if (counter == searchCounter) {
@@ -96,15 +145,6 @@ public class Board {
                 }
             }
             return true;
-        }
-        return false;
-    }
-
-    public boolean findColumnWin(Counter searchCounter) {
-        for (int column = 0; column < dimension; column++) {
-            if (columnWin(column, searchCounter)) {
-                return true;
-            }
         }
         return false;
     }
@@ -120,11 +160,6 @@ public class Board {
             return true;
         }
         return false;
-    }
-
-    public boolean findDiagonalWin(Counter searchCounter) {
-        return checkDiagonalWin(searchCounter, 0, POSITIVE_OFFSET) ||
-                checkDiagonalWin(searchCounter, dimension - 1, NEGATIVE_OFFSET);
     }
 
     private boolean checkDiagonalWin(Counter searchCounter, int startIndex, int offset) {
@@ -154,17 +189,4 @@ public class Board {
         return cells.get(cellIndex) == Counter.X || cells.get(cellIndex) == Counter.O;
     }
 
-    public ArrayList<String> findPositions(Counter counter) {
-        ArrayList<String> counterPositions = new ArrayList<>();
-        for (int i = 0; i < cells.size(); i++) {
-            if (cellValue(i) == counter) {
-                counterPositions.add(String.valueOf(i));
-            }
-        }
-        return counterPositions;
-    }
-
-    public int numberOfOpenPositions() {
-        return boardSize() - (findPositions(Counter.X).size() + findPositions(Counter.O).size());
-    }
 }
