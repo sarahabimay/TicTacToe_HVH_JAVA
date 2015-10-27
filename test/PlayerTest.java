@@ -12,9 +12,10 @@ public class PlayerTest {
     }
 
     @Test
-    public void boardReplaceWithNewCounter() {
-        UserInterface ui = new UserInterface();
-        Player player1 = new Player(Counter.X, ui);
+    public void boardUpdatedWithNewCounter() {
+        MockUserInterface mockUI = new MockUserInterface();
+        mockUI.addDummyInputs(mockUI.aListOfMoves(new Integer[]{1, 4, 2, 5, 3}));
+        Player player1 = new Player(Counter.X, mockUI);
         Board board = new Board(3);
         board = player1.playTurn(board);
         ArrayList<String> foundPositions = board.findPositions(Counter.X);

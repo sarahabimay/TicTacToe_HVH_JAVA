@@ -39,7 +39,7 @@ public class Game {
 
     private void playUntilGameOver() {
         Player currentPlayer = players.get(Counter.X);
-        while (!board.gameOver()) {
+        while (!board.isGameOver()) {
             userInterface.displayBoard(board);
             Player nextPlayer = playTurn(currentPlayer);
             currentPlayer = nextPlayer;
