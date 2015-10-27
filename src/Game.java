@@ -14,9 +14,9 @@ public class Game {
     }
 
     public void play() {
-            playUntilGameOver();
-            displayResult();
-            playAgain();
+        playUntilGameOver();
+        displayResult();
+        playAgain();
     }
 
 //    private void restart() {
@@ -25,7 +25,7 @@ public class Game {
 //    }
 
     private boolean playAgain() {
-        if (userInterface.requestPlayAgain()){
+        if (userInterface.requestPlayAgain()) {
             UserInterface ui = new UserInterface();
             Game game = new Game(ui, new Board(ui.requestBoardSize()), new Player(Counter.X, ui), new Player(Counter.O, ui));
             game.play();
