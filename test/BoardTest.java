@@ -26,6 +26,14 @@ public class BoardTest {
     }
 
     @Test
+    public void rightNumberOfPositionsLeftAfterTwoMoves() {
+        Board board = new Board(3);
+        board.playCounterInPosition(2, X);
+        board.playCounterInPosition(5, O);
+        assertEquals(7, board.numberOfOpenPositions());
+    }
+
+    @Test
     public void counterPlayedInAPosition() {
         Board emptyBoard = new Board(3);
         Board boardWithMove = emptyBoard.playCounterInPosition(1, X);
@@ -35,25 +43,25 @@ public class BoardTest {
     @Test
     public void counterPlayedInOccupiedPosition() {
         Counter currentBoard[] = {
-                X,      EMPTY,  EMPTY,
-                EMPTY,  EMPTY,  EMPTY,
-                EMPTY,  EMPTY,  EMPTY
+                X, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY
         };
         Board board = new Board(3, arrayToList(currentBoard));
         board = board.playCounterInPosition(1, O);
         assertEquals(Arrays.asList(
-                        X,      EMPTY,  EMPTY,
-                        EMPTY,  EMPTY,  EMPTY,
-                        EMPTY,  EMPTY,  EMPTY
-                ), board.getCells());
+                X, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY
+        ), board.getCells());
     }
 
     @Test
     public void foundRowWinInRow1_3x3Game() {
         Counter currentBoard[] = {
-                X,      X,      X,
-                O,      O,      EMPTY,
-                EMPTY,  EMPTY,  EMPTY
+                X, X, X,
+                O, O, EMPTY,
+                EMPTY, EMPTY, EMPTY
         };
         Board playerXRowWin = new Board(3, arrayToList(currentBoard));
         assertEquals(true, playerXRowWin.findRowWin(X));
@@ -152,13 +160,6 @@ public class BoardTest {
         assertEquals(false, board.isAWinner());
     }
 
-    @Test
-    public void rightNumberOfPositionsLeftAfterTwoMoves() {
-        Board board = new Board(3);
-        board.playCounterInPosition(2, X);
-        board.playCounterInPosition(5, O);
-        assertEquals(7, board.numberOfOpenPositions());
-    }
 
     private List<Counter> arrayToList(Counter[] initialBoard) {
         List<Counter> initialCells = new ArrayList<>(initialBoard.length);

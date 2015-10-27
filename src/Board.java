@@ -65,8 +65,8 @@ public class Board {
     }
 
     public boolean findDiagonalWin(Counter searchCounter) {
-        return checkDiagonalWin(searchCounter, 0, POSITIVE_OFFSET) ||
-                checkDiagonalWin(searchCounter, dimension - 1, NEGATIVE_OFFSET);
+        return checkDiagonalWinForCounter(searchCounter, 0) ||
+                checkDiagonalWinForCounter(searchCounter, dimension - 1);
     }
 
     protected boolean isAWinner() {
@@ -149,23 +149,37 @@ public class Board {
         return false;
     }
 
-    private boolean checkDiagonalWin(Counter searchCounter, int startIndex, int offset) {
+    private boolean checkDiagonalWinForCounter(Counter searchCounter, int startIndex) {
         Counter counterToMatch = cellValue(startIndex);
         if (counterToMatch == searchCounter) {
-            int diagonalOffset = determineDiagonalOffset(offset);
-            int indexLimit = boardSize() + offset;
-            for (int i = startIndex + diagonalOffset; i < indexLimit; i += diagonalOffset) {
-                if (!isMatch(counterToMatch, i)) {
-                    return false;
-                }
-            }
-            return true;
+            return checkForDiagonalWin(startIndex, counterToMatch);
         }
         return false;
     }
 
-    private int determineDiagonalOffset(int offset) {
-        return dimension + offset;
+    private boolean checkForDiagonalWin(int startIndex, Counter counterToMatch) {
+        int nextCellIncrement = determineNextDiagonalCellIncrement(startIndex);
+        int lastCellIndex = determineLastIndexForDiagonal(startIndex);
+        for (int i = startIndex + nextCellIncrement; i < lastCellIndex; i += nextCellIncrement) {
+            if (!isMatch(counterToMatch, i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private int determineLastIndexForDiagonal(int startIndex) {
+        int directionalOffset = determineDiagonalIndexDirection(startIndex);
+        return boardSize() + directionalOffset;
+    }
+
+    private int determineNextDiagonalCellIncrement(int startIndex) {
+        int directionalOffset = determineDiagonalIndexDirection(startIndex);
+        return startIndex == 0 ? dimension + directionalOffset : dimension + (directionalOffset);
+    }
+
+    private int determineDiagonalIndexDirection(int startIndex) {
+        return startIndex == 0 ? POSITIVE_OFFSET : NEGATIVE_OFFSET;
     }
 
     private boolean isMatch(Counter counterToMatch, int indexToCompare) {
