@@ -17,7 +17,6 @@ public class Game {
         do {
             clearBoard();
             playUntilGameOver();
-            displayBoard();
             displayResult();
         } while (playAgain());
     }
@@ -28,10 +27,6 @@ public class Game {
 
     private boolean playAgain() {
         return userInterface.requestPlayAgain();
-    }
-
-    public String displayBoard() {
-        return userInterface.displayBoard(board);
     }
 
     private void displayResult() {
@@ -46,8 +41,14 @@ public class Game {
         Player currentPlayer = players.get(Counter.X);
         while (!board.gameOver()) {
             userInterface.displayBoard(board);
-            board = currentPlayer.playTurn(board);
-            currentPlayer = players.get(currentPlayer.opponentMarker());
+            Player nextPlayer = playTurn(currentPlayer);
+            currentPlayer = nextPlayer;
         }
+        userInterface.displayBoard(board);
+    }
+
+    private Player playTurn(Player currentPlayer) {
+        currentPlayer.playTurn(board);
+        return players.get(currentPlayer.opponentMarker());
     }
 }

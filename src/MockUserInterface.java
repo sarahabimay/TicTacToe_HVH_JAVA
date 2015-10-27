@@ -11,8 +11,6 @@ public class MockUserInterface extends UserInterface {
     @Override
     public Integer requestBoardSize() {
         int dimension = (int) Math.sqrt(dummyInputs.size());
-        System.out.println("Please provide the dimensions of the board:\n");
-        System.out.println(String.format("%d", dimension));
         return dimension;
     }
 
@@ -25,17 +23,14 @@ public class MockUserInterface extends UserInterface {
     @Override
     public void displayResult(Counter winner) {
         if (winner.isEmpty()) {
-            System.out.println("Is a draw");
             draw = true;
         } else {
-            System.out.println(String.format("And the Winner is: %s", winner.toString()));
             this.winner = winner;
         }
     }
 
     @Override
     public Integer requestNextPosition() {
-        System.out.println("Please enter the position number for your next move: \n");
         int nextMove = dummyInputs.remove(0);
         while (!validateDummyPosition(nextMove)) {
             nextMove = dummyInputs.remove(0);

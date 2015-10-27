@@ -16,9 +16,11 @@ public class UserInterfaceTest {
     public void emptyBoardIsDisplayedCorrectly() {
         UserInterface ui = new UserInterface();
         Board board = new Board(3);
-        assertEquals("[1][2][3]\n" +
+        assertEquals("" +
+                "[1][2][3]\n" +
                 "[4][5][6]\n" +
-                "[7][8][9]\n", ui.displayBoard(board));
+                "[7][8][9]\n",
+                ui.displayBoard(board));
 
     }
 

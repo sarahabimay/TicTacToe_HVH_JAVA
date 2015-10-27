@@ -13,7 +13,7 @@ public class GameTest {
 
     @Test
     public void playWinningMove() {
-        mockUI.addDummyInputs(mockUI.aListOfMoves(new Integer[]{1, 2, 3, 4, 5, 7, 9, 6, 8}));
+        mockUI.addDummyInputs(mockUI.aListOfMoves(new Integer[]{1, 4, 2, 5, 3}));
         Game game = new Game(mockUI,
                 new Board(3),
                 new Player(Counter.X, mockUI),

@@ -65,7 +65,7 @@ public class Board {
     }
 
     public boolean gameOver() {
-        return isAWinner() || noEmptyPositions();
+        return isAWinner() || thereAreNoEmptyPositions();
     }
 
 
@@ -77,12 +77,6 @@ public class Board {
             return Counter.O;
         }
         return Counter.EMPTY;
-    }
-
-    public boolean findWin() {
-        return findColumnWin(Counter.X) || findColumnWin(Counter.O) ||
-                findRowWin(Counter.X) || findRowWin(Counter.O) ||
-                findDiagonalWin(Counter.X) || findDiagonalWin(Counter.O);
     }
 
     public boolean findWin(Counter searchCounter) {
@@ -112,7 +106,7 @@ public class Board {
                 checkDiagonalWin(searchCounter, dimension - 1, NEGATIVE_OFFSET);
     }
 
-    private boolean noEmptyPositions() {
+    private boolean thereAreNoEmptyPositions() {
         return boardSize() == numberOfPositionsTaken();
     }
 
@@ -124,7 +118,7 @@ public class Board {
         return findPositions(Counter.X).size() + findPositions(Counter.O).size();
     }
 
-    private boolean isAWinner() {
+    protected boolean isAWinner() {
         return getWinner() != Counter.EMPTY;
     }
 
