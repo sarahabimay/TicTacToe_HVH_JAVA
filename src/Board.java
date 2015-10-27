@@ -143,12 +143,12 @@ public class Board {
     private boolean columnWin(int columnIndex, Counter searchCounter) {
         Counter counter = cellValue(columnIndex);
         if (counter == searchCounter) {
-            return searchForColumnWin(columnIndex, counter);
+            return searchColumnForWin(columnIndex, counter);
         }
         return false;
     }
 
-    private boolean searchForColumnWin(int columnIndex, Counter counter) {
+    private boolean searchColumnForWin(int columnIndex, Counter counter) {
         for (int i = columnIndex; i < boardSize(); i += dimension) {
             if (cellValue(i) != counter) {
                 return false;
@@ -160,12 +160,12 @@ public class Board {
     private boolean diagonalWin(int startIndex, Counter searchCounter) {
         Counter counterToMatch = cellValue(startIndex);
         if (counterToMatch == searchCounter) {
-            return searchForDiagonalWin(startIndex, counterToMatch);
+            return searchDiagonalForWin(startIndex, counterToMatch);
         }
         return false;
     }
 
-    private boolean searchForDiagonalWin(int startIndex, Counter counterToMatch) {
+    private boolean searchDiagonalForWin(int startIndex, Counter counterToMatch) {
         int nextCellIncrement = determineNextDiagonalCellIncrement(startIndex);
         int lastCellIndex = determineLastIndexForDiagonal(startIndex);
         for (int i = startIndex + nextCellIncrement; i < lastCellIndex; i += nextCellIncrement) {
