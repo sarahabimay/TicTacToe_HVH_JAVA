@@ -14,19 +14,23 @@ public class Game {
     }
 
     public void play() {
-        do {
-            clearBoard();
             playUntilGameOver();
             displayResult();
-        } while (playAgain());
+            playAgain();
     }
 
-    private void clearBoard() {
-        board.clearBoard();
-    }
+//    private void restart() {
+//        UserInterface ui = new UserInterface();
+//        new Game(ui, new Board(ui.requestBoardSize()), new PlayerFactory(ui.getPlayersChoice));
+//    }
 
     private boolean playAgain() {
-        return userInterface.requestPlayAgain();
+        if (userInterface.requestPlayAgain()){
+            UserInterface ui = new UserInterface();
+            Game game = new Game(ui, new Board(ui.requestBoardSize()), new Player(Counter.X, ui), new Player(Counter.O, ui));
+            game.play();
+        }
+        return true;
     }
 
     private void displayResult() {
@@ -47,7 +51,7 @@ public class Game {
         userInterface.displayBoard(board);
     }
 
-    private Player playTurn(Player currentPlayer) {
+    Player playTurn(Player currentPlayer) {
         currentPlayer.playTurn(board);
         return players.get(currentPlayer.opponentMarker());
     }

@@ -17,6 +17,10 @@ public class Board {
         this.cells = initialState;
     }
 
+    public Board(List<Counter> cells) {
+        this.cells = cells;
+    }
+
     public void clearBoard() {
         this.cells = new ArrayList<>(generateEmptyCells());
     }
@@ -25,7 +29,7 @@ public class Board {
         if (validPosition(position)) {
             cells.set(position - POSITIVE_OFFSET, counter);
         }
-        return this;
+        return new Board(cells);
     }
 
     public boolean isGameOver() {
