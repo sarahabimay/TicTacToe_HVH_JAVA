@@ -99,14 +99,6 @@ public class Board {
         return cells.get(startIndex);
     }
 
-    private boolean validPosition(int position) {
-        return positionIsWithinRange(position) && !cellIsOccupied(position - POSITIVE_OFFSET);
-    }
-
-    private boolean positionIsWithinRange(int position) {
-        return 0 <= position && position <= boardSize();
-    }
-
     private boolean areEmptyPositions() {
         return boardSize() != numberOfPositionsTaken();
     }
@@ -115,12 +107,16 @@ public class Board {
         return findPositions(Counter.X).size() + findPositions(Counter.O).size();
     }
 
-    private List<Counter> generateEmptyCells() {
-        List<Counter> initialCells = new ArrayList<>(boardSize());
-        for (int i = 0; i < boardSize(); i++) {
-            initialCells.add(Counter.EMPTY);
-        }
-        return initialCells;
+    private boolean validPosition(int position) {
+        return positionIsWithinRange(position) && !cellIsOccupied(position - POSITIVE_OFFSET);
+    }
+
+    private boolean positionIsWithinRange(int position) {
+        return 0 <= position && position <= boardSize();
+    }
+
+    private boolean cellIsOccupied(int cellIndex) {
+        return cells.get(cellIndex) == Counter.X || cells.get(cellIndex) == Counter.O;
     }
 
     private boolean rowWin(int rowIndex, Counter searchCounter) {
@@ -194,8 +190,12 @@ public class Board {
         return cellValue(indexToCompare) == counterToMatch;
     }
 
-    private boolean cellIsOccupied(int cellIndex) {
-        return cells.get(cellIndex) == Counter.X || cells.get(cellIndex) == Counter.O;
-    }
 
+    private List<Counter> generateEmptyCells() {
+        List<Counter> initialCells = new ArrayList<>(boardSize());
+        for (int i = 0; i < boardSize(); i++) {
+            initialCells.add(Counter.EMPTY);
+        }
+        return initialCells;
+    }
 }
