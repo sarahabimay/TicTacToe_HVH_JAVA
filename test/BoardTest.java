@@ -64,7 +64,7 @@ public class BoardTest {
                 EMPTY, EMPTY, EMPTY
         };
         Board playerXRowWin = new Board(3, arrayToList(currentBoard));
-        assertEquals(true, playerXRowWin.findRowWin(X));
+        assertEquals(true, playerXRowWin.hasRowWin(X));
     }
 
     @Test
@@ -76,7 +76,7 @@ public class BoardTest {
                 O, O, X, X
         };
         Board playerXRowWin = new Board(4, arrayToList(currentBoard));
-        assertEquals(true, playerXRowWin.findRowWin(X));
+        assertEquals(true, playerXRowWin.hasRowWin(X));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class BoardTest {
                 X, X, O
         };
         Board playerXColumnWin = new Board(3, arrayToList(currentBoard));
-        assertEquals(true, playerXColumnWin.findColumnWin(X));
+        assertEquals(true, playerXColumnWin.hasColumnWin(X));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class BoardTest {
                 X, X, O, X
         };
         Board playerXColumnWin = new Board(4, arrayToList(currentBoard));
-        assertEquals(true, playerXColumnWin.findColumnWin(X));
+        assertEquals(true, playerXColumnWin.hasColumnWin(X));
     }
 
     @Test
@@ -110,7 +110,7 @@ public class BoardTest {
                 O, O, X
         };
         Board playerXDiagonalWin = new Board(3, arrayToList(currentBoard));
-        assertEquals(true, playerXDiagonalWin.findDiagonalWin(X));
+        assertEquals(true, playerXDiagonalWin.hasDiagonalWin(X));
     }
 
     @Test
@@ -122,7 +122,7 @@ public class BoardTest {
                 X, O, O, O
         };
         Board playerXDiagonalWin = new Board(4, arrayToList(currentBoard));
-        assertEquals(true, playerXDiagonalWin.findDiagonalWin(X));
+        assertEquals(true, playerXDiagonalWin.hasDiagonalWin(X));
     }
 
     @Test

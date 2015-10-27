@@ -43,10 +43,10 @@ public class Board {
     }
 
     public boolean findWin(Counter searchCounter) {
-        return findRowWin(searchCounter) || findColumnWin(searchCounter) || findDiagonalWin(searchCounter);
+        return hasRowWin(searchCounter) || hasColumnWin(searchCounter) || hasDiagonalWin(searchCounter);
     }
 
-    public boolean findRowWin(Counter searchCounter) {
+    public boolean hasRowWin(Counter searchCounter) {
         for (int row = 0; row < boardSize(); row += dimension) {
             if (rowWin(row, searchCounter)) {
                 return true;
@@ -55,7 +55,7 @@ public class Board {
         return false;
     }
 
-    public boolean findColumnWin(Counter searchCounter) {
+    public boolean hasColumnWin(Counter searchCounter) {
         for (int column = 0; column < dimension; column++) {
             if (columnWin(column, searchCounter)) {
                 return true;
@@ -64,9 +64,9 @@ public class Board {
         return false;
     }
 
-    public boolean findDiagonalWin(Counter searchCounter) {
-        return checkDiagonalWinForCounter(searchCounter, 0) ||
-                checkDiagonalWinForCounter(searchCounter, dimension - 1);
+    public boolean hasDiagonalWin(Counter searchCounter) {
+        return diagonalWin(0, searchCounter) ||
+                diagonalWin(dimension - 1, searchCounter);
     }
 
     protected boolean isAWinner() {
@@ -126,38 +126,46 @@ public class Board {
     private boolean rowWin(int rowIndex, Counter searchCounter) {
         Counter counter = cellValue(rowIndex);
         if (counter == searchCounter) {
-            for (int i = rowIndex; i < (rowIndex + dimension); i++) {
-                if (cellValue(i) != counter) {
-                    return false;
-                }
-            }
-            return true;
+            return searchRowForWin(rowIndex, counter);
         }
         return false;
+    }
+
+    private boolean searchRowForWin(int rowIndex, Counter counter) {
+        for (int i = rowIndex; i < (rowIndex + dimension); i++) {
+            if (cellValue(i) != counter) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean columnWin(int columnIndex, Counter searchCounter) {
         Counter counter = cellValue(columnIndex);
         if (counter == searchCounter) {
-            for (int i = columnIndex; i < boardSize(); i += dimension) {
-                if (cellValue(i) != counter) {
-                    return false;
-                }
-            }
-            return true;
+            return searchForColumnWin(columnIndex, counter);
         }
         return false;
     }
 
-    private boolean checkDiagonalWinForCounter(Counter searchCounter, int startIndex) {
+    private boolean searchForColumnWin(int columnIndex, Counter counter) {
+        for (int i = columnIndex; i < boardSize(); i += dimension) {
+            if (cellValue(i) != counter) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean diagonalWin(int startIndex, Counter searchCounter) {
         Counter counterToMatch = cellValue(startIndex);
         if (counterToMatch == searchCounter) {
-            return checkForDiagonalWin(startIndex, counterToMatch);
+            return searchForDiagonalWin(startIndex, counterToMatch);
         }
         return false;
     }
 
-    private boolean checkForDiagonalWin(int startIndex, Counter counterToMatch) {
+    private boolean searchForDiagonalWin(int startIndex, Counter counterToMatch) {
         int nextCellIncrement = determineNextDiagonalCellIncrement(startIndex);
         int lastCellIndex = determineLastIndexForDiagonal(startIndex);
         for (int i = startIndex + nextCellIncrement; i < lastCellIndex; i += nextCellIncrement) {
