@@ -97,10 +97,10 @@ public class UserInterface {
     }
 
     private boolean isEndOfRow(int index, Board board) {
-        return (index + 1) % getDimension(board) == 0;
+        return (index + 1) % calculateDimension(board) == 0;
     }
 
-    private int getDimension(Board board) {
+    private int calculateDimension(Board board) {
         return (int) Math.sqrt(board.boardSize());
     }
 
