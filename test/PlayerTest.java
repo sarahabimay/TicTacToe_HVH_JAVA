@@ -7,15 +7,15 @@ import static org.junit.Assert.*;
 public class PlayerTest {
     @Test
     public void getPlayersOpponent() {
-        Player player1 = new Player(Counter.X, new UserInterface());
+        Player player1 = new Player(Counter.X, new CommandLineUI());
         assertEquals(Counter.O, player1.opponentMarker());
     }
 
     @Test
     public void boardUpdatedWithNewCounter() {
-        MockUserInterface mockUI = new MockUserInterface();
-        mockUI.addDummyInputs(mockUI.aListOfMoves(new Integer[]{1, 4, 2, 5, 3}));
-        Player player1 = new Player(Counter.X, mockUI);
+        FakeCommandLineUI fakeUI = new FakeCommandLineUI();
+        fakeUI.addDummyInputs(fakeUI.aListOfMoves(new Integer[]{1, 4, 2, 5, 3}));
+        Player player1 = new Player(Counter.X, fakeUI);
         Board board = new Board(3);
         board = player1.playTurn(board);
         ArrayList<String> foundPositions = board.findPositions(Counter.X);

@@ -26,7 +26,7 @@ public class Game {
 
     private boolean playAgain() {
         if (userInterface.requestPlayAgain()) {
-            UserInterface ui = new UserInterface();
+            UserInterface ui = new CommandLineUI();
             Game game = new Game(ui, new Board(ui.requestBoardSize()), new Player(Counter.X, ui), new Player(Counter.O, ui));
             game.play();
         }

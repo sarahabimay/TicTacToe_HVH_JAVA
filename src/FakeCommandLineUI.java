@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntPredicate;
 
-public class MockUserInterface implements UserInterface {
+public class FakeCommandLineUI implements UserInterface {
     private boolean draw = false;
     private boolean playAgain = false;
     private Counter winner;
@@ -63,12 +63,18 @@ public class MockUserInterface implements UserInterface {
         return choiceFromInput != null && isValidChoice.test(choiceFromInput);
     }
 
+    boolean validateDimension(int dimension) {
+        return dimension >= 3;
+    }
+
     boolean validPosition(int position) {
         return position > 0;
     }
+
     boolean doPlayAgain(Integer instruction) {
         return 2 == instruction;
     }
+
     protected List<Integer> aListOfMoves(Integer[] moves) {
         List<Integer> listOfMoves = new ArrayList<>();
         for (int i = 0; i < moves.length; i++) {
@@ -76,5 +82,4 @@ public class MockUserInterface implements UserInterface {
         }
         return listOfMoves;
     }
-
 }

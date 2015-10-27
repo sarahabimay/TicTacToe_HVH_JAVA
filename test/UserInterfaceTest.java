@@ -5,16 +5,16 @@ import static org.junit.Assert.*;
 
 public class UserInterfaceTest {
 
-    public MockUserInterface mockUI;
+    public FakeCommandLineUI mockUI;
 
     @Before
     public void setUp() throws Exception {
-        mockUI = new MockUserInterface();
+        mockUI = new FakeCommandLineUI();
     }
 
     @Test
     public void emptyBoardIsDisplayedCorrectly() {
-        UserInterface ui = new UserInterface();
+        CommandLineUI ui = new CommandLineUI();
         Board board = new Board(3);
         assertEquals("" +
                 "[1][2][3]\n" +
