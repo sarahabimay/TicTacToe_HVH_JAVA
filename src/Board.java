@@ -21,10 +21,6 @@ public class Board {
         this.cells = new ArrayList<>(generateEmptyCells());
     }
 
-    public int getDimension() {
-        return dimension;
-    }
-
     public Board playCounterInPosition(int position, Counter counter) {
         if (validPosition(position)) {
             cells.set(position - POSITIVE_OFFSET, counter);

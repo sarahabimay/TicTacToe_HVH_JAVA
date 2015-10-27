@@ -75,16 +75,16 @@ public class UserInterface {
         return 2 == instruction;
     }
 
-    private boolean validInstruction(int instruction) {
-        return 0 < instruction && instruction < 3;
-    }
-
     protected boolean validateDimension(int dimension) {
         return dimension >= 3;
     }
 
     protected boolean validPosition(int position) {
         return position > 0;
+    }
+
+    private boolean validInstruction(int instruction) {
+        return 0 < instruction && instruction < 3;
     }
 
     private String convertRowToString(int index, Counter cellValue, Board board) {
@@ -97,7 +97,11 @@ public class UserInterface {
     }
 
     private boolean isEndOfRow(int index, Board board) {
-        return (index + 1) % board.getDimension() == 0;
+        return (index + 1) % getDimension(board) == 0;
+    }
+
+    private int getDimension(Board board) {
+        return (int) Math.sqrt(board.boardSize());
     }
 
     private void announceWinner(Counter winner) {
