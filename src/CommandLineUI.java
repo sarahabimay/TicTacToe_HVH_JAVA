@@ -56,6 +56,15 @@ public class CommandLineUI implements UserInterface {
         return output;
     }
 
+    public boolean requestToContinueGame() {
+        Integer instruction = 0;
+        while (instruction == 0){
+            writeStream.println("Do you want to continue game? Quit(1) or Continue(2): \n");
+            instruction = readInput();
+        }
+        return doPlayAgain(instruction);
+    }
+
     private Integer readInput() {
         try {
             return Integer.parseInt(readStream.readLine());

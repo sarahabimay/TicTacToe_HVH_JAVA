@@ -8,17 +8,24 @@ public class FakeCommandLineUI implements UserInterface {
     private Counter winner;
     private List<Integer> dummyInputs = new ArrayList<>();
     private int numberOfInputs;
+    private boolean userHasBeenAskedForDimension = false;
+    private boolean userHasBeenAskedForNextPosition = false;
+    private boolean haveDisplayedBoardToUser = false;
+    private boolean haveDisplayedResultToUser = false;
+    private boolean haveRequestedToQuit = false;
 
     public Integer requestBoardSize() {
         int dimension = (int) Math.sqrt(dummyInputs.size());
+        userHasBeenAskedForDimension = true;
         return dimension;
     }
 
     public Integer requestNextPosition() {
-        int nextMove = dummyInputs.remove(0);
-        while (!validateDummyPosition(nextMove)) {
-            nextMove = dummyInputs.remove(0);
+        Integer nextMove = dummyInputs.remove(0);
+        while (!validDummyPosition(nextMove)) {
+            nextMove = dummyInputs.size()>0 ? dummyInputs.remove(0) : null;
         }
+        userHasBeenAskedForNextPosition = true;
         return nextMove;
     }
 
@@ -32,13 +39,22 @@ public class FakeCommandLineUI implements UserInterface {
         } else {
             this.winner = winner;
         }
+        haveDisplayedResultToUser = true;
     }
 
     public String displayBoard(Board board) {
+        haveDisplayedBoardToUser = true;
         return null;
     }
 
-    private boolean validateDummyPosition(Integer nextMove) {
+    public boolean requestToContinueGame() {
+        if( dummyInputs.size() == 0){
+            haveRequestedToQuit = true;
+        }
+        return haveRequestedToQuit;
+    }
+
+    private boolean validDummyPosition(Integer nextMove) {
         return validate(nextMove, this::validPosition) && nextMove <= numberOfInputs;
     }
 
@@ -81,5 +97,25 @@ public class FakeCommandLineUI implements UserInterface {
             listOfMoves.add(moves[i]);
         }
         return listOfMoves;
+    }
+
+    public boolean hasAskedUserForDimension() {
+        return userHasBeenAskedForDimension;
+    }
+
+    public boolean hasAskedUserForNextPosition() {
+        return userHasBeenAskedForNextPosition;
+    }
+
+    public boolean hasDisplayedBoardToUser() {
+        return haveDisplayedBoardToUser;
+    }
+
+    public boolean hasDisplayedResultToUser() {
+        return haveDisplayedResultToUser;
+    }
+
+    public boolean hasRequestedToQuit() {
+        return haveRequestedToQuit;
     }
 }

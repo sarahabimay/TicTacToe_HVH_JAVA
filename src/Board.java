@@ -18,6 +18,7 @@ public class Board {
     }
 
     public Board(List<Counter> cells) {
+        this.dimension = (int) Math.sqrt(cells.size());
         this.cells = cells;
     }
 
@@ -25,7 +26,7 @@ public class Board {
 //        this.cells = new ArrayList<>(generateEmptyCells());
 //    }
 
-    public Board playCounterInPosition(int position, Counter counter) {
+    public Board playCounterInPosition(Integer position, Counter counter) {
         if (validPosition(position)) {
             cells.set(position - POSITIVE_OFFSET, counter);
         }
@@ -111,8 +112,8 @@ public class Board {
         return findPositions(Counter.X).size() + findPositions(Counter.O).size();
     }
 
-    private boolean validPosition(int position) {
-        return positionIsWithinRange(position) && !cellIsOccupied(position - POSITIVE_OFFSET);
+    private boolean validPosition(Integer position) {
+        return position != null && positionIsWithinRange(position) && !cellIsOccupied(position - POSITIVE_OFFSET);
     }
 
     private boolean positionIsWithinRange(int position) {

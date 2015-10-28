@@ -18,7 +18,7 @@ public class Player {
     }
 
     public Board playTurn(Board board) {
-        int nextPosition = userInterface.requestNextPosition();
+        Integer nextPosition = userInterface.requestNextPosition();
         return board.playCounterInPosition(nextPosition, counter);
     }
 }
