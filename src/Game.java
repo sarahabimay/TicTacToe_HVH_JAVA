@@ -4,14 +4,13 @@ import java.util.HashMap;
 
 public class Game {
     private UserInterface userInterface;
-    private Board board;
+    private Board board = new Board(new ArrayList<>(Arrays.asList()));;
     private HashMap<Counter, Player> players = new HashMap<>();
 
-    public Game(FakeCommandLineUI clUI) {
+    public Game(FakeCommandLineUI clUI, Player player1, Player player2) {
         this.userInterface = clUI;
-        this.board = new Board(new ArrayList<>(Arrays.asList()));
-        this.players.put(Counter.X, new Player(Counter.X, userInterface));
-        this.players.put(Counter.O, new Player(Counter.O, userInterface));
+        this.players.put(player1.getCounter(), player1);
+        this.players.put(player2.getCounter(), player2);
     }
 
     public void play() {

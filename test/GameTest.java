@@ -13,9 +13,9 @@ public class GameTest {
     public Game game;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
         clUI = new FakeCommandLineUI();
-        game = new Game(clUI);
+        game = new Game(clUI, new Player(Counter.X, clUI), new Player(Counter.O, clUI));
     }
 
     @Test

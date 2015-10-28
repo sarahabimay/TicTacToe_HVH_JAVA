@@ -21,4 +21,8 @@ public class Player {
         Integer nextPosition = userInterface.requestNextPosition();
         return board.playCounterInPosition(nextPosition, counter);
     }
+
+    public Counter getCounter() {
+        return counter;
+    }
 }
