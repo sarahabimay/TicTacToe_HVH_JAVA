@@ -16,6 +16,11 @@ public class Game {
     public void play() {
         board = new Board(userInterface.requestBoardSize());
         userInterface.displayBoard(board);
+        executeAllPlayersMoves();
+        userInterface.displayResult(board.getWinner());
+    }
+
+    private void executeAllPlayersMoves() {
         Player currentPlayer = players.get(Counter.X);
         while (!userInterface.requestToContinueGame() && !board.isGameOver()) {
             board = currentPlayer.playTurn(board);
@@ -23,7 +28,5 @@ public class Game {
             Player nextPlayer = players.get(currentPlayer.opponentMarker());
             currentPlayer = nextPlayer;
         }
-
-        userInterface.displayResult(board.getWinner());
     }
 }
