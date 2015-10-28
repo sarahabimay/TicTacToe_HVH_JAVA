@@ -7,24 +7,40 @@ public class Game {
     private Board board = new Board(new ArrayList<>(Arrays.asList()));;
     private HashMap<Counter, Player> players = new HashMap<>();
 
-    public Game(FakeCommandLineUI clUI, Player player1, Player player2) {
+    public Game(UserInterface clUI, Player player1, Player player2) {
         this.userInterface = clUI;
         this.players.put(player1.getCounter(), player1);
         this.players.put(player2.getCounter(), player2);
     }
 
     public void play() {
-        board = new Board(userInterface.requestBoardSize());
-        userInterface.displayBoard(board);
+        requestBoardSize();
         executeAllPlayersMoves();
+        displayResult();
+        playAgain();
+    }
+
+    private void requestBoardSize() {
+        board = new Board(userInterface.requestBoardSize());
+    }
+
+    private void displayResult() {
+        userInterface.displayBoard(board);
         userInterface.displayResult(board.getWinner());
+    }
+
+    private void playAgain() {
+        if (userInterface.requestPlayAgain()){
+            board.resetBoard();
+            play();
+        }
     }
 
     private void executeAllPlayersMoves() {
         Player currentPlayer = players.get(Counter.X);
-        while (!userInterface.requestToContinueGame() && !board.isGameOver()) {
-            board = currentPlayer.playTurn(board);
+        while (!board.isGameOver()) {
             userInterface.displayBoard(board);
+            board = currentPlayer.playTurn(board);
             Player nextPlayer = players.get(currentPlayer.opponentMarker());
             currentPlayer = nextPlayer;
         }

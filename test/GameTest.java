@@ -82,7 +82,19 @@ public class GameTest {
         assertEquals(true, clUI.hasDisplayedResultToUser());
     }
 
-//    @Test
+    @Test
+    public void requestToQuitAfterGameOver() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
+        clUI.addDummyInputs(initialState);
+        clUI.addDummyPlayAgainChoice(1);
+        game.play();
+        assertEquals(true, clUI.hasAskedUserToQuitGame());
+    }
+    
+    //    @Test
 //    public void dontDisplayResultInMiddleOfGame() {
 //
 //        List<Integer> initialState = new ArrayList<>(Arrays.asList(

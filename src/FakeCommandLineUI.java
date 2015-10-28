@@ -7,12 +7,21 @@ public class FakeCommandLineUI implements UserInterface {
     private boolean playAgain = false;
     private Counter winner;
     private List<Integer> dummyInputs = new ArrayList<>();
+    static private List<Integer> copyOfDummyInputs = new ArrayList<>();
     private int numberOfInputs;
     private boolean userHasBeenAskedForDimension = false;
     private boolean userHasBeenAskedForNextPosition = false;
     private boolean haveDisplayedBoardToUser = false;
     private boolean haveDisplayedResultToUser = false;
     private boolean haveRequestedToQuit = false;
+    private boolean haveAskeUserToQuitGame = false;
+
+    public FakeCommandLineUI() {
+    }
+
+    static public List<Integer> getCopyOfDummyInputs() {
+        return copyOfDummyInputs;
+    }
 
     public Integer requestBoardSize() {
         int dimension = (int) Math.sqrt(dummyInputs.size());
@@ -30,6 +39,7 @@ public class FakeCommandLineUI implements UserInterface {
     }
 
     public boolean requestPlayAgain() {
+        haveAskeUserToQuitGame = true;
         return playAgain;
     }
 
@@ -58,20 +68,13 @@ public class FakeCommandLineUI implements UserInterface {
         return validate(nextMove, this::validPosition) && nextMove <= numberOfInputs;
     }
 
-    public Counter getWinner() {
-        return this.winner;
-    }
-
-    public boolean isDraw() {
-        return draw;
-    }
-
     public void addDummyPlayAgainChoice(Integer replayOrQuit) {
         playAgain = doPlayAgain(replayOrQuit);
     }
 
     public void addDummyInputs(List<Integer> inputs) {
         dummyInputs = inputs;
+        copyOfDummyInputs = inputs;
         numberOfInputs = dummyInputs.size();
     }
 
@@ -117,5 +120,9 @@ public class FakeCommandLineUI implements UserInterface {
 
     public boolean hasRequestedToQuit() {
         return haveRequestedToQuit;
+    }
+
+    public boolean hasAskedUserToQuitGame() {
+        return haveAskeUserToQuitGame;
     }
 }

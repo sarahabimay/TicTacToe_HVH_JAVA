@@ -5,11 +5,11 @@ import static org.junit.Assert.*;
 
 public class UserInterfaceTest {
 
-    public FakeCommandLineUI mockUI;
+    public FakeCommandLineUI fakeUI;
 
     @Before
     public void setUp() throws Exception {
-        mockUI = new FakeCommandLineUI();
+        fakeUI = new FakeCommandLineUI();
     }
 
     @Test
@@ -26,39 +26,39 @@ public class UserInterfaceTest {
 
     @Test
     public void userChoosesToQuit() {
-        mockUI.addDummyPlayAgainChoice(1);
-        assertEquals(false, mockUI.requestPlayAgain());
+        fakeUI.addDummyPlayAgainChoice(1);
+        assertEquals(false, fakeUI.requestPlayAgain());
     }
 
     @Test
     public void userChoosesToReplay() {
-        mockUI.addDummyPlayAgainChoice(2);
-        assertEquals(true, mockUI.requestPlayAgain());
+        fakeUI.addDummyPlayAgainChoice(2);
+        assertEquals(true, fakeUI.requestPlayAgain());
     }
 
     @Test
     public void invalidEmptyBoardDimension() {
-        mockUI.addDummyInputs(mockUI.aListOfMoves(new Integer[]{}));
-        assertEquals(false, mockUI.validate(mockUI.requestBoardSize(), mockUI::validateDimension));
+        fakeUI.addDummyInputs(fakeUI.aListOfMoves(new Integer[]{}));
+        assertEquals(false, fakeUI.validate(fakeUI.requestBoardSize(), fakeUI::validateDimension));
     }
 
     @Test
     public void invalidNonEmptyBoardDimension() {
-        mockUI.addDummyInputs(mockUI.aListOfMoves(new Integer[]{1, 2, 3, 4}));
-        assertEquals(false, mockUI.validate(mockUI.requestBoardSize(), mockUI::validateDimension));
+        fakeUI.addDummyInputs(fakeUI.aListOfMoves(new Integer[]{1, 2, 3, 4}));
+        assertEquals(false, fakeUI.validate(fakeUI.requestBoardSize(), fakeUI::validateDimension));
     }
 
     @Test
     public void validBoardDimension() {
-        mockUI.addDummyInputs(mockUI.aListOfMoves(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9}));
-        assertEquals(true, mockUI.validate(mockUI.requestBoardSize(), mockUI::validateDimension));
+        fakeUI.addDummyInputs(fakeUI.aListOfMoves(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9}));
+        assertEquals(true, fakeUI.validate(fakeUI.requestBoardSize(), fakeUI::validateDimension));
     }
 
     @Test
     public void invalidPositionIsIgnored() {
-        mockUI.addDummyInputs(mockUI.aListOfMoves(new Integer[]{20, 1, 4, 2, 5, 3}));
-        assertEquals((Integer) 1, mockUI.requestNextPosition());
-        assertEquals((Integer) 4, mockUI.requestNextPosition());
-        assertEquals((Integer) 2, mockUI.requestNextPosition());
+        fakeUI.addDummyInputs(fakeUI.aListOfMoves(new Integer[]{20, 1, 4, 2, 5, 3}));
+        assertEquals((Integer) 1, fakeUI.requestNextPosition());
+        assertEquals((Integer) 4, fakeUI.requestNextPosition());
+        assertEquals((Integer) 2, fakeUI.requestNextPosition());
     }
 }

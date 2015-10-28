@@ -22,6 +22,9 @@ public class Board {
         this.cells = cells;
     }
 
+    public void resetBoard() {
+        this.cells = generateEmptyCells();
+    }
 //    public void clearBoard() {
 //        this.cells = new ArrayList<>(generateEmptyCells());
 //    }
@@ -203,4 +206,5 @@ public class Board {
         }
         return initialCells;
     }
+
 }
