@@ -27,12 +27,16 @@ public class Game {
 
     private void executeAllPlayersMoves() {
         Player currentPlayer = players.get(Counter.X);
-        while (!board.isGameOver()) {
+        while (!isGameOver()) {
             userInterface.displayBoard(board);
             board = currentPlayer.playTurn(board);
             Player nextPlayer = players.get(currentPlayer.opponentMarker());
             currentPlayer = nextPlayer;
         }
+    }
+
+    public boolean isGameOver() {
+        return board.isGameOver();
     }
 
     private void displayResult() {

@@ -3,9 +3,8 @@ import java.util.List;
 import java.util.function.IntPredicate;
 
 public class FakeCommandLineUI implements UserInterface {
-    private boolean draw = false;
     private boolean playAgain = false;
-    private Counter winner;
+    private Counter winner = Counter.EMPTY;
     private List<Integer> dummyInputs = new ArrayList<>();
     static private List<Integer> copyOfDummyInputs = new ArrayList<>();
     private int numberOfInputs;
@@ -31,7 +30,7 @@ public class FakeCommandLineUI implements UserInterface {
     public Integer requestNextPosition() {
         Integer nextMove = dummyInputs.remove(0);
         while (!validDummyPosition(nextMove)) {
-            nextMove = dummyInputs.size()>0 ? dummyInputs.remove(0) : null;
+            nextMove = dummyInputs.size() > 0 ? dummyInputs.remove(0) : null;
         }
         userHasBeenAskedForNextPosition = true;
         return nextMove;
@@ -42,10 +41,16 @@ public class FakeCommandLineUI implements UserInterface {
         return playAgain;
     }
 
+    public Counter getWinner() {
+        return this.winner;
+    }
+
+    public boolean isADraw() {
+        return this.winner == Counter.EMPTY;
+    }
+
     public void displayResult(Counter winner) {
-        if (winner.isEmpty()) {
-            draw = true;
-        } else {
+        if (!winner.isEmpty()) {
             this.winner = winner;
         }
         haveDisplayedResultToUser = true;
@@ -113,4 +118,5 @@ public class FakeCommandLineUI implements UserInterface {
     public boolean hasAskedUserToQuitGame() {
         return haveAskeUserToQuitGame;
     }
+
 }

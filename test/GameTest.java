@@ -13,7 +13,7 @@ public class GameTest {
     public Game game;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         clUI = new FakeCommandLineUI();
         game = new Game(clUI, new Player(Counter.X, clUI), new Player(Counter.O, clUI));
     }
@@ -83,4 +83,39 @@ public class GameTest {
         assertEquals(true, clUI.hasAskedUserToQuitGame());
     }
 
+    @Test
+    public void checkGameIsOver() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
+        clUI.addDummyInputs(initialState);
+        game.play();
+        assertEquals(true, game.isGameOver());
+    }
+
+    @Test
+    public void checkResultIsADraw() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                2, 1, 4,
+                5, 6, 3,
+                7, 8, 9));
+        clUI.addDummyInputs(initialState);
+        game.play();
+        assertEquals(true, game.isGameOver());
+        assertEquals(true, clUI.isADraw());
+    }
+
+    @Test
+    public void checkResultIsAWin() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
+        clUI.addDummyInputs(initialState);
+        game.play();
+        assertEquals(true, game.isGameOver());
+        assertEquals(false, clUI.isADraw());
+        assertEquals(Counter.X, clUI.getWinner());
+    }
 }
