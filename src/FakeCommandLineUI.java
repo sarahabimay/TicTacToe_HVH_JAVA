@@ -57,8 +57,28 @@ public class FakeCommandLineUI implements UserInterface {
     }
 
     public String displayBoard(Board board) {
+        String output = "";
         haveDisplayedBoardToUser = true;
-        return null;
+        for (int i = 0; i < board.boardSize(); i++) {
+            output += convertRowToString(i, board.cellValue(i), board);
+        }
+        return output;
+    }
+    private String convertRowToString(int index, Counter cellValue, Board board) {
+        String cellForDisplay = cellValue.counterForDisplay(index);
+        String output = String.format("[%s]", cellForDisplay);
+        if (isEndOfRow(index, board)) {
+            output += "\n";
+        }
+        return output;
+    }
+
+    private boolean isEndOfRow(int index, Board board) {
+        return (index + 1) % calculateDimension(board) == 0;
+    }
+
+    private int calculateDimension(Board board) {
+        return (int) Math.sqrt(board.boardSize());
     }
 
     private boolean validDummyPosition(Integer nextMove) {

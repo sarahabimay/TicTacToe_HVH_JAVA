@@ -21,17 +21,16 @@ public class Game {
         playAgain();
     }
 
-    private void requestBoardSize() {
+    public void requestBoardSize() {
         board = new Board(userInterface.requestBoardSize());
     }
 
     private void executeAllPlayersMoves() {
-        Player currentPlayer = players.get(Counter.X);
+        Counter currentCounter = Counter.X;
         while (!isGameOver()) {
             userInterface.displayBoard(board);
-            board = currentPlayer.playTurn(board);
-            Player nextPlayer = players.get(currentPlayer.opponentMarker());
-            currentPlayer = nextPlayer;
+            nextPlayerMakesMove(currentCounter);
+            currentCounter = getNextCounter(currentCounter);
         }
     }
 
@@ -49,5 +48,15 @@ public class Game {
             board.resetBoard();
             play();
         }
+    }
+
+    public Board nextPlayerMakesMove(Counter nextCounter) {
+        Player currentPlayer = players.get(nextCounter);
+        board = currentPlayer.playTurn(board);
+        return board;
+    }
+
+    public Counter getNextCounter(Counter counter) {
+        return counter.opponentCounter();
     }
 }

@@ -18,6 +18,7 @@ public class GameTest {
         game = new Game(clUI, new Player(Counter.X, clUI), new Player(Counter.O, clUI));
     }
 
+
     @Test
     public void choose3x3Game() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
@@ -47,6 +48,28 @@ public class GameTest {
         clUI.addDummyInputs(initialState);
         game.play();
         assertEquals(true, clUI.hasAskedUserForNextPosition());
+    }
+
+    @Test
+    public void playNextMoveAndSeeResult() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0));
+        clUI.addDummyInputs(initialState);
+        game.requestBoardSize();
+        Board board = game.nextPlayerMakesMove(Counter.X);
+        assertEquals("" +
+                        "[X][2][3]\n" +
+                        "[4][5][6]\n" +
+                        "[7][8][9]\n",
+                clUI.displayBoard(board));
+    }
+
+    @Test
+    public void checkPlayerCounterGetsSwitched() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0));
+        clUI.addDummyInputs(initialState);
+        game.requestBoardSize();
+        game.nextPlayerMakesMove(Counter.X);
+        assertEquals(Counter.O, game.getNextCounter(Counter.X));
     }
 
     @Test
