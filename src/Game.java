@@ -14,11 +14,44 @@ public class Game {
         this.players.put(player2.getCounter(), player2);
     }
 
+    public Game(UserInterface userInterface) {
+        this.userInterface = userInterface;
+    }
+
+    public String typeOfGame() {
+        return "";
+    }
+
+    public Board nextPlayerMakesMove(Counter nextCounter) {
+        Player currentPlayer = players.get(nextCounter);
+        board = currentPlayer != null ? currentPlayer.playTurn(board) : board;
+        return board;
+    }
+
+    public Counter getNextCounter(Counter counter) {
+        return counter.opponentCounter();
+    }
+
     public void play() {
         requestBoardSize();
+        createPlayers(requestGameType());
         executeAllPlayersMoves();
         displayResult();
         playAgain();
+    }
+
+    private void createPlayers(String gameType) {
+        if (gameType == "HVH") {
+            this.players.put(Counter.X, new Player(Counter.X, userInterface));
+            this.players.put(Counter.O, new Player(Counter.O, userInterface));
+        } else if (gameType == "HVC") {
+            this.players.put(Counter.X, new Player(Counter.X, userInterface));
+            this.players.put(Counter.O, new Player(Counter.O, userInterface));
+        }
+    }
+
+    private String requestGameType() {
+        return userInterface.requestGameType();
     }
 
     public void requestBoardSize() {
@@ -50,13 +83,5 @@ public class Game {
         }
     }
 
-    public Board nextPlayerMakesMove(Counter nextCounter) {
-        Player currentPlayer = players.get(nextCounter);
-        board = currentPlayer.playTurn(board);
-        return board;
-    }
 
-    public Counter getNextCounter(Counter counter) {
-        return counter.opponentCounter();
-    }
 }

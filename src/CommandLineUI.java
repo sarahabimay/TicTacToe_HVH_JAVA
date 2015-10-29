@@ -19,6 +19,10 @@ public class CommandLineUI implements UserInterface {
         return dimension;
     }
 
+    public String requestGameType() {
+        return "HVH";
+    }
+
     public Integer requestNextPosition() {
         Integer position = 0;
         while (!validate(position, this::validPosition)) {

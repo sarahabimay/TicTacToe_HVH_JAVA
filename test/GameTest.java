@@ -21,7 +21,10 @@ public class GameTest {
 
     @Test
     public void choose3x3Game() {
-        List<Integer> initialState = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9));
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
         clUI.addDummyInputs(initialState);
         game.play();
         assertEquals(true, clUI.hasAskedUserForDimension());
@@ -37,6 +40,32 @@ public class GameTest {
         clUI.addDummyInputs(initialState);
         game.play();
         assertEquals(true, clUI.hasAskedUserForDimension());
+    }
+
+    @Test
+    public void chooseHVHTypeOfGame() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
+        clUI.addDummyInputs(initialState);
+        clUI.setGameType("HVH");
+        Game newGame = new Game(clUI);
+        newGame.play();
+        assertEquals(true, clUI.hasAskedUserForGameType());
+    }
+
+    @Test
+    public void chooseHVCTypeOfGame() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
+        clUI.addDummyInputs(initialState);
+        clUI.setGameType("HVC");
+        Game newGame = new Game(clUI);
+        newGame.play();
+        assertEquals("HVC", game.typeOfGame());
     }
 
     @Test
