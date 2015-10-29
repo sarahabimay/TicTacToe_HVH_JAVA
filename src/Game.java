@@ -42,11 +42,11 @@ public class Game {
 
     private void createPlayers(String newGameType) {
         if (gameType == "HVH") {
-            this.players.put(Counter.X, new Player(Counter.X, userInterface));
-            this.players.put(Counter.O, new Player(Counter.O, userInterface));
+            this.players.put(Counter.X, new HumanPlayer(Counter.X, userInterface));
+            this.players.put(Counter.O, new HumanPlayer(Counter.O, userInterface));
         } else if (gameType == "HVC") {
-            this.players.put(Counter.X, new Player(Counter.X, userInterface));
-            this.players.put(Counter.O, new Player(Counter.O, userInterface));
+            this.players.put(Counter.X, new HumanPlayer(Counter.X, userInterface));
+            this.players.put(Counter.O, new HumanPlayer(Counter.O, userInterface));
         }
     }
 

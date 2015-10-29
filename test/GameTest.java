@@ -15,7 +15,7 @@ public class GameTest {
     @Before
     public void setUp() {
         clUI = new FakeCommandLineUI();
-        game = new Game(clUI, new Player(Counter.X, clUI), new Player(Counter.O, clUI));
+        game = new Game(clUI, new HumanPlayer(Counter.X, clUI), new HumanPlayer(Counter.O, clUI));
     }
 
 

@@ -1,6 +1,6 @@
-public class Player {
-    private Counter counter;
-    private UserInterface userInterface;
+public abstract class Player {
+    protected Counter counter;
+    protected UserInterface userInterface;
 
     public Player(Counter counter, UserInterface userInterface) {
         this.counter = counter;
@@ -17,10 +17,7 @@ public class Player {
         return Counter.EMPTY;
     }
 
-    public Board playTurn(Board board) {
-        Integer nextPosition = userInterface.requestNextPosition();
-        return board.playCounterInPosition(nextPosition, counter);
-    }
+    abstract Board playTurn(Board board);
 
     public Counter getCounter() {
         return counter;
