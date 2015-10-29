@@ -40,19 +40,20 @@ public class Game {
         playAgain();
     }
 
-    private void createPlayers(String newGameType) {
+    private void createPlayers(Integer newGameType) {
         if (gameType == "HVH") {
             this.players.put(Counter.X, new HumanPlayer(Counter.X, userInterface));
             this.players.put(Counter.O, new HumanPlayer(Counter.O, userInterface));
         } else if (gameType == "HVC") {
             this.players.put(Counter.X, new HumanPlayer(Counter.X, userInterface));
-            this.players.put(Counter.O, new HumanPlayer(Counter.O, userInterface));
+            this.players.put(Counter.O, new ComputerPlayer(Counter.O, userInterface));
         }
     }
 
-    private String requestGameType() {
-        this.gameType = userInterface.requestGameType();
-        return gameType;
+    private Integer requestGameType() {
+        Integer gameTypeOption = userInterface.requestGameType();
+        this.gameType = gameTypeOption == 1? "HVH" : "HVC";
+        return gameTypeOption;
     }
 
     public void requestBoardSize() {
@@ -85,4 +86,7 @@ public class Game {
     }
 
 
+    public String displayBoard() {
+        return userInterface.displayBoard(board);
+    }
 }

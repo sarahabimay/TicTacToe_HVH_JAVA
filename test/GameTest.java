@@ -181,4 +181,16 @@ public class GameTest {
         assertEquals(false, clUI.isADraw());
         assertEquals(Counter.X, clUI.getWinner());
     }
+
+    @Test
+    public void humanVsComputer() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                2, 1, 4,
+                5, 6, 3,
+                7, 8, 9));
+        clUI.addDummyInputs(initialState);
+        clUI.setGameType("HVC");
+        game.play();
+        System.out.println(game.displayBoard());
+    }
 }

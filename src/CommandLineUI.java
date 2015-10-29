@@ -19,8 +19,10 @@ public class CommandLineUI implements UserInterface {
         return dimension;
     }
 
-    public String requestGameType() {
-        return "HVH";
+    public Integer requestGameType() {
+        String prompt = "Human Vs Human(1) or Human Vs Computer?:\n";
+        writeStream.println(prompt);
+        return readInput();
     }
 
     public Integer requestNextPosition() {

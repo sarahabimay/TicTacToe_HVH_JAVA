@@ -9,5 +9,4 @@ public class HumanPlayer extends Player {
         Integer nextPosition = userInterface.requestNextPosition();
         return board.playCounterInPosition(nextPosition, counter);
     }
-
 }
