@@ -40,10 +40,20 @@ public class ComputerPlayerTest {
                         "[4][5][6]\n" +
                         "[7][8][9]\n",
                 fakeUI.displayBoard(board));
-        assertEquals("" +
-                        "[1][X][3]\n" +
-                        "[4][5][6]\n" +
-                        "[7][8][9]\n",
-                fakeUI.displayBoard(board));
+    }
+
+    @Test
+    public void randomPositionGenerator() {
+        fakeUI.setGameType("HVC");
+        Player player1 = new ComputerPlayer(Counter.X, fakeUI);
+        Board board = new Board(3);
+        for (int i = 0; i < 9; i++) {
+            board = player1.playTurn(board);
+            assertNotEquals("" +
+                            "[1][2][3]\n" +
+                            "[4][5][6]\n" +
+                            "[7][8][9]\n",
+                    fakeUI.displayBoard(board));
+        }
     }
 }

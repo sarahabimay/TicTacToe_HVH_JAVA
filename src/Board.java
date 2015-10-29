@@ -78,6 +78,14 @@ public class Board {
         return getWinner() != Counter.EMPTY;
     }
 
+    public boolean validPosition(Integer position) {
+        return position != null && positionIsWithinRange(position) && !cellIsOccupied(position - POSITIVE_OFFSET);
+    }
+
+    public boolean cellIsOccupied(int cellIndex) {
+        return cells.get(cellIndex) == Counter.X || cells.get(cellIndex) == Counter.O;
+    }
+
     protected int numberOfOpenPositions() {
         return boardSize() - numberOfPositionsTaken();
     }
@@ -112,17 +120,10 @@ public class Board {
         return findPositions(Counter.X).size() + findPositions(Counter.O).size();
     }
 
-    private boolean validPosition(Integer position) {
-        return position != null && positionIsWithinRange(position) && !cellIsOccupied(position - POSITIVE_OFFSET);
-    }
-
     private boolean positionIsWithinRange(int position) {
-        return 0 <= position && position <= boardSize();
+        return 0 < position && position <= boardSize();
     }
 
-    private boolean cellIsOccupied(int cellIndex) {
-        return cells.get(cellIndex) == Counter.X || cells.get(cellIndex) == Counter.O;
-    }
 
     private boolean rowWin(int rowIndex, Counter searchCounter) {
         Counter counter = cellValue(rowIndex);
