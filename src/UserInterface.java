@@ -12,4 +12,5 @@ public interface UserInterface {
     String displayBoard(Board board);
 
     boolean validate(Integer choiceFromInput, IntPredicate isValidChoice);
+
 }

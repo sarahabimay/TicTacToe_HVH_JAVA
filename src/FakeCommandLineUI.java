@@ -3,51 +3,66 @@ import java.util.List;
 import java.util.function.IntPredicate;
 
 public class FakeCommandLineUI implements UserInterface {
-    private boolean draw = false;
     private boolean playAgain = false;
-    private Counter winner;
+    private Counter winner = Counter.EMPTY;
     private List<Integer> dummyInputs = new ArrayList<>();
+    static private List<Integer> copyOfDummyInputs = new ArrayList<>();
     private int numberOfInputs;
+    private boolean userHasBeenAskedForDimension = false;
+    private boolean userHasBeenAskedForNextPosition = false;
+    private boolean haveDisplayedBoardToUser = false;
+    private boolean haveDisplayedResultToUser = false;
+    private boolean haveAskeUserToQuitGame = false;
+
+    public FakeCommandLineUI() {
+    }
+
+    static public List<Integer> getCopyOfDummyInputs() {
+        return copyOfDummyInputs;
+    }
 
     public Integer requestBoardSize() {
         int dimension = (int) Math.sqrt(dummyInputs.size());
+        userHasBeenAskedForDimension = true;
         return dimension;
     }
 
     public Integer requestNextPosition() {
-        int nextMove = dummyInputs.remove(0);
-        while (!validateDummyPosition(nextMove)) {
-            nextMove = dummyInputs.remove(0);
+        Integer nextMove = dummyInputs.remove(0);
+        while (!validDummyPosition(nextMove)) {
+            nextMove = dummyInputs.size() > 0 ? dummyInputs.remove(0) : null;
         }
+        userHasBeenAskedForNextPosition = true;
         return nextMove;
     }
 
     public boolean requestPlayAgain() {
+        haveAskeUserToQuitGame = true;
         return playAgain;
-    }
-
-    public void displayResult(Counter winner) {
-        if (winner.isEmpty()) {
-            draw = true;
-        } else {
-            this.winner = winner;
-        }
-    }
-
-    public String displayBoard(Board board) {
-        return null;
-    }
-
-    private boolean validateDummyPosition(Integer nextMove) {
-        return validate(nextMove, this::validPosition) && nextMove <= numberOfInputs;
     }
 
     public Counter getWinner() {
         return this.winner;
     }
 
-    public boolean isDraw() {
-        return draw;
+    public boolean isADraw() {
+        return this.winner == Counter.EMPTY;
+    }
+
+    public void displayResult(Counter winner) {
+        if (!winner.isEmpty()) {
+            this.winner = winner;
+        }
+        haveDisplayedResultToUser = true;
+    }
+
+    public String displayBoard(Board board) {
+        haveDisplayedBoardToUser = true;
+        return null;
+    }
+
+    private boolean validDummyPosition(Integer nextMove) {
+        return validate(nextMove, this::validPosition) && nextMove <= numberOfInputs;
     }
 
     public void addDummyPlayAgainChoice(Integer replayOrQuit) {
@@ -56,6 +71,7 @@ public class FakeCommandLineUI implements UserInterface {
 
     public void addDummyInputs(List<Integer> inputs) {
         dummyInputs = inputs;
+        copyOfDummyInputs = inputs;
         numberOfInputs = dummyInputs.size();
     }
 
@@ -82,4 +98,25 @@ public class FakeCommandLineUI implements UserInterface {
         }
         return listOfMoves;
     }
+
+    public boolean hasAskedUserForDimension() {
+        return userHasBeenAskedForDimension;
+    }
+
+    public boolean hasAskedUserForNextPosition() {
+        return userHasBeenAskedForNextPosition;
+    }
+
+    public boolean hasDisplayedBoardToUser() {
+        return haveDisplayedBoardToUser;
+    }
+
+    public boolean hasDisplayedResultToUser() {
+        return haveDisplayedResultToUser;
+    }
+
+    public boolean hasAskedUserToQuitGame() {
+        return haveAskeUserToQuitGame;
+    }
+
 }
