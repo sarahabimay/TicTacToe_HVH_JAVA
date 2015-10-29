@@ -13,5 +13,4 @@ public interface UserInterface {
 
     boolean validate(Integer choiceFromInput, IntPredicate isValidChoice);
 
-    boolean requestToContinueGame();
 }

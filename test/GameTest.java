@@ -61,17 +61,6 @@ public class GameTest {
     }
 
     @Test
-    public void requestToContinueOrQuitGameNotApplicableWhenGameOver() {
-        List<Integer> initialState = new ArrayList<>(Arrays.asList(
-                1, 2, 3,
-                4, 5, 6,
-                7, 8, 9));
-        clUI.addDummyInputs(initialState);
-        game.play();
-        assertEquals(false, clUI.hasRequestedToQuit());
-    }
-
-    @Test
     public void displayResultAtEndOfGame() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(
                 1, 2, 3,
@@ -93,17 +82,5 @@ public class GameTest {
         game.play();
         assertEquals(true, clUI.hasAskedUserToQuitGame());
     }
-    
-    //    @Test
-//    public void dontDisplayResultInMiddleOfGame() {
-//
-//        List<Integer> initialState = new ArrayList<>(Arrays.asList(
-//                1, 2, 3,
-//                4, 5, 6,
-//                7, 0, 0));
-//        clUI.addDummyInputs(initialState);
-//        game.play();
-//        assertEquals(false, clUI.hasRequestedToQuit());
-//        assertEquals(false, clUI.hasDisplayedResultToUser());
-//    }
+
 }

@@ -4,7 +4,8 @@ import java.util.HashMap;
 
 public class Game {
     private UserInterface userInterface;
-    private Board board = new Board(new ArrayList<>(Arrays.asList()));;
+    private Board board = new Board(new ArrayList<>(Arrays.asList()));
+    ;
     private HashMap<Counter, Player> players = new HashMap<>();
 
     public Game(UserInterface clUI, Player player1, Player player2) {
@@ -24,18 +25,6 @@ public class Game {
         board = new Board(userInterface.requestBoardSize());
     }
 
-    private void displayResult() {
-        userInterface.displayBoard(board);
-        userInterface.displayResult(board.getWinner());
-    }
-
-    private void playAgain() {
-        if (userInterface.requestPlayAgain()){
-            board.resetBoard();
-            play();
-        }
-    }
-
     private void executeAllPlayersMoves() {
         Player currentPlayer = players.get(Counter.X);
         while (!board.isGameOver()) {
@@ -43,6 +32,18 @@ public class Game {
             board = currentPlayer.playTurn(board);
             Player nextPlayer = players.get(currentPlayer.opponentMarker());
             currentPlayer = nextPlayer;
+        }
+    }
+
+    private void displayResult() {
+        userInterface.displayBoard(board);
+        userInterface.displayResult(board.getWinner());
+    }
+
+    private void playAgain() {
+        if (userInterface.requestPlayAgain()) {
+            board.resetBoard();
+            play();
         }
     }
 }

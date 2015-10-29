@@ -13,7 +13,6 @@ public class FakeCommandLineUI implements UserInterface {
     private boolean userHasBeenAskedForNextPosition = false;
     private boolean haveDisplayedBoardToUser = false;
     private boolean haveDisplayedResultToUser = false;
-    private boolean haveRequestedToQuit = false;
     private boolean haveAskeUserToQuitGame = false;
 
     public FakeCommandLineUI() {
@@ -55,13 +54,6 @@ public class FakeCommandLineUI implements UserInterface {
     public String displayBoard(Board board) {
         haveDisplayedBoardToUser = true;
         return null;
-    }
-
-    public boolean requestToContinueGame() {
-        if( dummyInputs.size() == 0){
-            haveRequestedToQuit = true;
-        }
-        return haveRequestedToQuit;
     }
 
     private boolean validDummyPosition(Integer nextMove) {
@@ -116,10 +108,6 @@ public class FakeCommandLineUI implements UserInterface {
 
     public boolean hasDisplayedResultToUser() {
         return haveDisplayedResultToUser;
-    }
-
-    public boolean hasRequestedToQuit() {
-        return haveRequestedToQuit;
     }
 
     public boolean hasAskedUserToQuitGame() {
