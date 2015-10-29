@@ -7,7 +7,7 @@ public class Player {
         this.userInterface = userInterface;
     }
 
-    public Counter opponentMarker() {
+    public Counter opponentCounter() {
         if (counter == Counter.X) {
             return Counter.O;
         }

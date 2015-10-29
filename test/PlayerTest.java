@@ -8,7 +8,7 @@ public class PlayerTest {
     @Test
     public void getPlayersOpponent() {
         Player player1 = new Player(Counter.X, new CommandLineUI());
-        assertEquals(Counter.O, player1.opponentMarker());
+        assertEquals(Counter.O, player1.opponentCounter());
     }
 
     @Test

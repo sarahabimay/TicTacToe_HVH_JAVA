@@ -10,4 +10,8 @@ public enum Counter {
     public String counterForDisplay(int index) {
         return isEmpty() ? String.valueOf(index + 1) : name();
     }
+
+    public Counter opponentCounter() {
+        return (this == Counter.X) ? Counter.O : Counter.X;
+    }
 }
