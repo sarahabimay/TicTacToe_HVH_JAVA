@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public class Game {
     private UserInterface userInterface;
+    private String gameType;
     private Board board = new Board(new ArrayList<>(Arrays.asList()));
-    ;
     private HashMap<Counter, Player> players = new HashMap<>();
 
     public Game(UserInterface clUI, Player player1, Player player2) {
@@ -19,7 +19,7 @@ public class Game {
     }
 
     public String typeOfGame() {
-        return "";
+        return gameType;
     }
 
     public Board nextPlayerMakesMove(Counter nextCounter) {
@@ -40,7 +40,7 @@ public class Game {
         playAgain();
     }
 
-    private void createPlayers(String gameType) {
+    private void createPlayers(String newGameType) {
         if (gameType == "HVH") {
             this.players.put(Counter.X, new Player(Counter.X, userInterface));
             this.players.put(Counter.O, new Player(Counter.O, userInterface));
@@ -51,7 +51,8 @@ public class Game {
     }
 
     private String requestGameType() {
-        return userInterface.requestGameType();
+        this.gameType = userInterface.requestGameType();
+        return gameType;
     }
 
     public void requestBoardSize() {

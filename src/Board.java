@@ -25,9 +25,6 @@ public class Board {
     public void resetBoard() {
         this.cells = generateEmptyCells();
     }
-//    public void clearBoard() {
-//        this.cells = new ArrayList<>(generateEmptyCells());
-//    }
 
     public Board playCounterInPosition(Integer position, Counter counter) {
         if (validPosition(position)) {
