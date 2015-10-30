@@ -1,4 +1,5 @@
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -15,9 +16,7 @@ public class GameTest {
     @Before
     public void setUp() {
         fakeUI = new FakeCommandLineUI();
-        game = new Game(fakeUI,
-                new HumanPlayer(Counter.X, Player.Type.Human, fakeUI),
-                new HumanPlayer(Counter.O, Player.Type.Human, fakeUI));
+        game = new Game(fakeUI);
     }
 
 
@@ -47,7 +46,7 @@ public class GameTest {
     }
 
     @Test
-    public void chooseHVHTypeOfGame() {
+    public void checkUserHasBeenAskedForTypeOfGame() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(
                 1, 2, 3,
                 4, 5, 6,
@@ -57,19 +56,6 @@ public class GameTest {
         Game newGame = new Game(fakeUI);
         newGame.play();
         assertEquals(true, fakeUI.hasAskedUserForGameType());
-    }
-
-    @Test
-    public void chooseHVCTypeOfGame() {
-        List<Integer> initialState = new ArrayList<>(Arrays.asList(
-                1, 2, 3,
-                4, 5, 6,
-                7, 8, 9));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setGameType("HVC");
-        Game newGame = new Game(fakeUI);
-        newGame.play();
-        assertEquals("HVC", newGame.typeOfGame());
     }
 
     @Test
@@ -90,6 +76,7 @@ public class GameTest {
         fakeUI.addDummyInputs(initialState);
         fakeUI.setGameType("HVH");
         game.requestBoardSize();
+        game.createPlayers(game.requestGameType());
         Board board = game.nextPlayerMakesMove(Counter.X);
         assertEquals("" +
                         "[X][2][3]\n" +
@@ -182,18 +169,6 @@ public class GameTest {
         assertEquals(true, game.isGameOver());
         assertEquals(false, fakeUI.isADraw());
         assertEquals(Counter.X, fakeUI.getWinner());
-    }
-
-    @Test
-    public void checkGameTypeIsHVC() {
-        List<Integer> initialState = new ArrayList<>(Arrays.asList(
-                2, 1, 4,
-                5, 6, 3,
-                7, 8, 9));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setGameType("HVC");
-        game.play();
-        assertEquals("HVC", game.typeOfGame());
     }
 
     @Test

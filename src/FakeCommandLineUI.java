@@ -20,18 +20,9 @@ public class FakeCommandLineUI implements UserInterface {
         userHasBeenAskedForDimension = true;
         return dimension;
     }
-    public Integer requestGameType() {
+    public String requestGameType() {
         haveAskedUserForGameType = true;
-        if (gameType == "HVH"){
-            return 1;
-        }
-        else if (gameType == "HVC"){
-            return 2;
-        }
-        else if (gameType =="CVH"){
-            return 3;
-        }
-        return -1;
+        return gameType;
     }
 
     public Integer requestNextPosition() {

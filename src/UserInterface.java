@@ -3,7 +3,7 @@ import java.util.function.IntPredicate;
 public interface UserInterface {
     Integer requestBoardSize();
 
-    Integer requestGameType();
+    String requestGameType();
 
     Integer requestNextPosition();
 

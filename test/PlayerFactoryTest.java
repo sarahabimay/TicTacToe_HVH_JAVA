@@ -9,20 +9,20 @@ public class PlayerFactoryTest {
     public void checkFactoryCanCreateHVHPlayers() {
         FakeCommandLineUI  fakeUI = new FakeCommandLineUI();
         PlayerFactory playerFactory = new PlayerFactory(fakeUI);
-        assertEquals(true, playerFactory.playersAvailableForGameType("HVH"));
+        assertEquals(true, playerFactory.playersAvailableForGameType(PlayerFactory.GameType.HVH));
     }
     @Test
     public void checkFactoryCanCreateHVCPlayers() {
         FakeCommandLineUI  fakeUI = new FakeCommandLineUI();
         PlayerFactory playerFactory = new PlayerFactory(fakeUI);
-        assertEquals(true, playerFactory.playersAvailableForGameType("HVC"));
+        assertEquals(true, playerFactory.playersAvailableForGameType(PlayerFactory.GameType.HVC));
     }
 
     @Test
     public void checkFactoryCanCreateCVHPlayers() {
         FakeCommandLineUI  fakeUI = new FakeCommandLineUI();
         PlayerFactory playerFactory = new PlayerFactory(fakeUI);
-        assertEquals(true, playerFactory.playersAvailableForGameType("CVH"));
+        assertEquals(true, playerFactory.playersAvailableForGameType(PlayerFactory.GameType.CVH));
     }
 
     @Test

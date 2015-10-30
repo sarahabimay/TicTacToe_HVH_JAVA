@@ -19,10 +19,19 @@ public class CommandLineUI implements UserInterface {
         return dimension;
     }
 
-    public Integer requestGameType() {
-        String prompt = "Human vs Human(1) or Human vs Computer(2) or Computer vs Computer(3)?:\n";
+    public String requestGameType() {
+        String prompt = "Human vs Human(HVH) or Human vs Computer(HVC) or Computer vs Computer(CVH)?:\n";
         writeStream.println(prompt);
-        return readInput();
+        return readString();
+    }
+
+    private String readString() {
+        try {
+            return readStream.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public Integer requestNextPosition() {
