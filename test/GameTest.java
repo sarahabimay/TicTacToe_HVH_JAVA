@@ -185,6 +185,18 @@ public class GameTest {
     }
 
     @Test
+    public void checkGameTypeIsHVC() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                2, 1, 4,
+                5, 6, 3,
+                7, 8, 9));
+        fakeUI.addDummyInputs(initialState);
+        fakeUI.setGameType("HVC");
+        game.play();
+        assertEquals("HVC", game.typeOfGame());
+    }
+
+    @Test
     public void humanVsComputer() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(
                 2, 1, 4,

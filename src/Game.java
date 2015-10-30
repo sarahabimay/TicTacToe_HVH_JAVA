@@ -57,6 +57,7 @@ public class Game {
     }
 
     private void createPlayers(Integer newGameType) {
+
         if (gameType == "HVH") {
             this.players.put(Counter.X, new HumanPlayer(Counter.X, Player.Type.Human, userInterface));
             this.players.put(Counter.O, new HumanPlayer(Counter.O, Player.Type.Human, userInterface));
@@ -81,7 +82,6 @@ public class Game {
         }
         return gameTypeOption;
     }
-
 
     private void executeAllPlayersMoves() {
         Counter currentCounter = Counter.X;
