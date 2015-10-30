@@ -20,13 +20,13 @@ public class HumanPlayerTest {
     public void createHumanPlayerType() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1));
         fakeUI.addDummyInputs(initialState);
-        HumanPlayer human = new HumanPlayer(Counter.X, fakeUI);
+        HumanPlayer human = new HumanPlayer(Counter.X, Player.Type.Human, fakeUI);
         assertEquals(HumanPlayer.class, human.getClass());
     }
 
     @Test
     public void getPlayersOpponent() {
-        Player player1 = new HumanPlayer(Counter.X, new CommandLineUI());
+        Player player1 = new HumanPlayer(Counter.X, Player.Type.Human, fakeUI);
         assertEquals(Counter.O, player1.opponentCounter());
     }
 
@@ -35,7 +35,7 @@ public class HumanPlayerTest {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1));
         fakeUI.addDummyInputs(initialState);
         fakeUI.setGameType("HVH");
-        Player player1 = new HumanPlayer(Counter.X, fakeUI);
+        Player player1 = new HumanPlayer(Counter.X, Player.Type.Human, fakeUI);
         Board board = new Board(3);
         board = player1.playTurn(board);
         assertEquals(Counter.X, board.cellValue(0));

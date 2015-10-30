@@ -22,14 +22,30 @@ public class Game {
         return gameType;
     }
 
+    public Player.Type getPlayerType(Counter counter) {
+        return players.get(counter).getPlayerType();
+    }
+
     public Board nextPlayerMakesMove(Counter nextCounter) {
         Player currentPlayer = players.get(nextCounter);
         board = currentPlayer != null ? currentPlayer.playTurn(board) : board;
         return board;
     }
 
+    public boolean isGameOver() {
+        return board.isGameOver();
+    }
+
     public Counter getNextCounter(Counter counter) {
         return counter.opponentCounter();
+    }
+
+    public String displayBoard() {
+        return userInterface.displayBoard(board);
+    }
+
+    public void requestBoardSize() {
+        board = new Board(userInterface.requestBoardSize());
     }
 
     public void play() {
@@ -42,23 +58,30 @@ public class Game {
 
     private void createPlayers(Integer newGameType) {
         if (gameType == "HVH") {
-            this.players.put(Counter.X, new HumanPlayer(Counter.X, userInterface));
-            this.players.put(Counter.O, new HumanPlayer(Counter.O, userInterface));
+            this.players.put(Counter.X, new HumanPlayer(Counter.X, Player.Type.Human, userInterface));
+            this.players.put(Counter.O, new HumanPlayer(Counter.O, Player.Type.Human, userInterface));
         } else if (gameType == "HVC") {
-            this.players.put(Counter.X, new HumanPlayer(Counter.X, userInterface));
-            this.players.put(Counter.O, new ComputerPlayer(Counter.O, userInterface));
+            this.players.put(Counter.X, new HumanPlayer(Counter.X, Player.Type.Human, userInterface));
+            this.players.put(Counter.O, new ComputerPlayer(Counter.O, Player.Type.Computer, userInterface));
+        } else if (gameType == "CVH") {
+            System.out.println("CVH");
+            this.players.put(Counter.X, new ComputerPlayer(Counter.X, Player.Type.Computer, userInterface));
+            this.players.put(Counter.O, new HumanPlayer(Counter.O, Player.Type.Human, userInterface));
         }
     }
 
     private Integer requestGameType() {
         Integer gameTypeOption = userInterface.requestGameType();
-        this.gameType = gameTypeOption == 1? "HVH" : "HVC";
+        if (gameTypeOption == 1) {
+            gameType = "HVH";
+        } else if (gameTypeOption == 2) {
+            gameType = "HVC";
+        } else if (gameTypeOption == 3) {
+            gameType = "CVH";
+        }
         return gameTypeOption;
     }
 
-    public void requestBoardSize() {
-        board = new Board(userInterface.requestBoardSize());
-    }
 
     private void executeAllPlayersMoves() {
         Counter currentCounter = Counter.X;
@@ -67,10 +90,6 @@ public class Game {
             nextPlayerMakesMove(currentCounter);
             currentCounter = getNextCounter(currentCounter);
         }
-    }
-
-    public boolean isGameOver() {
-        return board.isGameOver();
     }
 
     private void displayResult() {
@@ -83,10 +102,5 @@ public class Game {
             board.resetBoard();
             play();
         }
-    }
-
-
-    public String displayBoard() {
-        return userInterface.displayBoard(board);
     }
 }

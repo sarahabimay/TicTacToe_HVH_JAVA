@@ -22,7 +22,16 @@ public class FakeCommandLineUI implements UserInterface {
     }
     public Integer requestGameType() {
         haveAskedUserForGameType = true;
-        return (gameType == "HVH" )? 1 : 2;
+        if (gameType == "HVH"){
+            return 1;
+        }
+        else if (gameType == "HVC"){
+            return 2;
+        }
+        else if (gameType =="CVH"){
+            return 3;
+        }
+        return -1;
     }
 
     public Integer requestNextPosition() {

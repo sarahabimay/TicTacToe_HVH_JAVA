@@ -20,7 +20,7 @@ public class CommandLineUI implements UserInterface {
     }
 
     public Integer requestGameType() {
-        String prompt = "Human Vs Human(1) or Human Vs Computer?:\n";
+        String prompt = "Human vs Human(1) or Human vs Computer(2) or Computer vs Computer(3)?:\n";
         writeStream.println(prompt);
         return readInput();
     }

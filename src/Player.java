@@ -1,9 +1,20 @@
 public abstract class Player {
     protected Counter counter;
     protected UserInterface userInterface;
+    private Type playerType;
 
-    public Player(Counter counter, UserInterface userInterface) {
+    public enum Type {
+        Human,
+        Computer,
+    }
+
+    public Type getPlayerType() {
+        return playerType;
+    }
+
+    public Player(Counter counter, Type type, UserInterface userInterface) {
         this.counter = counter;
+        this.playerType = type;
         this.userInterface = userInterface;
     }
 
@@ -22,4 +33,5 @@ public abstract class Player {
     public Counter getCounter() {
         return counter;
     }
+
 }

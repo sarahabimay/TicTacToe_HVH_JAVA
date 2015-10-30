@@ -19,20 +19,20 @@ public class ComputerPlayerTest {
     public void createComputerPlayerType() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1));
         fakeUI.addDummyInputs(initialState);
-        ComputerPlayer human = new ComputerPlayer(Counter.X, fakeUI);
+        ComputerPlayer human = new ComputerPlayer(Counter.X, Player.Type.Computer, fakeUI);
         assertEquals(ComputerPlayer.class, human.getClass());
     }
 
     @Test
     public void getPlayersOpponent() {
-        Player player1 = new ComputerPlayer(Counter.X, fakeUI);
+        Player player1 = new ComputerPlayer(Counter.X, Player.Type.Computer, fakeUI);
         assertEquals(Counter.O, player1.opponentCounter());
     }
 
     @Test
     public void boardUpdatedWithNewCounter() {
         fakeUI.setGameType("HVC");
-        Player player1 = new ComputerPlayer(Counter.X, fakeUI);
+        Player player1 = new ComputerPlayer(Counter.X, Player.Type.Computer, fakeUI);
         Board board = new Board(3);
         board = player1.playTurn(board);
         assertNotEquals("" +
@@ -45,7 +45,7 @@ public class ComputerPlayerTest {
     @Test
     public void randomPositionGenerator() {
         fakeUI.setGameType("HVC");
-        Player player1 = new ComputerPlayer(Counter.X, fakeUI);
+        Player player1 = new ComputerPlayer(Counter.X, Player.Type.Computer, fakeUI);
         Board board = new Board(3);
         for (int i = 0; i < 9; i++) {
             board = player1.playTurn(board);

@@ -1,8 +1,8 @@
 import java.util.Random;
 
 public class ComputerPlayer extends Player {
-    public ComputerPlayer(Counter counter, UserInterface userInterface) {
-        super(counter, userInterface);
+    public ComputerPlayer(Counter counter, Type type, UserInterface userInterface) {
+        super(counter, type, userInterface);
     }
 
     @Override

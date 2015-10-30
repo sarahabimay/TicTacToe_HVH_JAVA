@@ -1,7 +1,7 @@
 public class HumanPlayer extends Player {
 
-    public HumanPlayer(Counter counter, UserInterface userInterface) {
-        super(counter, userInterface);
+    public HumanPlayer(Counter counter, Type type, UserInterface userInterface) {
+        super(counter, type, userInterface);
     }
 
     @Override
