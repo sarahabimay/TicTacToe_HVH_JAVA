@@ -3,28 +3,26 @@ import java.util.List;
 import java.util.function.IntPredicate;
 
 public class FakeCommandLineUI implements UserInterface {
+    private List<Integer> dummyInputs = new ArrayList<>();
+    private String gameType = "HVH";
     private boolean playAgain = false;
     private Counter winner = Counter.EMPTY;
-    private List<Integer> dummyInputs = new ArrayList<>();
-    static private List<Integer> copyOfDummyInputs = new ArrayList<>();
     private int numberOfInputs;
     private boolean userHasBeenAskedForDimension = false;
     private boolean userHasBeenAskedForNextPosition = false;
     private boolean haveDisplayedBoardToUser = false;
     private boolean haveDisplayedResultToUser = false;
-    private boolean haveAskeUserToQuitGame = false;
-
-    public FakeCommandLineUI() {
-    }
-
-    static public List<Integer> getCopyOfDummyInputs() {
-        return copyOfDummyInputs;
-    }
+    private boolean haveAskedUserToQuitGame = false;
+    private boolean haveAskedUserForGameType = false;
 
     public Integer requestBoardSize() {
         int dimension = (int) Math.sqrt(dummyInputs.size());
         userHasBeenAskedForDimension = true;
         return dimension;
+    }
+    public String requestGameType() {
+        haveAskedUserForGameType = true;
+        return gameType;
     }
 
     public Integer requestNextPosition() {
@@ -37,7 +35,7 @@ public class FakeCommandLineUI implements UserInterface {
     }
 
     public boolean requestPlayAgain() {
-        haveAskeUserToQuitGame = true;
+        haveAskedUserToQuitGame = true;
         return playAgain;
     }
 
@@ -91,7 +89,6 @@ public class FakeCommandLineUI implements UserInterface {
 
     public void addDummyInputs(List<Integer> inputs) {
         dummyInputs = inputs;
-        copyOfDummyInputs = inputs;
         numberOfInputs = dummyInputs.size();
     }
 
@@ -136,7 +133,14 @@ public class FakeCommandLineUI implements UserInterface {
     }
 
     public boolean hasAskedUserToQuitGame() {
-        return haveAskeUserToQuitGame;
+        return haveAskedUserToQuitGame;
     }
 
+    public boolean hasAskedUserForGameType() {
+        return haveAskedUserForGameType;
+    }
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
+    }
 }

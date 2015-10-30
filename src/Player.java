@@ -1,9 +1,20 @@
-public class Player {
-    private Counter counter;
-    private UserInterface userInterface;
+public abstract class Player {
+    protected Counter counter;
+    protected UserInterface userInterface;
+    private Type playerType;
 
-    public Player(Counter counter, UserInterface userInterface) {
+    public enum Type {
+        Human,
+        Computer,
+    }
+
+    public Type getPlayerType() {
+        return playerType;
+    }
+
+    public Player(Counter counter, Type type, UserInterface userInterface) {
         this.counter = counter;
+        this.playerType = type;
         this.userInterface = userInterface;
     }
 
@@ -17,12 +28,10 @@ public class Player {
         return Counter.EMPTY;
     }
 
-    public Board playTurn(Board board) {
-        Integer nextPosition = userInterface.requestNextPosition();
-        return board.playCounterInPosition(nextPosition, counter);
-    }
+    abstract Board playTurn(Board board);
 
     public Counter getCounter() {
         return counter;
     }
+
 }
