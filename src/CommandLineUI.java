@@ -5,10 +5,6 @@ public class CommandLineUI implements UserInterface {
     private BufferedReader readStream;
     private PrintStream writeStream;
 
-    public void outputToUI(String output) {
-        writeStream.println(output);
-    }
-
     public CommandLineUI() {
         this.readStream = new BufferedReader(new InputStreamReader(System.in));
         this.writeStream = new PrintStream(System.out);
@@ -32,19 +28,6 @@ public class CommandLineUI implements UserInterface {
         return choice;
     }
 
-    private boolean validatePlayerTypes(String choice) {
-        return PlayerFactory.validPlayerTypes(choice);
-    }
-
-    private String readString() {
-        try {
-            return readStream.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public Integer requestNextPosition() {
         Integer position = 0;
         while (!validate(position, this::validPosition)) {
@@ -64,6 +47,9 @@ public class CommandLineUI implements UserInterface {
         return doPlayAgain(instruction);
     }
 
+    public void outputToUI(String output) {
+        writeStream.println(output);
+    }
 
     public void displayResult(Counter winner) {
         if (winner.isEmpty()) {
@@ -82,6 +68,31 @@ public class CommandLineUI implements UserInterface {
         return output;
     }
 
+    public boolean validate(Integer choiceFromInput, IntPredicate isValidChoice) {
+        return choiceFromInput != null && isValidChoice.test(choiceFromInput);
+    }
+
+    private boolean validatePlayerTypes(String choice) {
+        return PlayerFactory.validPlayerTypes(choice);
+    }
+
+    private void announceWinner(Counter winner) {
+        writeStream.println(String.format("We have a Winner! Player: %s\n", winner.toString()));
+    }
+
+    private void announceDraw() {
+        writeStream.println("The game is a draw!");
+    }
+
+    private String readString() {
+        try {
+            return readStream.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private Integer readInput() {
         try {
             return Integer.parseInt(readStream.readLine());
@@ -93,23 +104,20 @@ public class CommandLineUI implements UserInterface {
         return 0;
     }
 
-    public boolean validate(Integer choiceFromInput, IntPredicate isValidChoice) {
-        return choiceFromInput != null && isValidChoice.test(choiceFromInput);
-    }
 
-    boolean doPlayAgain(Integer instruction) {
+    private boolean doPlayAgain(Integer instruction) {
         return 2 == instruction;
     }
 
-    boolean validateDimension(int dimension) {
+    private boolean validateDimension(int dimension) {
         return dimension >= 3;
     }
 
-    boolean validPosition(int position) {
+    private boolean validPosition(int position) {
         return position > 0;
     }
 
-    boolean validInstruction(int instruction) {
+    private boolean validInstruction(int instruction) {
         return 0 < instruction && instruction < 3;
     }
 
@@ -130,11 +138,4 @@ public class CommandLineUI implements UserInterface {
         return (int) Math.sqrt(board.boardSize());
     }
 
-    private void announceWinner(Counter winner) {
-        writeStream.println(String.format("We have a Winner! Player: %s\n", winner.toString()));
-    }
-
-    private void announceDraw() {
-        writeStream.println("The game is a draw!");
-    }
 }
