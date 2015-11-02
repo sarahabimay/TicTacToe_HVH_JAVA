@@ -3,18 +3,16 @@ import java.util.HashMap;
 
 public class PlayerFactory {
 
-    static final HashMap<String, GameType> optionToPlayerType = new HashMap<>();
+    static final HashMap<String, GameType> optionToGameType = new HashMap<>();
     private HashMap<GameType, ArrayList<Player.Type>> gameTypeToPlayerTypes = new HashMap<>();
 
     public PlayerFactory() {
-        optionToPlayerType.put("HVH", GameType.HVH);
-        optionToPlayerType.put("HVC", GameType.HVC);
-        optionToPlayerType.put("CVH", GameType.CVH);
+        registerOptionsToGameType();
         registerGameTypeWithPlayerTypes();
     }
 
     public static boolean validPlayerTypes(String choice) {
-        return optionToPlayerType.containsKey(choice);
+        return optionToGameType.containsKey(choice);
     }
 
     public boolean isPlayerTypeAvailable(GameType gameType) {
@@ -22,13 +20,19 @@ public class PlayerFactory {
     }
 
     public ArrayList<Player> generatePlayersFor(String playerType, UserInterface userInterface) {
-        return generatePlayers(getPlayerTypes(playerType), userInterface);
+        return generatePlayers(getGameType(playerType), userInterface);
+    }
+
+    private void registerOptionsToGameType() {
+        optionToGameType.put("HVH", GameType.HVH);
+        optionToGameType.put("HVC", GameType.HVC);
+        optionToGameType.put("CVH", GameType.CVH);
     }
 
     private void registerGameTypeWithPlayerTypes() {
-        gameTypeToPlayerTypes.put(getPlayerTypes("HVH"), createPlayerTypeList(GameType.HVH));
-        gameTypeToPlayerTypes.put(getPlayerTypes("HVC"), createPlayerTypeList(GameType.HVC));
-        gameTypeToPlayerTypes.put(getPlayerTypes("CVH"), createPlayerTypeList(GameType.CVH));
+        gameTypeToPlayerTypes.put(getGameType("HVH"), createPlayerTypeList(GameType.HVH));
+        gameTypeToPlayerTypes.put(getGameType("HVC"), createPlayerTypeList(GameType.HVC));
+        gameTypeToPlayerTypes.put(getGameType("CVH"), createPlayerTypeList(GameType.CVH));
     }
 
     private ArrayList<Player.Type> createPlayerTypeList(GameType gameType) {
@@ -46,10 +50,9 @@ public class PlayerFactory {
         return playerTypes;
     }
 
-
-    private ArrayList<Player> generatePlayers(GameType type, UserInterface ui) {
-        Player.Type player1Type = gameTypeToPlayerTypes.get(type).get(0);
-        Player.Type player2Type = gameTypeToPlayerTypes.get(type).get(1);
+    private ArrayList<Player> generatePlayers(GameType gameType, UserInterface ui) {
+        Player.Type player1Type = gameTypeToPlayerTypes.get(gameType).get(0);
+        Player.Type player2Type = gameTypeToPlayerTypes.get(gameType).get(1);
         return generatePlayerList(player1Type, player2Type, ui);
     }
 
@@ -66,14 +69,14 @@ public class PlayerFactory {
         return null;
     }
 
-    private GameType getPlayerTypes(String playerTypeOption) {
-        return optionToPlayerType.get(playerTypeOption);
-    }
-
     private ArrayList<Player> createPlayerList(Player player1, Player player2) {
         ArrayList<Player> players = new ArrayList<>();
         players.add(player1);
         players.add(player2);
         return players;
+    }
+
+    private GameType getGameType(String playerTypeOption) {
+        return optionToGameType.get(playerTypeOption);
     }
 }
