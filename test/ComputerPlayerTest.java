@@ -19,20 +19,21 @@ public class ComputerPlayerTest {
     public void createComputerPlayerType() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1));
         fakeUI.addDummyInputs(initialState);
-        ComputerPlayer human = new ComputerPlayer(Counter.X, Player.Type.Computer, fakeUI);
-        assertEquals(ComputerPlayer.class, human.getClass());
+        FakeComputerPlayer computer = new FakeComputerPlayer(Counter.X, Player.Type.Computer, fakeUI);
+        assertEquals(FakeComputerPlayer.class, computer.getClass());
     }
 
     @Test
     public void getPlayersOpponent() {
-        Player player1 = new ComputerPlayer(Counter.X, Player.Type.Computer, fakeUI);
+        Player player1 = new FakeComputerPlayer(Counter.X, Player.Type.Computer, fakeUI);
         assertEquals(Counter.O, player1.opponentCounter());
     }
 
     @Test
     public void boardUpdatedWithNewCounter() {
         fakeUI.setPlayerTypes("HVC");
-        Player player1 = new ComputerPlayer(Counter.X, Player.Type.Computer, fakeUI);
+        FakeComputerPlayer player1 = new FakeComputerPlayer(Counter.X, Player.Type.Computer, fakeUI);
+        player1.setDummyPosition(1);
         Board board = new Board(3);
         board = player1.playTurn(board);
         assertNotEquals("" +
@@ -40,6 +41,16 @@ public class ComputerPlayerTest {
                         "[4][5][6]\n" +
                         "[7][8][9]\n",
                 fakeUI.displayBoard(board));
+    }
+
+    @Test
+    public void computerHasGeneratedAMove() {
+        fakeUI.setPlayerTypes("HVC");
+        FakeComputerPlayer player1 = new FakeComputerPlayer(Counter.X, Player.Type.Computer, fakeUI);
+        player1.setDummyPosition(1);
+        Board board = new Board(3);
+        board = player1.playTurn(board);
+        assertEquals(true, player1.computerHasGeneratedNextMove());
     }
 
     @Test

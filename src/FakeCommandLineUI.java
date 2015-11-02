@@ -76,6 +76,55 @@ public class FakeCommandLineUI implements UserInterface {
         haveDisplayedResultToUser = true;
     }
 
+    protected List<Integer> aListOfMoves(Integer[] moves) {
+        List<Integer> listOfMoves = new ArrayList<>();
+        for (int i = 0; i < moves.length; i++) {
+            listOfMoves.add(moves[i]);
+        }
+        return listOfMoves;
+    }
+
+    // made public just for testing
+    public boolean hasAskedUserForDimension() {
+        return userHasBeenAskedForDimension;
+    }
+
+    public boolean hasAskedUserForNextPosition() {
+        return userHasBeenAskedForNextPosition;
+    }
+
+    public boolean hasDisplayedBoardToUser() {
+        return haveDisplayedBoardToUser;
+    }
+
+    public boolean hasDisplayedResultToUser() {
+        return haveDisplayedResultToUser;
+    }
+
+    public boolean hasAskedUserToQuitGame() {
+        return haveAskedUserToQuitGame;
+    }
+
+    public boolean hasAskedUserForGameType() {
+        return haveAskedUserForGameType;
+    }
+
+    public void setPlayerTypes(String gameType) {
+        this.playerType = gameType;
+    }
+
+    boolean validateDimension(int dimension) {
+        return dimension >= 3;
+    }
+
+    boolean validPosition(int position) {
+        return position > 0;
+    }
+
+    boolean doPlayAgain(Integer instruction) {
+        return 2 == instruction;
+    }
+
     public String displayBoard(Board board) {
         String output = "";
         haveDisplayedBoardToUser = true;
@@ -107,51 +156,4 @@ public class FakeCommandLineUI implements UserInterface {
     }
 
 
-    boolean validateDimension(int dimension) {
-        return dimension >= 3;
-    }
-
-    boolean validPosition(int position) {
-        return position > 0;
-    }
-
-    boolean doPlayAgain(Integer instruction) {
-        return 2 == instruction;
-    }
-
-    protected List<Integer> aListOfMoves(Integer[] moves) {
-        List<Integer> listOfMoves = new ArrayList<>();
-        for (int i = 0; i < moves.length; i++) {
-            listOfMoves.add(moves[i]);
-        }
-        return listOfMoves;
-    }
-
-    public boolean hasAskedUserForDimension() {
-        return userHasBeenAskedForDimension;
-    }
-
-    public boolean hasAskedUserForNextPosition() {
-        return userHasBeenAskedForNextPosition;
-    }
-
-    public boolean hasDisplayedBoardToUser() {
-        return haveDisplayedBoardToUser;
-    }
-
-    public boolean hasDisplayedResultToUser() {
-        return haveDisplayedResultToUser;
-    }
-
-    public boolean hasAskedUserToQuitGame() {
-        return haveAskedUserToQuitGame;
-    }
-
-    public boolean hasAskedUserForGameType() {
-        return haveAskedUserForGameType;
-    }
-
-    public void setPlayerTypes(String gameType) {
-        this.playerType = gameType;
-    }
 }

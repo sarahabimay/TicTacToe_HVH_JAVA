@@ -72,7 +72,6 @@ public class CommandLineUI implements UserInterface {
         return choiceFromInput != null && isValidChoice.test(choiceFromInput);
     }
 
-    @Override
     public boolean validatePlayerTypes(String choice) {
         return PlayerFactory.validPlayerTypes(choice);
     }
@@ -104,7 +103,6 @@ public class CommandLineUI implements UserInterface {
         }
         return 0;
     }
-
 
     private boolean doPlayAgain(Integer instruction) {
         return 2 == instruction;
@@ -138,5 +136,4 @@ public class CommandLineUI implements UserInterface {
     private int calculateDimension(Board board) {
         return (int) Math.sqrt(board.boardSize());
     }
-
 }

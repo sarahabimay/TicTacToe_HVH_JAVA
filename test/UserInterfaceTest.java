@@ -70,14 +70,6 @@ public class UserInterfaceTest {
     }
 
     @Test
-    public void validPlayerType() {
-        fakeUI.addDummyInputs(fakeUI.aListOfMoves(new Integer[]{}));
-        fakeUI.setPlayerTypes("HVH");
-        PlayerFactory factory = new PlayerFactory(fakeUI);
-        assertEquals(true, PlayerFactory.validPlayerTypes(fakeUI.requestPlayerTypes()));
-    }
-
-    @Test
     public void validatePlayerTypes() {
         fakeUI.addDummyInputs(fakeUI.aListOfMoves(new Integer[]{}));
         fakeUI.setPlayerTypes("HVH");

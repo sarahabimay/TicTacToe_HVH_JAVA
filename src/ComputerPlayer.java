@@ -5,7 +5,6 @@ public class ComputerPlayer extends Player {
         super(counter, type, userInterface);
     }
 
-    @Override
     Board playTurn(Board board) {
         userInterface.outputToUI(String.format("Computer(%s)'s turn: \n", counter));
         Integer nextPosition = calculateNextMove(board);

@@ -43,13 +43,13 @@ public class Game {
         playAgain();
     }
 
-    void selectPlayers(String newPlayersType) {
+    public void selectPlayers(String newPlayersType) {
         ArrayList<Player> bothPlayers = playerFactory.generatePlayersFor(newPlayersType);
         this.players.put(Counter.X, bothPlayers.get(0));
         this.players.put(Counter.O, bothPlayers.get(1));
     }
 
-    String requestPlayersType() {
+    public String requestPlayersType() {
          return userInterface.requestPlayerTypes();
     }
 
