@@ -13,7 +13,7 @@ public class ComputerPlayer extends Player {
 
     private Integer calculateNextMove(Board board) {
         Integer randomPosition = calculateRandomPosition(board);
-        while (!board.validPosition(randomPosition) ) {
+        while (!board.validPosition(randomPosition)) {
             randomPosition = calculateRandomPosition(board);
         }
         return randomPosition;
@@ -25,9 +25,10 @@ public class ComputerPlayer extends Player {
         return randomNumberInRange(fraction);
     }
 
-    private int randomNumberInRange(long fraction) {
+    private long calculateNumberRange(Board board) {
         int start = 1;
-        return (int) (fraction + start);
+        int end = board.boardSize();
+        return end - start + 1;
     }
 
     private long randomFractionFromRange(long range) {
@@ -35,9 +36,8 @@ public class ComputerPlayer extends Player {
         return (long) (range * randomGenerator.nextDouble());
     }
 
-    private long calculateNumberRange(Board board) {
+    private int randomNumberInRange(long fraction) {
         int start = 1;
-        int end = board.boardSize();
-        return end - start + 1;
+        return (int) (fraction + start);
     }
 }

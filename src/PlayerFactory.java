@@ -2,9 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PlayerFactory {
-    public static boolean validPlayerTypes(String choice) {
-        return optionToPlayerType.containsKey(choice);
-    }
 
     public enum PlayerTypes {
         HVH,
@@ -14,6 +11,10 @@ public class PlayerFactory {
 
     static final HashMap<String, PlayerTypes> optionToPlayerType = new HashMap<>();
     private HashMap<PlayerTypes, ArrayList<Player>> playerTypesToPlayers = new HashMap<>();
+
+    public static boolean validPlayerTypes(String choice) {
+        return optionToPlayerType.containsKey(choice);
+    }
 
     public PlayerFactory(UserInterface userInterface) {
         optionToPlayerType.put("HVH", PlayerTypes.HVH);
@@ -28,6 +29,10 @@ public class PlayerFactory {
 
     public ArrayList<Player> generatePlayersFor(String playerType) {
         return playerTypesToPlayers.get(getPlayerType(playerType));
+    }
+
+    private PlayerTypes getPlayerType(String playerTypeOption) {
+        return optionToPlayerType.get(playerTypeOption);
     }
 
     private void registerPlayers(UserInterface userInterface) {
@@ -50,9 +55,5 @@ public class PlayerFactory {
         players.add(player1);
         players.add(player2);
         return players;
-    }
-
-    private PlayerTypes getPlayerType(String playerTypeOption) {
-        return optionToPlayerType.get(playerTypeOption);
     }
 }
