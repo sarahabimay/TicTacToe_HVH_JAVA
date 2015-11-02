@@ -40,6 +40,15 @@ public class FakeCommandLineUI implements UserInterface {
         return playAgain;
     }
 
+    public String displayBoard(Board board) {
+        String output = "";
+        haveDisplayedBoardToUser = true;
+        for (int i = 0; i < board.boardSize(); i++) {
+            output += convertRowToString(i, board.cellValue(i), board);
+        }
+        return output;
+    }
+
     public void addDummyPlayAgainChoice(Integer replayOrQuit) {
         playAgain = doPlayAgain(replayOrQuit);
     }
@@ -113,25 +122,16 @@ public class FakeCommandLineUI implements UserInterface {
         this.playerType = gameType;
     }
 
+    boolean doPlayAgain(Integer instruction) {
+        return 2 == instruction;
+    }
+
     boolean validateDimension(int dimension) {
         return dimension >= 3;
     }
 
     boolean validPosition(int position) {
         return position > 0;
-    }
-
-    boolean doPlayAgain(Integer instruction) {
-        return 2 == instruction;
-    }
-
-    public String displayBoard(Board board) {
-        String output = "";
-        haveDisplayedBoardToUser = true;
-        for (int i = 0; i < board.boardSize(); i++) {
-            output += convertRowToString(i, board.cellValue(i), board);
-        }
-        return output;
     }
 
     private String convertRowToString(int index, Counter cellValue, Board board) {

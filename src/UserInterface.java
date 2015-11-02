@@ -13,9 +13,9 @@ public interface UserInterface {
 
     String displayBoard(Board board);
 
-    boolean validate(Integer choiceFromInput, IntPredicate isValidChoice);
-
     void outputToUI(String format);
+
+    boolean validate(Integer choiceFromInput, IntPredicate isValidChoice);
 
     boolean validatePlayerTypes(String choice);
 }
