@@ -179,8 +179,8 @@ public class GameTest {
         fakeUI.addDummyInputs(initialState);
         fakeUI.setPlayerTypes("HVC");
         game.play();
-        assertEquals(Player.Type.Human, game.getPlayerType(Counter.X));
-        assertEquals(Player.Type.Computer, game.getPlayerType(Counter.O));
+        assertEquals(Player.Type.HUMAN, game.getPlayerType(Counter.X));
+        assertEquals(Player.Type.COMPUTER, game.getPlayerType(Counter.O));
     }
 
     @Test
@@ -192,7 +192,7 @@ public class GameTest {
         fakeUI.addDummyInputs(initialState);
         fakeUI.setPlayerTypes("CVH");
         game.play();
-        assertEquals(Player.Type.Computer, game.getPlayerType(Counter.X));
-        assertEquals(Player.Type.Human, game.getPlayerType(Counter.O));
+        assertEquals(Player.Type.COMPUTER, game.getPlayerType(Counter.X));
+        assertEquals(Player.Type.HUMAN, game.getPlayerType(Counter.O));
     }
 }

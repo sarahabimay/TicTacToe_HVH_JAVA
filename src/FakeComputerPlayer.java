@@ -2,8 +2,8 @@ public class FakeComputerPlayer extends Player {
     private Integer dummyPosition;
     private boolean hasGeneratedNextMove;
 
-    public FakeComputerPlayer(Counter counter, Type type, UserInterface userInterface) {
-        super(counter, type, userInterface);
+    public FakeComputerPlayer(Counter counter, UserInterface userInterface) {
+        super(counter, Type.COMPUTER, userInterface);
         this.dummyPosition = 0;
         this.hasGeneratedNextMove = false;
     }

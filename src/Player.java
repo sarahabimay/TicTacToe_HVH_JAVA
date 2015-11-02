@@ -4,8 +4,8 @@ public abstract class Player {
     private Type playerType;
 
     public enum Type {
-        Human,
-        Computer,
+        HUMAN,
+        COMPUTER,
     }
 
     public Type getPlayerType() {
@@ -14,7 +14,7 @@ public abstract class Player {
 
     public Player(Counter counter, Type type, UserInterface userInterface) {
         this.counter = counter;
-        this.playerType = type;
+        this.playerType= type;
         this.userInterface = userInterface;
     }
 

@@ -10,7 +10,7 @@ public class Game {
 
     public Game(UserInterface userInterface) {
         this.userInterface = userInterface;
-        this.playerFactory = new PlayerFactory(userInterface);
+        this.playerFactory = new PlayerFactory();
     }
 
     public Player.Type getPlayerType(Counter counter) {
@@ -44,13 +44,13 @@ public class Game {
     }
 
     public void selectPlayers(String newPlayersType) {
-        ArrayList<Player> bothPlayers = playerFactory.generatePlayersFor(newPlayersType);
+        ArrayList<Player> bothPlayers = playerFactory.generatePlayersFor(newPlayersType, userInterface);
         this.players.put(Counter.X, bothPlayers.get(0));
         this.players.put(Counter.O, bothPlayers.get(1));
     }
 
     public String requestPlayersType() {
-         return userInterface.requestPlayerTypes();
+        return userInterface.requestPlayerTypes();
     }
 
     private void executeAllPlayersMoves() {
