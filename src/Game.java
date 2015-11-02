@@ -37,19 +37,19 @@ public class Game {
 
     public void play() {
         requestBoardSize();
-        createPlayers(requestGameType());
+        selectPlayers(requestPlayersType());
         executeAllPlayersMoves();
         displayResult();
         playAgain();
     }
 
-    void createPlayers(String newGameType) {
-        ArrayList<Player> bothPlayers = playerFactory.generatePlayersFor(newGameType);
+    void selectPlayers(String newPlayersType) {
+        ArrayList<Player> bothPlayers = playerFactory.generatePlayersFor(newPlayersType);
         this.players.put(Counter.X, bothPlayers.get(0));
         this.players.put(Counter.O, bothPlayers.get(1));
     }
 
-    String requestGameType() {
+    String requestPlayersType() {
          return userInterface.requestGameType();
     }
 

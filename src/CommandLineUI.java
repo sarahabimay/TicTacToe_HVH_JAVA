@@ -5,6 +5,10 @@ public class CommandLineUI implements UserInterface {
     private BufferedReader readStream;
     private PrintStream writeStream;
 
+    public void outputToUI(String output) {
+        writeStream.println(output);
+    }
+
     public CommandLineUI() {
         this.readStream = new BufferedReader(new InputStreamReader(System.in));
         this.writeStream = new PrintStream(System.out);
@@ -20,9 +24,16 @@ public class CommandLineUI implements UserInterface {
     }
 
     public String requestGameType() {
-        String prompt = "Human vs Human(HVH) or Human vs Computer(HVC) or Computer vs Computer(CVH)?:\n";
-        writeStream.println(prompt);
-        return readString();
+        String choice = "";
+        while (!validatePlayerTypes(choice)) {
+            writeStream.println("Human vs Human(HVH) or Human vs Computer(HVC) or Computer vs Computer(CVH)?:\n");
+            choice = readString();
+        }
+        return choice;
+    }
+
+    private boolean validatePlayerTypes(String choice) {
+        return PlayerFactory.validPlayerTypes(choice);
     }
 
     private String readString() {

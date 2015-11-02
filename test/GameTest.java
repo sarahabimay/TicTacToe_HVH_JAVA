@@ -1,5 +1,4 @@
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -76,7 +75,7 @@ public class GameTest {
         fakeUI.addDummyInputs(initialState);
         fakeUI.setGameType("HVH");
         game.requestBoardSize();
-        game.createPlayers(game.requestGameType());
+        game.selectPlayers(game.requestPlayersType());
         Board board = game.nextPlayerMakesMove(Counter.X);
         assertEquals("" +
                         "[X][2][3]\n" +

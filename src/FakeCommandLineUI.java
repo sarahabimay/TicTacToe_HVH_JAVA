@@ -39,6 +39,10 @@ public class FakeCommandLineUI implements UserInterface {
         return playAgain;
     }
 
+    public void outputToUI(String output) {
+        System.out.println(output);
+    }
+
     public Counter getWinner() {
         return this.winner;
     }
