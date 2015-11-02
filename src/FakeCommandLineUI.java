@@ -4,7 +4,7 @@ import java.util.function.IntPredicate;
 
 public class FakeCommandLineUI implements UserInterface {
     private List<Integer> dummyInputs = new ArrayList<>();
-    private String gameType = "HVH";
+    private String playerType = "HVH";
     private boolean playAgain = false;
     private Counter winner = Counter.EMPTY;
     private int numberOfInputs;
@@ -20,9 +20,10 @@ public class FakeCommandLineUI implements UserInterface {
         userHasBeenAskedForDimension = true;
         return dimension;
     }
-    public String requestGameType() {
+
+    public String requestPlayerTypes() {
         haveAskedUserForGameType = true;
-        return gameType;
+        return playerType;
     }
 
     public Integer requestNextPosition() {
@@ -37,6 +38,23 @@ public class FakeCommandLineUI implements UserInterface {
     public boolean requestPlayAgain() {
         haveAskedUserToQuitGame = true;
         return playAgain;
+    }
+
+    public void addDummyPlayAgainChoice(Integer replayOrQuit) {
+        playAgain = doPlayAgain(replayOrQuit);
+    }
+
+    public void addDummyInputs(List<Integer> inputs) {
+        dummyInputs = inputs;
+        numberOfInputs = dummyInputs.size();
+    }
+
+    public boolean validate(Integer choiceFromInput, IntPredicate isValidChoice) {
+        return choiceFromInput != null && isValidChoice.test(choiceFromInput);
+    }
+
+    public boolean validatePlayerTypes(String choice) {
+        return PlayerFactory.validPlayerTypes(choice);
     }
 
     public void outputToUI(String output) {
@@ -66,6 +84,7 @@ public class FakeCommandLineUI implements UserInterface {
         }
         return output;
     }
+
     private String convertRowToString(int index, Counter cellValue, Board board) {
         String cellForDisplay = cellValue.counterForDisplay(index);
         String output = String.format("[%s]", cellForDisplay);
@@ -87,18 +106,6 @@ public class FakeCommandLineUI implements UserInterface {
         return validate(nextMove, this::validPosition) && nextMove <= numberOfInputs;
     }
 
-    public void addDummyPlayAgainChoice(Integer replayOrQuit) {
-        playAgain = doPlayAgain(replayOrQuit);
-    }
-
-    public void addDummyInputs(List<Integer> inputs) {
-        dummyInputs = inputs;
-        numberOfInputs = dummyInputs.size();
-    }
-
-    public boolean validate(Integer choiceFromInput, IntPredicate isValidChoice) {
-        return choiceFromInput != null && isValidChoice.test(choiceFromInput);
-    }
 
     boolean validateDimension(int dimension) {
         return dimension >= 3;
@@ -144,7 +151,7 @@ public class FakeCommandLineUI implements UserInterface {
         return haveAskedUserForGameType;
     }
 
-    public void setGameType(String gameType) {
-        this.gameType = gameType;
+    public void setPlayerTypes(String gameType) {
+        this.playerType = gameType;
     }
 }

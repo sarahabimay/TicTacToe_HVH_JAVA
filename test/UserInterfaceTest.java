@@ -61,4 +61,27 @@ public class UserInterfaceTest {
         assertEquals((Integer) 4, fakeUI.requestNextPosition());
         assertEquals((Integer) 2, fakeUI.requestNextPosition());
     }
+
+    @Test
+    public void invalidPlayerType() {
+        fakeUI.addDummyInputs(fakeUI.aListOfMoves(new Integer[]{}));
+        fakeUI.setPlayerTypes("hvh");
+        assertEquals(false, PlayerFactory.validPlayerTypes(fakeUI.requestPlayerTypes()));
+    }
+
+    @Test
+    public void validPlayerType() {
+        fakeUI.addDummyInputs(fakeUI.aListOfMoves(new Integer[]{}));
+        fakeUI.setPlayerTypes("HVH");
+        PlayerFactory factory = new PlayerFactory(fakeUI);
+        assertEquals(true, PlayerFactory.validPlayerTypes(fakeUI.requestPlayerTypes()));
+    }
+
+    @Test
+    public void validatePlayerTypes() {
+        fakeUI.addDummyInputs(fakeUI.aListOfMoves(new Integer[]{}));
+        fakeUI.setPlayerTypes("HVH");
+        PlayerFactory factory = new PlayerFactory(fakeUI);
+        assertEquals(true, fakeUI.validatePlayerTypes(fakeUI.requestPlayerTypes()));
+    }
 }

@@ -50,7 +50,7 @@ public class Game {
     }
 
     String requestPlayersType() {
-         return userInterface.requestGameType();
+         return userInterface.requestPlayerTypes();
     }
 
     private void executeAllPlayersMoves() {
