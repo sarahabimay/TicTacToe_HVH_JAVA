@@ -1,10 +1,9 @@
 public class HumanPlayer extends Player {
 
-    public HumanPlayer(Counter counter, Type type, UserInterface userInterface) {
-        super(counter, type, userInterface);
+    public HumanPlayer(Counter counter, UserInterface userInterface) {
+        super(counter, Type.HUMAN, userInterface);
     }
 
-    @Override
     public Board playTurn(Board board) {
         Integer nextPosition = userInterface.requestNextPosition();
         return board.playCounterInPosition(nextPosition, counter);

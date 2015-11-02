@@ -7,29 +7,26 @@ import static org.junit.Assert.assertEquals;
 public class PlayerFactoryTest {
     @Test
     public void checkFactoryCanCreateHVHPlayers() {
-        FakeCommandLineUI  fakeUI = new FakeCommandLineUI();
-        PlayerFactory playerFactory = new PlayerFactory(fakeUI);
-        assertEquals(true, playerFactory.playersAvailableForGameType(PlayerFactory.GameType.HVH));
+        PlayerFactory playerFactory = new PlayerFactory();
+        assertEquals(true, playerFactory.isPlayerTypeAvailable(GameType.HVH));
     }
     @Test
     public void checkFactoryCanCreateHVCPlayers() {
-        FakeCommandLineUI  fakeUI = new FakeCommandLineUI();
-        PlayerFactory playerFactory = new PlayerFactory(fakeUI);
-        assertEquals(true, playerFactory.playersAvailableForGameType(PlayerFactory.GameType.HVC));
+        PlayerFactory playerFactory = new PlayerFactory();
+        assertEquals(true, playerFactory.isPlayerTypeAvailable(GameType.HVC));
     }
 
     @Test
     public void checkFactoryCanCreateCVHPlayers() {
-        FakeCommandLineUI  fakeUI = new FakeCommandLineUI();
-        PlayerFactory playerFactory = new PlayerFactory(fakeUI);
-        assertEquals(true, playerFactory.playersAvailableForGameType(PlayerFactory.GameType.CVH));
+        PlayerFactory playerFactory = new PlayerFactory();
+        assertEquals(true, playerFactory.isPlayerTypeAvailable(GameType.CVH));
     }
 
     @Test
     public void requestHVHPlayer() {
         FakeCommandLineUI  fakeUI = new FakeCommandLineUI();
-        PlayerFactory playerFactory = new PlayerFactory(fakeUI);
-        ArrayList<Player> players = playerFactory.generatePlayersFor("HVH");
+        PlayerFactory playerFactory = new PlayerFactory();
+        ArrayList<Player> players = playerFactory.generatePlayersFor("HVH",fakeUI );
         assertEquals(2, players.size());
         assertEquals(HumanPlayer.class, players.get(0).getClass());
         assertEquals(HumanPlayer.class, players.get(1).getClass());
@@ -37,8 +34,8 @@ public class PlayerFactoryTest {
     @Test
     public void requestHVCPlayer() {
         FakeCommandLineUI  fakeUI = new FakeCommandLineUI();
-        PlayerFactory playerFactory = new PlayerFactory(fakeUI);
-        ArrayList<Player> players = playerFactory.generatePlayersFor("HVC");
+        PlayerFactory playerFactory = new PlayerFactory();
+        ArrayList<Player> players = playerFactory.generatePlayersFor("HVC", fakeUI);
         assertEquals(2, players.size());
         assertEquals(HumanPlayer.class, players.get(0).getClass());
         assertEquals(ComputerPlayer.class, players.get(1).getClass());
