@@ -17,9 +17,9 @@ public class UserInterfaceTest {
         CommandLineUI ui = new CommandLineUI();
         Board board = new Board(3);
         assertEquals("" +
-                "[1][2][3]\n" +
-                "[4][5][6]\n" +
-                "[7][8][9]\n",
+                        "[1][2][3]\n" +
+                        "[4][5][6]\n" +
+                        "[7][8][9]\n",
                 ui.displayBoard(board));
     }
 

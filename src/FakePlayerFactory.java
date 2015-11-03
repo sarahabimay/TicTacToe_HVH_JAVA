@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class FakePlayerFactory extends PlayerFactory{
+public class FakePlayerFactory extends PlayerFactory {
     private FakeComputerPlayer fakeComputerPlayer = null;
 
     public FakePlayerFactory() {
@@ -29,8 +29,7 @@ public class FakePlayerFactory extends PlayerFactory{
             return new HumanPlayer(counter, ui);
         } else if (playerType == Player.Type.COMPUTER) {
             return new ComputerPlayer(counter, ui);
-        }
-        else if (playerType == Player.Type.FAKE){
+        } else if (playerType == Player.Type.FAKE) {
             return fakeComputerPlayer;
         }
         return null;
