@@ -40,6 +40,10 @@ public class Game {
         board = new Board(userInterface.requestBoardSize());
     }
 
+    public String displayBoard() {
+        return userInterface.displayBoard(board);
+    }
+
     public void play() {
         requestBoardSize();
         selectPlayers(requestGameType());
@@ -77,9 +81,5 @@ public class Game {
             board.resetBoard();
             play();
         }
-    }
-
-    public String displayBoard() {
-        return userInterface.displayBoard(board);
     }
 }
