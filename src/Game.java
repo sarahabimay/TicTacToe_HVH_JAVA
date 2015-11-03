@@ -13,6 +13,11 @@ public class Game {
         this.playerFactory = new PlayerFactory();
     }
 
+    public Game(FakeCommandLineUI fakeUI, FakePlayerFactory fakePlayerFactory) {
+        this.userInterface = fakeUI;
+        this.playerFactory = fakePlayerFactory;
+    }
+
     public Player.Type getPlayerType(Counter counter) {
         return players.get(counter).getPlayerType();
     }
@@ -37,20 +42,20 @@ public class Game {
 
     public void play() {
         requestBoardSize();
-        selectPlayers(requestPlayersType());
+        selectPlayers(requestGameType());
         executeAllPlayersMoves();
         displayResult();
         playAgain();
     }
 
-    public void selectPlayers(String newPlayersType) {
-        ArrayList<Player> bothPlayers = playerFactory.generatePlayersFor(newPlayersType, userInterface);
+    public void selectPlayers(String newGameType) {
+        ArrayList<Player> bothPlayers = playerFactory.generatePlayersFor(newGameType, userInterface);
         this.players.put(Counter.X, bothPlayers.get(0));
         this.players.put(Counter.O, bothPlayers.get(1));
     }
 
-    public String requestPlayersType() {
-        return userInterface.requestPlayerTypes();
+    public String requestGameType() {
+        return userInterface.requestGameType();
     }
 
     private void executeAllPlayersMoves() {
@@ -72,5 +77,9 @@ public class Game {
             board.resetBoard();
             play();
         }
+    }
+
+    public String displayBoard() {
+        return userInterface.displayBoard(board);
     }
 }

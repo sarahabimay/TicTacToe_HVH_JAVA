@@ -19,7 +19,7 @@ public class HumanPlayerTest {
     @Test
     public void createHumanPlayerType() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1));
-        fakeUI.addDummyInputs(initialState);
+        fakeUI.addDummyHumanMoves(initialState);
         HumanPlayer human = new HumanPlayer(Counter.X, fakeUI);
         assertEquals(HumanPlayer.class, human.getClass());
     }
@@ -33,8 +33,8 @@ public class HumanPlayerTest {
     @Test
     public void boardUpdatedWithNewCounter() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVH");
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVH");
         Player player1 = new HumanPlayer(Counter.X, fakeUI);
         Board board = new Board(3);
         board = player1.playTurn(board);

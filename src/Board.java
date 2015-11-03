@@ -48,7 +48,9 @@ public class Board {
     }
 
     public boolean findWin(Counter searchCounter) {
-        return hasRowWin(searchCounter) || hasColumnWin(searchCounter) || hasDiagonalWin(searchCounter);
+        return hasRowWin(searchCounter) ||
+                hasColumnWin(searchCounter) ||
+                hasDiagonalWin(searchCounter);
     }
 
     public boolean hasRowWin(Counter searchCounter) {
