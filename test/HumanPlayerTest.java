@@ -34,7 +34,7 @@ public class HumanPlayerTest {
     public void boardUpdatedWithNewCounter() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1));
         fakeUI.addDummyHumanMoves(initialState);
-        fakeUI.setGameType("HVH");
+        fakeUI.setGameType(1);
         Player player1 = new HumanPlayer(Counter.X, fakeUI);
         Board board = new Board(3);
         board = player1.playTurn(board);

@@ -4,7 +4,7 @@ import java.util.function.IntPredicate;
 
 public class FakeCommandLineUI implements UserInterface {
     private List<Integer> dummyInputs = new ArrayList<>();
-    private String playerType = "HVH";
+    private Integer playerType = 1;
     private boolean playAgain = false;
     private Counter winner = Counter.EMPTY;
     private int numberOfInputs;
@@ -21,7 +21,7 @@ public class FakeCommandLineUI implements UserInterface {
         return dummyDimension;
     }
 
-    public String requestGameType() {
+    public Integer requestGameType() {
         haveAskedUserForGameType = true;
         return playerType;
     }
@@ -49,6 +49,10 @@ public class FakeCommandLineUI implements UserInterface {
         return output;
     }
 
+    public void printCurrentCounter(Counter currentCounter) {
+
+    }
+
     public void addDummyPlayAgainChoice(Integer replayOrQuit) {
         playAgain = doPlayAgain(replayOrQuit);
     }
@@ -63,10 +67,6 @@ public class FakeCommandLineUI implements UserInterface {
 
     public boolean validate(Integer choiceFromInput, IntPredicate isValidChoice) {
         return choiceFromInput != null && isValidChoice.test(choiceFromInput);
-    }
-
-    public boolean validateGameType(String choice) {
-        return PlayerFactory.validPlayerTypes(choice);
     }
 
     public void outputToUI(String output) {
@@ -121,7 +121,7 @@ public class FakeCommandLineUI implements UserInterface {
         return haveAskedUserForGameType;
     }
 
-    public void setGameType(String gameType) {
+    public void setGameType(Integer gameType) {
         this.playerType = gameType;
     }
 
@@ -135,6 +135,10 @@ public class FakeCommandLineUI implements UserInterface {
 
     boolean validPosition(int position) {
         return position > 0;
+    }
+
+    public boolean validGameType(int choice) {
+        return choice == 1 || choice == 2 || choice == 3;
     }
 
     private String convertRowToString(int index, Counter cellValue, Board board) {

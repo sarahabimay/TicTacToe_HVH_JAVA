@@ -6,7 +6,6 @@ public class ComputerPlayer extends Player {
     }
 
     Board playTurn(Board board) {
-        userInterface.outputToUI(String.format("Computer(%s)'s turn: \n", counter));
         return board.playCounterInPosition(calculateNextMove(board), counter);
     }
 

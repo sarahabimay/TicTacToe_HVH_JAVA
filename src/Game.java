@@ -5,12 +5,12 @@ import java.util.HashMap;
 public class Game {
     private UserInterface userInterface;
     private PlayerFactory playerFactory;
-    private Board board = new Board(new ArrayList<>(Arrays.asList()));
+    private Board board = new Board(new ArrayList<>());
     private HashMap<Counter, Player> players = new HashMap<>();
 
     public Game(UserInterface userInterface) {
         this.userInterface = userInterface;
-        this.playerFactory = new PlayerFactory();
+        this.playerFactory = new PlayerFactory(userInterface);
     }
 
     public Game(FakeCommandLineUI fakeUI, FakePlayerFactory fakePlayerFactory) {
@@ -24,8 +24,7 @@ public class Game {
 
     public Board nextPlayerMakesMove(Counter nextCounter) {
         Player currentPlayer = players.get(nextCounter);
-        board = currentPlayer != null ? currentPlayer.playTurn(board) : board;
-        return board;
+        return currentPlayer.playTurn(board);
     }
 
     public boolean isGameOver() {
@@ -52,13 +51,13 @@ public class Game {
         playAgain();
     }
 
-    public void selectPlayers(String newGameType) {
-        ArrayList<Player> bothPlayers = playerFactory.generatePlayersFor(newGameType, userInterface);
+    public void selectPlayers(Integer newGameType) {
+        ArrayList<Player> bothPlayers = playerFactory.generatePlayersFor(newGameType);
         this.players.put(Counter.X, bothPlayers.get(0));
         this.players.put(Counter.O, bothPlayers.get(1));
     }
 
-    public String requestGameType() {
+    public Integer requestGameType() {
         return userInterface.requestGameType();
     }
 
@@ -66,7 +65,8 @@ public class Game {
         Counter currentCounter = Counter.X;
         while (!isGameOver()) {
             userInterface.displayBoard(board);
-            nextPlayerMakesMove(currentCounter);
+            board = nextPlayerMakesMove(currentCounter);
+            userInterface.printCurrentCounter(currentCounter);
             currentCounter = getNextCounter(currentCounter);
         }
     }

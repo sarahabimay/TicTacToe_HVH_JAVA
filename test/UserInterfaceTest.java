@@ -50,7 +50,7 @@ public class UserInterfaceTest {
     @Test
     public void validBoardDimension() {
         fakeUI.addDummyHumanMoves(fakeUI.aListOfMoves(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9}));
-        fakeUI.setGameType("HVH");
+        fakeUI.setGameType(1);
         fakeUI.addDummyDimension(3);
         assertEquals(true, fakeUI.validate(fakeUI.requestBoardSize(), fakeUI::validateDimension));
     }
@@ -65,17 +65,18 @@ public class UserInterfaceTest {
     }
 
     @Test
-    public void invalidPlayerType() {
+    public void invalidGameType() {
         fakeUI.addDummyHumanMoves(fakeUI.aListOfMoves(new Integer[]{}));
-        fakeUI.setGameType("hvh");
+        fakeUI.setGameType(5);
         assertEquals(false, PlayerFactory.validPlayerTypes(fakeUI.requestGameType()));
     }
 
     @Test
-    public void validatePlayerTypes() {
+    public void validGameType() {
         fakeUI.addDummyHumanMoves(fakeUI.aListOfMoves(new Integer[]{}));
-        fakeUI.setGameType("HVH");
+        fakeUI.setGameType(1);
         PlayerFactory factory = new PlayerFactory();
-        assertEquals(true, fakeUI.validateGameType(fakeUI.requestGameType()));
+        assertEquals(true, PlayerFactory.validPlayerTypes(fakeUI.requestGameType()));
+//        assertEquals(true, fakeUI.validGameType(fakeUI.requestGameType()));
     }
 }

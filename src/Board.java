@@ -206,5 +206,4 @@ public class Board {
         }
         return initialCells;
     }
-
 }

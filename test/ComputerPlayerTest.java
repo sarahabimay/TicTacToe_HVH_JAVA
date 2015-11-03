@@ -31,7 +31,7 @@ public class ComputerPlayerTest {
 
     @Test
     public void boardUpdatedWithNewCounter() {
-        fakeUI.setGameType("HVC");
+        fakeUI.setGameType(2);
         FakeComputerPlayer player1 = new FakeComputerPlayer(Counter.X, fakeUI);
         player1.setDummyPosition(1);
         Board board = new Board(3);
@@ -45,7 +45,7 @@ public class ComputerPlayerTest {
 
     @Test
     public void computerHasGeneratedAMove() {
-        fakeUI.setGameType("HVC");
+        fakeUI.setGameType(2);
         FakeComputerPlayer player1 = new FakeComputerPlayer(Counter.X, fakeUI);
         player1.setDummyPosition(1);
         Board board = new Board(3);
@@ -55,7 +55,7 @@ public class ComputerPlayerTest {
 
     @Test
     public void randomPositionGenerator() {
-        fakeUI.setGameType("HVC");
+        fakeUI.setGameType(2);
         Player player1 = new ComputerPlayer(Counter.X, fakeUI);
         Board board = new Board(3);
         for (int i = 0; i < 9; i++) {

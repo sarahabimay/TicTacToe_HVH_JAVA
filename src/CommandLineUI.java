@@ -19,11 +19,11 @@ public class CommandLineUI implements UserInterface {
         return dimension;
     }
 
-    public String requestGameType() {
-        String choice = "";
-        while (!validateGameType(choice)) {
-            writeStream.println("Human vs Human(HVH) or Human vs Computer(HVC) or Computer vs Computer(CVH)?:\n");
-            choice = readString();
+    public Integer requestGameType() {
+        Integer choice = -1;
+        while (!validate(choice, this::validGameType)) {
+            writeStream.println("Human vs Human(1) or Human vs Computer(2) or Computer vs Computer(3)?:\n");
+            choice = readInput();
         }
         return choice;
     }
@@ -68,13 +68,14 @@ public class CommandLineUI implements UserInterface {
         return output;
     }
 
+    public void printCurrentCounter(Counter currentCounter) {
+        writeStream.println(String.format("Board after %s's move: \n", currentCounter.name()));
+    }
+
     public boolean validate(Integer choiceFromInput, IntPredicate isValidChoice) {
         return choiceFromInput != null && isValidChoice.test(choiceFromInput);
     }
 
-    public boolean validateGameType(String choice) {
-        return PlayerFactory.validPlayerTypes(choice);
-    }
 
     private void announceWinner(Counter winner) {
         writeStream.println(String.format("We have a Winner! Player: %s\n", winner.toString()));
@@ -119,6 +120,14 @@ public class CommandLineUI implements UserInterface {
     private boolean validInstruction(int instruction) {
         return 0 < instruction && instruction < 3;
     }
+
+    public boolean validGameType(int choice) {
+        return false;
+    }
+
+//    public boolean validateGameType(String choice) {
+//        return PlayerFactory.validPlayerTypes(choice);
+//    }
 
     private String convertRowToString(int index, Counter cellValue, Board board) {
         String cellForDisplay = cellValue.counterForDisplay(index);
