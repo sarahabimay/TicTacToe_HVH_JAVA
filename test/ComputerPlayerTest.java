@@ -18,7 +18,7 @@ public class ComputerPlayerTest {
     @Test
     public void createComputerPlayerType() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1));
-        fakeUI.addDummyInputs(initialState);
+        fakeUI.addDummyHumanMoves(initialState);
         FakeComputerPlayer computer = new FakeComputerPlayer(Counter.X, fakeUI);
         assertEquals(FakeComputerPlayer.class, computer.getClass());
     }
@@ -31,7 +31,7 @@ public class ComputerPlayerTest {
 
     @Test
     public void boardUpdatedWithNewCounter() {
-        fakeUI.setPlayerTypes("HVC");
+        fakeUI.setGameType("HVC");
         FakeComputerPlayer player1 = new FakeComputerPlayer(Counter.X, fakeUI);
         player1.setDummyPosition(1);
         Board board = new Board(3);
@@ -45,7 +45,7 @@ public class ComputerPlayerTest {
 
     @Test
     public void computerHasGeneratedAMove() {
-        fakeUI.setPlayerTypes("HVC");
+        fakeUI.setGameType("HVC");
         FakeComputerPlayer player1 = new FakeComputerPlayer(Counter.X, fakeUI);
         player1.setDummyPosition(1);
         Board board = new Board(3);
@@ -55,7 +55,7 @@ public class ComputerPlayerTest {
 
     @Test
     public void randomPositionGenerator() {
-        fakeUI.setPlayerTypes("HVC");
+        fakeUI.setGameType("HVC");
         Player player1 = new ComputerPlayer(Counter.X, fakeUI);
         Board board = new Board(3);
         for (int i = 0; i < 9; i++) {

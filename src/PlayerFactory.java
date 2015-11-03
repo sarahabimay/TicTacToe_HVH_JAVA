@@ -19,8 +19,8 @@ public class PlayerFactory {
         return gameTypeToPlayerTypes.get(gameType) != null;
     }
 
-    public ArrayList<Player> generatePlayersFor(String playerType, UserInterface userInterface) {
-        return generatePlayers(getGameType(playerType), userInterface);
+    public ArrayList<Player> generatePlayersFor(String gameType, UserInterface userInterface) {
+        return generatePlayers(getGameType(gameType), userInterface);
     }
 
     private void registerOptionsToGameType() {
@@ -35,7 +35,7 @@ public class PlayerFactory {
         gameTypeToPlayerTypes.put(getGameType("CVH"), createPlayerTypeList(GameType.CVH));
     }
 
-    private ArrayList<Player.Type> createPlayerTypeList(GameType gameType) {
+    protected ArrayList<Player.Type> createPlayerTypeList(GameType gameType) {
         ArrayList<Player.Type> playerTypes = new ArrayList<>();
         if (gameType == GameType.HVH) {
             playerTypes.add(Player.Type.HUMAN);
@@ -60,7 +60,7 @@ public class PlayerFactory {
         return createPlayerList(createNewPlayer(player1Type, Counter.X, ui), createNewPlayer(player2Type, Counter.O, ui));
     }
 
-    private Player createNewPlayer(Player.Type playerType, Counter counter, UserInterface ui) {
+    protected Player createNewPlayer(Player.Type playerType, Counter counter, UserInterface ui) {
         if (playerType == Player.Type.HUMAN) {
             return new HumanPlayer(counter, ui);
         } else if (playerType == Player.Type.COMPUTER) {
@@ -76,7 +76,7 @@ public class PlayerFactory {
         return players;
     }
 
-    private GameType getGameType(String playerTypeOption) {
-        return optionToGameType.get(playerTypeOption);
+    private GameType getGameType(String gameTypeOption) {
+        return optionToGameType.get(gameTypeOption);
     }
 }

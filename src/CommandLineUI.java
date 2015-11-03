@@ -19,9 +19,9 @@ public class CommandLineUI implements UserInterface {
         return dimension;
     }
 
-    public String requestPlayerTypes() {
+    public String requestGameType() {
         String choice = "";
-        while (!validatePlayerTypes(choice)) {
+        while (!validateGameType(choice)) {
             writeStream.println("Human vs Human(HVH) or Human vs Computer(HVC) or Computer vs Computer(CVH)?:\n");
             choice = readString();
         }
@@ -72,7 +72,7 @@ public class CommandLineUI implements UserInterface {
         return choiceFromInput != null && isValidChoice.test(choiceFromInput);
     }
 
-    public boolean validatePlayerTypes(String choice) {
+    public boolean validateGameType(String choice) {
         return PlayerFactory.validPlayerTypes(choice);
     }
 

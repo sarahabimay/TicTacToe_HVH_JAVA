@@ -25,8 +25,9 @@ public class GameTest {
                 1, 2, 3,
                 4, 5, 6,
                 7, 8, 9));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVH");
+        fakeUI.addDummyDimension(3);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVH");
         game.play();
         assertEquals(true, fakeUI.hasAskedUserForDimension());
     }
@@ -38,8 +39,9 @@ public class GameTest {
                 5, 6, 7, 8,
                 9, 10, 11, 12,
                 13, 14, 15, 16));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVH");
+        fakeUI.addDummyDimension(4);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVH");
         game.play();
         assertEquals(true, fakeUI.hasAskedUserForDimension());
     }
@@ -50,8 +52,9 @@ public class GameTest {
                 1, 2, 3,
                 4, 5, 6,
                 7, 8, 9));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVH");
+        fakeUI.addDummyDimension(3);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVH");
         Game newGame = new Game(fakeUI);
         newGame.play();
         assertEquals(true, fakeUI.hasAskedUserForGameType());
@@ -63,8 +66,9 @@ public class GameTest {
                 1, 2, 3,
                 4, 5, 6,
                 7, 8, 9));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVH");
+        fakeUI.addDummyDimension(3);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVH");
         game.play();
         assertEquals(true, fakeUI.hasAskedUserForNextPosition());
     }
@@ -72,10 +76,11 @@ public class GameTest {
     @Test
     public void playNextMoveAndSeeResult() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVH");
+        fakeUI.addDummyDimension(3);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVH");
         game.requestBoardSize();
-        game.selectPlayers(game.requestPlayersType());
+        game.selectPlayers(game.requestGameType());
         Board board = game.nextPlayerMakesMove(Counter.X);
         assertEquals("" +
                         "[X][2][3]\n" +
@@ -87,8 +92,9 @@ public class GameTest {
     @Test
     public void checkPlayerCounterGetsSwitched() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1, 0, 0, 0, 0, 0, 0, 0, 0));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVH");
+        fakeUI.addDummyDimension(3);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVH");
         game.requestBoardSize();
         game.nextPlayerMakesMove(Counter.X);
         assertEquals(Counter.O, game.getNextCounter(Counter.X));
@@ -100,8 +106,9 @@ public class GameTest {
                 1, 2, 3,
                 4, 5, 6,
                 7, 8, 9));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVH");
+        fakeUI.addDummyDimension(3);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVH");
         game.play();
         assertEquals(true, fakeUI.hasDisplayedBoardToUser());
     }
@@ -112,8 +119,9 @@ public class GameTest {
                 1, 2, 3,
                 4, 5, 6,
                 7, 8, 9));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVH");
+        fakeUI.addDummyDimension(3);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVH");
         game.play();
         assertEquals(true, fakeUI.hasDisplayedResultToUser());
     }
@@ -124,8 +132,9 @@ public class GameTest {
                 1, 2, 3,
                 4, 5, 6,
                 7, 8, 9));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVH");
+        fakeUI.addDummyDimension(3);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVH");
         fakeUI.addDummyPlayAgainChoice(1);
         game.play();
         assertEquals(true, fakeUI.hasAskedUserToQuitGame());
@@ -137,8 +146,9 @@ public class GameTest {
                 1, 2, 3,
                 4, 5, 6,
                 7, 8, 9));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVH");
+        fakeUI.addDummyDimension(3);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVH");
         game.play();
         assertEquals(true, game.isGameOver());
     }
@@ -149,8 +159,9 @@ public class GameTest {
                 2, 1, 4,
                 5, 6, 3,
                 7, 8, 9));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVH");
+        fakeUI.addDummyDimension(3);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVH");
         game.play();
         assertEquals(true, game.isGameOver());
         assertEquals(true, fakeUI.isADraw());
@@ -162,8 +173,9 @@ public class GameTest {
                 1, 2, 3,
                 4, 5, 6,
                 7, 8, 9));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVH");
+        fakeUI.addDummyDimension(3);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVH");
         game.play();
         assertEquals(true, game.isGameOver());
         assertEquals(false, fakeUI.isADraw());
@@ -176,8 +188,9 @@ public class GameTest {
                 2, 1, 4,
                 5, 6, 3,
                 7, 8, 9));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("HVC");
+        fakeUI.addDummyDimension(3);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("HVC");
         game.play();
         assertEquals(Player.Type.HUMAN, game.getPlayerType(Counter.X));
         assertEquals(Player.Type.COMPUTER, game.getPlayerType(Counter.O));
@@ -189,10 +202,50 @@ public class GameTest {
                 2, 1, 4,
                 5, 6, 3,
                 7, 8, 9));
-        fakeUI.addDummyInputs(initialState);
-        fakeUI.setPlayerTypes("CVH");
+        fakeUI.addDummyDimension(3);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType("CVH");
         game.play();
         assertEquals(Player.Type.COMPUTER, game.getPlayerType(Counter.X));
         assertEquals(Player.Type.HUMAN, game.getPlayerType(Counter.O));
+    }
+
+    @Test
+    public void hvcWithInvalidMove() {
+        FakeComputerPlayer fakeAI = generateFakeComputerPlayer(Arrays.asList(2, 7, 8, 5));
+
+        FakePlayerFactory fakePlayerFactory = getFakePlayerFactory(fakeAI);
+
+        fakeUI = generateFakeUI(Arrays.asList(1, 2, 4, 3, 9), 3, "HVC");
+        Game fakeAIGame = new Game(fakeUI, fakePlayerFactory);
+        fakeAIGame.play();
+        assertEquals(Player.Type.HUMAN, fakeAIGame.getPlayerType(Counter.X));
+        assertEquals(Player.Type.FAKE, fakeAIGame.getPlayerType(Counter.O));
+        assertEquals("" +
+                        "[X][O][X]\n" +
+                        "[X][O][6]\n" +
+                        "[O][O][X]\n",
+                fakeAIGame.displayBoard());
+    }
+
+    private FakeCommandLineUI generateFakeUI(List<Integer> moves, int dimension, String gameType) {
+        List<Integer> initialState = new ArrayList<>(moves);
+        fakeUI.addDummyDimension(dimension);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType(gameType);
+        return fakeUI;
+    }
+
+    private FakePlayerFactory getFakePlayerFactory(FakeComputerPlayer fakeAI) {
+        FakePlayerFactory fakePlayerFactory = new FakePlayerFactory();
+        fakePlayerFactory.addFakeComputerPlayer(fakeAI);
+        return fakePlayerFactory;
+    }
+
+    private FakeComputerPlayer generateFakeComputerPlayer(List<Integer> moves) {
+        List<Integer> computerMoves = new ArrayList<>(moves);
+        FakeComputerPlayer fakeAI = new FakeComputerPlayer(Counter.O, fakeUI);
+        fakeAI.setDummyAIMoves(computerMoves);
+        return fakeAI;
     }
 }

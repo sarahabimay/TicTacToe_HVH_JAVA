@@ -6,6 +6,7 @@ public abstract class Player {
     public enum Type {
         HUMAN,
         COMPUTER,
+        FAKE
     }
 
     public Type getPlayerType() {

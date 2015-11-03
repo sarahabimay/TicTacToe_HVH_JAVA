@@ -14,14 +14,14 @@ public class FakeCommandLineUI implements UserInterface {
     private boolean haveDisplayedResultToUser = false;
     private boolean haveAskedUserToQuitGame = false;
     private boolean haveAskedUserForGameType = false;
+    private int dummyDimension= 0;
 
     public Integer requestBoardSize() {
-        int dimension = (int) Math.sqrt(dummyInputs.size());
         userHasBeenAskedForDimension = true;
-        return dimension;
+        return dummyDimension;
     }
 
-    public String requestPlayerTypes() {
+    public String requestGameType() {
         haveAskedUserForGameType = true;
         return playerType;
     }
@@ -53,7 +53,10 @@ public class FakeCommandLineUI implements UserInterface {
         playAgain = doPlayAgain(replayOrQuit);
     }
 
-    public void addDummyInputs(List<Integer> inputs) {
+    public void addDummyDimension(int dimension){
+        this.dummyDimension = dimension;
+    }
+    public void addDummyHumanMoves(List<Integer> inputs) {
         dummyInputs = inputs;
         numberOfInputs = dummyInputs.size();
     }
@@ -62,7 +65,7 @@ public class FakeCommandLineUI implements UserInterface {
         return choiceFromInput != null && isValidChoice.test(choiceFromInput);
     }
 
-    public boolean validatePlayerTypes(String choice) {
+    public boolean validateGameType(String choice) {
         return PlayerFactory.validPlayerTypes(choice);
     }
 
@@ -118,7 +121,7 @@ public class FakeCommandLineUI implements UserInterface {
         return haveAskedUserForGameType;
     }
 
-    public void setPlayerTypes(String gameType) {
+    public void setGameType(String gameType) {
         this.playerType = gameType;
     }
 
@@ -152,7 +155,7 @@ public class FakeCommandLineUI implements UserInterface {
     }
 
     private boolean validDummyPosition(Integer nextMove) {
-        return validate(nextMove, this::validPosition) && nextMove <= numberOfInputs;
+        return validate(nextMove, this::validPosition);//&& nextMove <= numberOfInputs;
     }
 
 

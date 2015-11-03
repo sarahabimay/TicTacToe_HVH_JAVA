@@ -3,7 +3,7 @@ import java.util.function.IntPredicate;
 public interface UserInterface {
     Integer requestBoardSize();
 
-    String requestPlayerTypes();
+    String requestGameType();
 
     Integer requestNextPosition();
 
@@ -17,5 +17,5 @@ public interface UserInterface {
 
     boolean validate(Integer choiceFromInput, IntPredicate isValidChoice);
 
-    boolean validatePlayerTypes(String choice);
+    boolean validateGameType(String choice);
 }
