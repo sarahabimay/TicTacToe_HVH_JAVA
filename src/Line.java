@@ -30,4 +30,8 @@ public class Line {
     public boolean hasCounterWin(Counter targetCounter) {
         return lineElements.stream().allMatch(counter -> counter.equals(targetCounter));
     }
+
+    public Counter findWinner() {
+        return hasAWinner() ? lineElements.get(0) : Counter.EMPTY;
+    }
 }

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 public class LineTest {
 
@@ -48,18 +47,39 @@ public class LineTest {
 
     @Test
     public void doNotFindWinForCounter() {
-        Line winning = new Line(Arrays.asList(Counter.O, Counter.X, Counter.X));
-        assertEquals(false, winning.hasAWinner());
+        Line line = new Line(Arrays.asList(Counter.O, Counter.X, Counter.X));
+        assertEquals(false, line.hasAWinner());
     }
     @Test
     public void doNotFindWinForAllEmptyElements() {
-        Line winning = new Line(Arrays.asList(Counter.EMPTY, Counter.EMPTY, Counter.EMPTY));
-        assertEquals(false, winning.hasAWinner());
+        Line line = new Line(Arrays.asList(Counter.EMPTY, Counter.EMPTY, Counter.EMPTY));
+        assertEquals(false, line.hasAWinner());
     }
 
     @Test
     public void searchForWinForACounter() {
         Line winning = new Line(Arrays.asList(Counter.X, Counter.X, Counter.X));
         assertEquals(true, winning.hasCounterWin(Counter.X));
+    }
+    @Test
+    public void doNotFindWinForACounter() {
+        Line line = new Line(Arrays.asList(Counter.EMPTY, Counter.X, Counter.X));
+        assertEquals(false, line.hasCounterWin(Counter.X));
+    }
+
+    @Test
+    public void findXCounterForWinner() {
+        Line winning = new Line(Arrays.asList(Counter.X, Counter.X, Counter.X));
+        assertEquals(Counter.X, winning.findWinner());
+    }
+    @Test
+    public void findOCounterForWinner() {
+        Line winning = new Line(Arrays.asList(Counter.O, Counter.O, Counter.O));
+        assertEquals(Counter.O, winning.findWinner());
+    }
+    @Test
+    public void dontFindAWinningCounter() {
+        Line winning = new Line(Arrays.asList(Counter.EMPTY, Counter.O, Counter.O));
+        assertEquals(Counter.EMPTY, winning.findWinner());
     }
 }
