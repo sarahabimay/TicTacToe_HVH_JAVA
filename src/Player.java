@@ -1,21 +1,9 @@
 public abstract class Player {
     protected Counter counter;
     protected UserInterface userInterface;
-    private Type playerType;
 
-    public enum Type {
-        HUMAN,
-        COMPUTER,
-        FAKE
-    }
-
-    public Type getPlayerType() {
-        return playerType;
-    }
-
-    public Player(Counter counter, Type type, UserInterface userInterface) {
+    public Player(Counter counter, UserInterface userInterface) {
         this.counter = counter;
-        this.playerType= type;
         this.userInterface = userInterface;
     }
 

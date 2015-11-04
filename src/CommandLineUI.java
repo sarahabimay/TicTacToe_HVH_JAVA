@@ -19,11 +19,12 @@ public class CommandLineUI implements UserInterface {
         return dimension;
     }
 
-    public String requestGameType() {
-        String choice = "";
-        while (!validateGameType(choice)) {
-            writeStream.println("Human vs Human(HVH) or Human vs Computer(HVC) or Computer vs Computer(CVH)?:\n");
-            choice = readString();
+    public Integer requestGameType() {
+        Integer choice = -1;
+        while (!validate(choice, this::validGameType)) {
+            writeStream.println("Human vs Human(1) or Human vs Computer(2) or Computer vs Computer(3)?:\n");
+            choice = readInput();
+            System.out.println(choice);
         }
         return choice;
     }
@@ -68,12 +69,28 @@ public class CommandLineUI implements UserInterface {
         return output;
     }
 
+    public void printCurrentCounter(Counter currentCounter) {
+        writeStream.println(String.format("Board after %s's move: \n", currentCounter.name()));
+    }
+
     public boolean validate(Integer choiceFromInput, IntPredicate isValidChoice) {
         return choiceFromInput != null && isValidChoice.test(choiceFromInput);
     }
 
-    public boolean validateGameType(String choice) {
-        return PlayerFactory.validPlayerTypes(choice);
+    public boolean validGameType(int choice) {
+        return choice == 1 || choice == 2 || choice == 3;
+    }
+
+    public boolean validateDimension(int dimension) {
+        return dimension >= 3;
+    }
+
+    public boolean validPosition(int position) {
+        return position > 0;
+    }
+
+    public boolean validInstruction(int instruction) {
+        return 0 < instruction && instruction < 3;
     }
 
     private void announceWinner(Counter winner) {
@@ -82,15 +99,6 @@ public class CommandLineUI implements UserInterface {
 
     private void announceDraw() {
         writeStream.println("The game is a draw!");
-    }
-
-    private String readString() {
-        try {
-            return readStream.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     private Integer readInput() {
@@ -106,18 +114,6 @@ public class CommandLineUI implements UserInterface {
 
     private boolean doPlayAgain(Integer instruction) {
         return 2 == instruction;
-    }
-
-    private boolean validateDimension(int dimension) {
-        return dimension >= 3;
-    }
-
-    private boolean validPosition(int position) {
-        return position > 0;
-    }
-
-    private boolean validInstruction(int instruction) {
-        return 0 < instruction && instruction < 3;
     }
 
     private String convertRowToString(int index, Counter cellValue, Board board) {
