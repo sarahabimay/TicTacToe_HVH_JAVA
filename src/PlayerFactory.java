@@ -15,7 +15,6 @@ public class PlayerFactory {
     public PlayerFactory(UserInterface ui) {
         this.userInterface = ui;
         registerOptionsToGameType();
-//        registerGameTypeWithPlayerTypes();
     }
 
     public static boolean validPlayerTypes(Integer choice) {
