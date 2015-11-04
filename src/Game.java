@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Game {
@@ -11,11 +10,6 @@ public class Game {
     public Game(UserInterface userInterface) {
         this.userInterface = userInterface;
         this.playerFactory = new PlayerFactory(userInterface);
-    }
-
-    public Game(FakeCommandLineUI fakeUI, FakePlayerFactory fakePlayerFactory) {
-        this.userInterface = fakeUI;
-        this.playerFactory = fakePlayerFactory;
     }
 
     public Player getPlayer(Counter counter) {
