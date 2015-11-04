@@ -22,7 +22,7 @@ public class CommandLineUI implements UserInterface {
     public Integer requestGameType() {
         Integer choice = -1;
         while (!validate(choice, this::validGameType)) {
-            writeStream.println("Human vs Human(1) or Human vs Computer(2) or Computer vs Computer(3)?:\n");
+            writeStream.println("Human vs Human(1) or Human vs Computer(2) or Computer vs Human(3)?:\n");
             choice = readInput();
             System.out.println(choice);
         }
