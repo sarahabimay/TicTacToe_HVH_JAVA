@@ -37,6 +37,10 @@ public class Board {
         return isAWinner() || !areEmptyPositions();
     }
 
+    protected boolean isAWinner() {
+        return getWinner() != Counter.EMPTY;
+    }
+
     public Counter getWinner() {
         if (findWin(Counter.X)) {
             return Counter.X;
@@ -74,10 +78,6 @@ public class Board {
     public boolean hasDiagonalWin(Counter searchCounter) {
         return diagonalWin(0, searchCounter) ||
                 diagonalWin(dimension - 1, searchCounter);
-    }
-
-    protected boolean isAWinner() {
-        return getWinner() != Counter.EMPTY;
     }
 
     public boolean validPosition(Integer position) {
@@ -197,7 +197,6 @@ public class Board {
     private boolean isMatch(Counter counterToMatch, int indexToCompare) {
         return cellValue(indexToCompare) == counterToMatch;
     }
-
 
     private List<Counter> generateEmptyCells() {
         List<Counter> initialCells = new ArrayList<>(boardSize());
