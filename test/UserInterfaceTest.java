@@ -77,6 +77,6 @@ public class UserInterfaceTest {
         fakeUI.setGameType(1);
         PlayerFactory factory = new PlayerFactory();
         assertEquals(true, PlayerFactory.validPlayerTypes(fakeUI.requestGameType()));
-//        assertEquals(true, fakeUI.validGameType(fakeUI.requestGameType()));
+        assertEquals(true, fakeUI.validGameType(fakeUI.requestGameType()));
     }
 }

@@ -25,8 +25,9 @@ public class ComputerPlayerTest {
 
     @Test
     public void getPlayersOpponent() {
-        Player player1 = new FakeComputerPlayer(Counter.X, fakeUI);
-        assertEquals(Counter.O, player1.opponentCounter());
+        Player computerPlayer = new ComputerPlayer(Counter.O, fakeUI);
+//        Player player1 = new FakeComputerPlayer(Counter.X, fakeUI);
+        assertEquals(Counter.X, computerPlayer.opponentCounter());
     }
 
     @Test

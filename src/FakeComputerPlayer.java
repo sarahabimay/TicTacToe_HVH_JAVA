@@ -7,7 +7,7 @@ public class FakeComputerPlayer extends Player {
     private List<Integer> dummyPositions;
 
     public FakeComputerPlayer(Counter counter, UserInterface userInterface) {
-        super(counter, Type.FAKE, userInterface);
+        super(counter, userInterface);
         this.hasGeneratedNextMove = false;
         this.dummyPositions = new ArrayList<>();
     }

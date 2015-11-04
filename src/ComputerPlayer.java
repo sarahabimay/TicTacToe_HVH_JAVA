@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class ComputerPlayer extends Player {
     public ComputerPlayer(Counter counter, UserInterface userInterface) {
-        super(counter, Type.COMPUTER, userInterface);
+        super(counter, userInterface);
     }
 
     Board playTurn(Board board) {

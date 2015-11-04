@@ -24,6 +24,7 @@ public class CommandLineUI implements UserInterface {
         while (!validate(choice, this::validGameType)) {
             writeStream.println("Human vs Human(1) or Human vs Computer(2) or Computer vs Computer(3)?:\n");
             choice = readInput();
+            System.out.println(choice);
         }
         return choice;
     }
@@ -76,6 +77,21 @@ public class CommandLineUI implements UserInterface {
         return choiceFromInput != null && isValidChoice.test(choiceFromInput);
     }
 
+    public boolean validGameType(int choice) {
+        return choice == 1 || choice == 2 || choice == 3;
+    }
+
+    public boolean validateDimension(int dimension) {
+        return dimension >= 3;
+    }
+
+    public boolean validPosition(int position) {
+        return position > 0;
+    }
+
+    public boolean validInstruction(int instruction) {
+        return 0 < instruction && instruction < 3;
+    }
 
     private void announceWinner(Counter winner) {
         writeStream.println(String.format("We have a Winner! Player: %s\n", winner.toString()));
@@ -83,15 +99,6 @@ public class CommandLineUI implements UserInterface {
 
     private void announceDraw() {
         writeStream.println("The game is a draw!");
-    }
-
-    private String readString() {
-        try {
-            return readStream.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     private Integer readInput() {
@@ -108,26 +115,6 @@ public class CommandLineUI implements UserInterface {
     private boolean doPlayAgain(Integer instruction) {
         return 2 == instruction;
     }
-
-    private boolean validateDimension(int dimension) {
-        return dimension >= 3;
-    }
-
-    private boolean validPosition(int position) {
-        return position > 0;
-    }
-
-    private boolean validInstruction(int instruction) {
-        return 0 < instruction && instruction < 3;
-    }
-
-    public boolean validGameType(int choice) {
-        return false;
-    }
-
-//    public boolean validateGameType(String choice) {
-//        return PlayerFactory.validPlayerTypes(choice);
-//    }
 
     private String convertRowToString(int index, Counter cellValue, Board board) {
         String cellForDisplay = cellValue.counterForDisplay(index);

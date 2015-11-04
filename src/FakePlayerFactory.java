@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class FakePlayerFactory extends PlayerFactory {
     private FakeComputerPlayer fakeComputerPlayer = null;
 

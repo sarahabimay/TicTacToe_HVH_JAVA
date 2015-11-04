@@ -1,7 +1,7 @@
 public class HumanPlayer extends Player {
 
     public HumanPlayer(Counter counter, UserInterface userInterface) {
-        super(counter, Type.HUMAN, userInterface);
+        super(counter, userInterface);
     }
 
     public Board playTurn(Board board) {

@@ -17,9 +17,13 @@ public interface UserInterface {
 
     boolean validate(Integer choiceFromInput, IntPredicate isValidChoice);
 
-//    boolean validateGameType(String choice);
-
     void printCurrentCounter(Counter currentCounter);
 
     boolean validGameType(int choice);
+
+    boolean validateDimension(int dimension);
+
+    boolean validPosition(int position);
+
+    boolean validInstruction(int instruction);
 }

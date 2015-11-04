@@ -18,8 +18,8 @@ public class Game {
         this.playerFactory = fakePlayerFactory;
     }
 
-    public Player.Type getPlayerType(Counter counter) {
-        return players.get(counter).getPlayerType();
+    public Player getPlayer(Counter counter) {
+        return players.get(counter);
     }
 
     public Board nextPlayerMakesMove(Counter nextCounter) {
