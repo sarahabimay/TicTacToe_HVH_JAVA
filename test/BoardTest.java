@@ -183,6 +183,53 @@ public class BoardTest {
     }
 
     @Test
+    public void findWinOnDiagonal1() {
+        Counter currentBoard[] = {
+                X, O, X,
+                X, X, O,
+                O, O, X
+        };
+
+        Board board = new Board(3, arrayToList(currentBoard));
+        assertEquals(true, board.foundWinInDiagonal());
+    }
+
+    @Test
+    public void foundWinOnOther_3x3Game() {
+        Counter currentBoard[] = {
+                O, O, X,
+                O, X, X,
+                X, O, O
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        assertEquals(true, board.foundWinInDiagonal());
+    }
+
+    @Test
+    public void foundWinOnDiagonal_4x4Game() {
+        Counter currentBoard[] = {
+                O, O, X, X,
+                X, X, X, O,
+                X, X, O, O,
+                X, O, O, O
+        };
+        Board board = new Board(4, arrayToList(currentBoard));
+        assertEquals(true, board.foundWinInDiagonal());
+    }
+
+    @Test
+    public void foundWinOnOtherDiagonal_4x4Game() {
+        Counter currentBoard[] = {
+                X, O, X, X,
+                O, X, X, O,
+                X, O, X, O,
+                O, O, O, X
+        };
+        Board board = new Board(4, arrayToList(currentBoard));
+        assertEquals(true, board.foundWinInDiagonal());
+    }
+
+    @Test
     public void findWinnerUsingLines() {
         Counter currentBoard[] = {
                 X, X, X,

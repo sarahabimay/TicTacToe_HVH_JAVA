@@ -1,6 +1,7 @@
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ public class Board {
     }
 
     public boolean hasAWinner() {
-        return foundWinInRow() || foundWinInColumn();
+        return foundWinInRow() || foundWinInColumn() || foundWinInDiagonal();
     }
 
     protected boolean foundWinInRow() {
@@ -55,6 +56,10 @@ public class Board {
         return getColumns().stream().anyMatch(Line::hasAWinner);
     }
 
+    public boolean foundWinInDiagonal() {
+        return getDiagonals().stream().anyMatch(Line::hasAWinner);
+    }
+
     protected List<Line> getRows() {
         List<List<Counter>> rowLines = Lists.partition(cells, dimension);
         return rowLines.stream().map(Line::new).collect(toList());
@@ -62,6 +67,20 @@ public class Board {
 
     public List<Line> getColumns() {
         return range(0, dimension).mapToObj(i -> new Line(getColumnCells(i))).collect(toList());
+    }
+
+    public List<Line> getDiagonals() {
+        return Arrays.stream(new int[]{0, dimension - 1}).mapToObj(i -> new Line(getDiagonalCells(i))).collect(toList());
+    }
+
+    private List<Counter> getDiagonalCells(int diagonalIndex) {
+        int nextCellIncrement = determineNextDiagonalCellIncrement(diagonalIndex);
+        int lastCellIndex = determineLastIndexForDiagonal(diagonalIndex);
+        ArrayList<Integer> indexesList = new ArrayList<>();
+        for (int i = diagonalIndex; i < lastCellIndex; i += nextCellIncrement) {
+            indexesList.add(i);
+        }
+        return indexesList.stream().map(i -> cells.get(i)).collect(toList());
     }
 
     private List<Counter> getColumnCells(int columnIndex) {
