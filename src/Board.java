@@ -47,8 +47,7 @@ public class Board {
     }
 
     protected boolean foundWinInRow() {
-        List<List<Counter>> rowLines = Lists.partition(cells, dimension);
-        return rowLines.stream().map(Line::new).anyMatch(Line::hasAWinner);
+        return getRows().stream().anyMatch(Line::hasAWinner);
     }
 
     protected boolean foundWinInColumn() {
@@ -59,8 +58,17 @@ public class Board {
         return range(0, dimension).mapToObj(i -> cells.get(columnIndex + i * dimension)).collect(toList());
     }
 
+    protected List<Line> getRows(){
+        List<List<Counter>> rowLines = Lists.partition(cells, dimension);
+        return rowLines.stream().map(Line::new).collect(toList());
+    }
+
     protected boolean isAWinner() {
         return getWinner() != Counter.EMPTY;
+    }
+
+    public Counter findWinner() {
+        return Counter.EMPTY;
     }
 
     public Counter getWinner() {

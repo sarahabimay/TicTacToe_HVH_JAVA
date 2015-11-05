@@ -207,6 +207,18 @@ public class BoardTest {
     }
 
     @Test
+    public void winnerIsXCounter() {
+        Counter currentBoard[] = {
+                X, O, X,
+                O, O, X,
+                O, X, X
+        };
+
+        Board board = new Board(3, arrayToList(currentBoard));
+        assertEquals(X, board.findWinner());
+    }
+
+    @Test
     public void createListOfRowLines() {
         Counter currentBoard[] = {
                 X, X, X,
@@ -220,9 +232,10 @@ public class BoardTest {
         ArrayList<Line> rowLines = new ArrayList<>();
         rowLines.add(new Line(arrayToList(row1)));
         rowLines.add(new Line(arrayToList(row2)));
+        rowLines.add(new Line(arrayToList(row3)));
 
-        assertEquals(true, board.hasAWinner());
-
+        assertEquals(3, board.getRows().size());
+        assertEquals(true, board.getRows().get(0).hasAWinner());
     }
 
     private List<Counter> arrayToList(Counter[] initialBoard) {
