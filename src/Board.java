@@ -65,26 +65,12 @@ public class Board {
         return rowLines.stream().map(Line::new).collect(toList());
     }
 
-    public List<Line> getColumns() {
+    protected List<Line> getColumns() {
         return range(0, dimension).mapToObj(i -> new Line(getColumnCells(i))).collect(toList());
     }
 
-    public List<Line> getDiagonals() {
+    protected List<Line> getDiagonals() {
         return Arrays.stream(new int[]{0, dimension - 1}).mapToObj(i -> new Line(getDiagonalCells(i))).collect(toList());
-    }
-
-    private List<Counter> getDiagonalCells(int diagonalIndex) {
-        int nextCellIncrement = determineNextDiagonalCellIncrement(diagonalIndex);
-        int lastCellIndex = determineLastIndexForDiagonal(diagonalIndex);
-        ArrayList<Integer> indexesList = new ArrayList<>();
-        for (int i = diagonalIndex; i < lastCellIndex; i += nextCellIncrement) {
-            indexesList.add(i);
-        }
-        return indexesList.stream().map(i -> cells.get(i)).collect(toList());
-    }
-
-    private List<Counter> getColumnCells(int columnIndex) {
-        return range(0, dimension).mapToObj(i -> cells.get(columnIndex + i * dimension)).collect(toList());
     }
 
     protected boolean isAWinner() {
@@ -94,14 +80,6 @@ public class Board {
     public Counter findWinner() {
         Optional<Line> lineOptional = getAllLines().stream().filter(Line::hasAWinner).findFirst();
         return (lineOptional.isPresent()) ? lineOptional.get().findWinner() : Counter.EMPTY;
-    }
-
-    private ArrayList<Line> getAllLines() {
-        ArrayList<Line> allLines = new ArrayList<>();
-        allLines.addAll(getRows());
-        allLines.addAll(getColumns());
-        allLines.addAll(getDiagonals());
-        return allLines;
     }
 
     public boolean validPosition(Integer position) {
@@ -138,6 +116,28 @@ public class Board {
         return cells.get(startIndex);
     }
 
+    private ArrayList<Line> getAllLines() {
+        ArrayList<Line> allLines = new ArrayList<>();
+        allLines.addAll(getRows());
+        allLines.addAll(getColumns());
+        allLines.addAll(getDiagonals());
+        return allLines;
+    }
+
+    private List<Counter> getDiagonalCells(int diagonalIndex) {
+        int nextCellIncrement = determineNextDiagonalCellIncrement(diagonalIndex);
+        int lastCellIndex = determineLastIndexForDiagonal(diagonalIndex);
+        ArrayList<Integer> indexesList = new ArrayList<>();
+        for (int i = diagonalIndex; i < lastCellIndex; i += nextCellIncrement) {
+            indexesList.add(i);
+        }
+        return indexesList.stream().map(i -> cells.get(i)).collect(toList());
+    }
+
+    private List<Counter> getColumnCells(int columnIndex) {
+        return range(0, dimension).mapToObj(i -> cells.get(columnIndex + i * dimension)).collect(toList());
+    }
+
     private boolean areEmptyPositions() {
         return boardSize() != numberOfPositionsTaken();
     }
@@ -151,8 +151,7 @@ public class Board {
     }
 
     private int determineLastIndexForDiagonal(int startIndex) {
-        int directionalOffset = determineDiagonalIndexDirection(startIndex);
-        return boardSize() + directionalOffset;
+        return boardSize() + determineDiagonalIndexDirection(startIndex);
     }
 
     private int determineNextDiagonalCellIncrement(int startIndex) {
