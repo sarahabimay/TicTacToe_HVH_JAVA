@@ -1,3 +1,5 @@
+import com.google.common.collect.Lists;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,12 @@ public class Board {
 
     public boolean isGameOver() {
         return isAWinner() || !areEmptyPositions();
+    }
+
+    public boolean hasAWinner() {
+        List<List<Counter>> rowLines = Lists.partition(cells, dimension);
+//        rowLines.stream().map(Line::new).forEach(line -> System.out.println(line.hasAWinner()));
+        return rowLines.stream().map(Line::new).anyMatch(Line::hasAWinner);
     }
 
     protected boolean isAWinner() {
@@ -205,4 +213,5 @@ public class Board {
         }
         return initialCells;
     }
+
 }

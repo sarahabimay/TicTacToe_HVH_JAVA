@@ -5,8 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9972e21-671e-4e6f-9b38-38c7c5f5e283" name="Default" comment="h">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/TTT_Java/Board.class" afterPath="$PROJECT_DIR$/out/production/TTT_Java/Board.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/test/TTT_Java/BoardTest.class" afterPath="$PROJECT_DIR$/out/test/TTT_Java/BoardTest.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Board.java" afterPath="$PROJECT_DIR$/src/Board.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/BoardTest.java" afterPath="$PROJECT_DIR$/test/BoardTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Line.java" afterPath="$PROJECT_DIR$/src/Line.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/LineTest.java" afterPath="$PROJECT_DIR$/test/LineTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TTT_Java.iml" afterPath="$PROJECT_DIR$/TTT_Java.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="TTT_Java.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -21,6 +27,7 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/TTT_Java$ComputerPlayerTest_calculate3x3NumberRangeForRandomCalculation.coverage" NAME="ComputerPlayerTest.calculate3x3NumberRangeForRandomCalculation Coverage Results" MODIFIED="1446640186731" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/TTT_Java$LineTest_dontFindAWinningCounter.coverage" NAME="LineTest.dontFindAWinningCounter Coverage Results" MODIFIED="1446674718530" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/TTT_Java$ComputerPlayerTest_calculateRandomNumberIs1.coverage" NAME="ComputerPlayerTest.calculateRandomNumberIs1 Coverage Results" MODIFIED="1446643818707" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/TTT_Java$All_in_TTT_Java.coverage" NAME="All in TTT_Java Coverage Results" MODIFIED="1446634362099" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/TTT_Java$HumanPlayerTest_boardUpdatedWithNewCounter.coverage" NAME="HumanPlayerTest.boardUpdatedWithNewCounter Coverage Results" MODIFIED="1446638740915" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
@@ -35,14 +42,14 @@
     <favorites_list name="TTT_Java" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
+    <splitter split-orientation="horizontal" split-proportion="0.51573676">
       <split-first>
         <leaf>
-          <file leaf-file-name="BoardTest.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="BoardTest.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/test/BoardTest.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="161" column="26" selection-start-line="161" selection-start-column="26" selection-end-line="161" selection-end-column="26" />
+                <state vertical-scroll-proportion="0.3539326">
+                  <caret line="170" column="27" selection-start-line="170" selection-start-column="27" selection-end-line="170" selection-end-column="27" />
                   <folding />
                 </state>
               </provider>
@@ -100,11 +107,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="LineTest.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="LineTest.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/test/LineTest.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.91573036">
-                  <caret line="82" column="34" selection-start-line="82" selection-start-column="34" selection-end-line="82" selection-end-column="34" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="92" column="4" selection-start-line="92" selection-start-column="4" selection-end-line="92" selection-end-column="4" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -116,11 +123,11 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="Board.java" pinned="false" current-in-tab="false">
+          <file leaf-file-name="Board.java" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/Board.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="60" column="63" selection-start-line="60" selection-start-column="63" selection-end-line="60" selection-end-column="63" />
+                <state vertical-scroll-proportion="0.51498127">
+                  <caret line="44" column="29" selection-start-line="44" selection-start-column="29" selection-end-line="44" selection-end-column="29" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -138,11 +145,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="Line.java" pinned="false" current-in-tab="true">
+          <file leaf-file-name="Line.java" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/Line.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.9719101">
-                  <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="38" column="37" selection-start-line="38" selection-start-column="37" selection-end-line="38" selection-end-column="37" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -202,7 +209,6 @@
         <option value="$PROJECT_DIR$/src/GameRunner.java" />
         <option value="$PROJECT_DIR$/src/GameTest.java" />
         <option value="$PROJECT_DIR$/src/BoardTest.java" />
-        <option value="$PROJECT_DIR$/test/BoardTest.java" />
         <option value="$PROJECT_DIR$/src/MockUserInterface.java" />
         <option value="$PROJECT_DIR$/src/Counter.java" />
         <option value="$PROJECT_DIR$/src/HumanePlayer.java" />
@@ -225,10 +231,11 @@
         <option value="$PROJECT_DIR$/src/PlayerFactory.java" />
         <option value="$PROJECT_DIR$/src/ComputerPlayer.java" />
         <option value="$PROJECT_DIR$/test/ComputerPlayerTest.java" />
-        <option value="$PROJECT_DIR$/src/Board.java" />
         <option value="$PROJECT_DIR$/src/LineElement.java" />
-        <option value="$PROJECT_DIR$/src/Line.java" />
+        <option value="$PROJECT_DIR$/test/BoardTest.java" />
         <option value="$PROJECT_DIR$/test/LineTest.java" />
+        <option value="$PROJECT_DIR$/src/Line.java" />
+        <option value="$PROJECT_DIR$/src/Board.java" />
       </list>
     </option>
   </component>
@@ -336,6 +343,8 @@
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="findjar.last.used.dir" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
@@ -362,49 +371,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.LineTest.dontFindAWinningCounter">
-    <configuration default="false" name="LineTest.searchForWinForACounter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="TTT_Java" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="LineTest" />
-      <option name="METHOD_NAME" value="searchForWinForACounter" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
-    <configuration default="false" name="LineTest.doNotFindWinForACounter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="TTT_Java" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="LineTest" />
-      <option name="METHOD_NAME" value="doNotFindWinForACounter" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="JUnit.BoardTest.createListOfRowLines">
     <configuration default="false" name="LineTest.findCounterForWinner" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="TTT_Java" />
@@ -455,6 +422,48 @@
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="LineTest" />
       <option name="METHOD_NAME" value="dontFindAWinningCounter" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="BoardTest.createListOfRowLines" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="TTT_Java" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="BoardTest" />
+      <option name="METHOD_NAME" value="createListOfRowLines" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="false" name="LineTest.dontFindAWinningCounter2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="TTT_Java" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="LineTest" />
+      <option name="METHOD_NAME" value="dontFindAWinningCounter2" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -664,19 +673,19 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.LineTest.searchForWinForACounter" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.LineTest.doNotFindWinForACounter" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.LineTest.findCounterForWinner" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.LineTest.findOCounterForWinner" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.LineTest.dontFindAWinningCounter" />
+      <item index="0" class="java.lang.String" itemvalue="JUnit.LineTest.findCounterForWinner" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.LineTest.findOCounterForWinner" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.LineTest.dontFindAWinningCounter" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.BoardTest.createListOfRowLines" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.LineTest.dontFindAWinningCounter2" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.LineTest.dontFindAWinningCounter" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.LineTest.findOCounterForWinner" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.LineTest.findCounterForWinner" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.LineTest.doNotFindWinForACounter" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.LineTest.searchForWinForACounter" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.BoardTest.createListOfRowLines" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.LineTest.dontFindAWinningCounter2" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.LineTest.dontFindAWinningCounter" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.LineTest.findOCounterForWinner" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.LineTest.findCounterForWinner" />
       </list>
     </recent_temporary>
   </component>
@@ -721,17 +730,17 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19270073" sideWeight="0.5015886" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18526466" sideWeight="0.51875" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931727" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12916328" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.12863071" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32904148" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32931727" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14377682" sideWeight="0.48125" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.10300429" sideWeight="0.48125" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22268327" sideWeight="0.49841145" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32627866" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32965633" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1069,14 +1078,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/UserInterface.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1135,22 +1136,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/HumanPlayer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ComputerPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1177,10 +1162,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Board.java">
+    <entry file="file://$PROJECT_DIR$/src/Game.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="60" column="63" selection-start-line="60" selection-start-column="63" selection-end-line="60" selection-end-column="63" />
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/HumanPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/LineTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="92" column="4" selection-start-line="92" selection-start-column="4" selection-end-line="92" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Line.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="37" selection-start-line="38" selection-start-column="37" selection-end-line="38" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1189,26 +1208,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/BoardTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="161" column="26" selection-start-line="161" selection-start-column="26" selection-end-line="161" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.3539326">
+          <caret line="170" column="27" selection-start-line="170" selection-start-column="27" selection-end-line="170" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Line.java">
+    <entry file="file://$PROJECT_DIR$/src/Board.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9719101">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/LineTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.91573036">
-          <caret line="82" column="34" selection-start-line="82" selection-start-column="34" selection-end-line="82" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.51498127">
+          <caret line="44" column="29" selection-start-line="44" selection-start-column="29" selection-end-line="44" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -34,4 +34,9 @@ public class Line {
     public Counter findWinner() {
         return hasAWinner() ? lineElements.get(0) : Counter.EMPTY;
     }
+    public void printLine(){
+        for (Counter c : lineElements) {
+            System.out.println(c + "\t");
+        }
+    }
 }

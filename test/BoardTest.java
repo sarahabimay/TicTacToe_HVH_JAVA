@@ -159,6 +159,25 @@ public class BoardTest {
     }
 
 
+    @Test
+    public void createListOfRowLines() {
+        Counter currentBoard[] = {
+                X, X, X,
+                O, O, X,
+                O, O, X
+        };
+        Counter row1[] = { X, X, X};
+        Counter row2[] = { O, O, X};
+        Counter row3[] = { O, O, X};
+        Board board = new Board(3, arrayToList(currentBoard));
+        ArrayList<Line> rowLines = new ArrayList<>();
+        rowLines.add(new Line(arrayToList(row1)));
+        rowLines.add(new Line(arrayToList(row2)));
+
+        assertEquals(true, board.hasAWinner() );
+
+    }
+
     private List<Counter> arrayToList(Counter[] initialBoard) {
         List<Counter> initialCells = new ArrayList<>(initialBoard.length);
         for (int i = 0; i < initialBoard.length; i++) {
@@ -166,5 +185,4 @@ public class BoardTest {
         }
         return initialCells;
     }
-
 }

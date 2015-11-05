@@ -50,6 +50,7 @@ public class LineTest {
         Line line = new Line(Arrays.asList(Counter.O, Counter.X, Counter.X));
         assertEquals(false, line.hasAWinner());
     }
+
     @Test
     public void doNotFindWinForAllEmptyElements() {
         Line line = new Line(Arrays.asList(Counter.EMPTY, Counter.EMPTY, Counter.EMPTY));
@@ -61,6 +62,7 @@ public class LineTest {
         Line winning = new Line(Arrays.asList(Counter.X, Counter.X, Counter.X));
         assertEquals(true, winning.hasCounterWin(Counter.X));
     }
+
     @Test
     public void doNotFindWinForACounter() {
         Line line = new Line(Arrays.asList(Counter.EMPTY, Counter.X, Counter.X));
@@ -72,14 +74,21 @@ public class LineTest {
         Line winning = new Line(Arrays.asList(Counter.X, Counter.X, Counter.X));
         assertEquals(Counter.X, winning.findWinner());
     }
+
     @Test
     public void findOCounterForWinner() {
         Line winning = new Line(Arrays.asList(Counter.O, Counter.O, Counter.O));
         assertEquals(Counter.O, winning.findWinner());
     }
+
     @Test
     public void dontFindAWinningCounter() {
         Line winning = new Line(Arrays.asList(Counter.EMPTY, Counter.O, Counter.O));
+        assertEquals(Counter.EMPTY, winning.findWinner());
+    }
+    @Test
+    public void dontFindAWinningCounter2() {
+        Line winning = new Line(Arrays.asList(Counter.O, Counter.O, Counter.X));
         assertEquals(Counter.EMPTY, winning.findWinner());
     }
 }
