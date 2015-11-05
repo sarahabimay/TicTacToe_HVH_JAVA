@@ -72,7 +72,10 @@ public class Board {
     }
 
     public Counter findWinner() {
-        return Counter.EMPTY;
+        ArrayList<Line> allLines = new ArrayList<>();
+        allLines.addAll(getRows());
+        allLines.addAll(getColumns());
+        return allLines.stream().filter(Line::hasAWinner).findFirst().get().findWinner();
     }
 
     public Counter getWinner() {

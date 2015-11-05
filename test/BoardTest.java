@@ -1,4 +1,3 @@
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -234,7 +233,6 @@ public class BoardTest {
     }
 
     @Test
-    @Ignore
     public void winnerIsXCounter() {
         Counter currentBoard[] = {
                 X, O, X,
