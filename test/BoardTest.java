@@ -233,7 +233,19 @@ public class BoardTest {
     }
 
     @Test
-    public void winnerIsXCounter() {
+    public void winnerIsXCounter_RowWin() {
+        Counter currentBoard[] = {
+                X, X, X,
+                O, O, O,
+                O, X, X
+        };
+
+        Board board = new Board(3, arrayToList(currentBoard));
+        assertEquals(X, board.findWinner());
+    }
+
+    @Test
+    public void winnerIsXCounter_ColumnWin() {
         Counter currentBoard[] = {
                 X, O, X,
                 O, O, X,
@@ -242,6 +254,18 @@ public class BoardTest {
 
         Board board = new Board(3, arrayToList(currentBoard));
         assertEquals(X, board.findWinner());
+    }
+
+    @Test
+    public void thereIsNoWinningCounter() {
+        Counter currentBoard[] = {
+                X, O, X,
+                X, O, O,
+                O, X, X
+        };
+
+        Board board = new Board(3, arrayToList(currentBoard));
+        assertEquals(EMPTY, board.findWinner());
     }
 
     private List<Counter> arrayToList(Counter[] initialBoard) {

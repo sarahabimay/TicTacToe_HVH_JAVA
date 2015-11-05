@@ -2,6 +2,7 @@ import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
@@ -72,10 +73,15 @@ public class Board {
     }
 
     public Counter findWinner() {
+        Optional<Line> lineOptional = getAllLines().stream().filter(Line::hasAWinner).findFirst();
+        return (lineOptional.isPresent()) ? lineOptional.get().findWinner() : Counter.EMPTY;
+    }
+
+    private ArrayList<Line> getAllLines() {
         ArrayList<Line> allLines = new ArrayList<>();
         allLines.addAll(getRows());
         allLines.addAll(getColumns());
-        return allLines.stream().filter(Line::hasAWinner).findFirst().get().findWinner();
+        return allLines;
     }
 
     public Counter getWinner() {
