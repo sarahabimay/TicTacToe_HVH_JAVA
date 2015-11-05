@@ -3,6 +3,9 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.IntStream.range;
+
 public class Board {
     private static final int POSITIVE_OFFSET = 1;
     private static final int NEGATIVE_OFFSET = -1;
@@ -40,9 +43,20 @@ public class Board {
     }
 
     public boolean hasAWinner() {
+        return foundWinInRow() || foundWinInColumn();
+    }
+
+    protected boolean foundWinInRow() {
         List<List<Counter>> rowLines = Lists.partition(cells, dimension);
-//        rowLines.stream().map(Line::new).forEach(line -> System.out.println(line.hasAWinner()));
         return rowLines.stream().map(Line::new).anyMatch(Line::hasAWinner);
+    }
+
+    protected boolean foundWinInColumn() {
+        return range(0, dimension).mapToObj(i -> new Line(getColumnCells(i))).anyMatch(Line::hasAWinner);
+    }
+
+    private List<Counter> getColumnCells(int columnIndex) {
+        return range(0, dimension).mapToObj(i -> cells.get(columnIndex + i * dimension)).collect(toList());
     }
 
     protected boolean isAWinner() {

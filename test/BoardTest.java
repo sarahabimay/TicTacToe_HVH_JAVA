@@ -158,6 +158,53 @@ public class BoardTest {
         assertEquals(false, board.isAWinner());
     }
 
+    @Test
+    public void findWinInARow() {
+        Counter currentBoard[] = {
+                X, X, X,
+                O, O, X,
+                O, O, X
+        };
+
+        Board board = new Board(3, arrayToList(currentBoard));
+        assertEquals(true, board.foundWinInRow());
+    }
+
+    @Test
+    public void findWinInAColumn() {
+        Counter currentBoard[] = {
+                X, O, X,
+                O, X, X,
+                O, O, X
+        };
+
+        Board board = new Board(3, arrayToList(currentBoard));
+        assertEquals(true, board.foundWinInColumn());
+    }
+
+    @Test
+    public void findWinnerUsingLines() {
+        Counter currentBoard[] = {
+                X, X, X,
+                O, O, O,
+                O, X, X
+        };
+
+        Board board = new Board(3, arrayToList(currentBoard));
+        assertEquals(true, board.hasAWinner());
+    }
+
+    @Test
+    public void findWinnerUsingLines_ColumnWin() {
+        Counter currentBoard[] = {
+                X, O, X,
+                O, O, X,
+                O, X, X
+        };
+
+        Board board = new Board(3, arrayToList(currentBoard));
+        assertEquals(true, board.hasAWinner());
+    }
 
     @Test
     public void createListOfRowLines() {
@@ -166,15 +213,15 @@ public class BoardTest {
                 O, O, X,
                 O, O, X
         };
-        Counter row1[] = { X, X, X};
-        Counter row2[] = { O, O, X};
-        Counter row3[] = { O, O, X};
+        Counter row1[] = {X, X, X};
+        Counter row2[] = {O, O, X};
+        Counter row3[] = {O, O, X};
         Board board = new Board(3, arrayToList(currentBoard));
         ArrayList<Line> rowLines = new ArrayList<>();
         rowLines.add(new Line(arrayToList(row1)));
         rowLines.add(new Line(arrayToList(row2)));
 
-        assertEquals(true, board.hasAWinner() );
+        assertEquals(true, board.hasAWinner());
 
     }
 
