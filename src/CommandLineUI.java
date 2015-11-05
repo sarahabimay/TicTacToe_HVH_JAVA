@@ -24,7 +24,6 @@ public class CommandLineUI implements UserInterface {
         while (!validate(choice, this::validGameType)) {
             writeStream.println("Human vs Human(1) or Human vs Computer(2) or Computer vs Human(3)?:\n");
             choice = readInput();
-            System.out.println(choice);
         }
         return choice;
     }

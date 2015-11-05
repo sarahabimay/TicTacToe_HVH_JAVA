@@ -67,7 +67,7 @@ public class Game {
 
     private void displayResult() {
         userInterface.displayBoard(board);
-        userInterface.displayResult(board.getWinner());
+        userInterface.displayResult(board.findWinner());
     }
 
     private void playAgain() {

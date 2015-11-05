@@ -70,7 +70,6 @@ public class ComputerPlayerTest {
         fakeUI.addDummyDimension(3);
         fakeUI.setGameType(2);
         long randomFraction = computerPlayer.randomFractionFromRange(9);
-        System.out.println(randomFraction);
         assertThat(randomFraction, greaterThanOrEqualTo((long) 0));
         assertThat(randomFraction, lessThanOrEqualTo((long) 8));
     }
