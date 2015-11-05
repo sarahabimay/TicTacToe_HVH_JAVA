@@ -12,11 +12,6 @@ public class Game {
         this.playerFactory = new PlayerFactory(userInterface);
     }
 
-    public Game(FakeCommandLineUI fakeUI, FakePlayerFactory fakePlayerFactory) {
-        this.userInterface = fakeUI;
-        this.playerFactory = fakePlayerFactory;
-    }
-
     public Player getPlayer(Counter counter) {
         return players.get(counter);
     }
