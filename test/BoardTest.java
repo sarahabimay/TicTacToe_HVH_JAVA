@@ -1,3 +1,4 @@
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -206,7 +207,34 @@ public class BoardTest {
         assertEquals(true, board.hasAWinner());
     }
 
+
     @Test
+    public void createListOfRowLines() {
+        Counter currentBoard[] = {
+                X, X, X,
+                O, O, X,
+                O, O, X
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        assertEquals(3, board.getRows().size());
+        assertEquals(true, board.getRows().get(0).hasAWinner());
+    }
+
+    @Test
+    public void createListOfColumnLines() {
+        Counter currentBoard[] = {
+                X, X, X,
+                O, O, X,
+                O, O, X
+        };
+
+        Board board = new Board(3, arrayToList(currentBoard));
+        assertEquals(3, board.getColumns().size());
+        assertEquals(true, board.getColumns().get(2).hasAWinner());
+    }
+
+    @Test
+    @Ignore
     public void winnerIsXCounter() {
         Counter currentBoard[] = {
                 X, O, X,
@@ -216,26 +244,6 @@ public class BoardTest {
 
         Board board = new Board(3, arrayToList(currentBoard));
         assertEquals(X, board.findWinner());
-    }
-
-    @Test
-    public void createListOfRowLines() {
-        Counter currentBoard[] = {
-                X, X, X,
-                O, O, X,
-                O, O, X
-        };
-        Counter row1[] = {X, X, X};
-        Counter row2[] = {O, O, X};
-        Counter row3[] = {O, O, X};
-        Board board = new Board(3, arrayToList(currentBoard));
-        ArrayList<Line> rowLines = new ArrayList<>();
-        rowLines.add(new Line(arrayToList(row1)));
-        rowLines.add(new Line(arrayToList(row2)));
-        rowLines.add(new Line(arrayToList(row3)));
-
-        assertEquals(3, board.getRows().size());
-        assertEquals(true, board.getRows().get(0).hasAWinner());
     }
 
     private List<Counter> arrayToList(Counter[] initialBoard) {

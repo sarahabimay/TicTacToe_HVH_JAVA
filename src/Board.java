@@ -51,16 +51,20 @@ public class Board {
     }
 
     protected boolean foundWinInColumn() {
-        return range(0, dimension).mapToObj(i -> new Line(getColumnCells(i))).anyMatch(Line::hasAWinner);
+        return getColumns().stream().anyMatch(Line::hasAWinner);
+    }
+
+    protected List<Line> getRows() {
+        List<List<Counter>> rowLines = Lists.partition(cells, dimension);
+        return rowLines.stream().map(Line::new).collect(toList());
+    }
+
+    public List<Line> getColumns() {
+        return range(0, dimension).mapToObj(i -> new Line(getColumnCells(i))).collect(toList());
     }
 
     private List<Counter> getColumnCells(int columnIndex) {
         return range(0, dimension).mapToObj(i -> cells.get(columnIndex + i * dimension)).collect(toList());
-    }
-
-    protected List<Line> getRows(){
-        List<List<Counter>> rowLines = Lists.partition(cells, dimension);
-        return rowLines.stream().map(Line::new).collect(toList());
     }
 
     protected boolean isAWinner() {
