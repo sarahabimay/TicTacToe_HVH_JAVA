@@ -25,7 +25,6 @@ public class FakeCommandLineUI implements UserInterface {
         haveAskedUserForGameType = true;
         if (!validate(playerType, this::validGameType)) {
             playerType = -1;
-            System.out.println(playerType);
         }
         return playerType;
     }
@@ -91,7 +90,7 @@ public class FakeCommandLineUI implements UserInterface {
     }
 
     public void outputToUI(String output) {
-        System.out.println(output);
+//        System.out.println(output);
     }
 
     public Counter getWinner() {

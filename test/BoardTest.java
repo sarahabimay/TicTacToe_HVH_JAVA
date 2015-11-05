@@ -62,7 +62,7 @@ public class BoardTest {
                 EMPTY, EMPTY, EMPTY
         };
         Board playerXRowWin = new Board(3, arrayToList(currentBoard));
-        assertEquals(true, playerXRowWin.hasRowWin(X));
+        assertEquals(true, playerXRowWin.foundWinInRow());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class BoardTest {
                 O, O, X, X
         };
         Board playerXRowWin = new Board(4, arrayToList(currentBoard));
-        assertEquals(true, playerXRowWin.hasRowWin(X));
+        assertEquals(true, playerXRowWin.foundWinInRow());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class BoardTest {
                 X, X, O
         };
         Board playerXColumnWin = new Board(3, arrayToList(currentBoard));
-        assertEquals(true, playerXColumnWin.hasColumnWin(X));
+        assertEquals(true, playerXColumnWin.foundWinInColumn());
     }
 
     @Test
@@ -97,7 +97,7 @@ public class BoardTest {
                 X, X, O, X
         };
         Board playerXColumnWin = new Board(4, arrayToList(currentBoard));
-        assertEquals(true, playerXColumnWin.hasColumnWin(X));
+        assertEquals(true, playerXColumnWin.foundWinInColumn());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class BoardTest {
                 O, O, X
         };
         Board playerXDiagonalWin = new Board(3, arrayToList(currentBoard));
-        assertEquals(true, playerXDiagonalWin.hasDiagonalWin(X));
+        assertEquals(true, playerXDiagonalWin.foundWinInDiagonal());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class BoardTest {
                 X, O, O, O
         };
         Board playerXDiagonalWin = new Board(4, arrayToList(currentBoard));
-        assertEquals(true, playerXDiagonalWin.hasDiagonalWin(X));
+        assertEquals(true, playerXDiagonalWin.foundWinInDiagonal());
     }
 
     @Test
@@ -132,7 +132,7 @@ public class BoardTest {
                 X, O, O, O
         };
         Board playerXDiagonalWin = new Board(4, arrayToList(currentBoard));
-        assertEquals(true, playerXDiagonalWin.findWin(X));
+        assertEquals(Counter.X, playerXDiagonalWin.findWinner());
     }
 
     @Test
@@ -143,7 +143,7 @@ public class BoardTest {
                 O, O, X
         };
         Board playerXDiagonalWin = new Board(3, arrayToList(currentBoard));
-        assertEquals(X, playerXDiagonalWin.getWinner());
+        assertEquals(X, playerXDiagonalWin.findWinner());
     }
 
 

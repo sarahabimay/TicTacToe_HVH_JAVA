@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class Game {
@@ -73,7 +72,7 @@ public class Game {
 
     private void displayResult() {
         userInterface.displayBoard(board);
-        userInterface.displayResult(board.getWinner());
+        userInterface.displayResult(board.findWinner());
     }
 
     private void playAgain() {
