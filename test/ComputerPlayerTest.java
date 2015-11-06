@@ -12,12 +12,16 @@ import static org.junit.Assert.*;
 
 public class ComputerPlayerTest {
     public FakeCommandLineUI fakeUI;
-    public ComputerPlayer computerPlayer;
+    public ComputerPlayer computerXPlayer;
+    public ComputerPlayer computerOPlayer;
+    private Counter X = Counter.X;
+    private Counter O = Counter.O;
 
     @Before
     public void setUp() throws Exception {
         fakeUI = new FakeCommandLineUI();
-        computerPlayer = new ComputerPlayer(Counter.X, fakeUI);
+        computerXPlayer = new ComputerPlayer(Counter.X, fakeUI);
+        computerOPlayer = new ComputerPlayer(Counter.O, fakeUI);
     }
 
     @Test
@@ -39,7 +43,7 @@ public class ComputerPlayerTest {
         fakeUI.addDummyDimension(3);
         fakeUI.setGameType(2);
         Board board = new Board(3);
-        board = computerPlayer.playTurn(board);
+        board = computerXPlayer.playTurn(board);
         assertNotEquals("" +
                         "[1][2][3]\n" +
                         "[4][5][6]\n" +
@@ -47,12 +51,14 @@ public class ComputerPlayerTest {
                 fakeUI.displayBoard(board));
     }
 
+
+
     @Test
     public void calculate3x3NumberRangeForRandomCalculation() {
         fakeUI.addDummyDimension(3);
         fakeUI.setGameType(2);
         Board board = new Board(3);
-        long range = computerPlayer.calculateNumberRange(board);
+        long range = computerXPlayer.calculateNumberRange(board);
         assertEquals(9, range);
     }
 
@@ -61,7 +67,7 @@ public class ComputerPlayerTest {
         fakeUI.addDummyDimension(3);
         fakeUI.setGameType(2);
         Board board = new Board(3);
-        Integer nextMove = computerPlayer.calculateRandomPosition(board);
+        Integer nextMove = computerXPlayer.calculateRandomPosition(board);
         assertEquals(true, board.validPosition(nextMove));
     }
 
@@ -69,7 +75,7 @@ public class ComputerPlayerTest {
     public void calculateFractionFromRangeIsValid() {
         fakeUI.addDummyDimension(3);
         fakeUI.setGameType(2);
-        long randomFraction = computerPlayer.randomFractionFromRange(9);
+        long randomFraction = computerXPlayer.randomFractionFromRange(9);
         assertThat(randomFraction, greaterThanOrEqualTo((long) 0));
         assertThat(randomFraction, lessThanOrEqualTo((long) 8));
     }
@@ -78,7 +84,7 @@ public class ComputerPlayerTest {
     public void calculateRandomNumberIs1() {
         fakeUI.addDummyDimension(3);
         fakeUI.setGameType(2);
-        long randomNumber = computerPlayer.randomNumberInRange(0);
+        long randomNumber = computerXPlayer.randomNumberInRange(0);
         assertThat(randomNumber, equalTo((long) 1));
     }
 
@@ -105,5 +111,12 @@ public class ComputerPlayerTest {
                             "[7][8][9]\n",
                     fakeUI.displayBoard(board));
         }
+    }
+    private List<Counter> arrayToList(Counter[] initialBoard) {
+        List<Counter> initialCells = new ArrayList<>(initialBoard.length);
+        for (int i = 0; i < initialBoard.length; i++) {
+            initialCells.add((initialBoard[i]));
+        }
+        return initialCells;
     }
 }

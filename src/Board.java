@@ -171,4 +171,8 @@ public class Board {
         return initialCells;
     }
 
+    public int calculateBoardScore(Counter aiCounter) {
+        return findWinner() == aiCounter ? 10 : -10;
+//        return getAllLines().stream().reduce(0, (sum, line) -> sum += line.score(), (sum1, sum2) -> sum1 + sum2);
+    }
 }

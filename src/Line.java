@@ -11,7 +11,7 @@ public class Line {
 
     public Line(int numberOfElements) {
         for (int i = 0; i < numberOfElements; i++) {
-           lineElements.add(Counter.EMPTY);
+            lineElements.add(Counter.EMPTY);
         }
     }
 
@@ -34,9 +34,19 @@ public class Line {
     public Counter findWinner() {
         return hasAWinner() ? lineElements.get(0) : Counter.EMPTY;
     }
-    public void printLine(){
+
+    public void printLine() {
         for (Counter c : lineElements) {
             System.out.println(c + "\t");
         }
     }
+
+//    public int score() {
+//        Counter aiCounter = Counter.X;
+//        System.out.println(Collections.frequency(lineElements, aiCounter));
+//            if (counter == aiCounter)
+//        }
+//        lineElements.stream().reduce(0, (sum, counter) -> sum += )
+//        return 1;
+//    }
 }

@@ -315,6 +315,30 @@ public class BoardTest {
         assertEquals(EMPTY, board.findWinner());
     }
 
+    @Test
+    public void scoreTheBoardWhenAIPlayerIsX() {
+        Counter currentBoard[] = {
+                O, O, X,
+                O, X, X,
+                X, O, O
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        Counter aiCounter = X;
+        assertEquals(10, board.calculateBoardScore(aiCounter));
+    }
+
+    @Test
+    public void scoreTheBoardWhenAIPlayerIsO() {
+        Counter currentBoard[] = {
+                O, O, X,
+                O, X, X,
+                X, O, O
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        Counter aiCounter = O;
+        assertEquals(-10, board.calculateBoardScore(aiCounter));
+    }
+
     private List<Counter> arrayToList(Counter[] initialBoard) {
         List<Counter> initialCells = new ArrayList<>(initialBoard.length);
         for (int i = 0; i < initialBoard.length; i++) {

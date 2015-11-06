@@ -9,7 +9,7 @@ public class ComputerPlayer extends Player {
         return board.playCounterInPosition(calculateNextMove(board), counter);
     }
 
-    private Integer calculateNextMove(Board board) {
+    protected Integer calculateNextMove(Board board) {
         Integer randomPosition = calculateRandomPosition(board);
         while (!board.validPosition(randomPosition)) {
             randomPosition = calculateRandomPosition(board);
