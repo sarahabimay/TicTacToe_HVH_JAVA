@@ -51,7 +51,16 @@ public class ComputerPlayerTest {
                 fakeUI.displayBoard(board));
     }
 
-
+    @Test
+    public void calculateNextMoveWithMinimax() {
+        Counter currentBoard[] = {
+                O, O, Counter.EMPTY,
+                O, X, X,
+                X, O, O
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        assertEquals((Integer)2, computerXPlayer.calculateNextMoveWithMinimax(board));
+    }
 
     @Test
     public void calculate3x3NumberRangeForRandomCalculation() {

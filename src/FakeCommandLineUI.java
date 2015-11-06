@@ -47,7 +47,7 @@ public class FakeCommandLineUI implements UserInterface {
         String output = "";
         haveDisplayedBoardToUser = true;
         for (int i = 0; i < board.boardSize(); i++) {
-            output += convertRowToString(i, board.cellValue(i), board);
+            output += convertRowToString(i, board.findCounterAtIndex(i), board);
         }
         return output;
     }

@@ -39,6 +39,6 @@ public class HumanPlayerTest {
         Player player1 = new HumanPlayer(Counter.X, fakeUI);
         Board board = new Board(3);
         board = player1.playTurn(board);
-        assertEquals(Counter.X, board.cellValue(0));
+        assertEquals(Counter.X, board.findCounterAtIndex(0));
     }
 }

@@ -1,12 +1,26 @@
 import java.util.Random;
 
 public class ComputerPlayer extends Player {
+    private Integer DEPTH = 0;
+
     public ComputerPlayer(Counter counter, UserInterface userInterface) {
         super(counter, userInterface);
     }
 
     Board playTurn(Board board) {
         return board.playCounterInPosition(calculateNextMove(board), counter);
+    }
+
+    public Integer calculateNextMoveWithMinimax(Board board) {
+        DEPTH = board.numberOfOpenPositions();
+        return minimax(DEPTH, this.counter, board);
+    }
+
+    private Integer minimax(Integer depth, Counter counter, Board currentBoard) {
+        if (DEPTH == 1) {
+            return currentBoard.findOpenPositions().get(0);
+        }
+        return null;
     }
 
     protected Integer calculateNextMove(Board board) {
@@ -38,4 +52,5 @@ public class ComputerPlayer extends Player {
         int start = 1;
         return (int) (fraction + start);
     }
+
 }

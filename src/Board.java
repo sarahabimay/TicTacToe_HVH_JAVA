@@ -97,7 +97,7 @@ public class Board {
     protected ArrayList<String> findPositions(Counter counter) {
         ArrayList<String> counterPositions = new ArrayList<>();
         for (int i = 0; i < cells.size(); i++) {
-            if (cellValue(i) == counter) {
+            if (findCounterAtIndex(i) == counter) {
                 counterPositions.add(String.valueOf(i));
             }
         }
@@ -112,7 +112,7 @@ public class Board {
         return dimension * dimension;
     }
 
-    protected Counter cellValue(int startIndex) {
+    protected Counter findCounterAtIndex(int startIndex) {
         return cells.get(startIndex);
     }
 
@@ -173,6 +173,13 @@ public class Board {
 
     public int calculateBoardScore(Counter aiCounter) {
         return findWinner() == aiCounter ? 10 : -10;
-//        return getAllLines().stream().reduce(0, (sum, line) -> sum += line.score(), (sum1, sum2) -> sum1 + sum2);
     }
+
+    public List<Integer> findOpenPositions() {
+        return range(0, cells.size())
+                .filter(p -> cells.get(p) == Counter.EMPTY)
+                .mapToObj(i -> i)
+                .collect(toList());
+    }
+
 }
