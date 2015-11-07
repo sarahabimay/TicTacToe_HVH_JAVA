@@ -1,9 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
@@ -16,6 +14,7 @@ public class ComputerPlayerTest {
     public ComputerPlayer computerOPlayer;
     private Counter X = Counter.X;
     private Counter O = Counter.O;
+    private Counter EMPTY = Counter.EMPTY;
 
     @Before
     public void setUp() throws Exception {
@@ -52,14 +51,50 @@ public class ComputerPlayerTest {
     }
 
     @Test
-    public void calculateNextMoveWithMinimax() {
+    public void oneChoiceForMinimaxAlgorithm() {
         Counter currentBoard[] = {
-                O, O, Counter.EMPTY,
+                X, O, EMPTY,
                 O, X, X,
                 X, O, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals((Integer)2, computerXPlayer.calculateNextMoveWithMinimax(board));
+        assertEquals((Integer) 2, computerXPlayer.calculateNextMoveWithMinimax(board).get("Move"));
+    }
+
+    @Test
+    public void twoChoicesForMinimaxAlgorithm() {
+        Counter currentBoard[] = {
+                X, X, EMPTY,
+                X, O, X,
+                O, O, EMPTY
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        assertEquals((Integer) 2, computerOPlayer.calculateNextMoveWithMinimax(board).get("Move"));
+    }
+
+    @Test
+    public void threeChoicesForMinimaxAlgorithm() {
+        Counter currentBoard[] = {
+                X,      X, EMPTY,
+                EMPTY,  O, X,
+                O,      O, EMPTY
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        HashMap<String, Integer> result = computerXPlayer.calculateNextMoveWithMinimax(board);
+        System.out.println(result);
+        assertEquals((Integer) 2, result.get("Move"));
+    }
+    @Test
+    public void fourChoicesForMinimaxAlgorithm() {
+        Counter currentBoard[] = {
+                X,      X, EMPTY,
+                EMPTY,  O, X,
+                EMPTY,      O, EMPTY
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        HashMap<String, Integer> result = computerOPlayer.calculateNextMoveWithMinimax(board);
+        System.out.println(result);
+        assertEquals((Integer) 2, result.get("Move"));
     }
 
     @Test
@@ -121,6 +156,7 @@ public class ComputerPlayerTest {
                     fakeUI.displayBoard(board));
         }
     }
+
     private List<Counter> arrayToList(Counter[] initialBoard) {
         List<Counter> initialCells = new ArrayList<>(initialBoard.length);
         for (int i = 0; i < initialBoard.length; i++) {

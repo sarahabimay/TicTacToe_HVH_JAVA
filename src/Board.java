@@ -182,4 +182,14 @@ public class Board {
                 .collect(toList());
     }
 
+    public Board newBoardWithNewMove(Integer move, Counter currentCounter) {
+        List<Counter> newCells = newCellsWithNewMove(move, currentCounter);
+        return new Board(newCells);
+    }
+
+    private List<Counter> newCellsWithNewMove(Integer move, Counter counter) {
+        List<Counter> newCells = new ArrayList<>(cells);
+        newCells.set(move, counter);
+        return newCells;
+    }
 }
