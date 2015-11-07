@@ -25,25 +25,27 @@ public class ComputerPlayer extends Player {
         List<Integer> openPositions = currentBoard.findOpenPositions();
         Integer bestScore = -10;
         Integer bestMove = -1;
-        System.out.println("Entering minimax, Depth: " + depth);
+//        System.out.println("Entering minimax, Depth: " + depth + ", Counter: " + currentCounter);
         if (currentBoard.isGameOver() || depth == 0 || openPositions.size() == 0) {
-            System.out.println("CurrentBoard: " + currentBoard.getCells());
+//            System.out.println("Depth: "+ depth + ", CurrentBoard: " + currentBoard.getCells());
             return calculateResult(currentBoard);
         }
 
         for (Integer move : openPositions){
             Board currentStateOfBoard = currentBoard.newBoardWithNewMove(move, currentCounter);
             Integer score = minimax(depth - 1, currentCounter.opponentCounter(), currentStateOfBoard).get("Score");
-            if (counter == currentCounter && score > bestScore ||
-                    counter != currentCounter && score < bestScore) {
+            if (this.counter == currentCounter && score >= bestScore ||
+                    this.counter != currentCounter && score <= bestScore) {
+//                System.out.println("Previous Best Score: " + bestScore + ", Prev BestMove: " + bestMove);
                 bestScore = score;
                 bestMove = move;
-                System.out.println("CurrentCounter: " + currentCounter + ", Depth: " + depth);
-                System.out.println("BestScore: " + bestScore + ", Best Move: " + bestMove);
+                System.out.println("New Best Score: " + bestScore + ", New BestMove: " + bestMove);
+//                System.out.println("CurrentCounter: " + currentCounter + ", Depth: " + depth);
+//                System.out.println("BestScore: " + bestScore + ", Best Move: " + bestMove);
             }
         }
-        System.out.println("Exiting minimax, Depth: " + depth);
-        System.out.println("Depth: " + depth + ", Node BestScore: " + bestScore + ", Node Best Move: " + bestMove);
+//        System.out.println("Depth: " + depth + ", Counter: " + currentCounter+ ",  Node BestScore: " + bestScore + ", Node Best Move: " + bestMove);
+//        System.out.println("Exiting minimax.");
         return createResultMap(bestScore, bestMove);
     }
 

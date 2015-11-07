@@ -69,27 +69,41 @@ public class ComputerPlayerTest {
                 O, O, EMPTY
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals((Integer) 2, computerOPlayer.calculateNextMoveWithMinimax(board).get("Move"));
+        assertEquals((Integer) 8, computerOPlayer.calculateNextMoveWithMinimax(board).get("Move"));
     }
 
     @Test
     public void threeChoicesForMinimaxAlgorithm() {
         Counter currentBoard[] = {
-                X,      X, EMPTY,
-                EMPTY,  O, X,
-                O,      O, EMPTY
+                X, X, EMPTY,
+                EMPTY, O, X,
+                O, O, EMPTY
         };
         Board board = new Board(3, arrayToList(currentBoard));
         HashMap<String, Integer> result = computerXPlayer.calculateNextMoveWithMinimax(board);
         System.out.println(result);
         assertEquals((Integer) 2, result.get("Move"));
     }
+
     @Test
     public void fourChoicesForMinimaxAlgorithm() {
         Counter currentBoard[] = {
+                X, X, EMPTY,
+                EMPTY, O, X,
+                EMPTY, O, EMPTY
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        HashMap<String, Integer> result = computerOPlayer.calculateNextMoveWithMinimax(board);
+        System.out.println(result);
+        assertEquals((Integer) 8, result.get("Move"));
+    }
+
+    @Test
+    public void minimaxShouldPickPositionToBlockOpponentWin() {
+        Counter currentBoard[] = {
                 X,      X, EMPTY,
                 EMPTY,  O, X,
-                EMPTY,      O, EMPTY
+                X,      O, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
         HashMap<String, Integer> result = computerOPlayer.calculateNextMoveWithMinimax(board);
