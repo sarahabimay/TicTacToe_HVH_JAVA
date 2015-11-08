@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.stream.Collectors.counting;
+
 public class Line {
     private List<Counter> lineElements = new ArrayList<>();
 
@@ -41,12 +43,27 @@ public class Line {
         }
     }
 
-//    public int score() {
-//        Counter aiCounter = Counter.X;
-//        System.out.println(Collections.frequency(lineElements, aiCounter));
-//            if (counter == aiCounter)
-//        }
-//        lineElements.stream().reduce(0, (sum, counter) -> sum += )
-//        return 1;
-//    }
+    public Integer score(Counter aiCounter) {
+        Counter oppCounter = aiCounter.opponentCounter();
+        if (bothCountersPresent()) {
+            return 0;
+        }
+        long count = countOfCounter(aiCounter);
+        if (count > 0) {
+            return (int) Math.pow(10, count - 1);
+        }
+        count = countOfCounter(oppCounter);
+        if (count > 0) {
+            return -1 * (int) Math.pow(10, count - 1);
+        }
+        return 0;
+    }
+
+    private Long countOfCounter(Counter counter) {
+        return lineElements.stream().filter(c -> c == counter).collect(counting());
+    }
+
+    private boolean bothCountersPresent() {
+        return lineElements.indexOf(Counter.X) >= 0 && lineElements.indexOf(Counter.O) >= 0;
+    }
 }

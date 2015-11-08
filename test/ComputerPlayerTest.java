@@ -99,11 +99,24 @@ public class ComputerPlayerTest {
     }
 
     @Test
+    public void minimaxAIPlayerCannotWin() {
+        Counter currentBoard[] = {
+                X, X, EMPTY,
+                EMPTY, O, X,
+                X, O, O
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        HashMap<String, Integer> result = computerOPlayer.calculateNextMoveWithMinimax(board);
+        System.out.println(result);
+        assertEquals((Integer) 3, result.get("Move"));
+    }
+
+    @Test
     public void minimaxShouldPickPositionToBlockOpponentWin() {
         Counter currentBoard[] = {
                 X,      X, EMPTY,
                 EMPTY,  O, X,
-                X,      O, O
+                O,      X, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
         HashMap<String, Integer> result = computerOPlayer.calculateNextMoveWithMinimax(board);

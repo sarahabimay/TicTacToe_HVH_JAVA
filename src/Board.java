@@ -172,7 +172,9 @@ public class Board {
     }
 
     public int calculateBoardScore(Counter aiCounter) {
-        return findWinner() == aiCounter ? 10 : -10;
+        return getAllLines().stream().reduce(0, (sum, line) -> sum += line.score(aiCounter), (sum1, sum2) -> sum1 + sum2);
+
+//        return findWinner() == aiCounter ? 10 : -10;
     }
 
     public List<Integer> findOpenPositions() {

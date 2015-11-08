@@ -23,11 +23,11 @@ public class ComputerPlayer extends Player {
 
     private HashMap<String, Integer> minimax(Integer depth, Counter currentCounter, Board currentBoard) {
         List<Integer> openPositions = currentBoard.findOpenPositions();
-        Integer bestScore = -10;
+        Integer bestScore = setInitialBestScore(currentCounter);
         Integer bestMove = -1;
 //        System.out.println("Entering minimax, Depth: " + depth + ", Counter: " + currentCounter);
         if (currentBoard.isGameOver() || depth == 0 || openPositions.size() == 0) {
-//            System.out.println("Depth: "+ depth + ", CurrentBoard: " + currentBoard.getCells());
+            System.out.println("Depth: "+ depth + ", CurrentBoard: " + currentBoard.getCells());
             return calculateResult(currentBoard);
         }
 
@@ -36,10 +36,10 @@ public class ComputerPlayer extends Player {
             Integer score = minimax(depth - 1, currentCounter.opponentCounter(), currentStateOfBoard).get("Score");
             if (this.counter == currentCounter && score >= bestScore ||
                     this.counter != currentCounter && score <= bestScore) {
-//                System.out.println("Previous Best Score: " + bestScore + ", Prev BestMove: " + bestMove);
+                System.out.println("Counter: " + currentCounter + ", Depth: " + depth + ", Previous Best Score: " + bestScore + ", Prev BestMove: " + bestMove);
                 bestScore = score;
                 bestMove = move;
-                System.out.println("New Best Score: " + bestScore + ", New BestMove: " + bestMove);
+                System.out.println("Depth: " + depth + ", New Best Score: " + bestScore + ", New BestMove: " + bestMove);
 //                System.out.println("CurrentCounter: " + currentCounter + ", Depth: " + depth);
 //                System.out.println("BestScore: " + bestScore + ", Best Move: " + bestMove);
             }
@@ -49,10 +49,14 @@ public class ComputerPlayer extends Player {
         return createResultMap(bestScore, bestMove);
     }
 
+    private Integer setInitialBestScore(Counter currentCounter) {
+        return currentCounter == counter ? -1000000 : 1000000;
+    }
+
 
     private HashMap<String, Integer> calculateResult(Board currentBoard) {
         HashMap<String, Integer> result = createResultMap(currentBoard.calculateBoardScore(counter), -1);
-        System.out.println("Restult: " + result);
+        System.out.println("Calculated Score: " + result);
         return result;
     }
 
