@@ -324,7 +324,7 @@ public class BoardTest {
         };
         Board board = new Board(3, arrayToList(currentBoard));
         Counter aiCounter = X;
-        assertEquals(10, board.calculateBoardScore(aiCounter));
+        assertEquals(100, board.calculateBoardScore(aiCounter));
     }
 
     @Test
@@ -336,7 +336,7 @@ public class BoardTest {
         };
         Board board = new Board(3, arrayToList(currentBoard));
         Counter aiCounter = O;
-        assertEquals(-10, board.calculateBoardScore(aiCounter));
+        assertEquals(-100, board.calculateBoardScore(aiCounter));
     }
 
     @Test

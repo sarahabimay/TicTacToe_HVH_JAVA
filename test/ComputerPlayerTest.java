@@ -69,7 +69,7 @@ public class ComputerPlayerTest {
                 O, O, EMPTY
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals((Integer) 8, computerOPlayer.calculateNextMoveWithMinimax(board).get("Move"));
+        assertEquals((Integer) 2, computerOPlayer.calculateNextMoveWithMinimax(board).get("Move"));
     }
 
     @Test
@@ -81,21 +81,19 @@ public class ComputerPlayerTest {
         };
         Board board = new Board(3, arrayToList(currentBoard));
         HashMap<String, Integer> result = computerXPlayer.calculateNextMoveWithMinimax(board);
-        System.out.println(result);
         assertEquals((Integer) 2, result.get("Move"));
     }
 
     @Test
     public void fourChoicesForMinimaxAlgorithm() {
         Counter currentBoard[] = {
-                X, X, EMPTY,
-                EMPTY, O, X,
-                EMPTY, O, EMPTY
+                X,      X,  EMPTY,
+                EMPTY,  O,  X,
+                EMPTY,  O,  EMPTY
         };
         Board board = new Board(3, arrayToList(currentBoard));
         HashMap<String, Integer> result = computerOPlayer.calculateNextMoveWithMinimax(board);
-        System.out.println(result);
-        assertEquals((Integer) 8, result.get("Move"));
+        assertEquals((Integer) 2, result.get("Move"));
     }
 
     @Test
@@ -107,7 +105,6 @@ public class ComputerPlayerTest {
         };
         Board board = new Board(3, arrayToList(currentBoard));
         HashMap<String, Integer> result = computerOPlayer.calculateNextMoveWithMinimax(board);
-        System.out.println(result);
         assertEquals((Integer) 3, result.get("Move"));
     }
 
