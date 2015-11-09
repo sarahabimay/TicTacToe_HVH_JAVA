@@ -49,7 +49,7 @@ public class ComputerPlayer extends Player {
     }
 
     private boolean noMoreMovesNeeded(Integer depth, Board currentBoard, List<Integer> openPositions) {
-        return currentBoard.isGameOver() || /*depth == 0 ||*/ openPositions.size() == 0;
+        return currentBoard.isGameOver() || depth == 0 || openPositions.size() == 0;
     }
 
     private Integer setInitialBestScore(Counter currentCounter) {
