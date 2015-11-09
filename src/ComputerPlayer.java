@@ -17,8 +17,7 @@ public class ComputerPlayer extends Player {
 
     public Integer calculateNextMoveWithMinimax(Board board) {
         DEPTH = board.numberOfOpenPositions();
-        HashMap<String, Integer> result = minimax(DEPTH, this.counter, board);
-        return indexToDisplayPosition(result);
+        return indexToDisplayPosition(minimax(DEPTH, this.counter, board));
     }
 
     private Integer indexToDisplayPosition(HashMap<String, Integer> result) {
@@ -26,23 +25,31 @@ public class ComputerPlayer extends Player {
     }
 
     private HashMap<String, Integer> minimax(Integer depth, Counter currentCounter, Board currentBoard) {
-        List<Integer> openPositions = currentBoard.findOpenPositions();
         Integer bestScore = setInitialBestScore(currentCounter);
         Integer bestMove = -1;
-        if (currentBoard.isGameOver() || depth == 0 || openPositions.size() == 0) {
+        List<Integer> openPositions = currentBoard.findOpenPositions();
+        if (noMoreMovesNeeded(depth, currentBoard, openPositions)) {
             return calculateResult(currentBoard);
         }
 
         for (Integer move : openPositions) {
             Board currentStateOfBoard = currentBoard.newBoardWithNewMove(move, currentCounter);
             Integer score = minimax(depth - 1, currentCounter.opponentCounter(), currentStateOfBoard).get(SCORE_KEY);
-            if (this.counter == currentCounter && score >= bestScore ||
-                    this.counter != currentCounter && score <= bestScore) {
+            if (foundNewBestScore(currentCounter, bestScore, score)) {
                 bestScore = score;
                 bestMove = move;
             }
         }
         return createResultMap(bestScore, bestMove);
+    }
+
+    private boolean foundNewBestScore(Counter currentCounter, Integer bestScore, Integer score) {
+        return this.counter == currentCounter && score >= bestScore ||
+                this.counter != currentCounter && score <= bestScore;
+    }
+
+    private boolean noMoreMovesNeeded(Integer depth, Board currentBoard, List<Integer> openPositions) {
+        return currentBoard.isGameOver() || /*depth == 0 ||*/ openPositions.size() == 0;
     }
 
     private Integer setInitialBestScore(Counter currentCounter) {
