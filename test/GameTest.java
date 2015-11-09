@@ -206,6 +206,19 @@ public class GameTest {
                 game.displayBoard());
     }
 
+//    @Test
+//    public void computerShouldBlockHuman() {
+//        fakeUI = generateFakeUI(Arrays.asList(
+//                1, 5, 9
+//                ), 3, 2);
+//        game.play();
+//        assertEquals("" +
+//                        "[X][O][X]\n" +
+//                        "[X][O][6]\n" +
+//                        "[O][O][X]\n",
+//                game.displayBoard());
+//    }
+
     private FakeCommandLineUI generateFakeUI(List<Integer> moves, int dimension, Integer gameType) {
         List<Integer> initialState = new ArrayList<>(moves);
         fakeUI.addDummyDimension(dimension);

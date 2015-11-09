@@ -35,7 +35,7 @@ public class BoardTest {
     public void counterPlayedInAPosition() {
         Board emptyBoard = new Board(3);
         Board boardWithMove = emptyBoard.playCounterInPosition(1, X);
-        assertEquals(X, boardWithMove.cellValue(0));
+        assertEquals(X, boardWithMove.findCounterAtIndex(0));
     }
 
     @Test
@@ -313,6 +313,51 @@ public class BoardTest {
 
         Board board = new Board(3, arrayToList(currentBoard));
         assertEquals(EMPTY, board.findWinner());
+    }
+
+    @Test
+    public void scoreTheBoardWhenAIPlayerIsX() {
+        Counter currentBoard[] = {
+                O, O, X,
+                O, X, X,
+                X, O, O
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        Counter aiCounter = X;
+        assertEquals(100, board.calculateBoardScore(aiCounter));
+    }
+
+    @Test
+    public void scoreTheBoardWhenAIPlayerIsO() {
+        Counter currentBoard[] = {
+                O, O, X,
+                O, X, X,
+                X, O, O
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        Counter aiCounter = O;
+        assertEquals(-100, board.calculateBoardScore(aiCounter));
+    }
+
+    @Test
+    public void getSeveralRemainingPositions() {
+        Counter currentBoard[] = {
+                O,      O,      EMPTY,
+                EMPTY,  X,      X,
+                X,      O,      O
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        ArrayList<Integer> openPositions = dummyListOfPositions(new int[]{2, 3});
+        assertEquals(openPositions, board.findOpenPositions());
+        assertEquals(2, board.findOpenPositions().size());
+    }
+
+    private ArrayList<Integer> dummyListOfPositions(int[] emptyPositions) {
+        ArrayList<Integer> openPositions = new ArrayList<>();
+        for (int i = 0; i < emptyPositions.length; i++) {
+            openPositions.add(emptyPositions[i]);
+        }
+        return openPositions;
     }
 
     private List<Counter> arrayToList(Counter[] initialBoard) {

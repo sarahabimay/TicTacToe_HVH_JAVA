@@ -62,7 +62,7 @@ public class CommandLineUI implements UserInterface {
     public String displayBoard(Board board) {
         String output = "";
         for (int i = 0; i < board.boardSize(); i++) {
-            output += convertRowToString(i, board.cellValue(i), board);
+            output += convertRowToString(i, board.findCounterAtIndex(i), board);
         }
         writeStream.println(output);
         return output;
