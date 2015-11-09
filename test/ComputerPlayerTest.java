@@ -1,12 +1,12 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.lessThanOrEqualTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class ComputerPlayerTest {
     public FakeCommandLineUI fakeUI;
@@ -14,7 +14,7 @@ public class ComputerPlayerTest {
     public ComputerPlayer computerOPlayer;
     private Counter X = Counter.X;
     private Counter O = Counter.O;
-    private Counter EMPTY = Counter.EMPTY;
+    private Counter E = Counter.EMPTY;
 
     @Before
     public void setUp() throws Exception {
@@ -53,107 +53,131 @@ public class ComputerPlayerTest {
     @Test
     public void oneChoiceForMinimaxAlgorithm() {
         Counter currentBoard[] = {
-                X, O, EMPTY,
+                X, O, E,
                 O, X, X,
                 X, O, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals((Integer) 2, computerXPlayer.calculateNextMoveWithMinimax(board).get("Move"));
+        assertEquals((Integer) 3, computerXPlayer.calculateNextMoveWithMinimax(board));
     }
 
     @Test
     public void twoChoicesForMinimaxAlgorithm() {
         Counter currentBoard[] = {
-                X, X, EMPTY,
+                X, X, E,
                 X, O, X,
-                O, O, EMPTY
+                O, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals((Integer) 2, computerOPlayer.calculateNextMoveWithMinimax(board).get("Move"));
+        assertEquals((Integer) 3, computerOPlayer.calculateNextMoveWithMinimax(board));
     }
 
     @Test
     public void threeChoicesForMinimaxAlgorithm() {
         Counter currentBoard[] = {
-                X, X, EMPTY,
-                EMPTY, O, X,
-                O, O, EMPTY
+                X, X, E,
+                E, O, X,
+                O, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        HashMap<String, Integer> result = computerXPlayer.calculateNextMoveWithMinimax(board);
-        assertEquals((Integer) 2, result.get("Move"));
+        Integer result = computerXPlayer.calculateNextMoveWithMinimax(board);
+        assertEquals((Integer) 3, result);
     }
 
     @Test
     public void fourChoicesForMinimaxAlgorithm() {
         Counter currentBoard[] = {
-                X,      X,  EMPTY,
-                EMPTY,  O,  X,
-                EMPTY,  O,  EMPTY
+                X, X, E,
+                E, O, X,
+                E, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        HashMap<String, Integer> result = computerOPlayer.calculateNextMoveWithMinimax(board);
-        assertEquals((Integer) 2, result.get("Move"));
+        Integer result = computerOPlayer.calculateNextMoveWithMinimax(board);
+        assertEquals((Integer) 3, result);
     }
 
     @Test
     public void minimaxAIPlayerCannotWin() {
         Counter currentBoard[] = {
-                X, X, EMPTY,
-                EMPTY, O, X,
+                X, X, E,
+                E, O, X,
                 X, O, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        HashMap<String, Integer> result = computerOPlayer.calculateNextMoveWithMinimax(board);
-        assertEquals((Integer) 3, result.get("Move"));
+        Integer result = computerOPlayer.calculateNextMoveWithMinimax(board);
+        assertEquals((Integer) 4, result);
     }
 
     @Test
     public void minimaxShouldPickPositionToBlockOpponentWin() {
         Counter currentBoard[] = {
-                X,      X, EMPTY,
-                EMPTY,  O, X,
-                O,      X, O
+                X, X, E,
+                E, O, X,
+                O, X, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        HashMap<String, Integer> result = computerOPlayer.calculateNextMoveWithMinimax(board);
-        System.out.println(result);
-        assertEquals((Integer) 2, result.get("Move"));
+        Integer result = computerOPlayer.calculateNextMoveWithMinimax(board);
+        assertEquals((Integer) 3, result);
     }
 
     @Test
-    public void calculate3x3NumberRangeForRandomCalculation() {
-        fakeUI.addDummyDimension(3);
-        fakeUI.setGameType(2);
-        Board board = new Board(3);
-        long range = computerXPlayer.calculateNumberRange(board);
-        assertEquals(9, range);
+    public void computerChoosesPositionToBlockOpponent() {
+        Counter currentBoard[] = {
+                X, E, E,
+                O, X, E,
+                E, E, E
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        Integer result = computerOPlayer.calculateNextMoveWithMinimax(board);
+        assertEquals((Integer) 9, result);
     }
 
     @Test
-    public void calculateNextMoveIsValid() {
-        fakeUI.addDummyDimension(3);
-        fakeUI.setGameType(2);
-        Board board = new Board(3);
-        Integer nextMove = computerXPlayer.calculateRandomPosition(board);
-        assertEquals(true, board.validPosition(nextMove));
+    public void oppStartsOnCornerAIPicksCenter() {
+        Counter currentBoard[] = {
+                X, E, E,
+                E, E, E,
+                E, E, E
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        Integer result = computerOPlayer.calculateNextMoveWithMinimax(board);
+        assertEquals((Integer) 5, result);
     }
 
     @Test
-    public void calculateFractionFromRangeIsValid() {
-        fakeUI.addDummyDimension(3);
-        fakeUI.setGameType(2);
-        long randomFraction = computerXPlayer.randomFractionFromRange(9);
-        assertThat(randomFraction, greaterThanOrEqualTo((long) 0));
-        assertThat(randomFraction, lessThanOrEqualTo((long) 8));
+    public void aiVsPerfectPlayerMustPick8() {
+        Counter currentBoard[] = {
+                X, E, E,
+                E, O, E,
+                E, E, E
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        Integer result = computerXPlayer.calculateNextMoveWithMinimax(board);
+        assertEquals((Integer) 9, result);
     }
 
     @Test
-    public void calculateRandomNumberIs1() {
-        fakeUI.addDummyDimension(3);
-        fakeUI.setGameType(2);
-        long randomNumber = computerXPlayer.randomNumberInRange(0);
-        assertThat(randomNumber, equalTo((long) 1));
+    public void aiVsPerfectPlayerAIMustPickAnEdge() {
+        Counter currentBoard[] = {
+                X, E, E,
+                E, O, E,
+                E, E, X
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        Integer result = computerOPlayer.calculateNextMoveWithMinimax(board);
+        assertEquals((Integer) 8, result);
+    }
+
+    @Test
+    public void aiVsPerfectPlayerAIMustPlayPerfectly() {
+        Counter currentBoard[] = {
+                X, E, E,
+                E, O, X,
+                E, E, E
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        Integer result = computerOPlayer.calculateNextMoveWithMinimax(board);
+        assertEquals((Integer) 9, result);
     }
 
     @Test
@@ -164,21 +188,6 @@ public class ComputerPlayerTest {
         Board board = new Board(3);
         board = player1.playTurn(board);
         assertEquals(true, player1.computerHasGeneratedNextMove());
-    }
-
-    @Test
-    public void randomPositionGenerator() {
-        fakeUI.setGameType(2);
-        Player player1 = new ComputerPlayer(Counter.X, fakeUI);
-        Board board = new Board(3);
-        for (int i = 0; i < 9; i++) {
-            board = player1.playTurn(board);
-            assertNotEquals("" +
-                            "[1][2][3]\n" +
-                            "[4][5][6]\n" +
-                            "[7][8][9]\n",
-                    fakeUI.displayBoard(board));
-        }
     }
 
     private List<Counter> arrayToList(Counter[] initialBoard) {
