@@ -97,7 +97,7 @@ public class ComputerPlayerTest {
     }
 
     @Test
-    public void minimaxAIPlayerCannotWin() {
+    public void minimaxAIPlayerForcedToLose() {
         Counter currentBoard[] = {
                 X, X, E,
                 E, O, X,
