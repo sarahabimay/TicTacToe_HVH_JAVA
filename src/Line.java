@@ -50,13 +50,17 @@ public class Line {
         }
         long count = countOfCounter(aiCounter);
         if (count > 0) {
-            return (int) Math.pow(10, count - 1);
+            return calculatePowerOfTen(count);
         }
         count = countOfCounter(oppCounter);
         if (count > 0) {
-            return -1 * (int) Math.pow(10, count - 1);
+            return -1 * calculatePowerOfTen(count);
         }
         return 0;
+    }
+
+    private int calculatePowerOfTen(long count) {
+        return (int) Math.pow(10, count - 1);
     }
 
     private Long countOfCounter(Counter counter) {
