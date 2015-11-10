@@ -31,12 +31,15 @@ public class ComputerPlayer extends Player {
     private HashMap<String, Integer> aBMinimax(Integer depth, Counter currentCounter, int alpha, int beta, Board currentBoard) {
         Integer bestScore = setInitialBestScore(currentCounter);
         Integer bestMove = -1;
-        List<Integer> openPositions = currentBoard.findOpenPositions();
-        if (noMoreMovesNeeded(depth, currentBoard, openPositions)) {
+//        List<Integer> openPositions = currentBoard.findOpenPositions();
+        if (noMoreMovesNeeded(depth, currentBoard)) {
             return calculateResult(currentBoard);
         }
 
-        for (Integer move : openPositions) {
+        for (Integer move : currentBoard.findOpenPositions()) {
+            if ((move == 1 || move == 8) && depth == 7){
+//                System.out.println("debug here");
+            }
             Board currentStateOfBoard = currentBoard.newBoardWithNewMove(move, currentCounter);
             Integer score = aBMinimax(depth - 1, currentCounter.opponentCounter(), alpha, beta, currentStateOfBoard).get(SCORE_KEY);
             if (newBestScore(currentCounter, bestScore, score)) {
@@ -45,16 +48,24 @@ public class ComputerPlayer extends Player {
             }
             alpha = newAlpha(alpha, bestScore, currentCounter);
             beta = newBeta(beta, bestScore, currentCounter);
+            if ((move == 1 || move == 8) && depth == 7){
+//                System.out.println("debug here");
+            }
             if (beta <= alpha){
+                if ((move == 1 || move == 8) && depth == 7){
+//                    System.out.println("debug here");
+                }
                 break;
             }
+        }
+        if ((bestMove == 1 || bestMove == 8) && depth == 7){
+//            System.out.println("debug here");
         }
         return createResultMap(bestScore, bestMove);
     }
 
     private int newAlpha(int alpha, Integer score, Counter currentCounter) {
         if (currentCounter == this.counter){
-//            System.out.println("Maximum Alpha: " + Math.max(alpha, score));
             return Math.max(alpha, score);
         }
         return alpha;
@@ -62,7 +73,6 @@ public class ComputerPlayer extends Player {
 
     private int newBeta(int beta, Integer score, Counter currentCounter) {
         if (currentCounter != this.counter) {
-//            System.out.println("Minimum Beta: " + Math.min(beta, score));
             return Math.min(beta, score);
         }
         return beta;
@@ -76,7 +86,7 @@ public class ComputerPlayer extends Player {
         Integer bestScore = setInitialBestScore(currentCounter);
         Integer bestMove = -1;
         List<Integer> openPositions = currentBoard.findOpenPositions();
-        if (noMoreMovesNeeded(depth, currentBoard, openPositions)) {
+        if (noMoreMovesNeeded(depth, currentBoard)) {
             return calculateResult(currentBoard);
         }
 
@@ -92,12 +102,12 @@ public class ComputerPlayer extends Player {
     }
 
     private boolean newBestScore(Counter currentCounter, Integer bestScore, Integer score) {
-        return this.counter == currentCounter && score > bestScore ||
-                this.counter != currentCounter && score < bestScore;
+        return this.counter == currentCounter && score >= bestScore ||
+                this.counter != currentCounter && score <= bestScore;
     }
 
-    private boolean noMoreMovesNeeded(Integer depth, Board currentBoard, List<Integer> openPositions) {
-        return currentBoard.isGameOver() || depth == 0 || openPositions.size() == 0;
+    private boolean noMoreMovesNeeded(Integer depth, Board currentBoard) {
+        return currentBoard.isGameOver() || depth == 0 ;//|| openPositions.size() == 0;
     }
 
     private Integer setInitialBestScore(Counter currentCounter) {
