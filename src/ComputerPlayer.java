@@ -25,8 +25,8 @@ public class ComputerPlayer extends Player {
 
     public Integer calculateNextMoveWithAlphaBeta(Board board) {
         DEPTH = board.numberOfOpenPositions();
-        return indexToDisplayPosition(aBMinimaxAlternative(DEPTH, this.counter, INITIAL_ALPHA, INITIAL_BETA, board));
-//        return indexToDisplayPosition(aBMinimax(DEPTH, this.counter, INITIAL_ALPHA, INITIAL_BETA, board));
+//        return indexToDisplayPosition(aBMinimaxAlternative(DEPTH, this.counter, INITIAL_ALPHA, INITIAL_BETA, board));
+        return indexToDisplayPosition(aBMinimax(DEPTH, this.counter, INITIAL_ALPHA, INITIAL_BETA, board));
     }
 
     private HashMap<String, Integer> aBMinimax(Integer depth, Counter currentCounter, int alpha, int beta, Board currentBoard) {
