@@ -1,14 +1,18 @@
 import java.util.HashMap;
 import java.util.List;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class ComputerPlayer extends Player {
-    public final int INITIAL_SCORE = 1000000;
-    private int DISPLAY_POSITION_OFFSET = 1;
-    private int INITIAL_ALPHA = -10000000;
-    private int INITIAL_BETA = 10000000;
-    private String MOVE_KEY = "Move";
-    private String SCORE_KEY = "Score";
-    private Integer DEPTH = 0;
+    private static final int SCORE_FOR_DRAW = 0;
+    public static final int INITIAL_SCORE = 1000000;
+    private static int DISPLAY_POSITION_OFFSET = 1;
+    private static int INITIAL_ALPHA = -10000000;
+    private static int INITIAL_BETA = 10000000;
+    private static String MOVE_KEY = "Move";
+    private static String SCORE_KEY = "Score";
+    private static Integer DEPTH = 0;
 
     public ComputerPlayer(Counter counter, UserInterface userInterface) {
         super(counter, userInterface);
@@ -23,7 +27,7 @@ public class ComputerPlayer extends Player {
         return indexToDisplayPosition(minimax(DEPTH, this.counter, board));
     }
 
-    public Integer calculateNextMoveWithAlphaBeta(Board board) {
+    public int calculateNextMoveWithAlphaBeta(Board board) {
         DEPTH = board.numberOfOpenPositions();
 //        return indexToDisplayPosition(aBMinimaxAlternative(DEPTH, this.counter, INITIAL_ALPHA, INITIAL_BETA, board));
         return indexToDisplayPosition(aBMinimax(DEPTH, this.counter, INITIAL_ALPHA, INITIAL_BETA, board));
@@ -32,20 +36,32 @@ public class ComputerPlayer extends Player {
     private HashMap<String, Integer> aBMinimax(Integer depth, Counter currentCounter, int alpha, int beta, Board currentBoard) {
         Integer bestScore = setInitialBestScore(currentCounter);
         Integer bestMove = -1;
-        if (noMoreMovesNeeded(depth, currentBoard)) {
+        if (noMoreMovesAvailable(depth, currentBoard)) {
             return calculateResult(currentBoard);
         }
 
-        for (Integer move : currentBoard.findOpenPositions()) {
+        for (Integer move : currentBoard.remainingPositions()) {
+            if ((move == 2 || move == 1 || move == 5) && depth == 3){
+//                System.out.println("debug");
+            }
             Board currentStateOfBoard = currentBoard.newBoardWithNewMove(move, currentCounter);
             Integer score = aBMinimax(depth - 1, currentCounter.opponentCounter(), alpha, beta, currentStateOfBoard).get(SCORE_KEY);
             if (newBestScore(currentCounter, bestScore, score)) {
+                if ((move == 2 || move == 1 || move == 5) && depth == 3){
+//                    System.out.println("debug");
+                }
                 bestScore = score;
                 bestMove = move;
             }
             alpha = newAlpha(alpha, score, currentCounter);
             beta = newBeta(beta, score, currentCounter);
+            if ((move == 2 || move == 1 || move == 5) && depth == 3){
+//                System.out.println("debug");
+            }
             if (beta <= alpha) {
+                if ((move == 2 || move == 1 || move == 5) && depth == 3){
+//                    System.out.println("debug");
+                }
                 break;
             }
         }
@@ -55,12 +71,12 @@ public class ComputerPlayer extends Player {
     private HashMap<String, Integer> aBMinimaxAlternative(Integer depth, Counter currentCounter, int alpha, int beta, Board currentBoard) {
         Integer bestScore = setInitialBestScore(currentCounter);
         Integer bestMove = -1;
-        if (noMoreMovesNeeded(depth, currentBoard)) {
+        if (noMoreMovesAvailable(depth, currentBoard)) {
             return calculateResult(currentBoard);
         }
         if (currentCounter == this.counter) {
             bestScore = -1000000;
-            for (Integer move : currentBoard.findOpenPositions()) {
+            for (Integer move : currentBoard.remainingPositions()) {
                 Board currentStateOfBoard = currentBoard.newBoardWithNewMove(move, currentCounter);
                 Integer score = aBMinimax(depth - 1, currentCounter.opponentCounter(), alpha, beta, currentStateOfBoard).get(SCORE_KEY);
                 if (this.counter == currentCounter && score >= bestScore) {
@@ -76,7 +92,7 @@ public class ComputerPlayer extends Player {
             }
         } else if (currentCounter != this.counter) {
             bestScore = 1000000;
-            for (Integer move : currentBoard.findOpenPositions()) {
+            for (Integer move : currentBoard.remainingPositions()) {
                 Board currentStateOfBoard = currentBoard.newBoardWithNewMove(move, currentCounter);
                 Integer score = aBMinimax(depth - 1, currentCounter.opponentCounter(), alpha, beta, currentStateOfBoard).get(SCORE_KEY);
                 if (this.counter != currentCounter && score <= bestScore) {
@@ -97,27 +113,27 @@ public class ComputerPlayer extends Player {
 
     private int newAlpha(int alpha, Integer score, Counter currentCounter) {
         if (currentCounter == this.counter) {
-            return Math.max(alpha, score);
+            return max(alpha, score);
         }
         return alpha;
     }
 
     private int newBeta(int beta, Integer score, Counter currentCounter) {
         if (currentCounter != this.counter) {
-            return Math.min(beta, score);
+            return min(beta, score);
         }
         return beta;
     }
 
-    private Integer indexToDisplayPosition(HashMap<String, Integer> result) {
+    private int indexToDisplayPosition(HashMap<String, Integer> result) {
         return result.get(MOVE_KEY) + DISPLAY_POSITION_OFFSET;
     }
 
     private HashMap<String, Integer> minimax(Integer depth, Counter currentCounter, Board currentBoard) {
         Integer bestScore = setInitialBestScore(currentCounter);
         Integer bestMove = -1;
-        List<Integer> openPositions = currentBoard.findOpenPositions();
-        if (noMoreMovesNeeded(depth, currentBoard)) {
+        List<Integer> openPositions = currentBoard.remainingPositions();
+        if (noMoreMovesAvailable(depth, currentBoard)) {
             return calculateResult(currentBoard);
         }
 
@@ -133,11 +149,11 @@ public class ComputerPlayer extends Player {
     }
 
     private boolean newBestScore(Counter currentCounter, Integer bestScore, Integer score) {
-        return this.counter == currentCounter && score >= bestScore ||
-                this.counter != currentCounter && score <= bestScore;
+        return this.counter == currentCounter && score > bestScore ||
+                this.counter != currentCounter && score < bestScore;
     }
 
-    private boolean noMoreMovesNeeded(Integer depth, Board currentBoard) {
+    private boolean noMoreMovesAvailable(int depth, Board currentBoard) {
         return currentBoard.isGameOver() || depth == 0;
     }
 
@@ -146,13 +162,22 @@ public class ComputerPlayer extends Player {
     }
 
     private HashMap<String, Integer> calculateResult(Board currentBoard) {
-        HashMap<String, Integer> result = createResultMap(currentBoard.calculateBoardScore(this.counter), -1);
-        return result;
+        double score = INITIAL_SCORE / (currentBoard.boardSize() - currentBoard.numberOfOpenPositions());
+
+        if (currentBoard.findWinner().equals(Counter.EMPTY)) {
+            return createResultMap(SCORE_FOR_DRAW, -1);
+        } else if (currentBoard.findWinner().equals(this.counter)) {
+            return createResultMap(score, -1);
+        }
+
+        return createResultMap(-score, -1);
+//        HashMap<String, Integer> result = createResultMap(currentBoard.calculateBoardScore(this.counter), -1);
+//        return result;
     }
 
-    private HashMap<String, Integer> createResultMap(int score, int move) {
+    private HashMap<String, Integer> createResultMap(double score, int move) {
         HashMap<String, Integer> result = new HashMap<>();
-        result.put(SCORE_KEY, score);
+        result.put(SCORE_KEY, (int)score);
         result.put(MOVE_KEY, move);
         return result;
     }

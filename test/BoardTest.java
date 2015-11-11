@@ -348,8 +348,8 @@ public class BoardTest {
         };
         Board board = new Board(3, arrayToList(currentBoard));
         ArrayList<Integer> openPositions = dummyListOfPositions(new int[]{2, 3});
-        assertEquals(openPositions, board.findOpenPositions());
-        assertEquals(2, board.findOpenPositions().size());
+        assertEquals(openPositions, board.remainingPositions());
+        assertEquals(2, board.remainingPositions().size());
     }
 
     private ArrayList<Integer> dummyListOfPositions(int[] emptyPositions) {
