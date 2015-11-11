@@ -171,13 +171,7 @@ public class Board {
         return initialCells;
     }
 
-    public int calculateBoardScore(Counter aiCounter) {
-        return getAllLines().stream().reduce(0, (sum, line) -> sum += line.score(aiCounter), (sum1, sum2) -> sum1 + sum2);
-
-//        return findWinner() == aiCounter ? 10 : -10;
-    }
-
-    public List<Integer> findOpenPositions() {
+    public List<Integer> remainingPositions() {
         return range(0, cells.size())
                 .filter(p -> cells.get(p) == Counter.EMPTY)
                 .mapToObj(i -> i)
