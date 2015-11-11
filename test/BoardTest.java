@@ -316,30 +316,6 @@ public class BoardTest {
     }
 
     @Test
-    public void scoreTheBoardWhenAIPlayerIsX() {
-        Counter currentBoard[] = {
-                O, O, X,
-                O, X, X,
-                X, O, O
-        };
-        Board board = new Board(3, arrayToList(currentBoard));
-        Counter aiCounter = X;
-        assertEquals(100, board.calculateBoardScore(aiCounter));
-    }
-
-    @Test
-    public void scoreTheBoardWhenAIPlayerIsO() {
-        Counter currentBoard[] = {
-                O, O, X,
-                O, X, X,
-                X, O, O
-        };
-        Board board = new Board(3, arrayToList(currentBoard));
-        Counter aiCounter = O;
-        assertEquals(-100, board.calculateBoardScore(aiCounter));
-    }
-
-    @Test
     public void getSeveralRemainingPositions() {
         Counter currentBoard[] = {
                 O,      O,      EMPTY,

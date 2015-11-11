@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.stream.Collectors.counting;
-
 public class Line {
     private List<Counter> lineElements = new ArrayList<>();
 
@@ -35,39 +33,5 @@ public class Line {
 
     public Counter findWinner() {
         return hasAWinner() ? lineElements.get(0) : Counter.EMPTY;
-    }
-
-    public void printLine() {
-        for (Counter c : lineElements) {
-            System.out.println(c + "\t");
-        }
-    }
-
-    public Integer score(Counter aiCounter) {
-        Counter oppCounter = aiCounter.opponentCounter();
-        if (bothCountersPresent()) {
-            return 0;
-        }
-        long count = countOfCounter(aiCounter);
-        if (count > 0) {
-            return calculatePowerOfTen(count);
-        }
-        count = countOfCounter(oppCounter);
-        if (count > 0) {
-            return -1 * calculatePowerOfTen(count);
-        }
-        return 0;
-    }
-
-    private int calculatePowerOfTen(long count) {
-        return (int) Math.pow(10, count - 1);
-    }
-
-    private Long countOfCounter(Counter counter) {
-        return lineElements.stream().filter(c -> c == counter).collect(counting());
-    }
-
-    private boolean bothCountersPresent() {
-        return lineElements.indexOf(Counter.X) >= 0 && lineElements.indexOf(Counter.O) >= 0;
     }
 }
