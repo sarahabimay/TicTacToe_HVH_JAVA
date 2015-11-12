@@ -5,10 +5,13 @@ public class HumanPlayer extends Player {
     }
 
     public Board playTurn(Board board) {
-        Integer nextPosition = userInterface.requestNextPosition();
+        int nextPosition = userInterface.requestNextPosition();
         while (!board.validPosition(nextPosition)) {
             nextPosition = userInterface.requestNextPosition();
         }
         return board.playCounterInPosition(nextPosition, counter);
+    }
+    Board playTurn(Board board, int newPosition) {
+        return board.playCounterInPosition(newPosition, counter);
     }
 }

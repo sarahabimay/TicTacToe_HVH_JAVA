@@ -33,11 +33,15 @@ public class Board {
         this.cells = generateEmptyCells();
     }
 
-    public Board playCounterInPosition(Integer position, Counter counter) {
+    public Board playCounterInPosition(int position, Counter counter) {
         if (validPosition(position)) {
             cells.set(position - POSITIVE_OFFSET, counter);
         }
         return new Board(cells);
+    }
+
+    public boolean isEmpty() {
+        return remainingPositions().size() == boardSize();
     }
 
     public boolean isGameOver() {
@@ -48,33 +52,8 @@ public class Board {
         return foundWinInRow() || foundWinInColumn() || foundWinInDiagonal();
     }
 
-    protected boolean foundWinInRow() {
-        return getRows().stream().anyMatch(Line::hasAWinner);
-    }
-
-    protected boolean foundWinInColumn() {
-        return getColumns().stream().anyMatch(Line::hasAWinner);
-    }
-
     public boolean foundWinInDiagonal() {
         return getDiagonals().stream().anyMatch(Line::hasAWinner);
-    }
-
-    protected List<Line> getRows() {
-        List<List<Counter>> rowLines = Lists.partition(cells, dimension);
-        return rowLines.stream().map(Line::new).collect(toList());
-    }
-
-    protected List<Line> getColumns() {
-        return range(0, dimension).mapToObj(i -> new Line(getColumnCells(i))).collect(toList());
-    }
-
-    protected List<Line> getDiagonals() {
-        return Arrays.stream(new int[]{0, dimension - 1}).mapToObj(i -> new Line(getDiagonalCells(i))).collect(toList());
-    }
-
-    protected boolean isAWinner() {
-        return findWinner() != Counter.EMPTY;
     }
 
     public Counter findWinner() {
@@ -82,37 +61,74 @@ public class Board {
         return (lineOptional.isPresent()) ? lineOptional.get().findWinner() : Counter.EMPTY;
     }
 
-    public boolean validPosition(Integer position) {
-        return position != null && positionIsWithinRange(position) && !cellIsOccupied(position - POSITIVE_OFFSET);
+    public boolean validPosition(int position) {
+        return positionIsWithinRange(position) && !cellIsOccupied(position - POSITIVE_OFFSET);
     }
 
     public boolean cellIsOccupied(int cellIndex) {
         return cells.get(cellIndex) == Counter.X || cells.get(cellIndex) == Counter.O;
     }
 
-    protected int numberOfOpenPositions() {
+    public List<Integer> remainingPositions() {
+        return range(0, cells.size())
+                .filter(p -> cells.get(p) == Counter.EMPTY)
+                .mapToObj(i -> i)
+                .collect(toList());
+    }
+
+    public Board newBoardWithNewMove(int move, Counter currentCounter) {
+        List<Counter> newCells = newCellsWithNewMove(move, currentCounter);
+        return new Board(newCells);
+    }
+
+    boolean foundWinInRow() {
+        return getRows().stream().anyMatch(Line::hasAWinner);
+    }
+
+    boolean foundWinInColumn() {
+        return getColumns().stream().anyMatch(Line::hasAWinner);
+    }
+
+    List<Line> getRows() {
+        List<List<Counter>> rowLines = Lists.partition(cells, dimension);
+        return rowLines.stream().map(Line::new).collect(toList());
+    }
+
+    List<Line> getColumns() {
+        return range(0, dimension).mapToObj(i -> new Line(getColumnCells(i))).collect(toList());
+    }
+
+    List<Line> getDiagonals() {
+        return Arrays.stream(new int[]{0, dimension - 1}).mapToObj(i -> new Line(getDiagonalCells(i))).collect(toList());
+    }
+
+    boolean isAWinner() {
+        return findWinner() != Counter.EMPTY;
+    }
+
+    int numberOfOpenPositions() {
         return boardSize() - numberOfPositionsTaken();
     }
 
-    protected ArrayList<String> findPositions(Counter counter) {
-        ArrayList<String> counterPositions = new ArrayList<>();
+    ArrayList<Integer> findPositions(Counter counter) {
+        ArrayList<Integer> counterPositions = new ArrayList<>();
         for (int i = 0; i < cells.size(); i++) {
             if (findCounterAtIndex(i) == counter) {
-                counterPositions.add(String.valueOf(i));
+                counterPositions.add(i);
             }
         }
         return counterPositions;
     }
 
-    protected List<Counter> getCells() {
+    List<Counter> getCells() {
         return cells;
     }
 
-    protected int boardSize() {
+    int boardSize() {
         return dimension * dimension;
     }
 
-    protected Counter findCounterAtIndex(int startIndex) {
+    Counter findCounterAtIndex(int startIndex) {
         return cells.get(startIndex);
     }
 
@@ -169,18 +185,6 @@ public class Board {
             initialCells.add(Counter.EMPTY);
         }
         return initialCells;
-    }
-
-    public List<Integer> remainingPositions() {
-        return range(0, cells.size())
-                .filter(p -> cells.get(p) == Counter.EMPTY)
-                .mapToObj(i -> i)
-                .collect(toList());
-    }
-
-    public Board newBoardWithNewMove(Integer move, Counter currentCounter) {
-        List<Counter> newCells = newCellsWithNewMove(move, currentCounter);
-        return new Board(newCells);
     }
 
     private List<Counter> newCellsWithNewMove(Integer move, Counter counter) {

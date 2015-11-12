@@ -10,7 +10,7 @@ public class CommandLineUI implements UserInterface {
         this.writeStream = new PrintStream(System.out);
     }
 
-    public Integer requestBoardSize() {
+    public int requestBoardSize() {
         Integer dimension = 0;
         while (!validate(dimension, this::validateDimension)) {
             writeStream.println("Please provide the dimensions of the board:\n");
@@ -19,7 +19,7 @@ public class CommandLineUI implements UserInterface {
         return dimension;
     }
 
-    public Integer requestGameType() {
+    public int requestGameType() {
         Integer choice = -1;
         while (!validate(choice, this::validGameType)) {
             writeStream.println("Human vs Human(1) or Human vs Computer(2) or Computer vs Human(3)?:\n");
@@ -28,7 +28,7 @@ public class CommandLineUI implements UserInterface {
         return choice;
     }
 
-    public Integer requestNextPosition() {
+    public int requestNextPosition() {
         Integer position = 0;
         while (!validate(position, this::validPosition)) {
             String prompt = "Please enter the position number for your next move:\n";
@@ -45,10 +45,6 @@ public class CommandLineUI implements UserInterface {
             instruction = readInput();
         }
         return doPlayAgain(instruction);
-    }
-
-    public void outputToUI(String output) {
-        writeStream.println(output);
     }
 
     public void displayResult(Counter winner) {

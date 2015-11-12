@@ -16,12 +16,12 @@ public class FakeCommandLineUI implements UserInterface {
     private boolean haveValidatedGameType = false;
     private int dummyDimension = 0;
 
-    public Integer requestBoardSize() {
+    public int requestBoardSize() {
         userHasBeenAskedForDimension = true;
         return dummyDimension;
     }
 
-    public Integer requestGameType() {
+    public int requestGameType() {
         haveAskedUserForGameType = true;
         if (!validate(playerType, this::validGameType)) {
             playerType = -1;
@@ -29,7 +29,7 @@ public class FakeCommandLineUI implements UserInterface {
         return playerType;
     }
 
-    public Integer requestNextPosition() {
+    public int requestNextPosition() {
         Integer nextMove = dummyInputs.remove(0);
         while (!validDummyPosition(nextMove)) {
             nextMove = dummyInputs.size() > 0 ? dummyInputs.remove(0) : null;

@@ -45,13 +45,13 @@ public class Game {
         playAgain();
     }
 
-    public void selectPlayers(Integer newGameType) {
+    public void selectPlayers(int newGameType) {
         ArrayList<Player> bothPlayers = playerFactory.generatePlayersFor(newGameType);
         this.players.put(Counter.X, bothPlayers.get(0));
         this.players.put(Counter.O, bothPlayers.get(1));
     }
 
-    public Integer requestGameType() {
+    public int requestGameType() {
         return userInterface.requestGameType();
     }
 

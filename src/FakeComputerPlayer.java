@@ -12,6 +12,10 @@ public class FakeComputerPlayer extends Player {
         this.dummyPositions = new ArrayList<>();
     }
 
+    Board playTurn(Board board, int newPosition) {
+        return board;
+    }
+
     Board playTurn(Board board) {
         hasGeneratedNextMove = true;
         Integer nextPosition = calculateNextMove(board);
