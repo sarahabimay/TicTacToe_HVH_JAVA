@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 public class UserInterfaceTest {
 
-    public FakeCommandLineUI fakeUI;
+    private FakeCommandLineUI fakeUI;
 
     @Before
     public void setUp() throws Exception {

@@ -9,8 +9,8 @@ import static org.junit.Assert.assertEquals;
 
 public class GameTest {
 
-    public FakeCommandLineUI fakeUI;
-    public Game game;
+    private FakeCommandLineUI fakeUI;
+    private Game game;
 
     @Before
     public void setUp() {

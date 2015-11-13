@@ -9,7 +9,6 @@ public class PlayerFactory {
 
     public PlayerFactory() {
         registerOptionsToGameType();
-        registerGameTypeWithPlayerTypes();
     }
 
     public PlayerFactory(UserInterface ui) {

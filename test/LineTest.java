@@ -8,8 +8,8 @@ import static org.junit.Assert.assertEquals;
 
 public class LineTest {
 
-    public Line fourElements;
-    public Line emptyThreeElements;
+    private Line fourElements;
+    private Line emptyThreeElements;
 
     @Before
     public void setUp() throws Exception {

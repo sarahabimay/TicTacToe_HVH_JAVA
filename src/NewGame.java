@@ -71,4 +71,9 @@ public class NewGame {
     public void playMove(Player playerA) {
         board = playerA.playTurn(board);
     }
+
+    public void play(int dimension, int gameType) {
+        setBoardDimension(dimension);
+        setGameType(gameType);
+    }
 }

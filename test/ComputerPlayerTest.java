@@ -10,9 +10,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 public class ComputerPlayerTest {
-    public FakeCommandLineUI fakeUI;
-    public ComputerPlayer computerXPlayer;
-    public ComputerPlayer computerOPlayer;
+    private FakeCommandLineUI fakeUI;
+    private ComputerPlayer computerXPlayer;
+    private ComputerPlayer computerOPlayer;
     private Counter X = Counter.X;
     private Counter O = Counter.O;
     private Counter E = Counter.EMPTY;
