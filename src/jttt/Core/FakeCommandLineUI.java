@@ -1,3 +1,5 @@
+package jttt.Core;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntPredicate;
@@ -108,7 +110,7 @@ public class FakeCommandLineUI implements UserInterface {
         haveDisplayedResultToUser = true;
     }
 
-    protected List<Integer> aListOfMoves(Integer[] moves) {
+    public List<Integer> aListOfMoves(Integer[] moves) {
         List<Integer> listOfMoves = new ArrayList<>();
         for (int i = 0; i < moves.length; i++) {
             listOfMoves.add(moves[i]);

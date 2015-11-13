@@ -1,3 +1,5 @@
+package jttt.Core;
+
 public class HumanPlayer extends Player {
 
     public HumanPlayer(Counter counter, UserInterface userInterface) {

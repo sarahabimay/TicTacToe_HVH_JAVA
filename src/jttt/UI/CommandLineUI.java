@@ -1,3 +1,9 @@
+package jttt.UI;
+
+import jttt.Core.Board;
+import jttt.Core.Counter;
+import jttt.Core.UserInterface;
+
 import java.io.*;
 import java.util.function.IntPredicate;
 
@@ -65,7 +71,7 @@ public class CommandLineUI implements UserInterface {
     }
 
     public void printCurrentCounter(Counter currentCounter) {
-        writeStream.println(String.format("Board after %s's move: \n", currentCounter.name()));
+        writeStream.println(String.format("jttt.Core.Board after %s's move: \n", currentCounter.name()));
     }
 
     public boolean validate(Integer choiceFromInput, IntPredicate isValidChoice) {
@@ -89,7 +95,7 @@ public class CommandLineUI implements UserInterface {
     }
 
     private void announceWinner(Counter winner) {
-        writeStream.println(String.format("We have a Winner! Player: %s\n", winner.toString()));
+        writeStream.println(String.format("We have a Winner! jttt.Core.Player: %s\n", winner.toString()));
     }
 
     private void announceDraw() {

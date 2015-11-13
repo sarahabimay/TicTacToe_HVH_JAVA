@@ -1,3 +1,6 @@
+package jttt.Core;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,30 +24,30 @@ public class NewGameTest {
     @Test
     public void noBoardCreatedYet() {
         NewGame game = new NewGame();
-        assertEquals(0, game.getBoardSize());
+        Assert.assertEquals(0, game.getBoardSize());
     }
 
     @Test
     public void gameReceivesBoardSize() {
         game.setBoardDimension(3);
-        assertEquals(9, game.getBoardSize());
+        Assert.assertEquals(9, game.getBoardSize());
     }
 
     @Test
     public void gameReceivesValidGameType() {
         game.setBoardDimension(3);
-        game.setGameType(1); //1 == GameType.HVH
+        game.setGameType(1); //1 == jttt.Core.GameType.HVH
         game.createPlayers();
 
-        assertEquals(HumanPlayer.class, game.getPlayers().get(0).getClass());
-        assertEquals(HumanPlayer.class, game.getPlayers().get(1).getClass());
+        Assert.assertEquals(HumanPlayer.class, game.getPlayers().get(0).getClass());
+        Assert.assertEquals(HumanPlayer.class, game.getPlayers().get(1).getClass());
     }
 
     @Test
     public void askedForFirstPlayer() {
         setUpGame(3, 1);
         Player playerA = game.getNextPlayer();
-        assertEquals(Counter.X, playerA.getCounter());
+        Assert.assertEquals(Counter.X, playerA.getCounter());
     }
 
     @Test
@@ -52,7 +55,7 @@ public class NewGameTest {
         setUpGame(3, 1);
         Player playerA = game.getNextPlayer();
         game.playMove(1, playerA);
-        assertEquals(Counter.X, game.getBoard().getCells().get(0));
+        Assert.assertEquals(Counter.X, game.getBoard().getCells().get(0));
     }
 
     @Test
@@ -61,7 +64,7 @@ public class NewGameTest {
         Player playerA = game.getNextPlayer();
         game.playMove(1, playerA);
         Player playerB = game.getNextPlayer();
-        assertEquals(Counter.O, playerB.getCounter());
+        Assert.assertEquals(Counter.O, playerB.getCounter());
     }
 
     @Test
@@ -70,17 +73,17 @@ public class NewGameTest {
         Player playerA = game.getNextPlayer();
         // maybe game.getNextPlayerMove() then game.playMove() but then
         // either the UI would need to know about player types or
-        // the Player will need to know about the UI
+        // the jttt.Core.Player will need to know about the UI
         // I can't yet see yet how this should go
         game.playMove(playerA);
-        assertEquals(Counter.X, game.getBoard().getCells().get(0));
+        Assert.assertEquals(Counter.X, game.getBoard().getCells().get(0));
     }
 
     @Test
     public void gameAskedForBoard() {
         setUpGame(3, 1);
         Board board = new Board(3);
-        assertEquals(board.isEmpty(), game.getBoard().isEmpty());
+        Assert.assertEquals(board.isEmpty(), game.getBoard().isEmpty());
     }
 
     @Test
@@ -106,7 +109,7 @@ public class NewGameTest {
 
     private void setUpGame(Integer dimension, Integer gameType) {
         game.setBoardDimension(dimension);
-        game.setGameType(gameType); //1 == GameType.HVH
+        game.setGameType(gameType); //1 == jttt.Core.GameType.HVH
         game.createPlayers();
     }
 

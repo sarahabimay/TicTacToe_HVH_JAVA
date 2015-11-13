@@ -1,9 +1,14 @@
+package jttt.Core.UI;
+
+import jttt.Core.Board;
+import jttt.Core.FakeCommandLineUI;
+import jttt.Core.PlayerFactory;
+import jttt.UI.CommandLineUI;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-public class UserInterfaceTest {
+public class CommandLineUITest {
 
     private FakeCommandLineUI fakeUI;
 
@@ -16,7 +21,7 @@ public class UserInterfaceTest {
     public void emptyBoardIsDisplayedCorrectly() {
         CommandLineUI ui = new CommandLineUI();
         Board board = new Board(3);
-        assertEquals("" +
+        Assert.assertEquals("" +
                         "[1][2][3]\n" +
                         "[4][5][6]\n" +
                         "[7][8][9]\n",
@@ -26,25 +31,25 @@ public class UserInterfaceTest {
     @Test
     public void userChoosesToQuit() {
         fakeUI.addDummyPlayAgainChoice(1);
-        assertEquals(false, fakeUI.requestPlayAgain());
+        Assert.assertEquals(false, fakeUI.requestPlayAgain());
     }
 
     @Test
     public void userChoosesToReplay() {
         fakeUI.addDummyPlayAgainChoice(2);
-        assertEquals(true, fakeUI.requestPlayAgain());
+        Assert.assertEquals(true, fakeUI.requestPlayAgain());
     }
 
     @Test
     public void invalidEmptyBoardDimension() {
         fakeUI.addDummyHumanMoves(fakeUI.aListOfMoves(new Integer[]{}));
-        assertEquals(false, fakeUI.validate(fakeUI.requestBoardSize(), fakeUI::validateDimension));
+        Assert.assertEquals(false, fakeUI.validate(fakeUI.requestBoardSize(), fakeUI::validateDimension));
     }
 
     @Test
     public void invalidNonEmptyBoardDimension() {
         fakeUI.addDummyHumanMoves(fakeUI.aListOfMoves(new Integer[]{1, 2, 3, 4}));
-        assertEquals(false, fakeUI.validate(fakeUI.requestBoardSize(), fakeUI::validateDimension));
+        Assert.assertEquals(false, fakeUI.validate(fakeUI.requestBoardSize(), fakeUI::validateDimension));
     }
 
     @Test
@@ -52,7 +57,7 @@ public class UserInterfaceTest {
         fakeUI.addDummyHumanMoves(fakeUI.aListOfMoves(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9}));
         fakeUI.setGameType(1);
         fakeUI.addDummyDimension(3);
-        assertEquals(true, fakeUI.validate(fakeUI.requestBoardSize(), fakeUI::validateDimension));
+        Assert.assertEquals(true, fakeUI.validate(fakeUI.requestBoardSize(), fakeUI::validateDimension));
     }
 
     @Test
@@ -60,15 +65,15 @@ public class UserInterfaceTest {
         Board board = new Board(3);
         fakeUI.addDummyHumanMoves(fakeUI.aListOfMoves(new Integer[]{20, 1}));
         fakeUI.addDummyDimension(3);
-        assertEquals(false, board.validPosition(fakeUI.requestNextPosition()));
-        assertEquals(true, board.validPosition(fakeUI.requestNextPosition()));
+        Assert.assertEquals(false, board.validPosition(fakeUI.requestNextPosition()));
+        Assert.assertEquals(true, board.validPosition(fakeUI.requestNextPosition()));
     }
 
     @Test
     public void invalidGameType() {
         fakeUI.addDummyHumanMoves(fakeUI.aListOfMoves(new Integer[]{}));
         fakeUI.setGameType(5);
-        assertEquals(false, PlayerFactory.validPlayerTypes(fakeUI.requestGameType()));
+        Assert.assertEquals(false, PlayerFactory.validPlayerTypes(fakeUI.requestGameType()));
     }
 
     @Test
@@ -76,7 +81,7 @@ public class UserInterfaceTest {
         fakeUI.addDummyHumanMoves(fakeUI.aListOfMoves(new Integer[]{}));
         fakeUI.setGameType(1);
         PlayerFactory factory = new PlayerFactory();
-        assertEquals(true, PlayerFactory.validPlayerTypes(fakeUI.requestGameType()));
-        assertEquals(true, fakeUI.validGameType(fakeUI.requestGameType()));
+        Assert.assertEquals(true, PlayerFactory.validPlayerTypes(fakeUI.requestGameType()));
+        Assert.assertEquals(true, fakeUI.validGameType(fakeUI.requestGameType()));
     }
 }

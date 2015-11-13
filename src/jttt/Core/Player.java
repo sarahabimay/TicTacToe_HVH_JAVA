@@ -1,3 +1,5 @@
+package jttt.Core;
+
 public abstract class Player {
     Counter counter;
     UserInterface userInterface;

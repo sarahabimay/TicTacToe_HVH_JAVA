@@ -1,3 +1,5 @@
+package jttt.Core;
+
 import java.util.HashMap;
 
 import static java.lang.Math.max;

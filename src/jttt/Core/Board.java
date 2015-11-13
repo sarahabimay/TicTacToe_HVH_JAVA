@@ -1,3 +1,5 @@
+package jttt.Core;
+
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
@@ -81,6 +83,14 @@ public class Board {
         return new Board(newCells);
     }
 
+    public int boardSize() {
+        return dimension * dimension;
+    }
+
+    public Counter findCounterAtIndex(int startIndex) {
+        return cells.get(startIndex);
+    }
+
     boolean foundWinInRow() {
         return getRows().stream().anyMatch(Line::hasAWinner);
     }
@@ -122,14 +132,6 @@ public class Board {
 
     List<Counter> getCells() {
         return cells;
-    }
-
-    int boardSize() {
-        return dimension * dimension;
-    }
-
-    Counter findCounterAtIndex(int startIndex) {
-        return cells.get(startIndex);
     }
 
     private ArrayList<Line> getAllLines() {

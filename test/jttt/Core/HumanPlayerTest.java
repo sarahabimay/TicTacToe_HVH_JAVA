@@ -1,3 +1,6 @@
+package jttt.Core;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,13 +24,13 @@ public class HumanPlayerTest {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1));
         fakeUI.addDummyHumanMoves(initialState);
         HumanPlayer human = new HumanPlayer(Counter.X, fakeUI);
-        assertEquals(HumanPlayer.class, human.getClass());
+        Assert.assertEquals(HumanPlayer.class, human.getClass());
     }
 
     @Test
     public void getPlayersOpponent() {
         Player player1 = new HumanPlayer(Counter.X, fakeUI);
-        assertEquals(Counter.O, player1.opponentCounter());
+        Assert.assertEquals(Counter.O, player1.opponentCounter());
     }
 
     @Test
@@ -39,6 +42,6 @@ public class HumanPlayerTest {
         Player player1 = new HumanPlayer(Counter.X, fakeUI);
         Board board = new Board(3);
         board = player1.playTurn(board);
-        assertEquals(Counter.X, board.findCounterAtIndex(0));
+        Assert.assertEquals(Counter.X, board.findCounterAtIndex(0));
     }
 }

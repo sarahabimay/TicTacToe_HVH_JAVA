@@ -1,3 +1,5 @@
+package jttt.Core;
+
 public class HumanPlayerNoUI extends Player {
     public HumanPlayerNoUI(Counter counter) {
     super(counter, null);

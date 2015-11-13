@@ -1,3 +1,5 @@
+package jttt.Core;
+
 public class FakePlayerFactory extends PlayerFactory {
     private FakeComputerPlayer fakeComputerPlayer = null;
 

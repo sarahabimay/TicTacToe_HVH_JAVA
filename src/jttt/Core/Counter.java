@@ -1,3 +1,5 @@
+package jttt.Core;
+
 public enum Counter {
     X,
     O,
