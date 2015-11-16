@@ -22,7 +22,7 @@ public class NewGame {
     }
 
     public int getBoardSize() {
-        return board.boardSize();
+        return board == null ? 0 : board.boardSize();
     }
 
     public void setBoardDimension(int dimension) {
