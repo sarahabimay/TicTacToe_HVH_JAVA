@@ -2,6 +2,7 @@ import javafx.event.ActionEvent;
 import javafxgui.Controller;
 import jttt.Core.HumanPlayer;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -25,6 +26,7 @@ public class ControllerTest {
     }
 
     @Test
+    @Ignore
     public void testStartEvent() {
         ActionEvent event = new ActionEvent();
         Controller controller = new Controller();

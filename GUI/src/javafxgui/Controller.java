@@ -13,7 +13,6 @@ public class Controller {
     public Button zero;
     public TextField dimension;
     public TextField gametype;
-    //    public TextField dimension;
     private NewGame game;
     private HashMap<Integer, String> gameTypeOptionToString = new HashMap<>();
 
@@ -22,13 +21,8 @@ public class Controller {
         mapGameTypeOptionToStringValue();
     }
 
-
     public NewGame getGame() {
         return game;
-    }
-
-    public void helloworldclick(ActionEvent event) {
-        zero.setText("I'm IN!");
     }
 
     public void positionSelected(ActionEvent event) {
@@ -40,6 +34,11 @@ public class Controller {
         this.game = new NewGame(dimension, gameType);
     }
 
+    public void start(ActionEvent event) {
+        startGame(Integer.valueOf(dimension.getText()), Integer.valueOf(gametype.getText()));
+        System.out.println(this.game.getBoardSize());
+    }
+
     private String createGameTypeTitle(int gameType) {
         return String.format("TicTacToe: %s", gameTypeOptionToString.get(gameType));
     }
@@ -48,11 +47,6 @@ public class Controller {
         gameTypeOptionToString.put(1, "Human Vs Human");
         gameTypeOptionToString.put(2, "Human Vs Computer");
         gameTypeOptionToString.put(3, "Computer Vs Human");
-    }
-
-    public void start(ActionEvent event) {
-        startGame(Integer.valueOf(dimension.getText()), Integer.valueOf(gametype.getText()));
-        System.out.println(this.game.getBoardSize());
     }
 }
 
