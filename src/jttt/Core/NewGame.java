@@ -21,6 +21,14 @@ public class NewGame {
         this.gameType = 0;
     }
 
+    public NewGame(int dimension, int gameType) {
+        this.gameType = gameType;
+        this.board = new Board(dimension);
+        this.playerFactory = new PlayerFactory();
+        this.players = new HashMap<>();
+        createPlayers();
+    }
+
     public int getBoardSize() {
         return board == null ? 0 : board.boardSize();
     }

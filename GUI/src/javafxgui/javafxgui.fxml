@@ -1,13 +1,30 @@
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import java.net.URL?>
 <GridPane fx:controller="javafxgui.Controller"
           stylesheets="/javafxgui/javafxgui.css"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
-    <Button text="say Hello!" onAction="#helloworldclick"></Button>
-    <Label GridPane.rowIndex="1" fx:id="helloworld"/>
+    <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+    <gridLinesVisible>true</gridLinesVisible>
+    <Label GridPane.rowIndex="0" fx:id="gametitle"/>
+    <Button minWidth="10" GridPane.fillWidth="true" GridPane.fillHeight="true" GridPane.columnIndex="1" GridPane.rowIndex="1" text="1" fx:id="zero" onAction="#positionSelected"/>
+    <Button GridPane.columnIndex="2" GridPane.rowIndex="1" text="2" fx:id="one" onAction="#positionSelected"/>
+    <Button GridPane.columnIndex="3" GridPane.rowIndex="1" text="3" fx:id="two" onAction="#positionSelected"/>
+    <Button GridPane.columnIndex="1" GridPane.rowIndex="2" text="4" fx:id="three" onAction="#positionSelected"/>
+    <Button GridPane.columnIndex="2" GridPane.rowIndex="2" text="5" fx:id="four" onAction="#positionSelected"/>
+    <Button GridPane.columnIndex="3" GridPane.rowIndex="2" text="6" fx:id="five" onAction="#positionSelected"/>
+    <Button GridPane.columnIndex="1" GridPane.rowIndex="3" text="7" fx:id="six" onAction="#positionSelected"/>
+    <Button GridPane.columnIndex="2" GridPane.rowIndex="3" text="8" fx:id="seven" onAction="#positionSelected"/>
+    <Button GridPane.columnIndex="3" GridPane.rowIndex="3" text="9" fx:id="eight" onAction="#positionSelected"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="5" text="Dimension of board:"/>
+    <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" fx:id="dimension"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="6" text="Type of Game:"/>
+    <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" fx:id="gametype"/>
+    <HBox alignment="BOTTOM_CENTER" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.fillWidth="true">
+        <Button text="Start Game" fx:id="startgame" onAction="#start"/>
+    </HBox>
     <stylesheets>
-        <URL value="@javafxgui.css" />
+        <URL value="@javafxgui.css"/>
     </stylesheets>
 </GridPane>

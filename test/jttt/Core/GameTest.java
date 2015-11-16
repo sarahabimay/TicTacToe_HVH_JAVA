@@ -1,6 +1,5 @@
 package jttt.Core;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +28,7 @@ public class GameTest {
                 7, 8, 9));
         fakeUI = generateFakeUI(initialState, 3, 1);
         game.play();
-        Assert.assertEquals(true, fakeUI.hasAskedUserForDimension());
+        assertEquals(true, fakeUI.hasAskedUserForDimension());
     }
 
     @Test
@@ -41,7 +40,7 @@ public class GameTest {
                 13, 14, 15, 16));
         fakeUI = generateFakeUI(initialState, 4, 1);
         game.play();
-        Assert.assertEquals(true, fakeUI.hasAskedUserForDimension());
+        assertEquals(true, fakeUI.hasAskedUserForDimension());
     }
 
     @Test
@@ -53,7 +52,7 @@ public class GameTest {
         fakeUI = generateFakeUI(initialState, 3, 1);
         Game newGame = new Game(fakeUI);
         newGame.play();
-        Assert.assertEquals(true, fakeUI.hasAskedUserForGameType());
+        assertEquals(true, fakeUI.hasAskedUserForGameType());
     }
 
     @Test
@@ -64,7 +63,7 @@ public class GameTest {
                 7, 8, 9));
         fakeUI = generateFakeUI(initialState, 3, 1);
         game.play();
-        Assert.assertEquals(true, fakeUI.hasAskedUserForNextPosition());
+        assertEquals(true, fakeUI.hasAskedUserForNextPosition());
     }
 
     @Test
@@ -74,7 +73,7 @@ public class GameTest {
                 4, 5, 6,
                 7, 8, 9), 3, 1);
         game.play();
-        Assert.assertEquals(true, fakeUI.hasGameTypeBeenValidated());
+        assertEquals(true, fakeUI.hasGameTypeBeenValidated());
     }
 
     @Test
@@ -84,7 +83,7 @@ public class GameTest {
         game.requestBoardSize();
         game.selectPlayers(game.requestGameType());
         Board board = game.nextPlayerMakesMove(Counter.X);
-        Assert.assertEquals("" +
+        assertEquals("" +
                         "[X][2][3]\n" +
                         "[4][5][6]\n" +
                         "[7][8][9]\n",
@@ -98,7 +97,7 @@ public class GameTest {
         game.requestBoardSize();
         game.selectPlayers(1);
         game.nextPlayerMakesMove(Counter.X);
-        Assert.assertEquals(Counter.O, game.getNextCounter(Counter.X));
+        assertEquals(Counter.O, game.getNextCounter(Counter.X));
     }
 
     @Test
@@ -109,7 +108,7 @@ public class GameTest {
                 7, 8, 9));
         fakeUI = generateFakeUI(initialState, 3, 1);
         game.play();
-        Assert.assertEquals(true, fakeUI.hasDisplayedBoardToUser());
+        assertEquals(true, fakeUI.hasDisplayedBoardToUser());
     }
 
     @Test
@@ -120,7 +119,7 @@ public class GameTest {
                 7, 8, 9));
         fakeUI = generateFakeUI(initialState, 3, 1);
         game.play();
-        Assert.assertEquals(true, fakeUI.hasDisplayedResultToUser());
+        assertEquals(true, fakeUI.hasDisplayedResultToUser());
     }
 
     @Test
@@ -132,7 +131,7 @@ public class GameTest {
         fakeUI = generateFakeUI(initialState, 3, 1);
         fakeUI.addDummyPlayAgainChoice(1);
         game.play();
-        Assert.assertEquals(true, fakeUI.hasAskedUserToQuitGame());
+        assertEquals(true, fakeUI.hasAskedUserToQuitGame());
     }
 
     @Test
@@ -143,7 +142,7 @@ public class GameTest {
                 7, 8, 9));
         fakeUI = generateFakeUI(initialState, 3, 1);
         game.play();
-        Assert.assertEquals(true, game.isGameOver());
+        assertEquals(true, game.isGameOver());
     }
 
     @Test
@@ -154,8 +153,8 @@ public class GameTest {
                 7, 8, 9));
         fakeUI = generateFakeUI(initialState, 3, 1);
         game.play();
-        Assert.assertEquals(true, game.isGameOver());
-        Assert.assertEquals(true, fakeUI.isADraw());
+        assertEquals(true, game.isGameOver());
+        assertEquals(true, fakeUI.isADraw());
     }
 
     @Test
@@ -166,9 +165,9 @@ public class GameTest {
                 7, 8, 9));
         fakeUI = generateFakeUI(initialState, 3, 1);
         game.play();
-        Assert.assertEquals(true, game.isGameOver());
-        Assert.assertEquals(false, fakeUI.isADraw());
-        Assert.assertEquals(Counter.X, fakeUI.getWinner());
+        assertEquals(true, game.isGameOver());
+        assertEquals(false, fakeUI.isADraw());
+        assertEquals(Counter.X, fakeUI.getWinner());
     }
 
     @Test
@@ -179,8 +178,8 @@ public class GameTest {
                 7, 8, 9));
         fakeUI = generateFakeUI(initialState, 3, 2);
         game.play();
-        Assert.assertEquals(HumanPlayer.class, game.getPlayer(Counter.X).getClass());
-        Assert.assertEquals(ComputerPlayer.class, game.getPlayer(Counter.O).getClass());
+        assertEquals(HumanPlayer.class, game.getPlayer(Counter.X).getClass());
+        assertEquals(ComputerPlayer.class, game.getPlayer(Counter.O).getClass());
     }
 
     @Test
@@ -191,8 +190,8 @@ public class GameTest {
                 7, 8, 9));
         fakeUI = generateFakeUI(initialState, 3, 3);
         game.play();
-        Assert.assertEquals(ComputerPlayer.class, game.getPlayer(Counter.X).getClass());
-        Assert.assertEquals(HumanPlayer.class, game.getPlayer(Counter.O).getClass());
+        assertEquals(ComputerPlayer.class, game.getPlayer(Counter.X).getClass());
+        assertEquals(HumanPlayer.class, game.getPlayer(Counter.O).getClass());
     }
 
     @Test
@@ -202,7 +201,7 @@ public class GameTest {
                 4, 7, 3,
                 8, 9, 5), 3, 1);
         game.play();
-        Assert.assertEquals("" +
+        assertEquals("" +
                         "[X][O][X]\n" +
                         "[X][O][6]\n" +
                         "[O][O][X]\n",
