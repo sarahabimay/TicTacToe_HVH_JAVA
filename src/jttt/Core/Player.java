@@ -1,10 +1,15 @@
 package jttt.Core;
 
 public abstract class Player {
+    public static enum Type{
+        AI,
+        HUMAN
+    }
     Counter counter;
     UserInterface userInterface;
+    Type playerType;
 
-    public Player(Counter counter, UserInterface userInterface) {
+    public Player(Counter counter, Type type, UserInterface userInterface) {
         this.counter = counter;
         this.userInterface = userInterface;
     }
@@ -17,6 +22,10 @@ public abstract class Player {
             return Counter.X;
         }
         return Counter.EMPTY;
+    }
+
+    public Type getPlayerType() {
+        return playerType;
     }
 
     abstract Board playTurn(Board board);

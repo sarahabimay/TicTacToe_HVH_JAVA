@@ -3,7 +3,7 @@ package jttt.Core;
 public class HumanPlayer extends Player {
 
     public HumanPlayer(Counter counter, UserInterface userInterface) {
-        super(counter, userInterface);
+        super(counter, Type.HUMAN, userInterface);
     }
 
     public Board playTurn(Board board) {

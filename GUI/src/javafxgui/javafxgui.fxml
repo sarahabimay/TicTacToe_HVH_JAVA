@@ -1,13 +1,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
 <?import java.net.URL?>
 <GridPane fx:controller="javafxgui.Controller"
           stylesheets="/javafxgui/javafxgui.css"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
     <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
-    <gridLinesVisible>true</gridLinesVisible>
-    <Label GridPane.rowIndex="0" fx:id="gametitle"/>
+    <!--<gridLinesVisible>true</gridLinesVisible>-->
+    <Text GridPane.rowIndex="0" fx:id="gametitle" text="Tic Tac Toe"/>
     <Button minWidth="10" GridPane.fillWidth="true" GridPane.fillHeight="true" GridPane.columnIndex="1" GridPane.rowIndex="1" text="1" fx:id="zero" onAction="#positionSelected"/>
     <Button GridPane.columnIndex="2" GridPane.rowIndex="1" text="2" fx:id="one" onAction="#positionSelected"/>
     <Button GridPane.columnIndex="3" GridPane.rowIndex="1" text="3" fx:id="two" onAction="#positionSelected"/>

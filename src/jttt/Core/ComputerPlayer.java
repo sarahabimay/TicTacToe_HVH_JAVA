@@ -16,7 +16,7 @@ public class ComputerPlayer extends Player {
     private static Integer DEPTH = 0;
 
     public ComputerPlayer(Counter counter, UserInterface userInterface) {
-        super(counter, userInterface);
+        super(counter, Type.AI , userInterface);
     }
 
     Board playTurn(Board board) {

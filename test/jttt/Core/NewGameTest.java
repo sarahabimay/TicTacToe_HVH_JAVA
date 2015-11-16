@@ -62,7 +62,7 @@ public class NewGameTest {
     public void gameAskedToUpdateBoardWithHumanPlayerMove() {
         setUpGame(3, 1);
         Player playerA = game.getNextPlayer();
-        game.playMove(1, playerA);
+        game.playMove(1);
         assertEquals(Counter.X, game.getBoard().getCells().get(0));
     }
 
@@ -70,7 +70,7 @@ public class NewGameTest {
     public void askedForNextPlayer() {
         setUpGame(3, 1);
         Player playerA = game.getNextPlayer();
-        game.playMove(1, playerA);
+        game.playMove(1);
         Player playerB = game.getNextPlayer();
         assertEquals(Counter.O, playerB.getCounter());
     }
@@ -83,7 +83,7 @@ public class NewGameTest {
         // either the UI would need to know about player types or
         // the jttt.Core.Player will need to know about the UI
         // I can't yet see yet how this should go
-        game.playMove(playerA);
+        game.playMove();
         assertEquals(Counter.X, game.getBoard().getCells().get(0));
     }
 

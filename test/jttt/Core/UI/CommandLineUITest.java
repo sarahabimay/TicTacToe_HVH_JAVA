@@ -84,4 +84,17 @@ public class CommandLineUITest {
         Assert.assertEquals(true, PlayerFactory.validPlayerTypes(fakeUI.requestGameType()));
         Assert.assertEquals(true, fakeUI.validGameType(fakeUI.requestGameType()));
     }
+
+    @Test
+    public void cliFullHVHGamePlayedThenQuit() {
+        fakeUI.addDummyDimension(3);
+        fakeUI.setGameType(1);
+        fakeUI.addDummyHumanMoves(fakeUI.aListOfMoves(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9}));
+        fakeUI.addDummyPlayAgainChoice(2);
+        fakeUI.start();
+        Assert.assertEquals(true, fakeUI.hasAskedUserForDimension());
+        Assert.assertEquals(true, fakeUI.hasAskedUserForGameType());
+        Assert.assertEquals(true, fakeUI.hasAskedUserForNextPosition());
+        Assert.assertEquals(true, fakeUI.hasAskedUserToQuitGame());
+    }
 }

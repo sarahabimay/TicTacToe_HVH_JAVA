@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.IntPredicate;
 
 public class FakeCommandLineUI implements UserInterface {
+    private NewGame game;
     private List<Integer> dummyInputs = new ArrayList<>();
     private Integer playerType = 1;
     private boolean playAgain = false;
@@ -17,6 +18,26 @@ public class FakeCommandLineUI implements UserInterface {
     private boolean haveAskedUserForGameType = false;
     private boolean haveValidatedGameType = false;
     private int dummyDimension = 0;
+
+    public FakeCommandLineUI() {
+        this.game = new NewGame();
+    }
+
+    @Override
+    public void start() {
+        int dimension = requestBoardSize();
+        int gameType = requestGameType();
+        game = new NewGame(dimension, gameType);
+        while(!game.isGameOver()){
+            if (game.getNextPlayer().getPlayerType() == Player.Type.AI){
+                game.playMove();
+            }
+            else{
+                game.playMove(requestNextPosition());
+            }
+        }
+        displayResult(game.findWinner());
+    }
 
     public int requestBoardSize() {
         userHasBeenAskedForDimension = true;
@@ -89,10 +110,6 @@ public class FakeCommandLineUI implements UserInterface {
     public boolean validGameType(int choice) {
         haveValidatedGameType = true;
         return choice == 1 || choice == 2 || choice == 3;
-    }
-
-    public void outputToUI(String output) {
-//        System.out.println(output);
     }
 
     public Counter getWinner() {
@@ -176,6 +193,4 @@ public class FakeCommandLineUI implements UserInterface {
     private boolean validDummyPosition(Integer nextMove) {
         return validate(nextMove, this::validPosition);//&& nextMove <= numberOfInputs;
     }
-
-
 }

@@ -1,19 +1,44 @@
 package jttt.UI;
 
-import jttt.Core.Board;
-import jttt.Core.Counter;
-import jttt.Core.UserInterface;
+import jttt.Core.*;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.util.function.IntPredicate;
 
 public class CommandLineUI implements UserInterface {
+    private NewGame game;
     private BufferedReader readStream;
     private PrintStream writeStream;
 
     public CommandLineUI() {
         this.readStream = new BufferedReader(new InputStreamReader(System.in));
         this.writeStream = new PrintStream(System.out);
+        this.game = new NewGame();
+    }
+
+    @Override
+    public void start() {
+        createNewGame(requestBoardSize(), requestGameType());
+        playAllMoves();
+        displayResult(game.findWinner());
+    }
+
+    private void createNewGame(int dimension, int gameType) {
+        game = new NewGame(dimension, gameType);
+    }
+
+    private void playAllMoves() {
+        while(!game.isGameOver()){
+            if (game.getNextPlayer().getPlayerType() == Player.Type.AI){
+                game.playMove();
+            }
+            else{
+                game.playMove(requestNextPosition());
+            }
+        }
     }
 
     public int requestBoardSize() {

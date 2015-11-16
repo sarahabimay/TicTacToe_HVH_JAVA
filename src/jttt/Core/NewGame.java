@@ -74,16 +74,26 @@ public class NewGame {
         return board;
     }
 
-    public void playMove(int newPosition, Player player) {
-        board = player.playTurn(board, newPosition);
+    public void playMove(int newPosition) {
+        Player currentPlayer = getNextPlayer();
+        board = currentPlayer.playTurn(board, newPosition);
     }
 
-    public void playMove(Player playerA) {
-        board = playerA.playTurn(board);
+    public void playMove() {
+        Player currentPlayer = getNextPlayer();
+        board = currentPlayer.playTurn(board);
     }
 
     public void play(int dimension, int gameType) {
         setBoardDimension(dimension);
         setGameType(gameType);
+    }
+
+    public boolean isGameOver() {
+        return board.isGameOver();
+    }
+
+    public Counter findWinner() {
+        return board.findWinner();
     }
 }

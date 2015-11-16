@@ -2,14 +2,14 @@ package javafxgui;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import jttt.Core.NewGame;
 
 import java.util.HashMap;
 
 public class Controller {
-    public Label gametitle;
+    public Text gametitle = new Text();
     public Button zero;
     public TextField dimension;
     public TextField gametype;

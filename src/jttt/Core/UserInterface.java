@@ -3,6 +3,7 @@ package jttt.Core;
 import java.util.function.IntPredicate;
 
 public interface UserInterface {
+
     int requestBoardSize();
 
     int requestGameType();
@@ -26,4 +27,6 @@ public interface UserInterface {
     boolean validPosition(int position);
 
     boolean validInstruction(int instruction);
+
+    void start();
 }
