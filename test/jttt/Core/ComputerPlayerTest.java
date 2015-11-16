@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public class ComputerPlayerTest {
     private FakeCommandLineUI fakeUI;
@@ -47,11 +46,7 @@ public class ComputerPlayerTest {
         fakeUI.setGameType(2);
         Board board = new Board(3);
         board = computerXPlayer.playTurn(board);
-        Assert.assertNotEquals("" +
-                        "[1][2][3]\n" +
-                        "[4][5][6]\n" +
-                        "[7][8][9]\n",
-                fakeUI.displayBoard(board));
+        Assert.assertEquals(1, board.findPositions(Counter.X).size());
     }
 
     @Test

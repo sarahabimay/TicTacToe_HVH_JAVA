@@ -194,4 +194,11 @@ public class Board {
         newCells.set(move, counter);
         return newCells;
     }
+
+    public Counter findNextCounter() {
+        if (findPositions(Counter.X).size() > findPositions(Counter.O).size()){
+            return Counter.O;
+        }
+        return Counter.X;
+    }
 }

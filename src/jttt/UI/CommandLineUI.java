@@ -24,21 +24,7 @@ public class CommandLineUI implements UserInterface {
         createNewGame(requestBoardSize(), requestGameType());
         playAllMoves();
         displayResult(game.findWinner());
-    }
-
-    private void createNewGame(int dimension, int gameType) {
-        game = new NewGame(dimension, gameType);
-    }
-
-    private void playAllMoves() {
-        while(!game.isGameOver()){
-            if (game.getNextPlayer().getPlayerType() == Player.Type.AI){
-                game.playMove();
-            }
-            else{
-                game.playMove(requestNextPosition());
-            }
-        }
+        playAgain();
     }
 
     public int requestBoardSize() {
@@ -86,17 +72,20 @@ public class CommandLineUI implements UserInterface {
         }
     }
 
+    public String displayBoard() {
+        String output = boardForDisplay(game.getBoard());
+        writeStream.println(output);
+        return output;
+    }
+
     public String displayBoard(Board board) {
-        String output = "";
-        for (int i = 0; i < board.boardSize(); i++) {
-            output += convertRowToString(i, board.findCounterAtIndex(i), board);
-        }
+        String output = boardForDisplay(board);
         writeStream.println(output);
         return output;
     }
 
     public void printCurrentCounter(Counter currentCounter) {
-        writeStream.println(String.format("jttt.Core.Board after %s's move: \n", currentCounter.name()));
+        writeStream.println(String.format("Board after %s's move: \n", currentCounter.name()));
     }
 
     public boolean validate(Integer choiceFromInput, IntPredicate isValidChoice) {
@@ -119,8 +108,30 @@ public class CommandLineUI implements UserInterface {
         return 0 < instruction && instruction < 3;
     }
 
+    private void playAgain() {
+        if (requestPlayAgain()){
+            game = new NewGame();
+            start();
+        }
+    }
+
+    public void createNewGame(int dimension, int gameType) {
+        game = new NewGame(dimension, gameType);
+    }
+
+    private void playAllMoves() {
+        while (!game.isGameOver()) {
+            if (game.getNextPlayer().getPlayerType() == Player.Type.AI) {
+                game.playMove();
+            } else {
+                game.playMove(requestNextPosition());
+            }
+            displayBoard();
+        }
+    }
+
     private void announceWinner(Counter winner) {
-        writeStream.println(String.format("We have a Winner! jttt.Core.Player: %s\n", winner.toString()));
+        writeStream.println(String.format("We have a Winner! Player: %s\n", winner.toString()));
     }
 
     private void announceDraw() {
@@ -140,6 +151,14 @@ public class CommandLineUI implements UserInterface {
 
     private boolean doPlayAgain(Integer instruction) {
         return 2 == instruction;
+    }
+
+    private String boardForDisplay(Board board) {
+        String output = "";
+        for (int i = 0; i < board.boardSize(); i++) {
+            output += convertRowToString(i, board.findCounterAtIndex(i), board);
+        }
+        return output;
     }
 
     private String convertRowToString(int index, Counter cellValue, Board board) {

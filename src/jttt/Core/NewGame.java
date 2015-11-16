@@ -64,10 +64,7 @@ public class NewGame {
             return this.players.get(Counter.X);
         }
         // get next player by looking at the board and working out who is next
-        if (board.findPositions(Counter.X).size() > board.findPositions(Counter.O).size()){
-            return players.get(Counter.O);
-        }
-        return players.get(Counter.X);
+        return players.get(board.findNextCounter());
     }
 
     public Board getBoard() {

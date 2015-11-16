@@ -10,6 +10,7 @@ public abstract class Player {
     Type playerType;
 
     public Player(Counter counter, Type type, UserInterface userInterface) {
+        this.playerType = type;
         this.counter = counter;
         this.userInterface = userInterface;
     }

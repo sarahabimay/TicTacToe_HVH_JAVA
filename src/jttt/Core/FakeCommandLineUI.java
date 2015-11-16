@@ -23,20 +23,11 @@ public class FakeCommandLineUI implements UserInterface {
         this.game = new NewGame();
     }
 
-    @Override
     public void start() {
-        int dimension = requestBoardSize();
-        int gameType = requestGameType();
-        game = new NewGame(dimension, gameType);
-        while(!game.isGameOver()){
-            if (game.getNextPlayer().getPlayerType() == Player.Type.AI){
-                game.playMove();
-            }
-            else{
-                game.playMove(requestNextPosition());
-            }
-        }
+        createNewGame(requestBoardSize(), requestGameType());
+        playAllMoves();
         displayResult(game.findWinner());
+        playAgain();
     }
 
     public int requestBoardSize() {
@@ -64,6 +55,12 @@ public class FakeCommandLineUI implements UserInterface {
     public boolean requestPlayAgain() {
         haveAskedUserToQuitGame = true;
         return playAgain;
+    }
+
+    public String displayBoard() {
+        String output = boardForDisplay(game.getBoard());
+        haveDisplayedBoardToUser = true;
+        return output;
     }
 
     public String displayBoard(Board board) {
@@ -172,6 +169,35 @@ public class FakeCommandLineUI implements UserInterface {
         return 2 == instruction;
     }
 
+    private void playAgain() {
+        if (requestPlayAgain()) {
+            game = new NewGame();
+            start();
+        }
+    }
+
+    private void createNewGame(int dimension, int gameType) {
+        game = new NewGame(dimension, gameType);
+    }
+
+    private void playAllMoves() {
+        while (!game.isGameOver()) {
+            if (game.getNextPlayer().getPlayerType() == Player.Type.AI) {
+                game.playMove();
+            } else {
+                game.playMove(requestNextPosition());
+            }
+            displayBoard();
+        }
+    }
+
+    private String boardForDisplay(Board board) {
+        String output = "";
+        for (int i = 0; i < board.boardSize(); i++) {
+            output += convertRowToString(i, board.findCounterAtIndex(i), board);
+        }
+        return output;
+    }
 
     private String convertRowToString(int index, Counter cellValue, Board board) {
         String cellForDisplay = cellValue.counterForDisplay(index);
@@ -192,5 +218,9 @@ public class FakeCommandLineUI implements UserInterface {
 
     private boolean validDummyPosition(Integer nextMove) {
         return validate(nextMove, this::validPosition);//&& nextMove <= numberOfInputs;
+    }
+
+    public NewGame getGame() {
+        return game;
     }
 }

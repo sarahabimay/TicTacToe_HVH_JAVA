@@ -20,12 +20,12 @@ public class CommandLineUITest {
     @Test
     public void emptyBoardIsDisplayedCorrectly() {
         CommandLineUI ui = new CommandLineUI();
-        Board board = new Board(3);
+        ui.createNewGame(3, 1);
         Assert.assertEquals("" +
                         "[1][2][3]\n" +
                         "[4][5][6]\n" +
                         "[7][8][9]\n",
-                ui.displayBoard(board));
+                ui.displayBoard());
     }
 
     @Test
@@ -90,7 +90,7 @@ public class CommandLineUITest {
         fakeUI.addDummyDimension(3);
         fakeUI.setGameType(1);
         fakeUI.addDummyHumanMoves(fakeUI.aListOfMoves(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9}));
-        fakeUI.addDummyPlayAgainChoice(2);
+        fakeUI.addDummyPlayAgainChoice(1);
         fakeUI.start();
         Assert.assertEquals(true, fakeUI.hasAskedUserForDimension());
         Assert.assertEquals(true, fakeUI.hasAskedUserForGameType());
