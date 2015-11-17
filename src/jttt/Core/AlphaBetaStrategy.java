@@ -6,14 +6,14 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class AlphaBetaStrategy implements AIMoveStrategy {
-    private static final int SCORE_FOR_DRAW = 0;
-    public static final int INITIAL_SCORE = 1000000;
     private static int DISPLAY_POSITION_OFFSET = 1;
+    private static final int SCORE_FOR_DRAW = 0;
+    private static Integer DEPTH = 0;
+    private static int INITIAL_SCORE = 1000000;
     private static int INITIAL_ALPHA = -10000000;
     private static int INITIAL_BETA = 10000000;
     private static String MOVE_KEY = "Move";
     private static String SCORE_KEY = "Score";
-    private static Integer DEPTH = 0;
     private Counter counter;
 
     public AlphaBetaStrategy() {
@@ -34,7 +34,11 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
 
         for (Integer move : currentBoard.remainingPositions()) {
             Board currentStateOfBoard = currentBoard.newBoardWithNewMove(move, currentCounter);
-            Integer score = aBMinimax(depth - 1, currentCounter.opponentCounter(), alpha, beta, currentStateOfBoard).get(SCORE_KEY);
+            Integer score = aBMinimax(  depth - 1,
+                                        currentCounter.opponentCounter(),
+                                        alpha,
+                                        beta,
+                                        currentStateOfBoard).get(SCORE_KEY);
             if (newBestScore(currentCounter, bestScore, score)) {
                 bestScore = score;
                 bestMove = move;

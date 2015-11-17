@@ -59,7 +59,8 @@ public class ComputerPlayerTest {
                 X, O, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        List<Counter> expected = arrayToList(new Counter[]{X, O, X, O, X, X, X, O, O});
+        currentBoard[2] = X;
+        List<Counter> expected = arrayToList(currentBoard);
         assertEquals(expected, computerXPlayer.playTurn(board).getCells());
     }
 
@@ -71,7 +72,8 @@ public class ComputerPlayerTest {
                 O, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        List<Counter> expected = arrayToList(new Counter[]{X, X, X, X, O, X, O, O, E});
+        currentBoard[2] = X;
+        List<Counter> expected = arrayToList(currentBoard);
         assertEquals(expected, computerXPlayer.playTurn(board).getCells());
     }
 
@@ -83,8 +85,9 @@ public class ComputerPlayerTest {
                 O, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        int result = computerXPlayer.calculateNextMoveWithAlphaBeta(board);
-        assertEquals(3, result);
+        currentBoard[2] = X;
+        List<Counter> expected = arrayToList(currentBoard);
+        assertEquals(expected, computerXPlayer.playTurn(board).getCells());
     }
 
     @Test
@@ -95,8 +98,9 @@ public class ComputerPlayerTest {
                 E, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        Integer result = computerOPlayer.calculateNextMoveWithAlphaBeta(board);
-        assertEquals((Integer) 3, result);
+        currentBoard[2] = O;
+        List<Counter> expected = arrayToList(currentBoard);
+        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
     @Test
@@ -151,21 +155,6 @@ public class ComputerPlayerTest {
         Board board = new Board(4, arrayToList(currentBoard));
         List<Counter> result = computerOPlayer.playTurn(board).getCells();
         assertThat(result, hasItem(O) );
-    }
-
-    @Test
-    @Ignore
-    public void aiPlayerShouldBlock_4x4() {
-
-        Counter currentBoard[] = {
-                E, E, E, E,
-                E, E, E, E,
-                E, E, E, E,
-                E, E, O, X,
-        };
-        Board board = new Board(4, arrayToList(currentBoard));
-        int  result = computerXPlayer.calculateNextMoveWithAlphaBeta(board);
-        assertEquals( 11, result);
     }
 
     @Test
