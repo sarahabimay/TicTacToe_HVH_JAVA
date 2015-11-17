@@ -1,12 +1,16 @@
 package jttt.Core.UI;
 
-import jttt.Core.Board;
-import jttt.Core.FakeCommandLineUI;
-import jttt.Core.PlayerFactory;
+import jttt.Core.*;
 import jttt.UI.CommandLineUI;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class CommandLineUITest {
 
@@ -96,5 +100,176 @@ public class CommandLineUITest {
         Assert.assertEquals(true, fakeUI.hasAskedUserForGameType());
         Assert.assertEquals(true, fakeUI.hasAskedUserForNextPosition());
         Assert.assertEquals(true, fakeUI.hasAskedUserToQuitGame());
+    }
+
+    @Test
+    public void choose3x3Game() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
+        fakeUI = generateFakeUI(initialState, 3, 1);
+        fakeUI.start();
+        assertEquals(true, fakeUI.hasAskedUserForDimension());
+    }
+
+    @Test
+    public void choose4x4Game() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3, 4,
+                5, 6, 7, 8,
+                9, 10, 11, 12,
+                13, 14, 15, 16));
+        fakeUI = generateFakeUI(initialState, 4, 1);
+        fakeUI.start();
+        assertEquals(true, fakeUI.hasAskedUserForDimension());
+    }
+
+    @Test
+    public void checkUserHasBeenAskedForTypeOfGame() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
+        fakeUI = generateFakeUI(initialState, 3, 1);
+        fakeUI.start();
+        assertEquals(true, fakeUI.hasAskedUserForGameType());
+    }
+
+    @Test
+    public void checkHumanHasBeenAskedForNextMove() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
+        fakeUI = generateFakeUI(initialState, 3, 1);
+        fakeUI.start();
+        assertEquals(true, fakeUI.hasAskedUserForNextPosition());
+    }
+
+    @Test
+    public void checkValidateGameTypeHasBeenCalled() {
+        fakeUI = generateFakeUI(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9), 3, 1);
+        fakeUI.start();
+        assertEquals(true, fakeUI.hasGameTypeBeenValidated());
+    }
+
+    @Test
+    public void displayBoardAfterEachMove() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
+        fakeUI = generateFakeUI(initialState, 3, 1);
+        fakeUI.start();
+        assertEquals(true, fakeUI.hasDisplayedBoardToUser());
+    }
+
+    @Test
+    public void displayResultAtEndOfGame() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
+        fakeUI = generateFakeUI(initialState, 3, 1);
+        fakeUI.start();
+        assertEquals(true, fakeUI.hasDisplayedResultToUser());
+    }
+
+    @Test
+    public void requestToQuitAfterGameOver() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
+        fakeUI = generateFakeUI(initialState, 3, 1);
+        fakeUI.addDummyPlayAgainChoice(1);
+        fakeUI.start();
+        assertEquals(true, fakeUI.hasAskedUserToQuitGame());
+    }
+
+    @Test
+    public void checkGameIsOver() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
+        fakeUI = generateFakeUI(initialState, 3, 1);
+        fakeUI.start();
+        assertEquals(true, fakeUI.getGame().isGameOver());
+    }
+
+    @Test
+    public void checkResultIsADraw() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                2, 1, 4,
+                5, 6, 3,
+                7, 8, 9));
+        fakeUI = generateFakeUI(initialState, 3, 1);
+        fakeUI.start();
+        assertEquals(true, fakeUI.getGame().isGameOver());
+        assertEquals(true, fakeUI.isADraw());
+    }
+
+    @Test
+    public void checkResultIsAWin() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                1, 2, 3,
+                4, 5, 6,
+                7, 8, 9));
+        fakeUI = generateFakeUI(initialState, 3, 1);
+        fakeUI.start();
+        assertEquals(true, fakeUI.getGame().isGameOver());
+        assertEquals(false, fakeUI.isADraw());
+        assertEquals(Counter.X, fakeUI.getWinner());
+    }
+
+    @Test
+    public void humanVsComputer() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                2, 1, 4,
+                5, 6, 3,
+                7, 8, 9));
+        fakeUI = generateFakeUI(initialState, 3, 2);
+        fakeUI.start();
+        assertEquals(HumanPlayer.class, fakeUI.getGame().getPlayer(Counter.X).getClass());
+        assertEquals(ComputerPlayer.class, fakeUI.getGame().getPlayer(Counter.O).getClass());
+    }
+
+    @Test
+    public void computerVsHuman() {
+        List<Integer> initialState = new ArrayList<>(Arrays.asList(
+                2, 1, 4,
+                5, 6, 3,
+                7, 8, 9));
+        fakeUI = generateFakeUI(initialState, 3, 3);
+        fakeUI.start();
+        assertEquals(ComputerPlayer.class, fakeUI.getGame().getPlayer(Counter.X).getClass());
+        assertEquals(HumanPlayer.class, fakeUI.getGame().getPlayer(Counter.O).getClass());
+    }
+
+    @Test
+    public void duplicateMoveRepeatsMoveRequestTillValid() {
+        fakeUI = generateFakeUI(Arrays.asList(
+                1, 2, 2,
+                4, 7, 3,
+                8, 9, 5), 3, 1);
+        fakeUI.start();
+        assertEquals("" +
+                        "[X][O][X]\n" +
+                        "[X][O][6]\n" +
+                        "[O][O][X]\n",
+                fakeUI.displayBoard());
+    }
+
+    private FakeCommandLineUI generateFakeUI(List<Integer> moves, int dimension, Integer gameType) {
+        List<Integer> initialState = new ArrayList<>(moves);
+        fakeUI.addDummyDimension(dimension);
+        fakeUI.addDummyHumanMoves(initialState);
+        fakeUI.setGameType(gameType);
+        return fakeUI;
     }
 }

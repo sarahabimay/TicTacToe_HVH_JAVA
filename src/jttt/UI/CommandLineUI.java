@@ -9,14 +9,14 @@ import java.io.PrintStream;
 import java.util.function.IntPredicate;
 
 public class CommandLineUI implements UserInterface {
-    private NewGame game;
+    private Game game;
     private BufferedReader readStream;
     private PrintStream writeStream;
 
     public CommandLineUI() {
         this.readStream = new BufferedReader(new InputStreamReader(System.in));
         this.writeStream = new PrintStream(System.out);
-        this.game = new NewGame();
+        this.game = new Game();
     }
 
     public void start() {
@@ -109,13 +109,13 @@ public class CommandLineUI implements UserInterface {
 
     private void playAgain() {
         if (requestPlayAgain()) {
-            game = new NewGame();
+            game = new Game();
             start();
         }
     }
 
     public void createNewGame(int dimension, int gameType) {
-        game = new NewGame(dimension, gameType);
+        game = new Game(dimension, gameType);
     }
 
     private void playAllMoves() {

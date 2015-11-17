@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import jttt.Core.Counter;
-import jttt.Core.NewGame;
+import jttt.Core.Game;
 import jttt.Core.Player;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class Controller {
     public TextField dimension;
     public TextField gametype;
     public GridPane gameboard;
-    private NewGame game;
+    private Game game;
     private HashMap<Integer, String> gameTypeOptionToString = new HashMap<>();
 
     public Controller() {
@@ -26,7 +26,7 @@ public class Controller {
         mapGameTypeOptionToStringValue();
     }
 
-    public NewGame getGame() {
+    public Game getGame() {
         return game;
     }
 
@@ -109,7 +109,7 @@ public class Controller {
     }
 
     public void createNewGame(int dimension, int gameType) {
-        this.game = new NewGame(dimension, gameType);
+        this.game = new Game(dimension, gameType);
     }
 
     private void changeTitle(int gameType) {
