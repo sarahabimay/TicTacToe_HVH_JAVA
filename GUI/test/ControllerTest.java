@@ -40,7 +40,7 @@ public class ControllerTest {
     public void testStartEvent() {
         ActionEvent event = new ActionEvent();
         Controller controller = new Controller();
-//        FakeController fakeer = new FakeController();
+//        javafxgui.FakeController fakeer = new javafxgui.FakeController();
         controller.start(event);
 
     }
