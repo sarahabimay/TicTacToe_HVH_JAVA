@@ -2,49 +2,55 @@ package jttt.Core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static java.util.stream.Collectors.toList;
 
 public class Game {
-    private UserInterface userInterface;
-    private PlayerFactory playerFactory;
-    private Board board = new Board(new ArrayList<>());
-    private HashMap<Counter, Player> players = new HashMap<>();
 
-    public Game(UserInterface userInterface) {
-        this.userInterface = userInterface;
-        this.playerFactory = new PlayerFactory(userInterface);
+    private PlayerFactory playerFactory;
+    private Board board;
+    private int gameType;
+    private HashMap<Counter, Player> players;
+
+    public Game() {
+        this.playerFactory = new PlayerFactory();
+        this.board = null;
+        this.players = new HashMap<>();
+        this.gameType = 0;
+    }
+
+    public Game(int dimension, int gameType) {
+        this.gameType = gameType;
+        this.board = new Board(dimension);
+        this.playerFactory = new PlayerFactory();
+        this.players = new HashMap<>();
+        createPlayers();
+    }
+
+    public int getBoardSize() {
+        return board == null ? 0 : board.boardSize();
+    }
+
+    public void setBoardDimension(int dimension) {
+        board = new Board(dimension);
+    }
+
+    public void setGameType(int gameType) {
+        this.gameType = gameType;
+
     }
 
     public Player getPlayer(Counter counter) {
         return players.get(counter);
     }
 
-    public Board nextPlayerMakesMove(Counter nextCounter) {
-        Player currentPlayer = players.get(nextCounter);
-        return currentPlayer.playTurn(board);
-    }
-
-    public boolean isGameOver() {
-        return board.isGameOver();
-    }
-
-    public Counter getNextCounter(Counter counter) {
-        return counter.opponentCounter();
-    }
-
-    public void requestBoardSize() {
-        board = new Board(userInterface.requestBoardSize());
-    }
-
-    public String displayBoard() {
-        return userInterface.displayBoard(board);
-    }
-
-    public void play() {
-        requestBoardSize();
-        selectPlayers(requestGameType());
-        executeAllPlayersMoves();
-        displayResult();
-        playAgain();
+    public List<Player> getPlayers() {
+        if (this.players == null ) {
+            return null;
+        }
+        return this.players.entrySet().stream().map(Map.Entry::getValue).collect(toList());
     }
 
     public void selectPlayers(int newGameType) {
@@ -53,29 +59,43 @@ public class Game {
         this.players.put(Counter.O, bothPlayers.get(1));
     }
 
-    public int requestGameType() {
-        return userInterface.requestGameType();
+    public void createPlayers() {
+        selectPlayers(this.gameType);
     }
 
-    private void executeAllPlayersMoves() {
-        Counter currentCounter = Counter.X;
-        while (!isGameOver()) {
-            userInterface.displayBoard(board);
-            board = nextPlayerMakesMove(currentCounter);
-            userInterface.printCurrentCounter(currentCounter);
-            currentCounter = getNextCounter(currentCounter);
+    public Player getNextPlayer() {
+        if (board.isEmpty()){
+            return this.players.get(Counter.X);
         }
+        // get next player by looking at the board and working out who is next
+        return players.get(board.findNextCounter());
     }
 
-    private void displayResult() {
-        userInterface.displayBoard(board);
-        userInterface.displayResult(board.findWinner());
+    public Board getBoard() {
+        return board;
     }
 
-    private void playAgain() {
-        if (userInterface.requestPlayAgain()) {
-            board.resetBoard();
-            play();
-        }
+    public void playMove(int newPosition) {
+        Player currentPlayer = getNextPlayer();
+        board = currentPlayer.playTurn(board, newPosition);
     }
+
+    public void playMove() {
+        Player currentPlayer = getNextPlayer();
+        board = currentPlayer.playTurn(board);
+    }
+
+    public void play(int dimension, int gameType) {
+        setBoardDimension(dimension);
+        setGameType(gameType);
+    }
+
+    public boolean isGameOver() {
+        return board.isGameOver();
+    }
+
+    public Counter findWinner() {
+        return board.findWinner();
+    }
+
 }

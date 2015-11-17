@@ -235,8 +235,8 @@ public class CommandLineUITest {
                 7, 8, 9));
         fakeUI = generateFakeUI(initialState, 3, 2);
         fakeUI.start();
-        assertEquals(HumanPlayer.class, fakeUI.getGame().getPlayers().get(0).getClass());
-        assertEquals(ComputerPlayer.class, fakeUI.getGame().getPlayers().get(1).getClass());
+        assertEquals(HumanPlayer.class, fakeUI.getGame().getPlayer(Counter.X).getClass());
+        assertEquals(ComputerPlayer.class, fakeUI.getGame().getPlayer(Counter.O).getClass());
     }
 
     @Test
@@ -247,8 +247,8 @@ public class CommandLineUITest {
                 7, 8, 9));
         fakeUI = generateFakeUI(initialState, 3, 3);
         fakeUI.start();
-        assertEquals(ComputerPlayer.class, fakeUI.getGame().getPlayers().get(0).getClass());
-        assertEquals(HumanPlayer.class, fakeUI.getGame().getPlayers().get(1).getClass());
+        assertEquals(ComputerPlayer.class, fakeUI.getGame().getPlayer(Counter.X).getClass());
+        assertEquals(HumanPlayer.class, fakeUI.getGame().getPlayer(Counter.O).getClass());
     }
 
     @Test

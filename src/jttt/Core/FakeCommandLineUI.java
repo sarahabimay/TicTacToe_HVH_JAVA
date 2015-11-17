@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.IntPredicate;
 
 public class FakeCommandLineUI implements UserInterface {
-    private NewGame game;
+    private Game game;
     private List<Integer> dummyInputs = new ArrayList<>();
     private Integer playerType = 1;
     private boolean playAgain = false;
@@ -20,7 +20,7 @@ public class FakeCommandLineUI implements UserInterface {
     private int dummyDimension = 0;
 
     public FakeCommandLineUI() {
-        this.game = new NewGame();
+        this.game = new Game();
     }
 
     public void start() {
@@ -171,13 +171,13 @@ public class FakeCommandLineUI implements UserInterface {
 
     private void playAgain() {
         if (requestPlayAgain()) {
-            game = new NewGame();
+            game = new Game();
             start();
         }
     }
 
     private void createNewGame(int dimension, int gameType) {
-        game = new NewGame(dimension, gameType);
+        game = new Game(dimension, gameType);
     }
 
     private void playAllMoves() {
@@ -220,7 +220,7 @@ public class FakeCommandLineUI implements UserInterface {
         return validate(nextMove, this::validPosition);//&& nextMove <= numberOfInputs;
     }
 
-    public NewGame getGame() {
+    public Game getGame() {
         return game;
     }
 }
