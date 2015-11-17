@@ -19,10 +19,20 @@ public class ControllerTest {
     @Test
     public void userProvidesDimensionAndGameType(){
         Controller controller = new Controller();
-        controller.startGame(3, HVH);
+        controller.createNewGame(3, HVH);
         assertEquals(9, controller.getGame().getBoardSize());
         assertEquals(HumanPlayer.class, controller.getGame().getPlayers().get(0).getClass());
         assertEquals(HumanPlayer.class, controller.getGame().getPlayers().get(1).getClass());
+    }
+
+    @Test
+    public void guiBoardGetsUpdatedByAI() {
+        Controller controller = new Controller();
+        ActionEvent event = new ActionEvent();
+        controller.start(event);
+        controller.positionSelected(event);
+        assertEquals(controller.zero.getText(), "X");
+
     }
 
     @Test
@@ -30,6 +40,7 @@ public class ControllerTest {
     public void testStartEvent() {
         ActionEvent event = new ActionEvent();
         Controller controller = new Controller();
+//        FakeController fakeer = new FakeController();
         controller.start(event);
 
     }

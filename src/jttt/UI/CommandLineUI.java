@@ -19,7 +19,6 @@ public class CommandLineUI implements UserInterface {
         this.game = new NewGame();
     }
 
-    @Override
     public void start() {
         createNewGame(requestBoardSize(), requestGameType());
         playAllMoves();
@@ -109,7 +108,7 @@ public class CommandLineUI implements UserInterface {
     }
 
     private void playAgain() {
-        if (requestPlayAgain()){
+        if (requestPlayAgain()) {
             game = new NewGame();
             start();
         }
