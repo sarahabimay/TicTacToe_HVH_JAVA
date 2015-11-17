@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class ComputerPlayerTest {
     private FakeCommandLineUI fakeUI;
@@ -57,7 +59,8 @@ public class ComputerPlayerTest {
                 X, O, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        Assert.assertEquals(3, computerXPlayer.calculateNextMoveWithAlphaBeta(board));
+        List<Counter> expected = arrayToList(new Counter[]{X, O, X, O, X, X, X, O, O});
+        assertEquals(expected, computerXPlayer.playTurn(board).getCells());
     }
 
     @Test
@@ -68,7 +71,8 @@ public class ComputerPlayerTest {
                 O, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        Assert.assertEquals(3, computerOPlayer.calculateNextMoveWithAlphaBeta(board));
+        List<Counter> expected = arrayToList(new Counter[]{X, X, X, X, O, X, O, O, E});
+        assertEquals(expected, computerXPlayer.playTurn(board).getCells());
     }
 
     @Test
@@ -104,8 +108,9 @@ public class ComputerPlayerTest {
                 E, O, O, X,
         };
         Board board = new Board(4, arrayToList(currentBoard));
-        Integer result = computerOPlayer.calculateNextMoveWithAlphaBeta(board);
-        assertEquals((Integer) 1, result);
+        currentBoard[0] = O;
+        List<Counter> expected = arrayToList(currentBoard);
+        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
     @Test
@@ -116,13 +121,13 @@ public class ComputerPlayerTest {
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        Integer result = computerOPlayer.calculateNextMoveWithAlphaBeta(board);
-        assertEquals((Integer) 1, result);
+        currentBoard[0] = O;
+        List<Counter> expected = arrayToList(currentBoard);
+        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
     @Test
-    @Ignore
-    public void firstMoveIsAICounterlphaBetaAlphaBeta_4x4() {
+    public void firstMoveIsRandomlySelected_4x4() {
         Counter currentBoard[] = {
                 E, E, E, E,
                 E, E, E, E,
@@ -130,12 +135,11 @@ public class ComputerPlayerTest {
                 E, E, E, E,
         };
         Board board = new Board(4, arrayToList(currentBoard));
-        int result = computerXPlayer.calculateNextMoveWithAlphaBeta(board);
-        assertEquals( 16, result);
+        List<Counter> result = computerXPlayer.playTurn(board).getCells();
+        assertThat(result, hasItem(X) );
     }
 
     @Test
-    @Ignore
     public void firstMoveIsCounterOppAlphaBetaAlphaBeta_4x4() {
 
         Counter currentBoard[] = {
@@ -145,8 +149,8 @@ public class ComputerPlayerTest {
                 E, E, E, X,
         };
         Board board = new Board(4, arrayToList(currentBoard));
-        int  result = computerOPlayer.calculateNextMoveWithAlphaBeta(board);
-        assertEquals( 15, result);
+        List<Counter> result = computerOPlayer.playTurn(board).getCells();
+        assertThat(result, hasItem(O) );
     }
 
     @Test
@@ -172,8 +176,9 @@ public class ComputerPlayerTest {
                 O, X, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        int  result = computerOPlayer.calculateNextMoveWithAlphaBeta(board);
-        assertEquals( 3, result);
+        currentBoard[2] = O;
+        List<Counter> expected = arrayToList(currentBoard);
+        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
     @Test
@@ -184,13 +189,12 @@ public class ComputerPlayerTest {
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        int  result = computerOPlayer.calculateNextMoveWithAlphaBeta(board);
-        assertEquals( 7, result);
+        currentBoard[6] = O;
+        List<Counter> expected = arrayToList(currentBoard);
+        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
-    //FAILS
     @Test
-    @Ignore
     public void oppStartsOnCornerAIPicksCenter() {
         Counter currentBoard[] = {
                 X, E, E,
@@ -198,8 +202,9 @@ public class ComputerPlayerTest {
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        int result = computerOPlayer.calculateNextMoveWithAlphaBeta(board);
-        assertEquals( 5, result);
+        currentBoard[4] = O;
+        List<Counter> expected = arrayToList(currentBoard);
+        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
     // FAILS BECAUSE IT TAKES THE FIRST BESTSCORE and position 9 must be
@@ -213,8 +218,11 @@ public class ComputerPlayerTest {
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        int result = computerXPlayer.calculateNextMoveWithAlphaBeta(board);
-        assertEquals( 9, result);
+        currentBoard[8] = X;
+        List<Counter> expected = arrayToList(currentBoard);
+        assertEquals(expected, computerXPlayer.playTurn(board).getCells());
+//        int result = computerXPlayer.calculateNextMoveWithAlphaBeta(board);
+//        assertEquals( 9, result);
     }
 
     @Test
@@ -225,8 +233,9 @@ public class ComputerPlayerTest {
                 E, E, X
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        int result = computerOPlayer.calculateNextMoveWithAlphaBeta(board);
-        assertEquals( 2, result);
+        currentBoard[1] = O;
+        List<Counter> expected = arrayToList(currentBoard);
+        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
     @Test
@@ -237,8 +246,9 @@ public class ComputerPlayerTest {
                 O, E, X
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        int result = computerXPlayer.calculateNextMoveWithAlphaBeta(board);
-        assertEquals( 3, result);
+        currentBoard[2] = X;
+        List<Counter> expected = arrayToList(currentBoard);
+        assertEquals(expected, computerXPlayer.playTurn(board).getCells());
     }
 
 

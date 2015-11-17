@@ -5,7 +5,7 @@ import java.util.HashMap;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class ComputerPlayer extends Player {
+public class AlphaBetaStrategy implements AIMoveStrategy {
     private static final int SCORE_FOR_DRAW = 0;
     public static final int INITIAL_SCORE = 1000000;
     private static int DISPLAY_POSITION_OFFSET = 1;
@@ -14,24 +14,13 @@ public class ComputerPlayer extends Player {
     private static String MOVE_KEY = "Move";
     private static String SCORE_KEY = "Score";
     private static Integer DEPTH = 0;
-    private AIStrategyFactory strategyFactory;
+    private Counter counter;
 
-    public ComputerPlayer(Counter counter, UserInterface userInterface) {
-        super(counter, Type.AI , userInterface);
-        strategyFactory = new AIStrategyFactory();
+    public AlphaBetaStrategy() {
     }
 
-    Board playTurn(Board board) {
-        AIMoveStrategy strategy = strategyFactory.selectStrategyByBoardSize(board.boardSize());
-        return board.playCounterInPosition(strategy.calculateNextMove(board, counter), counter);
-//        return board.playCounterInPosition(calculateNextMoveWithAlphaBeta(board), counter);
-    }
-
-    Board playTurn(Board board, int newPosition) {
-        return board;
-    }
-
-    public int calculateNextMoveWithAlphaBeta(Board board) {
+    public int calculateNextMove(Board board, Counter counter) {
+        this.counter = counter;
         DEPTH = board.numberOfOpenPositions();
         return indexToDisplayPosition(aBMinimax(DEPTH, this.counter, INITIAL_ALPHA, INITIAL_BETA, board));
     }

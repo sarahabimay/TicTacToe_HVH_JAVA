@@ -15,6 +15,7 @@ public class PlayerFactoryTest {
     @Before
     public void setUp() throws Exception {
         playerFactory = new PlayerFactory();
+        playerFactory.registerGameTypeWithPlayerTypes();
     }
 
     @Test

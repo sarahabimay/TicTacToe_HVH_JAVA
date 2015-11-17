@@ -31,13 +31,13 @@ public class PlayerFactory {
         return gameTypeOptionToPlayers.get(getGameType(gameType));
     }
 
-    private void registerOptionsToGameType() {
+    void registerOptionsToGameType() {
         optionToGameType.put(1, GameType.HVH);
         optionToGameType.put(2, GameType.HVC);
         optionToGameType.put(3, GameType.CVH);
     }
 
-    private void registerGameTypeWithPlayerTypes() {
+    void registerGameTypeWithPlayerTypes() {
         gameTypeOptionToPlayers.put(GameType.HVH, createPlayers(new HumanPlayer(Counter.X, userInterface), new HumanPlayer(Counter.O, userInterface)));
         gameTypeOptionToPlayers.put(GameType.HVC, createPlayers(new HumanPlayer(Counter.X, userInterface), new ComputerPlayer(Counter.O, userInterface)));
         gameTypeOptionToPlayers.put(GameType.CVH, createPlayers(new ComputerPlayer(Counter.X, userInterface), new HumanPlayer(Counter.O, userInterface)));
