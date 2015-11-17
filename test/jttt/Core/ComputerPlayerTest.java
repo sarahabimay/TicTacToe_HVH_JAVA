@@ -1,3 +1,6 @@
+package jttt.Core;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -7,12 +10,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public class ComputerPlayerTest {
-    public FakeCommandLineUI fakeUI;
-    public ComputerPlayer computerXPlayer;
-    public ComputerPlayer computerOPlayer;
+    private FakeCommandLineUI fakeUI;
+    private ComputerPlayer computerXPlayer;
+    private ComputerPlayer computerOPlayer;
     private Counter X = Counter.X;
     private Counter O = Counter.O;
     private Counter E = Counter.EMPTY;
@@ -29,13 +31,13 @@ public class ComputerPlayerTest {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1));
         fakeUI.addDummyHumanMoves(initialState);
         FakeComputerPlayer computer = new FakeComputerPlayer(Counter.X, fakeUI);
-        assertEquals(FakeComputerPlayer.class, computer.getClass());
+        Assert.assertEquals(FakeComputerPlayer.class, computer.getClass());
     }
 
     @Test
     public void getPlayersOpponent() {
         Player computerPlayer = new ComputerPlayer(Counter.O, fakeUI);
-        assertEquals(Counter.X, computerPlayer.opponentCounter());
+        Assert.assertEquals(Counter.X, computerPlayer.opponentCounter());
     }
 
     @Test
@@ -44,11 +46,7 @@ public class ComputerPlayerTest {
         fakeUI.setGameType(2);
         Board board = new Board(3);
         board = computerXPlayer.playTurn(board);
-        assertNotEquals("" +
-                        "[1][2][3]\n" +
-                        "[4][5][6]\n" +
-                        "[7][8][9]\n",
-                fakeUI.displayBoard(board));
+        Assert.assertEquals(1, board.findPositions(Counter.X).size());
     }
 
     @Test
@@ -59,7 +57,7 @@ public class ComputerPlayerTest {
                 X, O, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(3, computerXPlayer.calculateNextMoveWithAlphaBeta(board));
+        Assert.assertEquals(3, computerXPlayer.calculateNextMoveWithAlphaBeta(board));
     }
 
     @Test
@@ -70,7 +68,7 @@ public class ComputerPlayerTest {
                 O, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(3, computerOPlayer.calculateNextMoveWithAlphaBeta(board));
+        Assert.assertEquals(3, computerOPlayer.calculateNextMoveWithAlphaBeta(board));
     }
 
     @Test
@@ -251,7 +249,7 @@ public class ComputerPlayerTest {
         player1.setDummyPosition(1);
         Board board = new Board(3);
         board = player1.playTurn(board);
-        assertEquals(true, player1.computerHasGeneratedNextMove());
+        Assert.assertEquals(true, player1.computerHasGeneratedNextMove());
     }
 
     private List<Counter> arrayToList(Counter[] initialBoard) {

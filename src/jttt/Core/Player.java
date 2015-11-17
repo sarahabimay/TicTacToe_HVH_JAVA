@@ -1,8 +1,16 @@
-public abstract class Player {
-    protected Counter counter;
-    protected UserInterface userInterface;
+package jttt.Core;
 
-    public Player(Counter counter, UserInterface userInterface) {
+public abstract class Player {
+    public static enum Type{
+        AI,
+        HUMAN
+    }
+    Counter counter;
+    UserInterface userInterface;
+    Type playerType;
+
+    public Player(Counter counter, Type type, UserInterface userInterface) {
+        this.playerType = type;
         this.counter = counter;
         this.userInterface = userInterface;
     }
@@ -17,7 +25,13 @@ public abstract class Player {
         return Counter.EMPTY;
     }
 
+    public Type getPlayerType() {
+        return playerType;
+    }
+
     abstract Board playTurn(Board board);
+
+    abstract Board playTurn(Board board, int newPosition);
 
     public Counter getCounter() {
         return counter;

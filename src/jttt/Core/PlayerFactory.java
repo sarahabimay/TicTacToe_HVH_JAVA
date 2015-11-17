@@ -1,3 +1,5 @@
+package jttt.Core;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,7 +11,6 @@ public class PlayerFactory {
 
     public PlayerFactory() {
         registerOptionsToGameType();
-        registerGameTypeWithPlayerTypes();
     }
 
     public PlayerFactory(UserInterface ui) {
@@ -17,7 +18,7 @@ public class PlayerFactory {
         registerOptionsToGameType();
     }
 
-    public static boolean validPlayerTypes(Integer choice) {
+    public static boolean validPlayerTypes(int choice) {
         return optionToGameType.containsKey(choice);
     }
 
@@ -25,7 +26,7 @@ public class PlayerFactory {
         return gameTypeOptionToPlayers.get(gameType) != null;
     }
 
-    public ArrayList<Player> generatePlayersFor(Integer gameType) {
+    public ArrayList<Player> generatePlayersFor(int gameType) {
         registerGameTypeWithPlayerTypes();
         return gameTypeOptionToPlayers.get(getGameType(gameType));
     }
@@ -49,7 +50,7 @@ public class PlayerFactory {
         return players;
     }
 
-    private GameType getGameType(Integer gameTypeOption) {
+    private GameType getGameType(int gameTypeOption) {
         return optionToGameType.get(gameTypeOption);
     }
 }

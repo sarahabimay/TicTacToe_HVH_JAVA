@@ -1,3 +1,5 @@
+package jttt.Core;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,9 +9,13 @@ public class FakeComputerPlayer extends Player {
     private List<Integer> dummyPositions;
 
     public FakeComputerPlayer(Counter counter, UserInterface userInterface) {
-        super(counter, userInterface);
+        super(counter, Type.AI, userInterface);
         this.hasGeneratedNextMove = false;
         this.dummyPositions = new ArrayList<>();
+    }
+
+    Board playTurn(Board board, int newPosition) {
+        return board;
     }
 
     Board playTurn(Board board) {

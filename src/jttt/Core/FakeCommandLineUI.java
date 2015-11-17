@@ -1,8 +1,11 @@
+package jttt.Core;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntPredicate;
 
 public class FakeCommandLineUI implements UserInterface {
+    private NewGame game;
     private List<Integer> dummyInputs = new ArrayList<>();
     private Integer playerType = 1;
     private boolean playAgain = false;
@@ -16,12 +19,23 @@ public class FakeCommandLineUI implements UserInterface {
     private boolean haveValidatedGameType = false;
     private int dummyDimension = 0;
 
-    public Integer requestBoardSize() {
+    public FakeCommandLineUI() {
+        this.game = new NewGame();
+    }
+
+    public void start() {
+        createNewGame(requestBoardSize(), requestGameType());
+        playAllMoves();
+        displayResult(game.findWinner());
+        playAgain();
+    }
+
+    public int requestBoardSize() {
         userHasBeenAskedForDimension = true;
         return dummyDimension;
     }
 
-    public Integer requestGameType() {
+    public int requestGameType() {
         haveAskedUserForGameType = true;
         if (!validate(playerType, this::validGameType)) {
             playerType = -1;
@@ -29,7 +43,7 @@ public class FakeCommandLineUI implements UserInterface {
         return playerType;
     }
 
-    public Integer requestNextPosition() {
+    public int requestNextPosition() {
         Integer nextMove = dummyInputs.remove(0);
         while (!validDummyPosition(nextMove)) {
             nextMove = dummyInputs.size() > 0 ? dummyInputs.remove(0) : null;
@@ -41,6 +55,12 @@ public class FakeCommandLineUI implements UserInterface {
     public boolean requestPlayAgain() {
         haveAskedUserToQuitGame = true;
         return playAgain;
+    }
+
+    public String displayBoard() {
+        String output = boardForDisplay(game.getBoard());
+        haveDisplayedBoardToUser = true;
+        return output;
     }
 
     public String displayBoard(Board board) {
@@ -89,10 +109,6 @@ public class FakeCommandLineUI implements UserInterface {
         return choice == 1 || choice == 2 || choice == 3;
     }
 
-    public void outputToUI(String output) {
-//        System.out.println(output);
-    }
-
     public Counter getWinner() {
         return this.winner;
     }
@@ -108,7 +124,7 @@ public class FakeCommandLineUI implements UserInterface {
         haveDisplayedResultToUser = true;
     }
 
-    protected List<Integer> aListOfMoves(Integer[] moves) {
+    public List<Integer> aListOfMoves(Integer[] moves) {
         List<Integer> listOfMoves = new ArrayList<>();
         for (int i = 0; i < moves.length; i++) {
             listOfMoves.add(moves[i]);
@@ -153,6 +169,35 @@ public class FakeCommandLineUI implements UserInterface {
         return 2 == instruction;
     }
 
+    private void playAgain() {
+        if (requestPlayAgain()) {
+            game = new NewGame();
+            start();
+        }
+    }
+
+    private void createNewGame(int dimension, int gameType) {
+        game = new NewGame(dimension, gameType);
+    }
+
+    private void playAllMoves() {
+        while (!game.isGameOver()) {
+            if (game.getNextPlayer().getPlayerType() == Player.Type.AI) {
+                game.playMove();
+            } else {
+                game.playMove(requestNextPosition());
+            }
+            displayBoard();
+        }
+    }
+
+    private String boardForDisplay(Board board) {
+        String output = "";
+        for (int i = 0; i < board.boardSize(); i++) {
+            output += convertRowToString(i, board.findCounterAtIndex(i), board);
+        }
+        return output;
+    }
 
     private String convertRowToString(int index, Counter cellValue, Board board) {
         String cellForDisplay = cellValue.counterForDisplay(index);
@@ -175,5 +220,7 @@ public class FakeCommandLineUI implements UserInterface {
         return validate(nextMove, this::validPosition);//&& nextMove <= numberOfInputs;
     }
 
-
+    public NewGame getGame() {
+        return game;
+    }
 }

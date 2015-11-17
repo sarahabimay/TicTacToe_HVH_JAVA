@@ -1,19 +1,20 @@
+package jttt.Core;
+
 import java.util.function.IntPredicate;
 
 public interface UserInterface {
-    Integer requestBoardSize();
 
-    Integer requestGameType();
+    int requestBoardSize();
 
-    Integer requestNextPosition();
+    int requestGameType();
+
+    int requestNextPosition();
 
     boolean requestPlayAgain();
 
     void displayResult(Counter winner);
 
     String displayBoard(Board board);
-
-    void outputToUI(String format);
 
     boolean validate(Integer choiceFromInput, IntPredicate isValidChoice);
 
@@ -26,4 +27,6 @@ public interface UserInterface {
     boolean validPosition(int position);
 
     boolean validInstruction(int instruction);
+
+    void start();
 }
