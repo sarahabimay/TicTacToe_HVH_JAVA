@@ -4,6 +4,7 @@ import jttt.Core.Board;
 import jttt.Core.Mark;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -24,7 +25,7 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         return indexToDisplayPosition(aBMinimax(depth, this.mark, INITIAL_ALPHA, INITIAL_BETA, board));
     }
 
-    private HashMap<String, Integer> aBMinimax(int depth, Mark currentMark, int alpha, int beta, Board currentBoard) {
+    private Map<String, Integer> aBMinimax(int depth, Mark currentMark, int alpha, int beta, Board currentBoard) {
         int bestScore = setInitialBestScore(currentMark);
         int bestMove = -1;
         if (noMoreMovesAvailable(depth, currentBoard)) {
@@ -65,7 +66,7 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         return beta;
     }
 
-    private int indexToDisplayPosition(HashMap<String, Integer> result) {
+    private int indexToDisplayPosition(Map<String, Integer> result) {
         return result.get(MOVE_KEY) + DISPLAY_POSITION_OFFSET;
     }
 
@@ -86,11 +87,11 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         return currentMark == this.mark ? -INITIAL_SCORE : INITIAL_SCORE;
     }
 
-    private HashMap<String, Integer> calculateResult(Board currentBoard, int depth) {
+    private Map<String, Integer> calculateResult(Board currentBoard, int depth) {
         double score = INITIAL_SCORE / (currentBoard.boardSize() - currentBoard.numberOfOpenPositions());
-        if (currentBoard.findWinner().equals(Mark.EMPTY)) {
-            return createResultMap(SCORE_FOR_DRAW, -1);
-        } else if (currentBoard.findWinner().equals(this.mark)) {
+        if (hasWinner(currentBoard, Mark.EMPTY)) {
+            score = SCORE_FOR_DRAW;
+        } else if (hasWinner(currentBoard, this.mark)) {
             score = varyScoreUsingDepth(depth, score);
         } else {
             score = varyScoreUsingDepth(-depth, -score);
@@ -98,11 +99,15 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         return createResultMap(score, -1);
     }
 
+    private boolean hasWinner(Board currentBoard, Mark empty) {
+        return currentBoard.findWinner().equals(empty);
+    }
+
     private double varyScoreUsingDepth(int depth, double score) {
         return score + depth;
     }
 
-    private HashMap<String, Integer> createResultMap(double score, int move) {
+    private Map<String, Integer> createResultMap(double score, int move) {
         HashMap<String, Integer> result = new HashMap<>();
         result.put(SCORE_KEY, (int) score);
         result.put(MOVE_KEY, move);

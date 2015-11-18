@@ -1,16 +1,17 @@
 package jttt.Core.Players;
 
-import jttt.Core.Mark;
 import jttt.Core.GameType;
+import jttt.Core.Mark;
 import jttt.UI.UserInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerFactory {
 
-    static final HashMap<Integer, GameType> optionToGameType = new HashMap<>();
-    static final HashMap<GameType, ArrayList<Player>> gameTypeOptionToPlayers = new HashMap<>();
+    static final Map<Integer, GameType> optionToGameType = new HashMap<>();
+    static final Map<GameType, ArrayList<Player>> gameTypeOptionToPlayers = new HashMap<>();
     public UserInterface userInterface;
 
     public PlayerFactory() {

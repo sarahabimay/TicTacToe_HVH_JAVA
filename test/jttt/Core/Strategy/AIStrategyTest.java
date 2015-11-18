@@ -80,7 +80,6 @@ public class AIStrategyTest {
         Board board = new Board(4, arrayToList(currentBoard));
         FourByFourAlphaBetaStrategy specialAlphaBeta = new FourByFourAlphaBetaStrategy();
         int nextMove = specialAlphaBeta.calculateNextMove(board, Mark.X );
-        assertNotEquals(-1, nextMove);
         assertEquals(1, nextMove);
     }
 

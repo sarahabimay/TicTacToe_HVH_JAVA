@@ -6,11 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import jttt.Core.Mark;
 import jttt.Core.Game;
+import jttt.Core.Mark;
 import jttt.Core.Players.Player;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Controller {
     public Text gametitle = new Text();
@@ -19,7 +20,7 @@ public class Controller {
     public TextField gametype;
     public GridPane gameboard;
     private Game game;
-    private HashMap<Integer, String> gameTypeOptionToString = new HashMap<>();
+    private Map<Integer, String> gameTypeOptionToString = new HashMap<>();
 
     public Controller() {
         this.game = null;
