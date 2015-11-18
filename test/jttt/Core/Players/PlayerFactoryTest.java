@@ -1,5 +1,7 @@
-package jttt.Core;
+package jttt.Core.Players;
 
+import jttt.Core.Fakes.FakeCommandLineUI;
+import jttt.Core.GameType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +17,7 @@ public class PlayerFactoryTest {
     @Before
     public void setUp() throws Exception {
         playerFactory = new PlayerFactory();
+        playerFactory.registerGameTypeWithPlayerTypes();
     }
 
     @Test

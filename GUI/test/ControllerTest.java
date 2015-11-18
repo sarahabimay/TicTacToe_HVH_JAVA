@@ -1,7 +1,7 @@
 import javafx.event.ActionEvent;
 import javafxgui.Controller;
-import jttt.Core.Counter;
-import jttt.Core.HumanPlayer;
+import jttt.Core.Mark;
+import jttt.Core.Players.HumanPlayer;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -22,8 +22,8 @@ public class ControllerTest {
         Controller controller = new Controller();
         controller.createNewGame(3, HVH);
         assertEquals(9, controller.getGame().getBoardSize());
-        assertEquals(HumanPlayer.class, controller.getGame().getPlayer(Counter.X).getClass());
-        assertEquals(HumanPlayer.class, controller.getGame().getPlayer(Counter.O).getClass());
+        assertEquals(HumanPlayer.class, controller.getGame().getPlayer(Mark.X).getClass());
+        assertEquals(HumanPlayer.class, controller.getGame().getPlayer(Mark.O).getClass());
     }
 
     @Test

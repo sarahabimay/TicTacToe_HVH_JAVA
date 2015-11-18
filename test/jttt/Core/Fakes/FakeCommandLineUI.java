@@ -1,4 +1,10 @@
-package jttt.Core;
+package jttt.Core.Fakes;
+
+import jttt.Core.Board;
+import jttt.Core.Mark;
+import jttt.Core.Game;
+import jttt.Core.Players.Player;
+import jttt.UI.UserInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +13,9 @@ import java.util.function.IntPredicate;
 public class FakeCommandLineUI implements UserInterface {
     private Game game;
     private List<Integer> dummyInputs = new ArrayList<>();
-    private Integer playerType = 1;
+    private int playerType = 1;
     private boolean playAgain = false;
-    private Counter winner = Counter.EMPTY;
+    private Mark winner = Mark.EMPTY;
     private boolean userHasBeenAskedForDimension = false;
     private boolean userHasBeenAskedForNextPosition = false;
     private boolean haveDisplayedBoardToUser = false;
@@ -44,9 +50,9 @@ public class FakeCommandLineUI implements UserInterface {
     }
 
     public int requestNextPosition() {
-        Integer nextMove = dummyInputs.remove(0);
+        int nextMove = dummyInputs.remove(0);
         while (!validDummyPosition(nextMove)) {
-            nextMove = dummyInputs.size() > 0 ? dummyInputs.remove(0) : null;
+            nextMove = dummyInputs.size() > 0 ? dummyInputs.remove(0) : -1;
         }
         userHasBeenAskedForNextPosition = true;
         return nextMove;
@@ -72,11 +78,11 @@ public class FakeCommandLineUI implements UserInterface {
         return output;
     }
 
-    public void printCurrentCounter(Counter currentCounter) {
+    public void printCurrentCounter(Mark currentMark) {
 
     }
 
-    public void addDummyPlayAgainChoice(Integer replayOrQuit) {
+    public void addDummyPlayAgainChoice(int replayOrQuit) {
         playAgain = doPlayAgain(replayOrQuit);
     }
 
@@ -88,8 +94,8 @@ public class FakeCommandLineUI implements UserInterface {
         dummyInputs = inputs;
     }
 
-    public boolean validate(Integer choiceFromInput, IntPredicate isValidChoice) {
-        return choiceFromInput != null && isValidChoice.test(choiceFromInput);
+    public boolean validate(int choiceFromInput, IntPredicate isValidChoice) {
+        return isValidChoice.test(choiceFromInput);
     }
 
     public boolean validateDimension(int dimension) {
@@ -109,15 +115,15 @@ public class FakeCommandLineUI implements UserInterface {
         return choice == 1 || choice == 2 || choice == 3;
     }
 
-    public Counter getWinner() {
+    public Mark getWinner() {
         return this.winner;
     }
 
     public boolean isADraw() {
-        return this.winner == Counter.EMPTY;
+        return this.winner == Mark.EMPTY;
     }
 
-    public void displayResult(Counter winner) {
+    public void displayResult(Mark winner) {
         if (!winner.isEmpty()) {
             this.winner = winner;
         }
@@ -132,7 +138,6 @@ public class FakeCommandLineUI implements UserInterface {
         return listOfMoves;
     }
 
-    // made public just for testing
     public boolean hasAskedUserForDimension() {
         return userHasBeenAskedForDimension;
     }
@@ -157,7 +162,7 @@ public class FakeCommandLineUI implements UserInterface {
         return haveAskedUserForGameType;
     }
 
-    public void setGameType(Integer gameType) {
+    public void setGameType(int gameType) {
         this.playerType = gameType;
     }
 
@@ -165,7 +170,7 @@ public class FakeCommandLineUI implements UserInterface {
         return haveValidatedGameType;
     }
 
-    boolean doPlayAgain(Integer instruction) {
+    boolean doPlayAgain(int instruction) {
         return 2 == instruction;
     }
 
@@ -199,7 +204,7 @@ public class FakeCommandLineUI implements UserInterface {
         return output;
     }
 
-    private String convertRowToString(int index, Counter cellValue, Board board) {
+    private String convertRowToString(int index, Mark cellValue, Board board) {
         String cellForDisplay = cellValue.counterForDisplay(index);
         String output = String.format("[%s]", cellForDisplay);
         if (isEndOfRow(index, board)) {
@@ -216,7 +221,7 @@ public class FakeCommandLineUI implements UserInterface {
         return (int) Math.sqrt(board.boardSize());
     }
 
-    private boolean validDummyPosition(Integer nextMove) {
+    private boolean validDummyPosition(int nextMove) {
         return validate(nextMove, this::validPosition);//&& nextMove <= numberOfInputs;
     }
 

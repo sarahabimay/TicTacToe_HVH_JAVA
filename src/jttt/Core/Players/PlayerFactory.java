@@ -1,12 +1,17 @@
-package jttt.Core;
+package jttt.Core.Players;
+
+import jttt.Core.GameType;
+import jttt.Core.Mark;
+import jttt.UI.UserInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class PlayerFactory {
 
-    static final HashMap<Integer, GameType> optionToGameType = new HashMap<>();
-    static final HashMap<GameType, ArrayList<Player>> gameTypeOptionToPlayers = new HashMap<>();
+    static final Map<Integer, GameType> optionToGameType = new HashMap<>();
+    static final Map<GameType, ArrayList<Player>> gameTypeOptionToPlayers = new HashMap<>();
     public UserInterface userInterface;
 
     public PlayerFactory() {
@@ -31,16 +36,16 @@ public class PlayerFactory {
         return gameTypeOptionToPlayers.get(getGameType(gameType));
     }
 
-    private void registerOptionsToGameType() {
+    void registerOptionsToGameType() {
         optionToGameType.put(1, GameType.HVH);
         optionToGameType.put(2, GameType.HVC);
         optionToGameType.put(3, GameType.CVH);
     }
 
-    private void registerGameTypeWithPlayerTypes() {
-        gameTypeOptionToPlayers.put(GameType.HVH, createPlayers(new HumanPlayer(Counter.X, userInterface), new HumanPlayer(Counter.O, userInterface)));
-        gameTypeOptionToPlayers.put(GameType.HVC, createPlayers(new HumanPlayer(Counter.X, userInterface), new ComputerPlayer(Counter.O, userInterface)));
-        gameTypeOptionToPlayers.put(GameType.CVH, createPlayers(new ComputerPlayer(Counter.X, userInterface), new HumanPlayer(Counter.O, userInterface)));
+    void registerGameTypeWithPlayerTypes() {
+        gameTypeOptionToPlayers.put(GameType.HVH, createPlayers(new HumanPlayer(Mark.X, userInterface), new HumanPlayer(Mark.O, userInterface)));
+        gameTypeOptionToPlayers.put(GameType.HVC, createPlayers(new HumanPlayer(Mark.X, userInterface), new ComputerPlayer(Mark.O, userInterface)));
+        gameTypeOptionToPlayers.put(GameType.CVH, createPlayers(new ComputerPlayer(Mark.X, userInterface), new HumanPlayer(Mark.O, userInterface)));
     }
 
     protected ArrayList<Player> createPlayers(Player player1, Player player2) {

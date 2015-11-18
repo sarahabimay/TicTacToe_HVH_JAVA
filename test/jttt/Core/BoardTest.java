@@ -8,9 +8,9 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class BoardTest {
-    Counter X = Counter.X;
-    Counter O = Counter.O;
-    Counter EMPTY = Counter.EMPTY;
+    Mark X = Mark.X;
+    Mark O = Mark.O;
+    Mark EMPTY = Mark.EMPTY;
 
     @Test
     public void threeByThreeGameHasNineOpenPositions() {
@@ -41,7 +41,7 @@ public class BoardTest {
 
     @Test
     public void counterPlayedInOccupiedPosition() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, EMPTY, EMPTY,
                 EMPTY, EMPTY, EMPTY,
                 EMPTY, EMPTY, EMPTY
@@ -57,7 +57,7 @@ public class BoardTest {
 
     @Test
     public void foundRowWinInRow1_3x3Game() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, X, X,
                 O, O, EMPTY,
                 EMPTY, EMPTY, EMPTY
@@ -68,7 +68,7 @@ public class BoardTest {
 
     @Test
     public void foundWinInRow3_4x4Game() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, O, X, X,
                 X, O, O, O,
                 X, X, X, X,
@@ -80,7 +80,7 @@ public class BoardTest {
 
     @Test
     public void foundWinInColumn1_3x3Game() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, O, O,
                 X, O, X,
                 X, X, O
@@ -91,7 +91,7 @@ public class BoardTest {
 
     @Test
     public void foundWinInColumn2_4X4Game() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 O, X, O, X,
                 X, X, O, X,
                 O, X, X, O,
@@ -103,7 +103,7 @@ public class BoardTest {
 
     @Test
     public void foundDiagonalWin1_3x3Game() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, O, O,
                 O, X, X,
                 O, O, X
@@ -114,7 +114,7 @@ public class BoardTest {
 
     @Test
     public void foundDiagonalWin2_4x4Game() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 O, O, X, X,
                 X, X, X, O,
                 X, X, O, O,
@@ -126,19 +126,19 @@ public class BoardTest {
 
     @Test
     public void findCounterXWinner_4x4() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 O, O, X, X,
                 X, X, X, O,
                 X, X, O, O,
                 X, O, O, O
         };
         Board playerXDiagonalWin = new Board(4, arrayToList(currentBoard));
-        assertEquals(Counter.X, playerXDiagonalWin.findWinner());
+        assertEquals(Mark.X, playerXDiagonalWin.findWinner());
     }
 
     @Test
     public void getWinner() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, O, O,
                 O, X, X,
                 O, O, X
@@ -150,7 +150,7 @@ public class BoardTest {
 
     @Test
     public void itsADraw() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 O, X, O,
                 O, O, X,
                 X, O, X
@@ -161,7 +161,7 @@ public class BoardTest {
 
     @Test
     public void findWinInARow() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, X, X,
                 O, O, X,
                 O, O, X
@@ -173,7 +173,7 @@ public class BoardTest {
 
     @Test
     public void findWinInAColumn() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, O, X,
                 O, X, X,
                 O, O, X
@@ -185,7 +185,7 @@ public class BoardTest {
 
     @Test
     public void findWinOnDiagonal1() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, O, X,
                 X, X, O,
                 O, O, X
@@ -197,7 +197,7 @@ public class BoardTest {
 
     @Test
     public void foundWinOnOther_3x3Game() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 O, O, X,
                 O, X, X,
                 X, O, O
@@ -208,7 +208,7 @@ public class BoardTest {
 
     @Test
     public void foundWinOnDiagonal_4x4Game() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 O, O, X, X,
                 X, X, X, O,
                 X, X, O, O,
@@ -220,7 +220,7 @@ public class BoardTest {
 
     @Test
     public void foundWinOnOtherDiagonal_4x4Game() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, O, X, X,
                 O, X, X, O,
                 X, O, X, O,
@@ -232,7 +232,7 @@ public class BoardTest {
 
     @Test
     public void findWinnerUsingLines() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, X, X,
                 O, O, O,
                 O, X, X
@@ -244,7 +244,7 @@ public class BoardTest {
 
     @Test
     public void findWinnerUsingLines_ColumnWin() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, O, X,
                 O, O, X,
                 O, X, X
@@ -257,7 +257,7 @@ public class BoardTest {
 
     @Test
     public void createListOfRowLines() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, X, X,
                 O, O, X,
                 O, O, X
@@ -269,7 +269,7 @@ public class BoardTest {
 
     @Test
     public void createListOfColumnLines() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, X, X,
                 O, O, X,
                 O, O, X
@@ -282,7 +282,7 @@ public class BoardTest {
 
     @Test
     public void winnerIsXCounter_RowWin() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, X, X,
                 O, O, O,
                 O, X, X
@@ -294,7 +294,7 @@ public class BoardTest {
 
     @Test
     public void winnerIsXCounter_ColumnWin() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, O, X,
                 O, O, X,
                 O, X, X
@@ -306,7 +306,7 @@ public class BoardTest {
 
     @Test
     public void thereIsNoWinningCounter() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, O, X,
                 X, O, O,
                 O, X, X
@@ -318,7 +318,7 @@ public class BoardTest {
 
     @Test
     public void getSeveralRemainingPositions() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 O,      O,      EMPTY,
                 EMPTY,  X,      X,
                 X,      O,      O
@@ -337,8 +337,8 @@ public class BoardTest {
         return openPositions;
     }
 
-    private List<Counter> arrayToList(Counter[] initialBoard) {
-        List<Counter> initialCells = new ArrayList<>(initialBoard.length);
+    private List<Mark> arrayToList(Mark[] initialBoard) {
+        List<Mark> initialCells = new ArrayList<>(initialBoard.length);
         for (int i = 0; i < initialBoard.length; i++) {
             initialCells.add((initialBoard[i]));
         }

@@ -1,6 +1,10 @@
 package jttt.Core.UI;
 
 import jttt.Core.*;
+import jttt.Core.Fakes.FakeCommandLineUI;
+import jttt.Core.Players.ComputerPlayer;
+import jttt.Core.Players.HumanPlayer;
+import jttt.Core.Players.PlayerFactory;
 import jttt.UI.CommandLineUI;
 import org.junit.Assert;
 import org.junit.Before;
@@ -224,7 +228,7 @@ public class CommandLineUITest {
         fakeUI.start();
         assertEquals(true, fakeUI.getGame().isGameOver());
         assertEquals(false, fakeUI.isADraw());
-        assertEquals(Counter.X, fakeUI.getWinner());
+        assertEquals(Mark.X, fakeUI.getWinner());
     }
 
     @Test
@@ -235,8 +239,8 @@ public class CommandLineUITest {
                 7, 8, 9));
         fakeUI = generateFakeUI(initialState, 3, 2);
         fakeUI.start();
-        assertEquals(HumanPlayer.class, fakeUI.getGame().getPlayer(Counter.X).getClass());
-        assertEquals(ComputerPlayer.class, fakeUI.getGame().getPlayer(Counter.O).getClass());
+        assertEquals(HumanPlayer.class, fakeUI.getGame().getPlayer(Mark.X).getClass());
+        assertEquals(ComputerPlayer.class, fakeUI.getGame().getPlayer(Mark.O).getClass());
     }
 
     @Test
@@ -247,8 +251,8 @@ public class CommandLineUITest {
                 7, 8, 9));
         fakeUI = generateFakeUI(initialState, 3, 3);
         fakeUI.start();
-        assertEquals(ComputerPlayer.class, fakeUI.getGame().getPlayer(Counter.X).getClass());
-        assertEquals(HumanPlayer.class, fakeUI.getGame().getPlayer(Counter.O).getClass());
+        assertEquals(ComputerPlayer.class, fakeUI.getGame().getPlayer(Mark.X).getClass());
+        assertEquals(HumanPlayer.class, fakeUI.getGame().getPlayer(Mark.O).getClass());
     }
 
     @Test

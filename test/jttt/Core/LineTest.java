@@ -16,13 +16,13 @@ public class LineTest {
 
     @Before
     public void setUp() throws Exception {
-        fourElements = new Line(new ArrayList<>(Arrays.asList(Counter.X, Counter.O, Counter.EMPTY, Counter.X)));
+        fourElements = new Line(new ArrayList<>(Arrays.asList(Mark.X, Mark.O, Mark.EMPTY, Mark.X)));
         emptyThreeElements = new Line(3);
     }
 
     @Test
     public void aLineShouldHave3Elements() {
-        Line line = new Line(Arrays.asList(Counter.X, Counter.X, Counter.X));
+        Line line = new Line(Arrays.asList(Mark.X, Mark.X, Mark.X));
         Assert.assertEquals(3, line.getElements().size());
     }
 
@@ -38,61 +38,61 @@ public class LineTest {
 
     @Test
     public void counterCanBeAddedToLineAtIndex() {
-        emptyThreeElements.addElementAtIndex(0, Counter.X);
-        Assert.assertEquals(Counter.X, emptyThreeElements.getElements().get(0));
+        emptyThreeElements.addElementAtIndex(0, Mark.X);
+        Assert.assertEquals(Mark.X, emptyThreeElements.getElements().get(0));
     }
 
     @Test
     public void findWinForCounter() {
-        Line winning = new Line(Arrays.asList(Counter.X, Counter.X, Counter.X));
+        Line winning = new Line(Arrays.asList(Mark.X, Mark.X, Mark.X));
         Assert.assertEquals(true, winning.hasAWinner());
     }
 
     @Test
     public void doNotFindWinForCounter() {
-        Line line = new Line(Arrays.asList(Counter.O, Counter.X, Counter.X));
+        Line line = new Line(Arrays.asList(Mark.O, Mark.X, Mark.X));
         Assert.assertEquals(false, line.hasAWinner());
     }
 
     @Test
     public void doNotFindWinForAllEmptyElements() {
-        Line line = new Line(Arrays.asList(Counter.EMPTY, Counter.EMPTY, Counter.EMPTY));
+        Line line = new Line(Arrays.asList(Mark.EMPTY, Mark.EMPTY, Mark.EMPTY));
         Assert.assertEquals(false, line.hasAWinner());
     }
 
     @Test
     public void searchForWinForACounter() {
-        Line winning = new Line(Arrays.asList(Counter.X, Counter.X, Counter.X));
-        Assert.assertEquals(true, winning.hasCounterWin(Counter.X));
+        Line winning = new Line(Arrays.asList(Mark.X, Mark.X, Mark.X));
+        Assert.assertEquals(true, winning.hasCounterWin(Mark.X));
     }
 
     @Test
     public void doNotFindWinForACounter() {
-        Line line = new Line(Arrays.asList(Counter.EMPTY, Counter.X, Counter.X));
-        Assert.assertEquals(false, line.hasCounterWin(Counter.X));
+        Line line = new Line(Arrays.asList(Mark.EMPTY, Mark.X, Mark.X));
+        Assert.assertEquals(false, line.hasCounterWin(Mark.X));
     }
 
     @Test
     public void findXCounterForWinner() {
-        Line winning = new Line(Arrays.asList(Counter.X, Counter.X, Counter.X));
-        Assert.assertEquals(Counter.X, winning.findWinner());
+        Line winning = new Line(Arrays.asList(Mark.X, Mark.X, Mark.X));
+        Assert.assertEquals(Mark.X, winning.findWinner());
     }
 
     @Test
     public void findOCounterForWinner() {
-        Line winning = new Line(Arrays.asList(Counter.O, Counter.O, Counter.O));
-        Assert.assertEquals(Counter.O, winning.findWinner());
+        Line winning = new Line(Arrays.asList(Mark.O, Mark.O, Mark.O));
+        Assert.assertEquals(Mark.O, winning.findWinner());
     }
 
     @Test
     public void dontFindAWinningCounter() {
-        Line winning = new Line(Arrays.asList(Counter.EMPTY, Counter.O, Counter.O));
-        Assert.assertEquals(Counter.EMPTY, winning.findWinner());
+        Line winning = new Line(Arrays.asList(Mark.EMPTY, Mark.O, Mark.O));
+        Assert.assertEquals(Mark.EMPTY, winning.findWinner());
     }
 
     @Test
     public void dontFindAWinningCounter2() {
-        Line winning = new Line(Arrays.asList(Counter.O, Counter.O, Counter.X));
-        Assert.assertEquals(Counter.EMPTY, winning.findWinner());
+        Line winning = new Line(Arrays.asList(Mark.O, Mark.O, Mark.X));
+        Assert.assertEquals(Mark.EMPTY, winning.findWinner());
     }
 }

@@ -1,5 +1,8 @@
 package jttt.Core;
 
+import jttt.Core.Players.Player;
+import jttt.Core.Players.PlayerFactory;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +15,7 @@ public class Game {
     private PlayerFactory playerFactory;
     private Board board;
     private int gameType;
-    private HashMap<Counter, Player> players;
+    private HashMap<Mark, Player> players;
 
     public Game() {
         this.playerFactory = new PlayerFactory();
@@ -42,8 +45,8 @@ public class Game {
 
     }
 
-    public Player getPlayer(Counter counter) {
-        return players.get(counter);
+    public Player getPlayer(Mark mark) {
+        return players.get(mark);
     }
 
     public List<Player> getPlayers() {
@@ -55,8 +58,8 @@ public class Game {
 
     public void selectPlayers(int newGameType) {
         ArrayList<Player> bothPlayers = playerFactory.generatePlayersFor(newGameType);
-        this.players.put(Counter.X, bothPlayers.get(0));
-        this.players.put(Counter.O, bothPlayers.get(1));
+        this.players.put(Mark.X, bothPlayers.get(0));
+        this.players.put(Mark.O, bothPlayers.get(1));
     }
 
     public void createPlayers() {
@@ -65,7 +68,7 @@ public class Game {
 
     public Player getNextPlayer() {
         if (board.isEmpty()){
-            return this.players.get(Counter.X);
+            return this.players.get(Mark.X);
         }
         // get next player by looking at the board and working out who is next
         return players.get(board.findNextCounter());
@@ -94,7 +97,7 @@ public class Game {
         return board.isGameOver();
     }
 
-    public Counter findWinner() {
+    public Mark findWinner() {
         return board.findWinner();
     }
 

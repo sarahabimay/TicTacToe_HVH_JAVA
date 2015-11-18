@@ -1,6 +1,7 @@
 package jttt.UI;
 
 import jttt.Core.*;
+import jttt.Core.Players.Player;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class CommandLineUI implements UserInterface {
     }
 
     public int requestBoardSize() {
-        Integer dimension = 0;
+        int dimension = 0;
         while (!validate(dimension, this::validateDimension)) {
             writeStream.println("Please provide the dimensions of the board:\n");
             dimension = readInput();
@@ -36,7 +37,7 @@ public class CommandLineUI implements UserInterface {
     }
 
     public int requestGameType() {
-        Integer choice = -1;
+        int choice = -1;
         while (!validate(choice, this::validGameType)) {
             writeStream.println("Human vs Human(1) or Human vs Computer(2) or Computer vs Human(3)?:\n");
             choice = readInput();
@@ -45,7 +46,7 @@ public class CommandLineUI implements UserInterface {
     }
 
     public int requestNextPosition() {
-        Integer position = 0;
+        int position = 0;
         while (!validate(position, this::validPosition)) {
             String prompt = "Please enter the position number for your next move:\n";
             writeStream.println(prompt);
@@ -55,7 +56,7 @@ public class CommandLineUI implements UserInterface {
     }
 
     public boolean requestPlayAgain() {
-        Integer instruction = 0;
+        int instruction = 0;
         while (!validate(instruction, this::validInstruction)) {
             writeStream.println("Do you want to play again? Quit(1) or Replay(2) :\n");
             instruction = readInput();
@@ -63,7 +64,7 @@ public class CommandLineUI implements UserInterface {
         return doPlayAgain(instruction);
     }
 
-    public void displayResult(Counter winner) {
+    public void displayResult(Mark winner) {
         if (winner.isEmpty()) {
             announceDraw();
         } else {
@@ -83,12 +84,12 @@ public class CommandLineUI implements UserInterface {
         return output;
     }
 
-    public void printCurrentCounter(Counter currentCounter) {
-        writeStream.println(String.format("Board after %s's move: \n", currentCounter.name()));
+    public void printCurrentCounter(Mark currentMark) {
+        writeStream.println(String.format("Board after %s's move: \n", currentMark.name()));
     }
 
-    public boolean validate(Integer choiceFromInput, IntPredicate isValidChoice) {
-        return choiceFromInput != null && isValidChoice.test(choiceFromInput);
+    public boolean validate(int choiceFromInput, IntPredicate isValidChoice) {
+        return isValidChoice.test(choiceFromInput);
     }
 
     public boolean validGameType(int choice) {
@@ -129,7 +130,7 @@ public class CommandLineUI implements UserInterface {
         }
     }
 
-    private void announceWinner(Counter winner) {
+    private void announceWinner(Mark winner) {
         writeStream.println(String.format("We have a Winner! Player: %s\n", winner.toString()));
     }
 
@@ -137,18 +138,18 @@ public class CommandLineUI implements UserInterface {
         writeStream.println("The game is a draw!");
     }
 
-    private Integer readInput() {
+    private int readInput() {
         try {
             return Integer.parseInt(readStream.readLine());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NumberFormatException e) {
-            return null;
+            return 0;
         }
         return 0;
     }
 
-    private boolean doPlayAgain(Integer instruction) {
+    private boolean doPlayAgain(int instruction) {
         return 2 == instruction;
     }
 
@@ -160,7 +161,7 @@ public class CommandLineUI implements UserInterface {
         return output;
     }
 
-    private String convertRowToString(int index, Counter cellValue, Board board) {
+    private String convertRowToString(int index, Mark cellValue, Board board) {
         String cellForDisplay = cellValue.counterForDisplay(index);
         String output = String.format("[%s]", cellForDisplay);
         if (isEndOfRow(index, board)) {
