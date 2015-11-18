@@ -1,6 +1,6 @@
 package jttt.Core;
 
-public enum Counter {
+public enum Mark {
     X,
     O,
     EMPTY;
@@ -13,7 +13,7 @@ public enum Counter {
         return isEmpty() ? String.valueOf(index + 1) : name();
     }
 
-    public Counter opponentCounter() {
-        return (this == Counter.X) ? Counter.O : Counter.X;
+    public Mark opponentCounter() {
+        return (this == Mark.X) ? Mark.O : Mark.X;
     }
 }

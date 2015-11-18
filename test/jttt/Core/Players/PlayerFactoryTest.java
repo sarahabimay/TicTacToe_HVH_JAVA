@@ -1,5 +1,7 @@
-package jttt.Core;
+package jttt.Core.Players;
 
+import jttt.Core.Fakes.FakeCommandLineUI;
+import jttt.Core.GameType;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

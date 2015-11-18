@@ -1,4 +1,7 @@
-package jttt.Core;
+package jttt.Core.Fakes;
+
+import jttt.Core.Players.PlayerFactory;
+import jttt.UI.UserInterface;
 
 public class FakePlayerFactory extends PlayerFactory {
     private FakeComputerPlayer fakeComputerPlayer = null;

@@ -1,13 +1,16 @@
-package jttt.Core;
+package jttt.Core.Strategy;
+
+import jttt.Core.Board;
+import jttt.Core.Mark;
 
 import java.util.Random;
 
 public class RandomStrategy implements AIMoveStrategy{
 
-    private Counter counter;
+    private Mark mark;
 
-    public int calculateNextMove(Board board, Counter counter) {
-        this.counter = counter;
+    public int calculateNextMove(Board board, Mark mark) {
+        this.mark = mark;
         long range = calculateNumberRange(board);
         long fraction = randomFractionFromRange(range);
         return randomNumberInRange(fraction);

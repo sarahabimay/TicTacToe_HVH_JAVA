@@ -1,5 +1,9 @@
-package jttt.Core;
+package jttt.Core.Players;
 
+import jttt.Core.Board;
+import jttt.Core.Mark;
+import jttt.Core.Fakes.FakeCommandLineUI;
+import jttt.Core.Fakes.FakeComputerPlayer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -17,29 +21,29 @@ public class ComputerPlayerTest {
     private FakeCommandLineUI fakeUI;
     private ComputerPlayer computerXPlayer;
     private ComputerPlayer computerOPlayer;
-    private Counter X = Counter.X;
-    private Counter O = Counter.O;
-    private Counter E = Counter.EMPTY;
+    private Mark X = Mark.X;
+    private Mark O = Mark.O;
+    private Mark E = Mark.EMPTY;
 
     @Before
     public void setUp() throws Exception {
         fakeUI = new FakeCommandLineUI();
-        computerXPlayer = new ComputerPlayer(Counter.X, fakeUI);
-        computerOPlayer = new ComputerPlayer(Counter.O, fakeUI);
+        computerXPlayer = new ComputerPlayer(Mark.X, fakeUI);
+        computerOPlayer = new ComputerPlayer(Mark.O, fakeUI);
     }
 
     @Test
     public void createComputerPlayerType() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1));
         fakeUI.addDummyHumanMoves(initialState);
-        FakeComputerPlayer computer = new FakeComputerPlayer(Counter.X, fakeUI);
+        FakeComputerPlayer computer = new FakeComputerPlayer(Mark.X, fakeUI);
         Assert.assertEquals(FakeComputerPlayer.class, computer.getClass());
     }
 
     @Test
     public void getPlayersOpponent() {
-        Player computerPlayer = new ComputerPlayer(Counter.O, fakeUI);
-        Assert.assertEquals(Counter.X, computerPlayer.opponentCounter());
+        Player computerPlayer = new ComputerPlayer(Mark.O, fakeUI);
+        Assert.assertEquals(Mark.X, computerPlayer.opponentCounter());
     }
 
     @Test
@@ -48,64 +52,64 @@ public class ComputerPlayerTest {
         fakeUI.setGameType(2);
         Board board = new Board(3);
         board = computerXPlayer.playTurn(board);
-        Assert.assertEquals(1, board.findPositions(Counter.X).size());
+        Assert.assertEquals(1, board.findPositions(Mark.X).size());
     }
 
     @Test
     public void oneChoiceForAlphaBetaAlgorithm() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, O, E,
                 O, X, X,
                 X, O, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
         currentBoard[2] = X;
-        List<Counter> expected = arrayToList(currentBoard);
+        List<Mark> expected = arrayToList(currentBoard);
         assertEquals(expected, computerXPlayer.playTurn(board).getCells());
     }
 
     @Test
     public void twoChoicesForAlphaBetaAlgorithm() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, X, E,
                 X, O, X,
                 O, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
         currentBoard[2] = X;
-        List<Counter> expected = arrayToList(currentBoard);
+        List<Mark> expected = arrayToList(currentBoard);
         assertEquals(expected, computerXPlayer.playTurn(board).getCells());
     }
 
     @Test
     public void threeChoicesForAlphaBetaAlgorithm() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, X, E,
                 E, O, X,
                 O, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
         currentBoard[2] = X;
-        List<Counter> expected = arrayToList(currentBoard);
+        List<Mark> expected = arrayToList(currentBoard);
         assertEquals(expected, computerXPlayer.playTurn(board).getCells());
     }
 
     @Test
     public void fourChoicesForAlphaBetaAlgorithm() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, X, E,
                 E, O, X,
                 E, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
         currentBoard[2] = O;
-        List<Counter> expected = arrayToList(currentBoard);
+        List<Mark> expected = arrayToList(currentBoard);
         assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
     @Test
     public void elevenOptionsAlphaBetaAlphaBeta_4x4() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 E, E, E, E,
                 E, X, E, E,
                 E, E, X, E,
@@ -113,86 +117,86 @@ public class ComputerPlayerTest {
         };
         Board board = new Board(4, arrayToList(currentBoard));
         currentBoard[0] = O;
-        List<Counter> expected = arrayToList(currentBoard);
+        List<Mark> expected = arrayToList(currentBoard);
         assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
     @Test
     public void firstMoveIsAICounterlphaBetaAlphaBeta_3x3() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 E, E, E,
                 E, E, E,
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
         currentBoard[0] = O;
-        List<Counter> expected = arrayToList(currentBoard);
+        List<Mark> expected = arrayToList(currentBoard);
         assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
     @Test
     public void firstMoveIsRandomlySelected_4x4() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 E, E, E, E,
                 E, E, E, E,
                 E, E, E, E,
                 E, E, E, E,
         };
         Board board = new Board(4, arrayToList(currentBoard));
-        List<Counter> result = computerXPlayer.playTurn(board).getCells();
+        List<Mark> result = computerXPlayer.playTurn(board).getCells();
         assertThat(result, hasItem(X) );
     }
 
     @Test
     public void firstMoveIsCounterOppAlphaBetaAlphaBeta_4x4() {
 
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 E, E, E, E,
                 E, E, E, E,
                 E, E, E, E,
                 E, E, E, X,
         };
         Board board = new Board(4, arrayToList(currentBoard));
-        List<Counter> result = computerOPlayer.playTurn(board).getCells();
+        List<Mark> result = computerOPlayer.playTurn(board).getCells();
         assertThat(result, hasItem(O) );
     }
 
     @Test
     public void alphaBetaShouldPickPositionToBlockOpponentWin() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, X, E,
                 E, O, X,
                 O, X, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
         currentBoard[2] = O;
-        List<Counter> expected = arrayToList(currentBoard);
+        List<Mark> expected = arrayToList(currentBoard);
         assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
     @Test
     public void computerChoosesPositionToBlockOpponent() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 E, E, X,
                 O, X, E,
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
         currentBoard[6] = O;
-        List<Counter> expected = arrayToList(currentBoard);
+        List<Mark> expected = arrayToList(currentBoard);
         assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
     @Test
     public void oppStartsOnCornerAIPicksCenter() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, E, E,
                 E, E, E,
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
         currentBoard[4] = O;
-        List<Counter> expected = arrayToList(currentBoard);
+        List<Mark> expected = arrayToList(currentBoard);
         assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
@@ -201,14 +205,14 @@ public class ComputerPlayerTest {
     @Test
     @Ignore
     public void aiVsPerfectPlayerMustPick9() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, E, E,
                 E, O, E,
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
         currentBoard[8] = X;
-        List<Counter> expected = arrayToList(currentBoard);
+        List<Mark> expected = arrayToList(currentBoard);
         assertEquals(expected, computerXPlayer.playTurn(board).getCells());
 //        int result = computerXPlayer.calculateNextMoveWithAlphaBeta(board);
 //        assertEquals( 9, result);
@@ -216,27 +220,27 @@ public class ComputerPlayerTest {
 
     @Test
     public void aiVsPerfectPlayerAIMustPickAnEdge() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, E, E,
                 E, O, E,
                 E, E, X
         };
         Board board = new Board(3, arrayToList(currentBoard));
         currentBoard[1] = O;
-        List<Counter> expected = arrayToList(currentBoard);
+        List<Mark> expected = arrayToList(currentBoard);
         assertEquals(expected, computerOPlayer.playTurn(board).getCells());
     }
 
     @Test
     public void mustBlockOpponent() {
-        Counter currentBoard[] = {
+        Mark currentBoard[] = {
                 X, E, E,
                 E, O, E,
                 O, E, X
         };
         Board board = new Board(3, arrayToList(currentBoard));
         currentBoard[2] = X;
-        List<Counter> expected = arrayToList(currentBoard);
+        List<Mark> expected = arrayToList(currentBoard);
         assertEquals(expected, computerXPlayer.playTurn(board).getCells());
     }
 
@@ -244,15 +248,15 @@ public class ComputerPlayerTest {
     @Test
     public void computerHasGeneratedAMove() {
         fakeUI.setGameType(2);
-        FakeComputerPlayer player1 = new FakeComputerPlayer(Counter.X, fakeUI);
+        FakeComputerPlayer player1 = new FakeComputerPlayer(Mark.X, fakeUI);
         player1.setDummyPosition(1);
         Board board = new Board(3);
         board = player1.playTurn(board);
         Assert.assertEquals(true, player1.computerHasGeneratedNextMove());
     }
 
-    private List<Counter> arrayToList(Counter[] initialBoard) {
-        List<Counter> initialCells = new ArrayList<>(initialBoard.length);
+    private List<Mark> arrayToList(Mark[] initialBoard) {
+        List<Mark> initialCells = new ArrayList<>(initialBoard.length);
         for (int i = 0; i < initialBoard.length; i++) {
             initialCells.add((initialBoard[i]));
         }

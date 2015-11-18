@@ -1,4 +1,4 @@
-package jttt.Core;
+package jttt.Core.Strategy;
 
 import java.util.HashMap;
 

@@ -1,4 +1,7 @@
-package jttt.Core;
+package jttt.Core.Strategy;
+
+import jttt.Core.Board;
+import jttt.Core.Mark;
 
 import java.util.Random;
 
@@ -7,12 +10,12 @@ public class FourByFourAlphaBetaStrategy extends AlphaBetaStrategy {
     private final int FOUR_BY_FOUR_SIZE = 16;
     private final int THRESHOLD_FOR_RANDOM = 12;
 
-    public int calculateNextMove(Board board, Counter counter) {
+    public int calculateNextMove(Board board, Mark mark) {
         int numberOfOpenPositions = board.numberOfOpenPositions();
         if (randomStrategyWillBeFaster(board, numberOfOpenPositions)) {
             return calculateRandomPosition(board);
         }
-        return super.calculateNextMove(board, counter);
+        return super.calculateNextMove(board, mark);
     }
 
     protected long calculateNumberRange(Board board) {
@@ -31,7 +34,7 @@ public class FourByFourAlphaBetaStrategy extends AlphaBetaStrategy {
         return (int) (fraction + start);
     }
 
-    Integer calculateRandomPosition(Board board) {
+    int calculateRandomPosition(Board board) {
         long range = calculateNumberRange(board);
         long fraction = randomFractionFromRange(range);
         return randomNumberInRange(fraction);

@@ -1,5 +1,5 @@
-import jttt.Core.AIStrategyFactory;
-import jttt.Core.AlphaBetaStrategy;
+package jttt.Core.Strategy;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -10,6 +10,4 @@ public class AIStrategyFactoryTest {
         AIStrategyFactory sf = new AIStrategyFactory();
         assertEquals(AlphaBetaStrategy.class, sf.selectStrategyByBoardSize(2).getClass());
     }
-
-
 }

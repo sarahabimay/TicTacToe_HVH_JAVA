@@ -1,4 +1,7 @@
-package jttt.Core;
+package jttt.Core.Strategy;
+
+import jttt.Core.Board;
+import jttt.Core.Mark;
 
 import java.util.HashMap;
 
@@ -8,43 +11,39 @@ import static java.lang.Math.min;
 public class AlphaBetaStrategy implements AIMoveStrategy {
     private static int DISPLAY_POSITION_OFFSET = 1;
     private static final int SCORE_FOR_DRAW = 0;
-    private static Integer DEPTH = 0;
     private static int INITIAL_SCORE = 1000000;
     private static int INITIAL_ALPHA = -10000000;
     private static int INITIAL_BETA = 10000000;
     private static String MOVE_KEY = "Move";
     private static String SCORE_KEY = "Score";
-    private Counter counter;
+    private Mark mark;
 
-    public AlphaBetaStrategy() {
+    public int calculateNextMove(Board board, Mark mark) {
+        this.mark = mark;
+        int depth = board.numberOfOpenPositions();
+        return indexToDisplayPosition(aBMinimax(depth, this.mark, INITIAL_ALPHA, INITIAL_BETA, board));
     }
 
-    public int calculateNextMove(Board board, Counter counter) {
-        this.counter = counter;
-        DEPTH = board.numberOfOpenPositions();
-        return indexToDisplayPosition(aBMinimax(DEPTH, this.counter, INITIAL_ALPHA, INITIAL_BETA, board));
-    }
-
-    private HashMap<String, Integer> aBMinimax(int depth, Counter currentCounter, int alpha, int beta, Board currentBoard) {
-        Integer bestScore = setInitialBestScore(currentCounter);
-        Integer bestMove = -1;
+    private HashMap<String, Integer> aBMinimax(int depth, Mark currentMark, int alpha, int beta, Board currentBoard) {
+        int bestScore = setInitialBestScore(currentMark);
+        int bestMove = -1;
         if (noMoreMovesAvailable(depth, currentBoard)) {
             return calculateResult(currentBoard, depth);
         }
 
         for (Integer move : currentBoard.remainingPositions()) {
-            Board currentStateOfBoard = currentBoard.newBoardWithNewMove(move, currentCounter);
-            Integer score = aBMinimax(  depth - 1,
-                                        currentCounter.opponentCounter(),
+            Board currentStateOfBoard = currentBoard.newBoardWithNewMove(move, currentMark);
+            int score = aBMinimax(  depth - 1,
+                                        currentMark.opponentCounter(),
                                         alpha,
                                         beta,
                                         currentStateOfBoard).get(SCORE_KEY);
-            if (newBestScore(currentCounter, bestScore, score)) {
+            if (newBestScore(currentMark, bestScore, score)) {
                 bestScore = score;
                 bestMove = move;
             }
-            alpha = newAlpha(alpha, score, currentCounter);
-            beta = newBeta(beta, score, currentCounter);
+            alpha = newAlpha(alpha, score, currentMark);
+            beta = newBeta(beta, score, currentMark);
             if (beta <= alpha) {
                 break;
             }
@@ -52,15 +51,15 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         return createResultMap(bestScore, bestMove);
     }
 
-    private int newAlpha(int alpha, Integer score, Counter currentCounter) {
-        if (isComputerCounter(currentCounter)) {
+    private int newAlpha(int alpha, int score, Mark currentMark) {
+        if (isComputerCounter(currentMark)) {
             return max(alpha, score);
         }
         return alpha;
     }
 
-    private int newBeta(int beta, Integer score, Counter currentCounter) {
-        if (!isComputerCounter(currentCounter)) {
+    private int newBeta(int beta, int score, Mark currentMark) {
+        if (!isComputerCounter(currentMark)) {
             return min(beta, score);
         }
         return beta;
@@ -70,28 +69,28 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         return result.get(MOVE_KEY) + DISPLAY_POSITION_OFFSET;
     }
 
-    private boolean newBestScore(Counter currentCounter, Integer bestScore, Integer score) {
-        return isComputerCounter(currentCounter) && score > bestScore ||
-                !isComputerCounter(currentCounter) && score < bestScore;
+    private boolean newBestScore(Mark currentMark, int bestScore, int score) {
+        return isComputerCounter(currentMark) && score > bestScore ||
+                !isComputerCounter(currentMark) && score < bestScore;
     }
 
-    private boolean isComputerCounter(Counter currentCounter) {
-        return this.counter == currentCounter;
+    private boolean isComputerCounter(Mark currentMark) {
+        return this.mark == currentMark;
     }
 
     private boolean noMoreMovesAvailable(int depth, Board currentBoard) {
         return currentBoard.isGameOver() || depth == 0;
     }
 
-    private Integer setInitialBestScore(Counter currentCounter) {
-        return currentCounter == this.counter ? -INITIAL_SCORE : INITIAL_SCORE;
+    private int setInitialBestScore(Mark currentMark) {
+        return currentMark == this.mark ? -INITIAL_SCORE : INITIAL_SCORE;
     }
 
     private HashMap<String, Integer> calculateResult(Board currentBoard, int depth) {
         double score = INITIAL_SCORE / (currentBoard.boardSize() - currentBoard.numberOfOpenPositions());
-        if (currentBoard.findWinner().equals(Counter.EMPTY)) {
+        if (currentBoard.findWinner().equals(Mark.EMPTY)) {
             return createResultMap(SCORE_FOR_DRAW, -1);
-        } else if (currentBoard.findWinner().equals(this.counter)) {
+        } else if (currentBoard.findWinner().equals(this.mark)) {
             score = varyScoreUsingDepth(depth, score);
         } else {
             score = varyScoreUsingDepth(-depth, -score);

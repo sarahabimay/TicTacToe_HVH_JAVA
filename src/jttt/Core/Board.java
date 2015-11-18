@@ -14,19 +14,19 @@ public class Board {
     private static final int POSITIVE_OFFSET = 1;
     private static final int NEGATIVE_OFFSET = -1;
     private int dimension;
-    private List<Counter> cells;
+    private List<Mark> cells;
 
     public Board(int dimension) {
         this.dimension = dimension;
         this.cells = new ArrayList<>(generateEmptyCells());
     }
 
-    public Board(int dimension, List<Counter> initialState) {
+    public Board(int dimension, List<Mark> initialState) {
         this.dimension = dimension;
         this.cells = initialState;
     }
 
-    public Board(List<Counter> cells) {
+    public Board(List<Mark> cells) {
         this.dimension = (int) Math.sqrt(cells.size());
         this.cells = cells;
     }
@@ -35,9 +35,9 @@ public class Board {
         this.cells = generateEmptyCells();
     }
 
-    public Board playCounterInPosition(int position, Counter counter) {
+    public Board playCounterInPosition(int position, Mark mark) {
         if (validPosition(position)) {
-            cells.set(position - POSITIVE_OFFSET, counter);
+            cells.set(position - POSITIVE_OFFSET, mark);
         }
         return new Board(cells);
     }
@@ -58,9 +58,9 @@ public class Board {
         return getDiagonals().stream().anyMatch(Line::hasAWinner);
     }
 
-    public Counter findWinner() {
+    public Mark findWinner() {
         Optional<Line> lineOptional = getAllLines().stream().filter(Line::hasAWinner).findFirst();
-        return (lineOptional.isPresent()) ? lineOptional.get().findWinner() : Counter.EMPTY;
+        return (lineOptional.isPresent()) ? lineOptional.get().findWinner() : Mark.EMPTY;
     }
 
     public boolean validPosition(int position) {
@@ -68,27 +68,44 @@ public class Board {
     }
 
     public boolean cellIsOccupied(int cellIndex) {
-        return cells.get(cellIndex) == Counter.X || cells.get(cellIndex) == Counter.O;
+        return cells.get(cellIndex) == Mark.X || cells.get(cellIndex) == Mark.O;
     }
 
     public List<Integer> remainingPositions() {
         return range(0, cells.size())
-                .filter(p -> cells.get(p) == Counter.EMPTY)
+                .filter(p -> cells.get(p) == Mark.EMPTY)
                 .mapToObj(i -> i)
                 .collect(toList());
     }
 
-    public Board newBoardWithNewMove(int move, Counter currentCounter) {
-        List<Counter> newCells = newCellsWithNewMove(move, currentCounter);
+    public Board newBoardWithNewMove(int move, Mark currentMark) {
+        List<Mark> newCells = newCellsWithNewMove(move, currentMark);
         return new Board(newCells);
+    }
+    public ArrayList<Integer> findPositions(Mark mark) {
+        ArrayList<Integer> counterPositions = new ArrayList<>();
+        for (int i = 0; i < cells.size(); i++) {
+            if (findCounterAtIndex(i) == mark) {
+                counterPositions.add(i);
+            }
+        }
+        return counterPositions;
+    }
+
+    public List<Mark> getCells() {
+        return cells;
     }
 
     public int boardSize() {
         return dimension * dimension;
     }
 
-    public Counter findCounterAtIndex(int startIndex) {
+    public Mark findCounterAtIndex(int startIndex) {
         return cells.get(startIndex);
+    }
+
+    public int numberOfOpenPositions() {
+        return boardSize() - numberOfPositionsTaken();
     }
 
     boolean foundWinInRow() {
@@ -100,7 +117,7 @@ public class Board {
     }
 
     List<Line> getRows() {
-        List<List<Counter>> rowLines = Lists.partition(cells, dimension);
+        List<List<Mark>> rowLines = Lists.partition(cells, dimension);
         return rowLines.stream().map(Line::new).collect(toList());
     }
 
@@ -113,26 +130,9 @@ public class Board {
     }
 
     boolean isAWinner() {
-        return findWinner() != Counter.EMPTY;
+        return findWinner() != Mark.EMPTY;
     }
 
-    int numberOfOpenPositions() {
-        return boardSize() - numberOfPositionsTaken();
-    }
-
-    ArrayList<Integer> findPositions(Counter counter) {
-        ArrayList<Integer> counterPositions = new ArrayList<>();
-        for (int i = 0; i < cells.size(); i++) {
-            if (findCounterAtIndex(i) == counter) {
-                counterPositions.add(i);
-            }
-        }
-        return counterPositions;
-    }
-
-    List<Counter> getCells() {
-        return cells;
-    }
 
     private ArrayList<Line> getAllLines() {
         ArrayList<Line> allLines = new ArrayList<>();
@@ -142,7 +142,7 @@ public class Board {
         return allLines;
     }
 
-    private List<Counter> getDiagonalCells(int diagonalIndex) {
+    private List<Mark> getDiagonalCells(int diagonalIndex) {
         int nextCellIncrement = determineNextDiagonalCellIncrement(diagonalIndex);
         int lastCellIndex = determineLastIndexForDiagonal(diagonalIndex);
         ArrayList<Integer> indexesList = new ArrayList<>();
@@ -152,7 +152,7 @@ public class Board {
         return indexesList.stream().map(i -> cells.get(i)).collect(toList());
     }
 
-    private List<Counter> getColumnCells(int columnIndex) {
+    private List<Mark> getColumnCells(int columnIndex) {
         return range(0, dimension).mapToObj(i -> cells.get(columnIndex + i * dimension)).collect(toList());
     }
 
@@ -161,7 +161,7 @@ public class Board {
     }
 
     private int numberOfPositionsTaken() {
-        return findPositions(Counter.X).size() + findPositions(Counter.O).size();
+        return findPositions(Mark.X).size() + findPositions(Mark.O).size();
     }
 
     private boolean positionIsWithinRange(int position) {
@@ -181,24 +181,24 @@ public class Board {
         return startIndex == 0 ? POSITIVE_OFFSET : NEGATIVE_OFFSET;
     }
 
-    private List<Counter> generateEmptyCells() {
-        List<Counter> initialCells = new ArrayList<>(boardSize());
+    private List<Mark> generateEmptyCells() {
+        List<Mark> initialCells = new ArrayList<>(boardSize());
         for (int i = 0; i < boardSize(); i++) {
-            initialCells.add(Counter.EMPTY);
+            initialCells.add(Mark.EMPTY);
         }
         return initialCells;
     }
 
-    private List<Counter> newCellsWithNewMove(Integer move, Counter counter) {
-        List<Counter> newCells = new ArrayList<>(cells);
-        newCells.set(move, counter);
+    private List<Mark> newCellsWithNewMove(int move, Mark mark) {
+        List<Mark> newCells = new ArrayList<>(cells);
+        newCells.set(move, mark);
         return newCells;
     }
 
-    public Counter findNextCounter() {
-        if (findPositions(Counter.X).size() > findPositions(Counter.O).size()){
-            return Counter.O;
+    public Mark findNextCounter() {
+        if (findPositions(Mark.X).size() > findPositions(Mark.O).size()){
+            return Mark.O;
         }
-        return Counter.X;
+        return Mark.X;
     }
 }

@@ -6,9 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import jttt.Core.Counter;
+import jttt.Core.Mark;
 import jttt.Core.Game;
-import jttt.Core.Player;
+import jttt.Core.Players.Player;
 
 import java.util.HashMap;
 
@@ -31,10 +31,10 @@ public class Controller {
     }
 
     public void positionSelected(ActionEvent event) {
-        Counter counter = this.game.getNextPlayer().getCounter();
+        Mark mark = this.game.getNextPlayer().getMark();
         Button button = (Button) event.getSource();
         this.game.playMove(Integer.valueOf(button.getText()));
-        button.setText(counter.name());
+        button.setText(mark.name());
         if (!consolePlayersTurn()){
             enableBoard(false);
             playAIMove();
@@ -93,7 +93,7 @@ public class Controller {
         return false;
     }
 
-    public void displayResult(Counter winner) {
+    public void displayResult(Mark winner) {
         if (winner.isEmpty()) {
             System.out.println("No Winner");
 //            announceDraw();
