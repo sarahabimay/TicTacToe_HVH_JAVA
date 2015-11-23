@@ -15,6 +15,7 @@ public class CommandLineUI implements UserInterface {
     private Game game;
     private BufferedReader readStream;
     private PrintStream writeStream;
+    private int dimension;
 
     public CommandLineUI(Game game, InputStream inputStream, PrintStream outputStream) {
         this.readStream = new BufferedReader(new InputStreamReader(inputStream));
@@ -23,10 +24,13 @@ public class CommandLineUI implements UserInterface {
     }
 
     public void start() {
-        createNewGame(requestBoardDimension(), requestGameType());
-        playAllMoves();
-        displayResult(game.findWinner());
-        playAgain();
+        boolean replay = true;
+        while (replay) {
+            createNewGame(requestBoardDimension(), requestGameType());
+            playAllMoves();
+            displayResult(game.findWinner());
+            replay = playAgain();
+        }
     }
 
     public int requestBoardDimension() {
@@ -110,15 +114,17 @@ public class CommandLineUI implements UserInterface {
         return 0 < instruction && instruction < 3;
     }
 
-    private void playAgain() {
-        if (requestPlayAgain()) {
-            game = new Game(new PlayerFactory());
-            start();
-        }
+    public void createNewGame(int dimension, int gameType) {
+        game = new Game(new Board(dimension), gameType, new PlayerFactory());
     }
 
-    public void createNewGame(int dimension, int gameType) {
-        game = new Game(new PlayerFactory(), dimension, gameType);
+    private boolean playAgain() {
+        if (requestPlayAgain()) {
+            int dimension = 3;
+            game = new Game(new Board(dimension), new PlayerFactory());
+            return true;
+        }
+        return false;
     }
 
     private void playAllMoves() {

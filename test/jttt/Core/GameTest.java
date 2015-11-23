@@ -20,12 +20,12 @@ public class GameTest {
 
     @Before
     public void setUp() {
-        game = new Game(new PlayerFactory());
+        game = new Game(new Board(0), new PlayerFactory());
     }
 
     @Test
     public void noBoardCreatedYet() {
-        Game game = new Game(new PlayerFactory());
+        Game game = new Game(new Board(0), new PlayerFactory());
         assertEquals(0, game.getBoardSize());
     }
 
@@ -37,8 +37,8 @@ public class GameTest {
 
     @Test
     public void gameReceivesValidGameType() {
-        game.setBoardDimension(3);
-        game.setGameType(1); //1 == jttt.Core.GameType.HVH
+        int gameType = 1;
+        Game game = new Game(new Board(3), gameType, new PlayerFactory());
         game.createPlayers();
 
         assertEquals(HumanPlayer.class, game.getPlayer(Mark.X).getClass());
@@ -47,7 +47,7 @@ public class GameTest {
 
     @Test
     public void createGameFromInputs() {
-        Game game = new Game(new PlayerFactory(), 3, 1);
+        Game game = new Game(new Board(3), 1, new PlayerFactory());
 
         assertEquals(9, game.getBoardSize());
         assertEquals(HumanPlayer.class, game.getPlayer(Mark.X).getClass());

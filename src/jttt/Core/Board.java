@@ -137,7 +137,6 @@ public class Board {
         return findWinner() != Mark.EMPTY;
     }
 
-
     private ArrayList<Line> getAllLines() {
         ArrayList<Line> allLines = new ArrayList<>();
         allLines.addAll(getRows());
@@ -198,5 +197,4 @@ public class Board {
         newCells.set(move, mark);
         return newCells;
     }
-
 }

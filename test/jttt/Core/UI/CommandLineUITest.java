@@ -1,5 +1,6 @@
 package jttt.Core.UI;
 
+import jttt.Core.Board;
 import jttt.Core.Game;
 import jttt.Core.GameType;
 import jttt.Core.Players.PlayerFactory;
@@ -33,8 +34,8 @@ public class CommandLineUITest {
         output = new ByteArrayOutputStream();
         printStream = new PrintStream(output);
         InputStream inputStream = new ByteArrayInputStream("".getBytes());
-        cli = new CommandLineUI(new Game(new PlayerFactory()), inputStream, printStream);
-        game = new Game(new PlayerFactory());
+        cli = new CommandLineUI(new Game(new Board(3), new PlayerFactory()), inputStream, printStream);
+        game = new Game(new Board(3), new PlayerFactory());
     }
 
     @Test
@@ -61,7 +62,7 @@ public class CommandLineUITest {
     @Test
     public void userChoosesToQuit() {
         InputStream inputStream = new ByteArrayInputStream("1\n".getBytes());
-        CommandLineUI cli = new CommandLineUI(new Game(new PlayerFactory()), inputStream, printStream);
+        CommandLineUI cli = new CommandLineUI(new Game(new Board(3), new PlayerFactory()), inputStream, printStream);
         assertEquals(false, cli.requestPlayAgain());
         String expected = cli.REPLAY_REQUEST;
         assertThat(output.toString(), containsString(expected));
@@ -70,7 +71,7 @@ public class CommandLineUITest {
     @Test
     public void userChoosesToReplay() {
         InputStream inputStream = new ByteArrayInputStream("2\n".getBytes());
-        CommandLineUI cli = new CommandLineUI(new Game(new PlayerFactory()), inputStream, printStream);
+        CommandLineUI cli = new CommandLineUI(new Game(new Board(3), new PlayerFactory()), inputStream, printStream);
         assertEquals(true, cli.requestPlayAgain());
         String expected = cli.REPLAY_REQUEST;
         assertThat(output.toString(), containsString(expected));
@@ -79,7 +80,7 @@ public class CommandLineUITest {
     @Test
     public void requestBoardSizeCalled() {
         InputStream inputStream = new ByteArrayInputStream("3\n".getBytes());
-        CommandLineUI cli = new CommandLineUI(new Game(new PlayerFactory()), inputStream, printStream);
+        CommandLineUI cli = new CommandLineUI(new Game(new Board(3), new PlayerFactory()), inputStream, printStream);
         assertEquals(3, cli.requestBoardDimension());
         String expected = cli.DIMENSION_REQUEST;
         assertThat(output.toString(), containsString(expected));
@@ -120,8 +121,7 @@ public class CommandLineUITest {
         moves.add(gameType.ordinal() + 1);
         moves.addAll(arrayToList(humanMoves));
         moves.add(choice.ordinal() + 1);
-        String combinedInputs = moves.stream().map(move -> move.toString()).collect(Collectors.joining("\n", "", "\n"));
-        System.out.println(combinedInputs);
+        String combinedInputs = moves.stream().map(Object::toString).collect(Collectors.joining("\n", "", "\n"));
         return combinedInputs.getBytes();
     }
 

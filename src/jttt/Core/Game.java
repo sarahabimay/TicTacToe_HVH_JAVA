@@ -17,16 +17,16 @@ public class Game {
     private int gameType;
     private HashMap<Mark, Player> players;
 
-    public Game(PlayerFactory playerFactory) {
+    public Game(Board board, PlayerFactory playerFactory) {
         this.playerFactory = playerFactory;
-        this.board = null;
+        this.board = board;
         this.players = new HashMap<>();
         this.gameType = 0;
     }
 
-    public Game(PlayerFactory playerFactory, int dimension, int gameType) {
+    public Game(Board board, int gameType, PlayerFactory playerFactory) {
         this.gameType = gameType;
-        this.board = new Board(dimension);
+        this.board = board;
         this.playerFactory = playerFactory;
         this.players = new HashMap<>();
         createPlayers();
@@ -50,7 +50,7 @@ public class Game {
     }
 
     public List<Player> getPlayers() {
-        if (this.players == null ) {
+        if (this.players == null) {
             return null;
         }
         return this.players.entrySet().stream().map(Map.Entry::getValue).collect(toList());
@@ -67,7 +67,7 @@ public class Game {
     }
 
     public Player getNextPlayer() {
-        if (board.isEmpty()){
+        if (board.isEmpty()) {
             return this.players.get(Mark.X);
         }
         return players.get(board.findNextCounter());
@@ -99,5 +99,4 @@ public class Game {
     public Mark findWinner() {
         return board.findWinner();
     }
-
 }

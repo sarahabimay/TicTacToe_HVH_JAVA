@@ -16,18 +16,18 @@ public class FourByFourAlphaBetaStrategy extends AlphaBetaStrategy {
         return super.calculateNextMove(board, mark);
     }
 
-    protected long calculateNumberRange(Board board) {
+    long calculateNumberRange(Board board) {
         int start = 1;
         int end = board.boardSize();
         return end - start + 1;
     }
 
-    protected long randomFractionFromRange(long range) {
+    long randomFractionFromRange(long range) {
         Random randomGenerator = new Random();
         return (long) (range * randomGenerator.nextDouble());
     }
 
-    protected int randomNumberInRange(long fraction) {
+    int randomNumberInRange(long fraction) {
         int start = 1;
         return (int) (fraction + start);
     }
