@@ -2,11 +2,9 @@ package jttt.UI;
 
 import jttt.Core.*;
 import jttt.Core.Players.Player;
+import jttt.Core.Players.PlayerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.function.IntPredicate;
 
 public class CommandLineUI implements UserInterface {
@@ -14,10 +12,10 @@ public class CommandLineUI implements UserInterface {
     private BufferedReader readStream;
     private PrintStream writeStream;
 
-    public CommandLineUI() {
-        this.readStream = new BufferedReader(new InputStreamReader(System.in));
-        this.writeStream = new PrintStream(System.out);
-        this.game = new Game();
+    public CommandLineUI(Game game, InputStream inputStream, PrintStream outputStream) {
+        this.readStream = new BufferedReader(new InputStreamReader(inputStream));
+        this.writeStream = outputStream;
+        this.game = game;
     }
 
     public void start() {
@@ -110,13 +108,13 @@ public class CommandLineUI implements UserInterface {
 
     private void playAgain() {
         if (requestPlayAgain()) {
-            game = new Game();
+            game = new Game(new PlayerFactory());
             start();
         }
     }
 
     public void createNewGame(int dimension, int gameType) {
-        game = new Game(dimension, gameType);
+        game = new Game(new PlayerFactory(), dimension, gameType);
     }
 
     private void playAllMoves() {

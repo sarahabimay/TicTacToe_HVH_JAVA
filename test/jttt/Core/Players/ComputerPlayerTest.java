@@ -214,8 +214,6 @@ public class ComputerPlayerTest {
         currentBoard[8] = X;
         List<Mark> expected = arrayToList(currentBoard);
         assertEquals(expected, computerXPlayer.playTurn(board).getCells());
-//        int result = computerXPlayer.calculateNextMoveWithAlphaBeta(board);
-//        assertEquals( 9, result);
     }
 
     @Test

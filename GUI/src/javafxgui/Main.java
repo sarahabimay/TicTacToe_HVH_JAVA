@@ -12,7 +12,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("javafxgui.fxml"));
         primaryStage.setTitle("TicTacToe");
 
-        primaryStage.setScene(new Scene(root, 500, 475));
+        primaryStage.setScene(new Scene(root, 600, 575));
         primaryStage.show();
     }
     public static void main(String[] args) {

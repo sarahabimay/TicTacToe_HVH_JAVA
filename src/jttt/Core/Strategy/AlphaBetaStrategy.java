@@ -3,9 +3,6 @@ package jttt.Core.Strategy;
 import jttt.Core.Board;
 import jttt.Core.Mark;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
@@ -15,8 +12,6 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
     private static int INITIAL_SCORE = 1000000;
     private static int INITIAL_ALPHA = -10000000;
     private static int INITIAL_BETA = 10000000;
-    private static String MOVE_KEY = "Move";
-    private static String SCORE_KEY = "Score";
     private Mark mark;
 
     public int calculateNextMove(Board board, Mark mark) {
@@ -25,7 +20,7 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         return indexToDisplayPosition(aBMinimax(depth, this.mark, INITIAL_ALPHA, INITIAL_BETA, board));
     }
 
-    private Map<String, Integer> aBMinimax(int depth, Mark currentMark, int alpha, int beta, Board currentBoard) {
+    private Result aBMinimax(int depth, Mark currentMark, int alpha, int beta, Board currentBoard) {
         int bestScore = setInitialBestScore(currentMark);
         int bestMove = -1;
         if (noMoreMovesAvailable(depth, currentBoard)) {
@@ -34,11 +29,11 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
 
         for (Integer move : currentBoard.remainingPositions()) {
             Board currentStateOfBoard = currentBoard.newBoardWithNewMove(move, currentMark);
-            int score = aBMinimax(  depth - 1,
-                                        currentMark.opponentCounter(),
-                                        alpha,
-                                        beta,
-                                        currentStateOfBoard).get(SCORE_KEY);
+            int score = aBMinimax(depth - 1,
+                    currentMark.opponentCounter(),
+                    alpha,
+                    beta,
+                    currentStateOfBoard).getScore();
             if (newBestScore(currentMark, bestScore, score)) {
                 bestScore = score;
                 bestMove = move;
@@ -49,7 +44,7 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
                 break;
             }
         }
-        return createResultMap(bestScore, bestMove);
+        return new Result(bestScore, bestMove);
     }
 
     private int newAlpha(int alpha, int score, Mark currentMark) {
@@ -66,8 +61,8 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         return beta;
     }
 
-    private int indexToDisplayPosition(Map<String, Integer> result) {
-        return result.get(MOVE_KEY) + DISPLAY_POSITION_OFFSET;
+    private int indexToDisplayPosition(Result result) {
+        return result.getMove() + DISPLAY_POSITION_OFFSET;
     }
 
     private boolean newBestScore(Mark currentMark, int bestScore, int score) {
@@ -87,7 +82,7 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         return currentMark == this.mark ? -INITIAL_SCORE : INITIAL_SCORE;
     }
 
-    private Map<String, Integer> calculateResult(Board currentBoard, int depth) {
+    private Result calculateResult(Board currentBoard, int depth) {
         double score = INITIAL_SCORE / (currentBoard.boardSize() - currentBoard.numberOfOpenPositions());
         if (hasWinner(currentBoard, Mark.EMPTY)) {
             score = SCORE_FOR_DRAW;
@@ -96,7 +91,7 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         } else {
             score = varyScoreUsingDepth(-depth, -score);
         }
-        return createResultMap(score, -1);
+        return new Result((int)score, -1);
     }
 
     private boolean hasWinner(Board currentBoard, Mark empty) {
@@ -107,10 +102,21 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         return score + depth;
     }
 
-    private Map<String, Integer> createResultMap(double score, int move) {
-        HashMap<String, Integer> result = new HashMap<>();
-        result.put(SCORE_KEY, (int) score);
-        result.put(MOVE_KEY, move);
-        return result;
+    public class Result {
+        private int move;
+        private int score;
+
+        public Result(int score, int move) {
+            this.score = score;
+            this.move = move;
+        }
+
+        public int getMove() {
+            return move;
+        }
+
+        public int getScore() {
+            return score;
+        }
     }
 }

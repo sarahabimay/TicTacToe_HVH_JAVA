@@ -4,6 +4,7 @@ import jttt.Core.Board;
 import jttt.Core.Mark;
 import jttt.Core.Game;
 import jttt.Core.Players.Player;
+import jttt.Core.Players.PlayerFactory;
 import jttt.UI.UserInterface;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class FakeCommandLineUI implements UserInterface {
     private int dummyDimension = 0;
 
     public FakeCommandLineUI() {
-        this.game = new Game();
+        this.game = new Game(new PlayerFactory());
     }
 
     public void start() {
@@ -176,13 +177,13 @@ public class FakeCommandLineUI implements UserInterface {
 
     private void playAgain() {
         if (requestPlayAgain()) {
-            game = new Game();
+            game = new Game(new PlayerFactory());
             start();
         }
     }
 
     private void createNewGame(int dimension, int gameType) {
-        game = new Game(dimension, gameType);
+        game = new Game(new PlayerFactory(), dimension, gameType);
     }
 
     private void playAllMoves() {

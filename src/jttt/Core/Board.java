@@ -31,10 +31,6 @@ public class Board {
         this.cells = cells;
     }
 
-    public void resetBoard() {
-        this.cells = generateEmptyCells();
-    }
-
     public Board playCounterInPosition(int position, Mark mark) {
         if (validPosition(position)) {
             cells.set(position - POSITIVE_OFFSET, mark);
@@ -82,6 +78,14 @@ public class Board {
         List<Mark> newCells = newCellsWithNewMove(move, currentMark);
         return new Board(newCells);
     }
+
+    public Mark findNextCounter() {
+        if (findPositions(Mark.X).size() > findPositions(Mark.O).size()) {
+            return Mark.O;
+        }
+        return Mark.X;
+    }
+
     public ArrayList<Integer> findPositions(Mark mark) {
         ArrayList<Integer> counterPositions = new ArrayList<>();
         for (int i = 0; i < cells.size(); i++) {
@@ -195,10 +199,4 @@ public class Board {
         return newCells;
     }
 
-    public Mark findNextCounter() {
-        if (findPositions(Mark.X).size() > findPositions(Mark.O).size()){
-            return Mark.O;
-        }
-        return Mark.X;
-    }
 }

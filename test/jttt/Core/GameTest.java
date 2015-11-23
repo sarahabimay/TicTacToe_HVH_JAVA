@@ -2,6 +2,7 @@ package jttt.Core;
 
 import jttt.Core.Players.HumanPlayer;
 import jttt.Core.Players.Player;
+import jttt.Core.Players.PlayerFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,12 +20,12 @@ public class GameTest {
 
     @Before
     public void setUp() {
-        game = new Game();
+        game = new Game(new PlayerFactory());
     }
 
     @Test
     public void noBoardCreatedYet() {
-        Game game = new Game();
+        Game game = new Game(new PlayerFactory());
         assertEquals(0, game.getBoardSize());
     }
 
@@ -46,7 +47,7 @@ public class GameTest {
 
     @Test
     public void createGameFromInputs() {
-        Game game = new Game(3, 1);
+        Game game = new Game(new PlayerFactory(), 3, 1);
 
         assertEquals(9, game.getBoardSize());
         assertEquals(HumanPlayer.class, game.getPlayer(Mark.X).getClass());

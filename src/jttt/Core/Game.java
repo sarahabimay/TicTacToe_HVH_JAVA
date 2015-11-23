@@ -17,17 +17,17 @@ public class Game {
     private int gameType;
     private HashMap<Mark, Player> players;
 
-    public Game() {
-        this.playerFactory = new PlayerFactory();
+    public Game(PlayerFactory playerFactory) {
+        this.playerFactory = playerFactory;
         this.board = null;
         this.players = new HashMap<>();
         this.gameType = 0;
     }
 
-    public Game(int dimension, int gameType) {
+    public Game(PlayerFactory playerFactory, int dimension, int gameType) {
         this.gameType = gameType;
         this.board = new Board(dimension);
-        this.playerFactory = new PlayerFactory();
+        this.playerFactory = playerFactory;
         this.players = new HashMap<>();
         createPlayers();
     }
@@ -70,7 +70,6 @@ public class Game {
         if (board.isEmpty()){
             return this.players.get(Mark.X);
         }
-        // get next player by looking at the board and working out who is next
         return players.get(board.findNextCounter());
     }
 
