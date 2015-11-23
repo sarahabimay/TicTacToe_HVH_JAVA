@@ -29,7 +29,10 @@ public class CommandLineUITest {
 
     @Test
     public void emptyBoardIsDisplayedCorrectly() {
-        CommandLineUI ui = new CommandLineUI(new Game(new PlayerFactory()), new BufferedInputStream(System.in), new PrintStream(System.out));
+        CommandLineUI ui = new CommandLineUI(
+                new Game(new PlayerFactory()),
+                new BufferedInputStream(System.in),
+                new PrintStream(System.out));
         ui.createNewGame(3, 1);
         Assert.assertEquals("" +
                         "[1][2][3]\n" +
