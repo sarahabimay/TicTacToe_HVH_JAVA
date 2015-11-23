@@ -1,6 +1,23 @@
 .root {
-    -fx-background-color: pink;
+    -fx-background-color: #85adad;
 }
-.label {
-    -fx-font-size: 20;
+#gametitle {
+    -fx-font-size: 30;
+
+}
+#options {
+    -fx-font-size: 15;
+}
+
+.button {
+    -fx-background-color: #e0ebeb;
+    -fx-background-insets: 0;
+    -fx-background-radius: 3;
+    -fx-text-fill: black;
+    -fx-font-size: 12px;
+    -fx-min-height: 50px;
+    -fx-min-width: 80px;
+}
+.box {
+    -fx-background-color: blue;
 }

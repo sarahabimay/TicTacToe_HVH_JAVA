@@ -3,18 +3,19 @@ package javafxgui;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import jttt.Core.Game;
 import jttt.Core.Mark;
 import jttt.Core.Players.Player;
+import jttt.Core.Players.PlayerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Controller {
-    public Text gametitle = new Text();
+    public Label gametitle = new Label();
     public Button zero;
     public TextField dimension;
     public TextField gametype;
@@ -36,7 +37,7 @@ public class Controller {
         Button button = (Button) event.getSource();
         this.game.playMove(Integer.valueOf(button.getText()));
         button.setText(mark.name());
-        if (!consolePlayersTurn()){
+        if (!consolePlayersTurn()) {
             enableBoard(false);
             playAIMove();
         }
@@ -109,8 +110,12 @@ public class Controller {
         return "";
     }
 
+    public void options(ActionEvent actionEvent) {
+
+    }
+
     public void createNewGame(int dimension, int gameType) {
-        this.game = new Game(dimension, gameType);
+        this.game = new Game(new PlayerFactory(), dimension, gameType);
     }
 
     private void changeTitle(int gameType) {
@@ -141,5 +146,6 @@ public class Controller {
         gameTypeOptionToString.put(2, "Human Vs Computer");
         gameTypeOptionToString.put(3, "Computer Vs Human");
     }
+
 }
 
