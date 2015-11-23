@@ -102,7 +102,7 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         return score + depth;
     }
 
-    public class Result {
+    private class Result {
         private int move;
         private int score;
 
