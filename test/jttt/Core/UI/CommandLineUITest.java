@@ -10,6 +10,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.BufferedInputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +29,7 @@ public class CommandLineUITest {
 
     @Test
     public void emptyBoardIsDisplayedCorrectly() {
-        CommandLineUI ui = new CommandLineUI();
+        CommandLineUI ui = new CommandLineUI(new Game(new PlayerFactory()), new BufferedInputStream(System.in), new PrintStream(System.out));
         ui.createNewGame(3, 1);
         Assert.assertEquals("" +
                         "[1][2][3]\n" +
