@@ -7,7 +7,7 @@ import java.util.function.IntPredicate;
 
 public interface UserInterface {
 
-    int requestBoardSize();
+    int requestBoardDimension();
 
     int requestGameType();
 

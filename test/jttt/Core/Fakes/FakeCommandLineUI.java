@@ -31,13 +31,13 @@ public class FakeCommandLineUI implements UserInterface {
     }
 
     public void start() {
-        createNewGame(requestBoardSize(), requestGameType());
+        createNewGame(requestBoardDimension(), requestGameType());
         playAllMoves();
         displayResult(game.findWinner());
         playAgain();
     }
 
-    public int requestBoardSize() {
+    public int requestBoardDimension() {
         userHasBeenAskedForDimension = true;
         return dummyDimension;
     }
