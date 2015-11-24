@@ -48,7 +48,7 @@ public class PlayerFactory {
         gameTypeOptionToPlayers.put(GameType.CVH, createPlayers(new ComputerPlayer(Mark.X, userInterface), new HumanPlayer(Mark.O, userInterface)));
     }
 
-    protected ArrayList<Player> createPlayers(Player player1, Player player2) {
+    ArrayList<Player> createPlayers(Player player1, Player player2) {
         ArrayList<Player> players = new ArrayList<>();
         players.add(player1);
         players.add(player2);

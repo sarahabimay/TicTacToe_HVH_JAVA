@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import jttt.Core.Board;
 import jttt.Core.Game;
 import jttt.Core.Mark;
 import jttt.Core.Players.Player;
@@ -115,7 +116,7 @@ public class Controller {
     }
 
     public void createNewGame(int dimension, int gameType) {
-        this.game = new Game(new PlayerFactory(), dimension, gameType);
+        this.game = new Game(new Board(dimension), gameType, new PlayerFactory());
     }
 
     private void changeTitle(int gameType) {

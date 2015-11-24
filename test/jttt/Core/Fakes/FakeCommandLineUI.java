@@ -27,17 +27,17 @@ public class FakeCommandLineUI implements UserInterface {
     private int dummyDimension = 0;
 
     public FakeCommandLineUI() {
-        this.game = new Game(new PlayerFactory());
+        this.game = new Game(new Board(3), new PlayerFactory());
     }
 
     public void start() {
-        createNewGame(requestBoardSize(), requestGameType());
+        createNewGame(requestBoardDimension(), requestGameType());
         playAllMoves();
         displayResult(game.findWinner());
         playAgain();
     }
 
-    public int requestBoardSize() {
+    public int requestBoardDimension() {
         userHasBeenAskedForDimension = true;
         return dummyDimension;
     }
@@ -177,13 +177,13 @@ public class FakeCommandLineUI implements UserInterface {
 
     private void playAgain() {
         if (requestPlayAgain()) {
-            game = new Game(new PlayerFactory());
+            game = new Game(new Board(3), new PlayerFactory());
             start();
         }
     }
 
     private void createNewGame(int dimension, int gameType) {
-        game = new Game(new PlayerFactory(), dimension, gameType);
+        game = new Game(new Board(dimension), gameType, new PlayerFactory() );
     }
 
     private void playAllMoves() {

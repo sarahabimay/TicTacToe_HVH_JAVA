@@ -5,7 +5,7 @@ import jttt.Core.Mark;
 import jttt.UI.UserInterface;
 
 public abstract class Player {
-    public static enum Type {
+    public enum Type {
         AI,
         HUMAN
     }
@@ -41,6 +41,4 @@ public abstract class Player {
     abstract public Board playTurn(Board board);
 
     abstract public Board playTurn(Board board, int newPosition);
-
-
 }

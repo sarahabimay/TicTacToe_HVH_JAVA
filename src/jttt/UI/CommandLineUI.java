@@ -8,9 +8,14 @@ import java.io.*;
 import java.util.function.IntPredicate;
 
 public class CommandLineUI implements UserInterface {
+    public final String REPLAY_REQUEST = "Do you want to play again? Quit(1) or Replay(2) :\n";
+    public final String DIMENSION_REQUEST = "Please provide the dimensions of the board:\n";
+    public final String GAME_TYPE_REQUEST = "Human vs Human(1) or Human vs Computer(2) or Computer vs Human(3)?:\n";
+    public final String POSITION_REQUEST = "Please enter the position number for your next move:\n";
     private Game game;
     private BufferedReader readStream;
     private PrintStream writeStream;
+    private int dimension;
 
     public CommandLineUI(Game game, InputStream inputStream, PrintStream outputStream) {
         this.readStream = new BufferedReader(new InputStreamReader(inputStream));
@@ -19,16 +24,19 @@ public class CommandLineUI implements UserInterface {
     }
 
     public void start() {
-        createNewGame(requestBoardSize(), requestGameType());
-        playAllMoves();
-        displayResult(game.findWinner());
-        playAgain();
+        boolean replay = true;
+        while (replay) {
+            createNewGame(requestBoardDimension(), requestGameType());
+            playAllMoves();
+            displayResult(game.findWinner());
+            replay = playAgain();
+        }
     }
 
-    public int requestBoardSize() {
+    public int requestBoardDimension() {
         int dimension = 0;
         while (!validate(dimension, this::validateDimension)) {
-            writeStream.println("Please provide the dimensions of the board:\n");
+            writeStream.println(DIMENSION_REQUEST);
             dimension = readInput();
         }
         return dimension;
@@ -37,7 +45,7 @@ public class CommandLineUI implements UserInterface {
     public int requestGameType() {
         int choice = -1;
         while (!validate(choice, this::validGameType)) {
-            writeStream.println("Human vs Human(1) or Human vs Computer(2) or Computer vs Human(3)?:\n");
+            writeStream.println(GAME_TYPE_REQUEST);
             choice = readInput();
         }
         return choice;
@@ -46,7 +54,7 @@ public class CommandLineUI implements UserInterface {
     public int requestNextPosition() {
         int position = 0;
         while (!validate(position, this::validPosition)) {
-            String prompt = "Please enter the position number for your next move:\n";
+            String prompt = POSITION_REQUEST;
             writeStream.println(prompt);
             position = readInput();
         }
@@ -56,7 +64,7 @@ public class CommandLineUI implements UserInterface {
     public boolean requestPlayAgain() {
         int instruction = 0;
         while (!validate(instruction, this::validInstruction)) {
-            writeStream.println("Do you want to play again? Quit(1) or Replay(2) :\n");
+            writeStream.println(REPLAY_REQUEST);
             instruction = readInput();
         }
         return doPlayAgain(instruction);
@@ -106,15 +114,17 @@ public class CommandLineUI implements UserInterface {
         return 0 < instruction && instruction < 3;
     }
 
-    private void playAgain() {
-        if (requestPlayAgain()) {
-            game = new Game(new PlayerFactory());
-            start();
-        }
+    public void createNewGame(int dimension, int gameType) {
+        game = new Game(new Board(dimension), gameType, new PlayerFactory());
     }
 
-    public void createNewGame(int dimension, int gameType) {
-        game = new Game(new PlayerFactory(), dimension, gameType);
+    private boolean playAgain() {
+        if (requestPlayAgain()) {
+            int dimension = 3;
+            game = new Game(new Board(dimension), new PlayerFactory());
+            return true;
+        }
+        return false;
     }
 
     private void playAllMoves() {
