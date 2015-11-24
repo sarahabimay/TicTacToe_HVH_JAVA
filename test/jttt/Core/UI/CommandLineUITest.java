@@ -2,7 +2,7 @@ package jttt.Core.UI;
 
 import jttt.Core.Board;
 import jttt.Core.Game;
-import jttt.Core.GameType;
+import jttt.Core.Mark;
 import jttt.Core.Players.PlayerFactory;
 import jttt.UI.CommandLineUI;
 import org.junit.Before;
@@ -11,7 +11,6 @@ import org.junit.Test;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
@@ -26,11 +25,6 @@ public class CommandLineUITest {
     private CommandLineUI cli;
     private Game game;
 
-    private enum Replay {
-        QUIT,
-        REPLAY,
-    }
-
     @Before
     public void setUp() throws Exception {
         output = new ByteArrayOutputStream();
@@ -40,8 +34,8 @@ public class CommandLineUITest {
                 new Game(new Board(DEFAULT_DIMENSION),
                         DEFAULT_GAMETYPE,
                         new PlayerFactory()),
-                        inputStream,
-                        printStream);
+                inputStream,
+                printStream);
         game = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAMETYPE, new PlayerFactory());
     }
 
@@ -73,8 +67,8 @@ public class CommandLineUITest {
                 new Game(new Board(DEFAULT_DIMENSION),
                         DEFAULT_GAMETYPE,
                         new PlayerFactory()),
-                        inputStream,
-                        printStream);
+                inputStream,
+                printStream);
         assertEquals(false, cli.requestPlayAgain());
         assertThat(output.toString(), containsString(cli.REPLAY_REQUEST));
     }
@@ -86,9 +80,9 @@ public class CommandLineUITest {
                 new Game(new Board(DEFAULT_DIMENSION),
                         DEFAULT_GAMETYPE,
                         new PlayerFactory()),
-                        inputStream,
-                        printStream);
-        assertEquals(true, cli.requestPlayAgain());
+                inputStream,
+                printStream);
+        assertEquals(true, cli.playAgain());
         assertThat(output.toString(), containsString(cli.REPLAY_REQUEST));
     }
 
@@ -99,8 +93,8 @@ public class CommandLineUITest {
                 new Game(new Board(DEFAULT_DIMENSION),
                         DEFAULT_GAMETYPE,
                         new PlayerFactory()),
-                        inputStream,
-                        printStream);
+                inputStream,
+                printStream);
         assertEquals(3, cli.requestBoardDimension());
         assertThat(output.toString(), containsString(cli.DIMENSION_REQUEST));
     }
@@ -122,23 +116,53 @@ public class CommandLineUITest {
     }
 
     @Test
-    public void resultDisplayed() {
-        byte[] buf = "3\n1\n3\n1\n2\n4\n6\n5\n7\n9\n8\n1\n".getBytes();
-//        byte[] buf = setupGame(GameType.HVH, DEFAULT_DIMENSION, new int[]{3, 1, 2, 4, 6, 5, 7, 9, 8}, Replay.QUIT);
+    public void winningResultDisplayed() {
+        InputStream inputStream = new ByteArrayInputStream("1\n".getBytes());
+        CommandLineUI cli = new CommandLineUI(game, inputStream, printStream);
+        cli.displayResult(Mark.X);
+        String expected = String.format(cli.WINNER_ANNOUNCE, Mark.X);
+        assertThat(output.toString(), containsString(expected));
+    }
+
+    @Test
+    public void drawResultDisplayed() {
+        InputStream inputStream = new ByteArrayInputStream("1\n".getBytes());
+        CommandLineUI cli = new CommandLineUI(game, inputStream, printStream);
+        cli.displayResult(Mark.EMPTY);
+        assertThat(output.toString(), containsString(cli.DRAW_ANNOUNCE));
+    }
+
+    @Test
+    public void playEntireHvHGame() {
+        byte[] buf = "1\n3\n1\n2\n5\n3\n9\n1\n".getBytes();
         InputStream inputStream = new ByteArrayInputStream(buf);
         CommandLineUI cli = new CommandLineUI(game, inputStream, printStream);
         cli.start();
-        assertThat(output.toString(), containsString(cli.REPLAY_REQUEST));
-    }
-
-    private byte[] setupGame(GameType gameType, int dimension, int[] humanMoves, Replay choice) {
-        List<Integer> moves = new ArrayList<>();
-        moves.add(dimension);
-        moves.add(gameType.ordinal() + 1);
-        moves.addAll(arrayToList(humanMoves));
-        moves.add(choice.ordinal() + 1);
-        String combinedInputs = moves.stream().map(Object::toString).collect(Collectors.joining("\n", "", "\n"));
-        return combinedInputs.getBytes();
+        String expected = "Human vs Human(1) or Human vs Computer(2) or Computer vs Human(3)?:\n\n" +
+                "Please provide the dimensions of the board:\n\n" +
+                "Please enter the position number for your next move:\n\n" +
+                "[X][2][3]\n" +
+                "[4][5][6]\n" +
+                "[7][8][9]\n\n" +
+                "Please enter the position number for your next move:\n\n" +
+                "[X][O][3]\n" +
+                "[4][5][6]\n" +
+                "[7][8][9]\n\n" +
+                "Please enter the position number for your next move:\n\n" +
+                "[X][O][3]\n" +
+                "[4][X][6]\n" +
+                "[7][8][9]\n\n" +
+                "Please enter the position number for your next move:\n\n" +
+                "[X][O][O]\n" +
+                "[4][X][6]\n" +
+                "[7][8][9]\n\n" +
+                "Please enter the position number for your next move:\n\n" +
+                "[X][O][O]\n" +
+                "[4][X][6]\n" +
+                "[7][8][X]\n\n" +
+                "We have a Winner! Player: X\n\n" +
+                "Do you want to play again? Quit(1) or Replay(2) :\n";
+        assertThat(output.toString(), containsString(expected));
     }
 
     //    @Test

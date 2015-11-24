@@ -57,6 +57,10 @@ public class Game {
         return players.get(board.findNextCounter());
     }
 
+    public Player.Type getNextPlayerType() {
+        return getNextPlayer().getPlayerType();
+    }
+
     public Board getBoard() {
         return board;
     }

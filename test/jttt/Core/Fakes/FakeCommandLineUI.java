@@ -72,23 +72,6 @@ public class FakeCommandLineUI implements UserInterface {
         return output;
     }
 
-    public String displayBoard(Board board) {
-        String output = "";
-        haveDisplayedBoardToUser = true;
-        for (int i = 0; i < board.boardSize(); i++) {
-            output += convertRowToString(i, board.findCounterAtIndex(i), board);
-        }
-        return output;
-    }
-
-    public void printCurrentCounter(Mark currentMark) {
-
-    }
-
-    public void addDummyPlayAgainChoice(int replayOrQuit) {
-        playAgain = doPlayAgain(replayOrQuit);
-    }
-
     public void addDummyDimension(int dimension) {
         this.dummyDimension = dimension;
     }
@@ -118,63 +101,11 @@ public class FakeCommandLineUI implements UserInterface {
         return choice == 1 || choice == 2 || choice == 3;
     }
 
-    public Mark getWinner() {
-        return this.winner;
-    }
-
-    public boolean isADraw() {
-        return this.winner == Mark.EMPTY;
-    }
-
     public void displayResult(Mark winner) {
         if (!winner.isEmpty()) {
             this.winner = winner;
         }
         haveDisplayedResultToUser = true;
-    }
-
-    public List<Integer> aListOfMoves(Integer[] moves) {
-        List<Integer> listOfMoves = new ArrayList<>();
-        for (int i = 0; i < moves.length; i++) {
-            listOfMoves.add(moves[i]);
-        }
-        return listOfMoves;
-    }
-
-    public boolean hasAskedUserForDimension() {
-        return userHasBeenAskedForDimension;
-    }
-
-    public boolean hasAskedUserForNextPosition() {
-        return userHasBeenAskedForNextPosition;
-    }
-
-    public boolean hasDisplayedBoardToUser() {
-        return haveDisplayedBoardToUser;
-    }
-
-    public boolean hasDisplayedResultToUser() {
-        return haveDisplayedResultToUser;
-    }
-
-    public boolean hasAskedUserToQuitGame() {
-        return haveAskedUserToQuitGame;
-    }
-
-    public boolean hasAskedUserForGameType() {
-        return haveAskedUserForGameType;
-    }
-
-    public void setGameType(int gameType) {
-        this.playerType = gameType;
-    }
-
-    public boolean hasGameTypeBeenValidated() {
-        return haveValidatedGameType;
-    }
-
-    boolean doPlayAgain(int instruction) {
-        return 2 == instruction;
     }
 
     private void playAgain() {
@@ -190,7 +121,7 @@ public class FakeCommandLineUI implements UserInterface {
 
     private void playAllMoves() {
         while (!game.isGameOver()) {
-            if (game.getNextPlayer().getPlayerType() == Player.Type.AI) {
+            if (game.getNextPlayerType() == Player.Type.AI) {
                 game.playAIMove();
             } else {
                 game.playMove(requestNextPosition());
@@ -226,9 +157,5 @@ public class FakeCommandLineUI implements UserInterface {
 
     private boolean validDummyPosition(int nextMove) {
         return validate(nextMove, this::validPosition);//&& nextMove <= numberOfInputs;
-    }
-
-    public Game getGame() {
-        return game;
     }
 }
