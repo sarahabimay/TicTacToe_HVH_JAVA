@@ -10,7 +10,15 @@ import java.io.PrintStream;
 
 public class Main {
     public static void main(String[] args) {
-        CommandLineUI ui = new CommandLineUI(new Game(new Board(0), new PlayerFactory()), new BufferedInputStream(System.in), new PrintStream(System.out));
+        int DEFAULT_GAME_TYPE = 3;
+        int DEFAULT_DIMENSION = 0;
+        CommandLineUI ui = new CommandLineUI(
+                            new Game(
+                                new Board(DEFAULT_DIMENSION),
+                                DEFAULT_GAME_TYPE,
+                                new PlayerFactory()),
+                                new BufferedInputStream(System.in),
+                                new PrintStream(System.out));
         ui.start();
     }
 }

@@ -125,7 +125,7 @@ public class Controller {
 
     private void playAIMove() {
         while (game.getNextPlayer().getPlayerType() == Player.Type.AI) {
-            game.playMove();
+            game.playAIMove();
         }
         displayBoard();
     }

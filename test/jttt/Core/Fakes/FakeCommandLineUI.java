@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.function.IntPredicate;
 
 public class FakeCommandLineUI implements UserInterface {
+    private int DEFAULT_DIMENSION = 3;
+    private int DEFAULT_GAME_TYPE = 3;
     private Game game;
     private List<Integer> dummyInputs = new ArrayList<>();
     private int playerType = 1;
@@ -27,7 +29,7 @@ public class FakeCommandLineUI implements UserInterface {
     private int dummyDimension = 0;
 
     public FakeCommandLineUI() {
-        this.game = new Game(new Board(3), new PlayerFactory());
+        this.game = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAME_TYPE, new PlayerFactory());
     }
 
     public void start() {
@@ -177,7 +179,7 @@ public class FakeCommandLineUI implements UserInterface {
 
     private void playAgain() {
         if (requestPlayAgain()) {
-            game = new Game(new Board(3), new PlayerFactory());
+            game = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAME_TYPE, new PlayerFactory());
             start();
         }
     }
@@ -189,7 +191,7 @@ public class FakeCommandLineUI implements UserInterface {
     private void playAllMoves() {
         while (!game.isGameOver()) {
             if (game.getNextPlayer().getPlayerType() == Player.Type.AI) {
-                game.playMove();
+                game.playAIMove();
             } else {
                 game.playMove(requestNextPosition());
             }

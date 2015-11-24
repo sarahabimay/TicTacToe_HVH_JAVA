@@ -19,6 +19,8 @@ import static org.junit.Assert.assertThat;
 
 public class CommandLineUITest {
 
+    private int DEFAULT_GAMETYPE = 1;
+    private final int DEFAULT_DIMENSION = 3;
     private OutputStream output;
     private PrintStream printStream;
     private CommandLineUI cli;
@@ -34,13 +36,18 @@ public class CommandLineUITest {
         output = new ByteArrayOutputStream();
         printStream = new PrintStream(output);
         InputStream inputStream = new ByteArrayInputStream("".getBytes());
-        cli = new CommandLineUI(new Game(new Board(3), new PlayerFactory()), inputStream, printStream);
-        game = new Game(new Board(3), new PlayerFactory());
+        cli = new CommandLineUI(
+                new Game(new Board(DEFAULT_DIMENSION),
+                        DEFAULT_GAMETYPE,
+                        new PlayerFactory()),
+                        inputStream,
+                        printStream);
+        game = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAMETYPE, new PlayerFactory());
     }
 
     @Test
     public void empty3x3BoardIsDisplayedCorrectly() {
-        cli.createNewGame(3, 1);
+        cli.createNewGame(DEFAULT_GAMETYPE, DEFAULT_DIMENSION);
         cli.displayBoard();
         assertThat(output.toString(), containsString("" +
                 "[1][2][3]\n" +
@@ -50,40 +57,52 @@ public class CommandLineUITest {
 
     @Test
     public void empty4x4BoardIsDisplayedCorrectly() {
-        cli.createNewGame(4, 1);
+        cli.createNewGame(1, 4);
         cli.displayBoard();
         assertThat(output.toString(), containsString("" +
                 "[1][2][3][4]\n" +
                 "[5][6][7][8]\n" +
                 "[9][10][11][12]\n" +
-                "[13][14][15][16]\n" ));
+                "[13][14][15][16]\n"));
     }
 
     @Test
     public void userChoosesToQuit() {
         InputStream inputStream = new ByteArrayInputStream("1\n".getBytes());
-        CommandLineUI cli = new CommandLineUI(new Game(new Board(3), new PlayerFactory()), inputStream, printStream);
+        CommandLineUI cli = new CommandLineUI(
+                new Game(new Board(DEFAULT_DIMENSION),
+                        DEFAULT_GAMETYPE,
+                        new PlayerFactory()),
+                        inputStream,
+                        printStream);
         assertEquals(false, cli.requestPlayAgain());
-        String expected = cli.REPLAY_REQUEST;
-        assertThat(output.toString(), containsString(expected));
+        assertThat(output.toString(), containsString(cli.REPLAY_REQUEST));
     }
 
     @Test
     public void userChoosesToReplay() {
         InputStream inputStream = new ByteArrayInputStream("2\n".getBytes());
-        CommandLineUI cli = new CommandLineUI(new Game(new Board(3), new PlayerFactory()), inputStream, printStream);
+        CommandLineUI cli = new CommandLineUI(
+                new Game(new Board(DEFAULT_DIMENSION),
+                        DEFAULT_GAMETYPE,
+                        new PlayerFactory()),
+                        inputStream,
+                        printStream);
         assertEquals(true, cli.requestPlayAgain());
-        String expected = cli.REPLAY_REQUEST;
-        assertThat(output.toString(), containsString(expected));
+        assertThat(output.toString(), containsString(cli.REPLAY_REQUEST));
     }
 
     @Test
     public void requestBoardSizeCalled() {
         InputStream inputStream = new ByteArrayInputStream("3\n".getBytes());
-        CommandLineUI cli = new CommandLineUI(new Game(new Board(3), new PlayerFactory()), inputStream, printStream);
+        CommandLineUI cli = new CommandLineUI(
+                new Game(new Board(DEFAULT_DIMENSION),
+                        DEFAULT_GAMETYPE,
+                        new PlayerFactory()),
+                        inputStream,
+                        printStream);
         assertEquals(3, cli.requestBoardDimension());
-        String expected = cli.DIMENSION_REQUEST;
-        assertThat(output.toString(), containsString(expected));
+        assertThat(output.toString(), containsString(cli.DIMENSION_REQUEST));
     }
 
     @Test
@@ -91,8 +110,7 @@ public class CommandLineUITest {
         InputStream inputStream = new ByteArrayInputStream("1\n".getBytes());
         CommandLineUI cli = new CommandLineUI(game, inputStream, printStream);
         assertEquals(1, cli.requestGameType());
-        String expected = cli.GAME_TYPE_REQUEST;
-        assertThat(output.toString(), containsString(expected));
+        assertThat(output.toString(), containsString(cli.GAME_TYPE_REQUEST));
     }
 
     @Test
@@ -100,19 +118,17 @@ public class CommandLineUITest {
         InputStream inputStream = new ByteArrayInputStream("9\n".getBytes());
         CommandLineUI cli = new CommandLineUI(game, inputStream, printStream);
         assertEquals(9, cli.requestNextPosition());
-        String expected = cli.POSITION_REQUEST;
-        assertThat(output.toString(), containsString(expected));
+        assertThat(output.toString(), containsString(cli.POSITION_REQUEST));
     }
 
     @Test
     public void resultDisplayed() {
-        byte[] buf = setupGame(GameType.HVH, 3, new int[]{3, 1, 2, 4, 6, 5, 7, 9, 8}, Replay.QUIT);
+        byte[] buf = "3\n1\n3\n1\n2\n4\n6\n5\n7\n9\n8\n1\n".getBytes();
+//        byte[] buf = setupGame(GameType.HVH, DEFAULT_DIMENSION, new int[]{3, 1, 2, 4, 6, 5, 7, 9, 8}, Replay.QUIT);
         InputStream inputStream = new ByteArrayInputStream(buf);
         CommandLineUI cli = new CommandLineUI(game, inputStream, printStream);
         cli.start();
-        String expected = cli.REPLAY_REQUEST;
-        assertThat(output.toString(), containsString(expected));
-
+        assertThat(output.toString(), containsString(cli.REPLAY_REQUEST));
     }
 
     private byte[] setupGame(GameType gameType, int dimension, int[] humanMoves, Replay choice) {
