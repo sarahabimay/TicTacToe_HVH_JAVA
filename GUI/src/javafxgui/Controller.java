@@ -61,7 +61,7 @@ public class Controller {
     }
 
     private boolean consolePlayersTurn() {
-        return this.game.getNextPlayer().getPlayerType() == Player.Type.HUMAN;
+        return this.game.getNextPlayerType() == Player.Type.HUMAN;
     }
 
     private void enableBoard(boolean enable) {
@@ -124,8 +124,8 @@ public class Controller {
     }
 
     private void playAIMove() {
-        while (game.getNextPlayer().getPlayerType() == Player.Type.AI) {
-            game.playMove();
+        while (game.getNextPlayerType() == Player.Type.AI) {
+            game.playAIMove();
         }
         displayBoard();
     }

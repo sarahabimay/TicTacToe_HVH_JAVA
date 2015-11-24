@@ -49,8 +49,7 @@ public class PlayerFactoryTest {
 
     @Test
     public void requestHVHPlayer() {
-        FakeCommandLineUI fakeUI = new FakeCommandLineUI();
-        PlayerFactory playerFactory = new PlayerFactory(fakeUI);
+        PlayerFactory playerFactory = new PlayerFactory(new FakeCommandLineUI());
         ArrayList<Player> players = playerFactory.generatePlayersFor(1);
         assertEquals(2, players.size());
         Assert.assertEquals(HumanPlayer.class, players.get(0).getClass());
@@ -59,8 +58,7 @@ public class PlayerFactoryTest {
 
     @Test
     public void requestHVCPlayer() {
-        FakeCommandLineUI fakeUI = new FakeCommandLineUI();
-        PlayerFactory playerFactory = new PlayerFactory(fakeUI);
+        PlayerFactory playerFactory = new PlayerFactory(new FakeCommandLineUI());
         ArrayList<Player> players = playerFactory.generatePlayersFor(2);
         assertEquals(2, players.size());
         Assert.assertEquals(HumanPlayer.class, players.get(0).getClass());
@@ -68,8 +66,7 @@ public class PlayerFactoryTest {
     }
     @Test
     public void requestCVHPlayer() {
-        FakeCommandLineUI fakeUI = new FakeCommandLineUI();
-        PlayerFactory playerFactory = new PlayerFactory(fakeUI);
+        PlayerFactory playerFactory = new PlayerFactory(new FakeCommandLineUI());
         ArrayList<Player> players = playerFactory.generatePlayersFor(2);
         assertEquals(2, players.size());
         Assert.assertEquals(ComputerPlayer.class, players.get(1).getClass());

@@ -254,7 +254,6 @@ public class BoardTest {
         assertEquals(true, board.hasAWinner());
     }
 
-
     @Test
     public void createListOfRowLines() {
         Mark currentBoard[] = {

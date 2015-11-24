@@ -6,129 +6,97 @@ import jttt.Core.Players.PlayerFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 
 public class GameTest {
 
-    private Game game;
+    private int CVH_GAME_TYPE = 3;
+    private int DEFAULT_DIMENSION = 3;
+    private final int ZERO_DIMENSION_BOARD = 0;
+    private int DEFAULT_GAMETYPE = 1;
+    private Game defaultGame;
+    private Game zeroGame;
     Mark X = Mark.X;
     Mark O = Mark.O;
     Mark EMPTY = Mark.EMPTY;
 
     @Before
     public void setUp() {
-        game = new Game(new Board(0), new PlayerFactory());
+        zeroGame = new Game(new Board(ZERO_DIMENSION_BOARD), DEFAULT_GAMETYPE, new PlayerFactory());
+        defaultGame = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAMETYPE, new PlayerFactory());
     }
 
     @Test
     public void noBoardCreatedYet() {
-        Game game = new Game(new Board(0), new PlayerFactory());
-        assertEquals(0, game.getBoardSize());
+        assertEquals(0, zeroGame.getBoardSize());
     }
 
     @Test
     public void gameReceivesBoardSize() {
-        game.setBoardDimension(3);
-        assertEquals(9, game.getBoardSize());
+        assertEquals(9, defaultGame.getBoardSize());
     }
 
     @Test
     public void gameReceivesValidGameType() {
-        int gameType = 1;
-        Game game = new Game(new Board(3), gameType, new PlayerFactory());
-        game.createPlayers();
-
-        assertEquals(HumanPlayer.class, game.getPlayer(Mark.X).getClass());
-        assertEquals(HumanPlayer.class, game.getPlayer(Mark.O).getClass());
+        assertEquals(HumanPlayer.class, defaultGame.getPlayer(Mark.X).getClass());
+        assertEquals(HumanPlayer.class, defaultGame.getPlayer(Mark.O).getClass());
     }
 
     @Test
     public void createGameFromInputs() {
-        Game game = new Game(new Board(3), 1, new PlayerFactory());
-
-        assertEquals(9, game.getBoardSize());
-        assertEquals(HumanPlayer.class, game.getPlayer(Mark.X).getClass());
-        assertEquals(HumanPlayer.class, game.getPlayer(Mark.O).getClass());
+        assertEquals(9, defaultGame.getBoardSize());
+        assertEquals(HumanPlayer.class, defaultGame.getPlayer(Mark.X).getClass());
+        assertEquals(HumanPlayer.class, defaultGame.getPlayer(Mark.O).getClass());
     }
 
     @Test
     public void askedForFirstPlayer() {
-        setUpGame(3, 1);
-        Player playerA = game.getNextPlayer();
+        Player playerA = defaultGame.getNextPlayer();
         assertEquals(Mark.X, playerA.getMark());
     }
 
     @Test
     public void gameAskedToUpdateBoardWithHumanPlayerMove() {
-        setUpGame(3, 1);
-        Player playerA = game.getNextPlayer();
-        game.playMove(1);
-        assertEquals(Mark.X, game.getBoard().getCells().get(0));
+        defaultGame.playMove(1);
+        assertEquals(Mark.X, defaultGame.getBoard().getCells().get(0));
     }
 
     @Test
     public void askedForNextPlayer() {
-        setUpGame(3, 1);
-        Player playerA = game.getNextPlayer();
-        game.playMove(1);
-        Player playerB = game.getNextPlayer();
+        defaultGame.playMove(1);
+        Player playerB = defaultGame.getNextPlayer();
         assertEquals(Mark.O, playerB.getMark());
     }
 
     @Test
     public void gameAskedForComputerMove() {
-        setUpGame(3, 3); // 3 == boardSize; 3 == CVH
+        Game game = new Game(new Board(DEFAULT_DIMENSION), CVH_GAME_TYPE, new PlayerFactory());
         Player playerA = game.getNextPlayer();
-        // maybe game.getNextPlayerMove() then game.playMove() but then
+        // maybe defaultGame.getNextPlayerMove() then defaultGame.playMove() but then
         // either the UI would need to know about player types or
         // the jttt.Core.Players.Player will need to know about the UI
         // I can't yet see yet how this should go
-        game.playMove();
+        game.playAIMove();
         assertEquals(Mark.X, game.getBoard().getCells().get(0));
     }
 
     @Test
     public void gameAskedForBoard() {
-        setUpGame(3, 1);
-        Board board = new Board(3);
-        assertEquals(board.isEmpty(), game.getBoard().isEmpty());
-    }
-
-    @Test
-    public void gameAskedToPlay() {
-        int dimension = 3;
-        int gameType = 1;
-        game.play(dimension, gameType);
-
+        Board board = new Board(DEFAULT_DIMENSION);
+        assertEquals(board.isEmpty(), defaultGame.getBoard().isEmpty());
     }
 
     @Test
     public void gameAskedForResult() {
-        setUpGame(3, 3);
         Mark currentBoard[] = {
                 X, O, X,
                 O, O, X,
                 O, X, X
         };
-
-        Board board = new Board(3, arrayToList(currentBoard));
-
-    }
-
-    private void setUpGame(int dimension, int gameType) {
-        game.setBoardDimension(dimension);
-        game.setGameType(gameType); //1 == jttt.Core.GameType.HVH
-        game.createPlayers();
-    }
-
-    private List<Mark> arrayToList(Mark[] initialBoard) {
-        List<Mark> initialCells = new ArrayList<>(initialBoard.length);
-        for (int i = 0; i < initialBoard.length; i++) {
-            initialCells.add((initialBoard[i]));
+        for (int i = 0; i < currentBoard.length; i++){
+            defaultGame.playMove(i + 1);
         }
-        return initialCells;
+        assertEquals(true, defaultGame.isGameOver());
+        assertEquals(X, defaultGame.findWinner());
     }
 }

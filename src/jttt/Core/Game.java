@@ -17,18 +17,11 @@ public class Game {
     private int gameType;
     private HashMap<Mark, Player> players;
 
-    public Game(Board board, PlayerFactory playerFactory) {
-        this.playerFactory = playerFactory;
-        this.board = board;
-        this.players = new HashMap<>();
-        this.gameType = 0;
-    }
-
     public Game(Board board, int gameType, PlayerFactory playerFactory) {
-        this.gameType = gameType;
-        this.board = board;
         this.playerFactory = playerFactory;
+        this.board = board;
         this.players = new HashMap<>();
+        this.gameType = gameType;
         createPlayers();
     }
 
@@ -36,22 +29,13 @@ public class Game {
         return board == null ? 0 : board.boardSize();
     }
 
-    public void setBoardDimension(int dimension) {
-        board = new Board(dimension);
-    }
-
-    public void setGameType(int gameType) {
-        this.gameType = gameType;
-
-    }
-
     public Player getPlayer(Mark mark) {
         return players.get(mark);
     }
 
     public List<Player> getPlayers() {
-        if (this.players == null) {
-            return null;
+        if (this.players.size() != 2) {
+            return new ArrayList<>();
         }
         return this.players.entrySet().stream().map(Map.Entry::getValue).collect(toList());
     }
@@ -73,6 +57,10 @@ public class Game {
         return players.get(board.findNextCounter());
     }
 
+    public Player.Type getNextPlayerType() {
+        return getNextPlayer().getPlayerType();
+    }
+
     public Board getBoard() {
         return board;
     }
@@ -82,14 +70,9 @@ public class Game {
         board = currentPlayer.playTurn(board, newPosition);
     }
 
-    public void playMove() {
+    public void playAIMove() {
         Player currentPlayer = getNextPlayer();
         board = currentPlayer.playTurn(board);
-    }
-
-    public void play(int dimension, int gameType) {
-        setBoardDimension(dimension);
-        setGameType(gameType);
     }
 
     public boolean isGameOver() {

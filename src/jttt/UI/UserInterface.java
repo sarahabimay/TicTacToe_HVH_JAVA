@@ -1,6 +1,5 @@
 package jttt.UI;
 
-import jttt.Core.Board;
 import jttt.Core.Mark;
 
 import java.util.function.IntPredicate;
@@ -17,11 +16,7 @@ public interface UserInterface {
 
     void displayResult(Mark winner);
 
-    String displayBoard(Board board);
-
     boolean validate(int choiceFromInput, IntPredicate isValidChoice);
-
-    void printCurrentCounter(Mark currentMark);
 
     boolean validGameType(int choice);
 
