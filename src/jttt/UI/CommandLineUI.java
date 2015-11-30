@@ -82,9 +82,7 @@ public class CommandLineUI implements UserInterface {
     public boolean playAgain() {
         if (requestPlayAgain()) {
             clearDisplay();
-            int DEFAULT_DIMENSION = 3;
-            int DEFAULT_GAME_TYPE = 1;
-            game = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAME_TYPE, new PlayerFactory());
+            resetGame();
             return true;
         }
         return false;
@@ -149,6 +147,12 @@ public class CommandLineUI implements UserInterface {
         }
         clearDisplay();
         return inputValue;
+    }
+
+    private void resetGame() {
+        int DEFAULT_DIMENSION = 3;
+        int DEFAULT_GAME_TYPE = 1;
+        game = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAME_TYPE, new PlayerFactory());
     }
 
     private boolean continueToPlayGame(int choice) {
