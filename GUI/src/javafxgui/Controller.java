@@ -6,9 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import jttt.Core.Board;
+import jttt.Core.Board.Board;
 import jttt.Core.Game;
-import jttt.Core.Mark;
+import jttt.Core.Board.Mark;
 import jttt.Core.Players.Player;
 import jttt.Core.Players.PlayerFactory;
 

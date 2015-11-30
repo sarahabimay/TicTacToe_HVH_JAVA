@@ -1,7 +1,7 @@
 package jttt.Core.Strategy;
 
-import jttt.Core.Board;
-import jttt.Core.Mark;
+import jttt.Core.Board.Board;
+import jttt.Core.Board.Mark;
 
 import java.util.Random;
 

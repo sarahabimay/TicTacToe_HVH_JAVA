@@ -1,5 +1,7 @@
 package jttt.Core;
 
+import jttt.Core.Board.Board;
+import jttt.Core.Board.Mark;
 import jttt.Core.Players.Player;
 import jttt.Core.Players.PlayerFactory;
 

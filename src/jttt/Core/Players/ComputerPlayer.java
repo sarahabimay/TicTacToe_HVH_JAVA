@@ -1,6 +1,7 @@
 package jttt.Core.Players;
 
-import jttt.Core.*;
+import jttt.Core.Board.Board;
+import jttt.Core.Board.Mark;
 import jttt.Core.Strategy.AIMoveStrategy;
 import jttt.Core.Strategy.AIStrategyFactory;
 import jttt.UI.UserInterface;

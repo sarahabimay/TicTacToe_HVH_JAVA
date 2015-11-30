@@ -1,7 +1,7 @@
 package jttt.Core.Strategy;
 
-import jttt.Core.Board;
-import jttt.Core.Mark;
+import jttt.Core.Board.Board;
+import jttt.Core.Board.Mark;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -95,7 +95,6 @@ public class AIStrategyTest {
         FourByFourAlphaBetaStrategy specialAlphaBeta = new FourByFourAlphaBetaStrategy();
         int nextMove = specialAlphaBeta.calculateNextMove(board, Mark.X );
         assertNotEquals(-1, nextMove);
-        assertThat(nextMove, isA(Integer.class));
     }
 
     @Test
@@ -111,7 +110,6 @@ public class AIStrategyTest {
         int nextMove = randomStrategy.calculateNextMove(board, Mark.X);
         assertThat(nextMove, greaterThan(0));
         assertThat(nextMove, lessThanOrEqualTo(16));
-        assertThat(nextMove, isA(Integer.class));
     }
 
     private List<Mark> arrayToList(Mark[] initialBoard) {

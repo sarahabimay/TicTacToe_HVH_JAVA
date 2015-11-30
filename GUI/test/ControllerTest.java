@@ -1,6 +1,6 @@
 import javafx.event.ActionEvent;
 import javafxgui.Controller;
-import jttt.Core.Mark;
+import jttt.Core.Board.Mark;
 import jttt.Core.Players.HumanPlayer;
 import org.junit.Before;
 import org.junit.Ignore;

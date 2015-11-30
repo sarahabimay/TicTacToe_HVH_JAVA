@@ -1,7 +1,7 @@
 package jttt.Core.Players;
 
-import jttt.Core.Board;
-import jttt.Core.Mark;
+import jttt.Core.Board.Board;
+import jttt.Core.Board.Mark;
 import jttt.UI.UserInterface;
 
 public abstract class Player {
