@@ -11,22 +11,18 @@ import java.io.*;
 import java.util.function.IntPredicate;
 
 public class CommandLineUI implements UserInterface {
-    public String REPLAY_REQUEST = "Do you want to play again? Quit(1) or Replay(2) :\n";
-    public String DIMENSION_REQUEST = "Please provide the dimensions of the board:\n";
+    private String ANSI_CLEAR = "\033[H\033[2J";
+    public String GREETING = "Do you want to play a game of TIC TAC TOE? Yes(1) or No(2) : \n";
     public String GAME_TYPE_REQUEST = "Human vs Human(1) or Human vs Computer(2) or Computer vs Human(3)?:\n";
+    public String DIMENSION_REQUEST = "Please provide the dimensions of the board:\n";
     public String POSITION_REQUEST = "Please enter the position number for your next move:\n";
-    public String DRAW_ANNOUNCE = "The game is a draw!";
+    public String DRAW_ANNOUNCE = "The game is a draw!\n";
     public String WINNER_ANNOUNCE = "We have a Winner! Player: %s\n";
+    public String REPLAY_REQUEST = "Do you want to play again? Yes(1) or No(2) :\n";
     private Game game;
     private DisplayStyler styler;
     private BufferedReader readStream;
     private Writer writeStream;
-
-    public CommandLineUI(Game game, InputStream inputStream, Writer writer) {
-        this.readStream = new BufferedReader(new InputStreamReader(inputStream));
-        this.writeStream = writer;
-        this.game = game;
-    }
 
     public CommandLineUI(Game game, DisplayStyler boardStyle, InputStream inputStream, Writer writer) {
         this.readStream = new BufferedReader(new InputStreamReader(inputStream));
@@ -35,62 +31,45 @@ public class CommandLineUI implements UserInterface {
         this.styler = boardStyle;
     }
 
-//    public CommandLineUI(Game game, InputStream inputStream, Writer writer) {
-
-//        String clear = "\033[H\033[2J";
-//        formatConsoleDisplay(clear, writer);
-//        formatConsoleDisplay("SOMETHING ELSE", writer);
-//        formatConsoleDisplay(clear, writer);
-//        formatConsoleDisplay("SOMETHING", writer);
-//        formatConsoleDisplay(clear, writer);
-//        String ANSI_RESET = "\u001B[0m";
-//        String ANSI_RED = "\u001B[31m";
-//        formatConsoleDisplay(ANSI_RED + "This text is red!" + ANSI_RESET,  writer);
-//    }
-
-
     public void start() {
-        boolean replay = true;
-        while (replay) {
+        clearDisplay();
+        boolean playGame = continueToPlayGame(displayGreetingRequest());
+        while (playGame) {
             createNewGame(requestGameType(), requestBoardDimension());
             displayBoard();
             playAllMoves();
             displayResult(game.findWinner());
-            replay = playAgain();
+            playGame = playAgain();
         }
+    }
+
+    public int displayGreetingRequest() {
+        return request(GREETING, this::validateContinueChoice);
     }
 
     public int requestBoardDimension() {
-        int dimension = 0;
-        while (!validate(dimension, this::validateDimension)) {
-            displayToOutput(DIMENSION_REQUEST);
-            dimension = readInput();
-        }
-        clear();
-        return dimension;
+        return request(DIMENSION_REQUEST, this::validateDimension);
     }
 
-
     public int requestGameType() {
-        int choice = -1;
-        while (!validate(choice, this::validGameType)) {
-            displayToOutput(GAME_TYPE_REQUEST);
-            choice = readInput();
-        }
-        clear();
-        return choice;
+        return request(GAME_TYPE_REQUEST, this::validGameType);
     }
 
     public int requestNextPosition() {
-        int position = 0;
-        while (!validate(position, this::validPosition)) {
-            String prompt = POSITION_REQUEST;
-            displayToOutput(prompt);
-            position = readInput();
-        }
-        return position;
+        return request(POSITION_REQUEST, this::validPosition);
     }
 
+    public boolean requestPlayAgain() {
+        int instruction = request(REPLAY_REQUEST, this::validReplayChoice);
+        return doPlayAgain(instruction);
+    }
+
+    public String displayBoard() {
+        clearDisplay();
+        String output = styler.formatBoardForDisplay(game.getBoard());
+        displayToOutput(output);
+        return output;
+    }
 
     public void displayResult(Mark winner) {
         if (winner.isEmpty()) {
@@ -102,29 +81,13 @@ public class CommandLineUI implements UserInterface {
 
     public boolean playAgain() {
         if (requestPlayAgain()) {
-            clear();
+            clearDisplay();
             int DEFAULT_DIMENSION = 3;
             int DEFAULT_GAME_TYPE = 1;
             game = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAME_TYPE, new PlayerFactory());
             return true;
         }
         return false;
-    }
-
-    public boolean requestPlayAgain() {
-        int instruction = 0;
-        while (!validate(instruction, this::validInstruction)) {
-            displayToOutput(REPLAY_REQUEST);
-            instruction = readInput();
-        }
-        return doPlayAgain(instruction);
-    }
-
-    public String displayBoard() {
-        clear();
-        String output = styler.displayBoard(game.getBoard());
-        displayToOutput(output+"\n");
-        return output;
     }
 
     public boolean validate(int choiceFromInput, IntPredicate isValidChoice) {
@@ -143,8 +106,12 @@ public class CommandLineUI implements UserInterface {
         return position > 0;
     }
 
-    public boolean validInstruction(int instruction) {
-        return 0 < instruction && instruction < 3;
+    public boolean validReplayChoice(int instruction) {
+        return BinaryChoice.YES.equalsChoice(instruction) || BinaryChoice.NO.equalsChoice(instruction);
+    }
+
+    public boolean validateContinueChoice(int playOrQuit) {
+        return BinaryChoice.YES.equalsChoice(playOrQuit) || BinaryChoice.NO.equalsChoice(playOrQuit);
     }
 
     public void createNewGame(int gameType, int dimension) {
@@ -165,6 +132,29 @@ public class CommandLineUI implements UserInterface {
         }
     }
 
+    private void displayToOutput(String messageToDisplay) {
+        try {
+            writeStream.write(messageToDisplay);
+            writeStream.flush();
+        } catch (IOException e) {
+            System.out.println(String.format("IO Exception: %s", e.toString()));
+        }
+    }
+
+    private int request(String outputMessage, IntPredicate isValidChoice) {
+        int inputValue = -1;
+        while (!validate(inputValue, isValidChoice)) {
+            displayToOutput(outputMessage);
+            inputValue = readInput();
+        }
+        clearDisplay();
+        return inputValue;
+    }
+
+    private boolean continueToPlayGame(int choice) {
+        return BinaryChoice.YES.equalsChoice(choice);
+    }
+
     private boolean nextPlayerIsAI() {
         return game.getNextPlayerType() == Player.Type.AI;
     }
@@ -178,21 +168,11 @@ public class CommandLineUI implements UserInterface {
     }
 
     private boolean doPlayAgain(int instruction) {
-        return 2 == instruction;
+        return BinaryChoice.YES.equalsChoice(instruction);
     }
 
-    private void displayToOutput(String messageToDisplay) {
-        try {
-            writeStream.write(messageToDisplay);
-            writeStream.flush();
-        } catch (IOException e) {
-            System.out.println(String.format("IO Exception: %s", e.toString()));
-        }
-    }
-
-    private void clear() {
-        String message = "\033[H\033[2J";
-        displayToOutput("\n" + message + "\n");
+    private void clearDisplay() {
+        displayToOutput("\n" + ANSI_CLEAR + "\n");
     }
 
     private int readInput() {
@@ -204,5 +184,20 @@ public class CommandLineUI implements UserInterface {
             return 0;
         }
         return 0;
+    }
+
+    private enum BinaryChoice {
+        YES(1),
+        NO(2);
+
+        private int choiceOption;
+
+        BinaryChoice(int choiceOption) {
+            this.choiceOption = choiceOption;
+        }
+
+        public boolean equalsChoice(int choice) {
+            return choiceOption == choice;
+        }
     }
 }

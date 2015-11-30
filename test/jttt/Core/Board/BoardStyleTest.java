@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -14,9 +15,13 @@ public class BoardStyleTest {
     private Mark X = Mark.X;
     private Mark O = Mark.O;
     private Mark E = Mark.EMPTY;
+    private String ANSI_RESET = "\u001B[0m";
+    private String ANSI_BLUE = "\u001B[34m";
+    private String ANSI_RED = "\u001B[31m";
+    private String ANSI_GREEN = "\u001B[32m";
 
     @Test
-    public void boardIsDisplayed() {
+    public void emptyElementDisplayed() {
         Mark currentBoard[] = {
                 E, E, E, E,
                 E, E, E, E,
@@ -25,12 +30,13 @@ public class BoardStyleTest {
         };
         Board board = new Board(4, arrayToList(currentBoard));
         DisplayStyler styler = new DisplayStyler();
-        System.out.println(styler.displayBoard(board));
-        assertEquals("" +
-                "[1]\t\t[2]\t\t[3]\t\t[4]\n" +
-                "[5]\t\t[6]\t\t[7]\t\t[8]\n" +
-                "[9]\t\t[10]\t[X]\t\t[12]\n" +
-                "[13]\t[14]\t[O]\t\t[X]\n", styler.displayBoard(board));
+        String expected = "[1]";
+        assertEquals(expected, styler.formatMarkForDisplay(0, board));
+        assertEquals(2, styler.appendSpaces(0, board).length());
+        expected = ANSI_GREEN + "|  " + ANSI_RESET;
+        assertEquals(expected, styler.appendDivider(0, board));
+        assertEquals("", styler.appendNewLine(0, board));
+        assertEquals("", styler.addBottomLine(0, board));
     }
 
     @Test
@@ -44,9 +50,30 @@ public class BoardStyleTest {
         Board board = new Board(4, arrayToList(currentBoard));
         DisplayStyler styler = new DisplayStyler();
         String cellForDisplay = board.findMarkAtIndex(0).markOrPositionForDisplay(0);
-        System.out.println(styler.colourCell(cellForDisplay));
-        String cell = styler.colourCell(cellForDisplay);
-        assertThat(cell, is("\n\u001B[31mX\u001B[0m\n"));
+        String cell = styler.setDisplayColor(cellForDisplay);
+        assertThat(cell, is(String.format("%s%s%s", ANSI_RED, "X", ANSI_RESET)));
+        cellForDisplay = board.findMarkAtIndex(1).markOrPositionForDisplay(1);
+        cell = styler.setDisplayColor(cellForDisplay);
+        assertThat(cell, is(String.format("%s%s%s", ANSI_BLUE, "O", ANSI_RESET)));
+    }
+
+    @Test
+    public void markElementDisplayed() {
+        Mark currentBoard[] = {
+                E, E, E, E,
+                E, E, E, E,
+                E, E, X, O,
+                E, E, O, X,
+        };
+        Board board = new Board(4, arrayToList(currentBoard));
+        DisplayStyler styler = new DisplayStyler();
+        String expected = String.format("[%s]", styler.setDisplayColor("O"));
+        assertEquals(expected, styler.formatMarkForDisplay(11, board));
+        assertEquals(0, styler.appendSpaces(11, board).length());
+        assertEquals("", styler.appendDivider(11, board));
+        assertEquals("\n", styler.appendNewLine(11, board));
+        expected = ANSI_GREEN + "_________" + ANSI_RESET;
+        assertThat(styler.addBottomLine(11, board), containsString(expected));
     }
 
     private List<Mark> arrayToList(Mark[] initialBoard) {

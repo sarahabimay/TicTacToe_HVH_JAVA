@@ -1,10 +1,12 @@
 package jttt.UI;
 
-import jttt.Core.Mark;
+import jttt.Core.Board.Mark;
 
 import java.util.function.IntPredicate;
 
 public interface UserInterface {
+
+    int displayGreetingRequest();
 
     int requestBoardDimension();
 
@@ -24,7 +26,9 @@ public interface UserInterface {
 
     boolean validPosition(int position);
 
-    boolean validInstruction(int instruction);
+    boolean validReplayChoice(int instruction);
+
+    boolean validateContinueChoice(int playOrQuit);
 
     void start();
 }

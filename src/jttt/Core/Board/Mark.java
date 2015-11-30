@@ -1,4 +1,4 @@
-package jttt.Core;
+package jttt.Core.Board;
 
 public enum Mark {
     X,

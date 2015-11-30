@@ -1,7 +1,7 @@
 package jttt.Core.Fakes;
 
-import jttt.Core.Board;
-import jttt.Core.Mark;
+import jttt.Core.Board.Board;
+import jttt.Core.Board.Mark;
 import jttt.Core.Game;
 import jttt.Core.Players.Player;
 import jttt.Core.Players.PlayerFactory;
@@ -39,6 +39,16 @@ public class FakeCommandLineUI implements UserInterface {
         playAgain();
     }
 
+    @Override
+    public int displayGreetingRequest() {
+        return 1;
+    }
+
+    @Override
+    public boolean validateContinueChoice(int playOrQuit) {
+        return false;
+    }
+
     public int requestBoardDimension() {
         userHasBeenAskedForDimension = true;
         return dummyDimension;
@@ -71,6 +81,9 @@ public class FakeCommandLineUI implements UserInterface {
         haveDisplayedBoardToUser = true;
         return output;
     }
+    public void setGameType(int gameType) {
+        this.playerType = gameType;
+    }
 
     public void addDummyDimension(int dimension) {
         this.dummyDimension = dimension;
@@ -92,7 +105,7 @@ public class FakeCommandLineUI implements UserInterface {
         return position > 0;
     }
 
-    public boolean validInstruction(int instruction) {
+    public boolean validReplayChoice(int instruction) {
         return 0 < instruction && instruction < 3;
     }
 
@@ -133,13 +146,13 @@ public class FakeCommandLineUI implements UserInterface {
     private String boardForDisplay(Board board) {
         String output = "";
         for (int i = 0; i < board.boardSize(); i++) {
-            output += convertRowToString(i, board.findCounterAtIndex(i), board);
+            output += convertRowToString(i, board.findMarkAtIndex(i), board);
         }
         return output;
     }
 
     private String convertRowToString(int index, Mark cellValue, Board board) {
-        String cellForDisplay = cellValue.counterForDisplay(index);
+        String cellForDisplay = cellValue.markOrPositionForDisplay(index);
         String output = String.format("[%s]", cellForDisplay);
         if (isEndOfRow(index, board)) {
             output += "\n";
