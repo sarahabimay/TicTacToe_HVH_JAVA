@@ -1,13 +1,13 @@
-package jttt.Core;
+package jttt.Core.Board;
 
+import jttt.Core.Board.Line;
+import jttt.Core.Board.Mark;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
 
 public class LineTest {
 

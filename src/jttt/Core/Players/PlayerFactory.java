@@ -1,7 +1,7 @@
 package jttt.Core.Players;
 
 import jttt.Core.GameType;
-import jttt.Core.Mark;
+import jttt.Core.Board.Mark;
 import jttt.UI.UserInterface;
 
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
 package jttt.Core.Players;
 
-import jttt.Core.Board;
+import jttt.Core.Board.Board;
 import jttt.Core.Fakes.FakeCommandLineUI;
-import jttt.Core.Mark;
+import jttt.Core.Board.Mark;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;

@@ -1,4 +1,4 @@
-package jttt.Core;
+package jttt.Core.Board;
 
 import com.google.common.collect.Lists;
 

@@ -1,6 +1,6 @@
 package jttt.UI;
 
-import jttt.Core.Mark;
+import jttt.Core.Board.Mark;
 
 import java.util.function.IntPredicate;
 

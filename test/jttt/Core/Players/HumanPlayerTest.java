@@ -1,7 +1,7 @@
 package jttt.Core.Players;
 
-import jttt.Core.Board;
-import jttt.Core.Mark;
+import jttt.Core.Board.Board;
+import jttt.Core.Board.Mark;
 import jttt.Core.Fakes.FakeCommandLineUI;
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,6 +43,6 @@ public class HumanPlayerTest {
         Player player1 = new HumanPlayer(Mark.X, fakeUI);
         Board board = new Board(3);
         board = player1.playTurn(board);
-        Assert.assertEquals(Mark.X, board.findCounterAtIndex(0));
+        Assert.assertEquals(Mark.X, board.findMarkAtIndex(0));
     }
 }
