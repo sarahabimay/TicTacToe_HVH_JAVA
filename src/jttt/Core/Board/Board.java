@@ -13,37 +13,28 @@ import static java.util.stream.IntStream.range;
 public class Board {
     private static final int POSITIVE_OFFSET = 1;
     private static final int NEGATIVE_OFFSET = -1;
-    private final DisplayStyler styler;
     private int dimension;
     private List<Mark> cells;
 
     public Board(int dimension) {
         this.dimension = dimension;
         this.cells = new ArrayList<>(generateEmptyCells());
-        this.styler = new DisplayStyler();
     }
 
     public Board(int dimension, List<Mark> initialState) {
         this.dimension = dimension;
         this.cells = initialState;
-        this.styler = new DisplayStyler();
-    }
-
-    public Board(int dimension, DisplayStyler boardStyle) {
-        this.dimension = dimension;
-        this.cells = new ArrayList<>(generateEmptyCells());
-        this.styler = boardStyle;
     }
 
     public Board playCounterInPosition(int position, Mark mark) {
         if (validPosition(position)) {
-            cells = newCellsWithNewMove(position - POSITIVE_OFFSET, mark);
+            cells.set(position - POSITIVE_OFFSET, mark);
         }
         return new Board(dimension, cells);
     }
 
-    public Board newBoardWithNewMove(int move, Mark currentMark) {
-        return new Board(dimension, newCellsWithNewMove(move, currentMark));
+    public Board createBoardCopy() {
+        return new Board(dimension, copyOfCells());
     }
 
     public boolean isEmpty() {
@@ -134,6 +125,11 @@ public class Board {
 
     List<Line> getDiagonals() {
         return Arrays.stream(new int[]{0, dimension - 1}).mapToObj(i -> new Line(getDiagonalCells(i))).collect(toList());
+    }
+
+    private List<Mark> copyOfCells() {
+        List<Mark> newCells = new ArrayList<>(cells);
+        return newCells;
     }
 
     private List<Mark> newCellsWithNewMove(int move, Mark mark) {

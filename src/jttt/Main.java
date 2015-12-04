@@ -15,7 +15,7 @@ public class Main {
         int DEFAULT_DIMENSION = 0;
         CommandLineUI ui = new CommandLineUI(
                 new Game(
-                        new Board(DEFAULT_DIMENSION, new DisplayStyler()),
+                        new Board(DEFAULT_DIMENSION),
                         DEFAULT_GAME_TYPE,
                         new PlayerFactory()),
                 new DisplayStyler(),

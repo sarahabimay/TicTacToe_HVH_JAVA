@@ -28,16 +28,20 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         }
 
         for (Integer move : currentBoard.remainingPositions()) {
-            Board currentStateOfBoard = currentBoard.newBoardWithNewMove(move, currentMark);
+            Board currentStateOfBoard = currentBoard.createBoardCopy();
+            currentStateOfBoard.playCounterInPosition(displayPosition(move), currentMark);
+
             int score = aBMinimax(depth - 1,
                     currentMark.opponentCounter(),
                     alpha,
                     beta,
                     currentStateOfBoard).getScore();
+
             if (newBestScore(currentMark, bestScore, score)) {
                 bestScore = score;
                 bestMove = move;
             }
+
             alpha = newAlpha(alpha, score, currentMark);
             beta = newBeta(beta, score, currentMark);
             if (beta <= alpha) {
@@ -45,6 +49,10 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
             }
         }
         return new Result(bestScore, bestMove);
+    }
+
+    private Integer displayPosition(Integer move) {
+        return move + DISPLAY_POSITION_OFFSET;
     }
 
     private int newAlpha(int alpha, int score, Mark currentMark) {

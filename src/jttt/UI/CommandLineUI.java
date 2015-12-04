@@ -114,7 +114,7 @@ public class CommandLineUI implements UserInterface {
 
     public void createNewGame(int gameType, int dimension) {
         game = new Game(
-                new Board(dimension, new DisplayStyler()),
+                new Board(dimension),
                 gameType,
                 new PlayerFactory());
     }

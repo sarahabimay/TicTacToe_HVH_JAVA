@@ -30,7 +30,7 @@ public class AIStrategyTest {
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        int nextMove = alphaBetaStrategy.calculateNextMove(board, Mark.X );
+        int nextMove = alphaBetaStrategy.calculateNextMove(board, Mark.X);
         assertNotEquals(-1, nextMove);
         assertEquals(1, nextMove);
     }
@@ -43,7 +43,7 @@ public class AIStrategyTest {
                 E, O, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(7, alphaBetaStrategy.calculateNextMove(board, Mark.X ));
+        assertEquals(7, alphaBetaStrategy.calculateNextMove(board, Mark.X));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class AIStrategyTest {
                 O, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(3, alphaBetaStrategy.calculateNextMove(board, Mark.X ));
+        assertEquals(3, alphaBetaStrategy.calculateNextMove(board, Mark.X));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class AIStrategyTest {
                 E, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        int result = alphaBetaStrategy.calculateNextMove(board, Mark.X );
+        int result = alphaBetaStrategy.calculateNextMove(board, Mark.X);
         assertEquals(3, result);
     }
 
@@ -79,7 +79,7 @@ public class AIStrategyTest {
         };
         Board board = new Board(4, arrayToList(currentBoard));
         FourByFourAlphaBetaStrategy specialAlphaBeta = new FourByFourAlphaBetaStrategy();
-        int nextMove = specialAlphaBeta.calculateNextMove(board, Mark.X );
+        int nextMove = specialAlphaBeta.calculateNextMove(board, Mark.X);
         assertEquals(1, nextMove);
     }
 
@@ -93,7 +93,7 @@ public class AIStrategyTest {
         };
         Board board = new Board(4, arrayToList(currentBoard));
         FourByFourAlphaBetaStrategy specialAlphaBeta = new FourByFourAlphaBetaStrategy();
-        int nextMove = specialAlphaBeta.calculateNextMove(board, Mark.X );
+        int nextMove = specialAlphaBeta.calculateNextMove(board, Mark.X);
         assertNotEquals(-1, nextMove);
     }
 

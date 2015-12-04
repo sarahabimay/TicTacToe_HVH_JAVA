@@ -147,7 +147,6 @@ public class ComputerPlayerTest {
 
     @Test
     public void firstMoveIsCounterOppAlphaBetaAlphaBeta_4x4() {
-
         Mark currentBoard[] = {
                 E, E, E, E,
                 E, E, E, E,
