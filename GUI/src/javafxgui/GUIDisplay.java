@@ -95,6 +95,7 @@ public class GUIDisplay {
         Button button = new Button("Start Game");
         button.setId("startButton");
         vbox.getChildren().add(button);
+        JavaFXButton javafxButton = new JavaFXButton(button);
 //        Text actiontarget = new Text();
 //        vbox.getChildren().add(actiontarget);
         return vbox;
@@ -146,6 +147,12 @@ public class GUIDisplay {
         vbox.getChildren().add(rb1);
         vbox.getChildren().add(rb2);
         vbox.getChildren().add(rb3);
+        return vbox;
+    }
+
+    private VBox rightBorder() {
+        VBox vbox = new VBox();
+        vbox.setId("rightBorder");
         return vbox;
     }
 }

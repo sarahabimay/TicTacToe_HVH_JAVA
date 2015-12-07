@@ -1,11 +1,9 @@
 package javafxgui;
 
 import javafx.application.Application;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    Controller controller;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -16,11 +14,6 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    private VBox rightBorder() {
-        VBox vbox = new VBox();
-        vbox.setId("rightBorder");
-        return vbox;
-    }
 
 //        controller.setGameOptions(vbox);
 //        button.setOnAction(event -> controller.start(event));
