@@ -72,4 +72,11 @@ public class GUIDisplayTest {
         assertEquals("footer", footer.getId());
         assertEquals("resultTarget", footer.getChildren().get(0).getId());
     }
+
+//    @Test
+//    public void registerStartButtonEventHandler() {
+//        JavaFXButton startButton = new JavaFXButton(new Button("Start Game"));
+//        guiDisplay.registerActionWithHandler(startButton, new startGameHandler());
+//
+//    }
 }
