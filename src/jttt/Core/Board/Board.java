@@ -26,6 +26,18 @@ public class Board {
         this.cells = initialState;
     }
 
+    public int getDimension() {
+        return dimension;
+    }
+
+    public List<Mark> getCells() {
+        return cells;
+    }
+
+    public int boardSize() {
+        return dimension * dimension;
+    }
+
     public Board playCounterInPosition(int position, Mark mark) {
         if (validPosition(position)) {
             cells.set(position - POSITIVE_OFFSET, mark);
@@ -86,14 +98,6 @@ public class Board {
         return counterPositions;
     }
 
-    public List<Mark> getCells() {
-        return cells;
-    }
-
-    public int boardSize() {
-        return dimension * dimension;
-    }
-
     public Mark findMarkAtIndex(int startIndex) {
         return cells.get(startIndex);
     }
@@ -129,12 +133,6 @@ public class Board {
 
     private List<Mark> copyOfCells() {
         List<Mark> newCells = new ArrayList<>(cells);
-        return newCells;
-    }
-
-    private List<Mark> newCellsWithNewMove(int move, Mark mark) {
-        List<Mark> newCells = new ArrayList<>(cells);
-        newCells.set(move, mark);
         return newCells;
     }
 

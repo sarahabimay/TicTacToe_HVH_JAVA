@@ -2,10 +2,12 @@ package javafxgui;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import jttt.Core.Board.Board;
 import jttt.Core.Game;
 import jttt.Core.Board.Mark;
@@ -16,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Controller {
+    private Scene scene;
     public Label gametitle = new Label();
     public Button zero;
     public TextField dimension;
@@ -23,8 +26,15 @@ public class Controller {
     public GridPane gameboard;
     private Game game;
     private Map<Integer, String> gameTypeOptionToString = new HashMap<>();
+    private VBox gameOptions;
 
     public Controller() {
+        this.game = null;
+        mapGameTypeOptionToStringValue();
+    }
+
+    public Controller(Scene scene) {
+        this.scene = scene;
         this.game = null;
         mapGameTypeOptionToStringValue();
     }
@@ -33,6 +43,9 @@ public class Controller {
         return game;
     }
 
+    public void setGameOptions(VBox gameOptions) {
+        this.gameOptions = gameOptions;
+    }
     public void positionSelected(ActionEvent event) {
         Mark mark = this.game.getNextPlayer().getMark();
         Button button = (Button) event.getSource();
@@ -45,6 +58,8 @@ public class Controller {
     }
 
     public void start(ActionEvent event) {
+//        public void start(ActionEvent event) {
+//        gameOptions.getChildren().get(0)
         changeTitle(getGameType());
         createNewGame(getDimension(), getGameType());
         if (isGameValid()) {
@@ -147,6 +162,5 @@ public class Controller {
         gameTypeOptionToString.put(2, "Human Vs Computer");
         gameTypeOptionToString.put(3, "Computer Vs Human");
     }
-
 }
 
