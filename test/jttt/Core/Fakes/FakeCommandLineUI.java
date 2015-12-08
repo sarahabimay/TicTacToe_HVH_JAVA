@@ -39,6 +39,16 @@ public class FakeCommandLineUI implements UserInterface {
         playAgain();
     }
 
+    @Override
+    public int displayGreetingRequest() {
+        return 1;
+    }
+
+    @Override
+    public boolean validateContinueChoice(int playOrQuit) {
+        return false;
+    }
+
     public int requestBoardDimension() {
         userHasBeenAskedForDimension = true;
         return dummyDimension;
@@ -95,7 +105,7 @@ public class FakeCommandLineUI implements UserInterface {
         return position > 0;
     }
 
-    public boolean validInstruction(int instruction) {
+    public boolean validReplayChoice(int instruction) {
         return 0 < instruction && instruction < 3;
     }
 

@@ -26,16 +26,15 @@ public class Board {
         this.cells = initialState;
     }
 
-    public Board(List<Mark> cells) {
-        this.dimension = (int) Math.sqrt(cells.size());
-        this.cells = cells;
-    }
-
     public Board playCounterInPosition(int position, Mark mark) {
         if (validPosition(position)) {
             cells.set(position - POSITIVE_OFFSET, mark);
         }
-        return new Board(cells);
+        return new Board(dimension, cells);
+    }
+
+    public Board createBoardCopy() {
+        return new Board(dimension, copyOfCells());
     }
 
     public boolean isEmpty() {
@@ -48,10 +47,6 @@ public class Board {
 
     public boolean hasAWinner() {
         return foundWinInRow() || foundWinInColumn() || foundWinInDiagonal();
-    }
-
-    public boolean foundWinInDiagonal() {
-        return getDiagonals().stream().anyMatch(Line::hasAWinner);
     }
 
     public Mark findWinner() {
@@ -74,11 +69,6 @@ public class Board {
                 .collect(toList());
     }
 
-    public Board newBoardWithNewMove(int move, Mark currentMark) {
-        List<Mark> newCells = newCellsWithNewMove(move, currentMark);
-        return new Board(newCells);
-    }
-
     public Mark findNextCounter() {
         if (findPositions(Mark.X).size() > findPositions(Mark.O).size()) {
             return Mark.O;
@@ -89,7 +79,7 @@ public class Board {
     public ArrayList<Integer> findPositions(Mark mark) {
         ArrayList<Integer> counterPositions = new ArrayList<>();
         for (int i = 0; i < cells.size(); i++) {
-            if (findCounterAtIndex(i) == mark) {
+            if (findMarkAtIndex(i) == mark) {
                 counterPositions.add(i);
             }
         }
@@ -104,7 +94,7 @@ public class Board {
         return dimension * dimension;
     }
 
-    public Mark findCounterAtIndex(int startIndex) {
+    public Mark findMarkAtIndex(int startIndex) {
         return cells.get(startIndex);
     }
 
@@ -120,6 +110,10 @@ public class Board {
         return getColumns().stream().anyMatch(Line::hasAWinner);
     }
 
+    boolean foundWinInDiagonal() {
+        return getDiagonals().stream().anyMatch(Line::hasAWinner);
+    }
+
     List<Line> getRows() {
         List<List<Mark>> rowLines = Lists.partition(cells, dimension);
         return rowLines.stream().map(Line::new).collect(toList());
@@ -133,8 +127,15 @@ public class Board {
         return Arrays.stream(new int[]{0, dimension - 1}).mapToObj(i -> new Line(getDiagonalCells(i))).collect(toList());
     }
 
-    boolean isAWinner() {
-        return findWinner() != Mark.EMPTY;
+    private List<Mark> copyOfCells() {
+        List<Mark> newCells = new ArrayList<>(cells);
+        return newCells;
+    }
+
+    private List<Mark> newCellsWithNewMove(int move, Mark mark) {
+        List<Mark> newCells = new ArrayList<>(cells);
+        newCells.set(move, mark);
+        return newCells;
     }
 
     private ArrayList<Line> getAllLines() {
@@ -192,9 +193,4 @@ public class Board {
         return initialCells;
     }
 
-    private List<Mark> newCellsWithNewMove(int move, Mark mark) {
-        List<Mark> newCells = new ArrayList<>(cells);
-        newCells.set(move, mark);
-        return newCells;
-    }
 }

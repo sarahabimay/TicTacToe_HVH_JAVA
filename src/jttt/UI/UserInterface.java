@@ -6,6 +6,8 @@ import java.util.function.IntPredicate;
 
 public interface UserInterface {
 
+    int displayGreetingRequest();
+
     int requestBoardDimension();
 
     int requestGameType();
@@ -24,7 +26,9 @@ public interface UserInterface {
 
     boolean validPosition(int position);
 
-    boolean validInstruction(int instruction);
+    boolean validReplayChoice(int instruction);
+
+    boolean validateContinueChoice(int playOrQuit);
 
     void start();
 }

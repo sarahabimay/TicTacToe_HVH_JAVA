@@ -9,7 +9,7 @@ public enum Mark {
         return this == EMPTY;
     }
 
-    public String counterForDisplay(int index) {
+    public String markOrPositionForDisplay(int index) {
         return isEmpty() ? String.valueOf(index + 1) : name();
     }
 
