@@ -1,22 +1,88 @@
 .root {
-    -fx-background-color: #85adad;
+    -fx-background-image: url("triangulos7.jpg");
 }
-#gametitle {
-    -fx-font-size: 30;
-
-}
-#options {
-    -fx-font-size: 15;
+#titleBar {
+    -fx-alignment: center;
 }
 
-.button {
+#gameTitle{
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial Black";
+    -fx-font-color: white;
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+#gameBoard{
+    -fx-alignment: center;
+    -fx-hgap: 10px;
+    -fx-vgap: 10px;
+    -fx-background-size: 320, 400;
+}
+
+.button{
+    -fx-background-color: gainsboro;
+    -fx-opacity: 1.0;
+    -fx-text-fill: black;
+    -fx-font-size: 20px;
+    -fx-font-family: "Arial Black";
+    -fx-min-height: 100px;
+    -fx-min-width: 100px;
+}
+
+.button:hover {
+    -fx-background-color: silver;
+}
+.button:disabled {
+    -fx-text-fill: black;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-opacity: 1.0 ;
+    -fx-background-color: lightslategray
+}
+#gameOptions {
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+    -fx-background-color: gainsboro;
+    -fx-alignment: center-left;
+    -fx-font-family: "Arial Black";
+    -fx-background-radius: 10;
+}
+
+.radio-button{
+    -fx-font-family: "Arial Black";
+}
+
+#startButton{
+    -fx-spacing: 15px;
     -fx-background-color: #e0ebeb;
     -fx-background-insets: 0;
     -fx-background-radius: 3;
     -fx-text-fill: black;
-    -fx-font-size: 12px;
-    -fx-min-height: 50px;
-    -fx-min-width: 80px;
+    -fx-font-size: 15px;
+    -fx-font-family: "Arial Black";
+    -fx-min-height: 20px;
+    -fx-min-width: 25px;
+}
+
+#startButton:hover{
+    -fx-background-color: lightgray;
+}
+
+#footer{
+    -fx-alignment: center;
+}
+
+#resultTarget{
+    -fx-font-size: 32px;
+    -fx-font-family: "Arial Black";
+    -fx-font-color: white;
+    -fx-fill: #818181;
+    -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+#options {
+    -fx-font-size: 15;
 }
 .box {
     -fx-background-color: blue;

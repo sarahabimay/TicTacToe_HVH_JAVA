@@ -7,10 +7,6 @@ import jttt.Core.Players.PlayerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static java.util.stream.Collectors.toList;
 
 public class Game {
 
@@ -33,13 +29,6 @@ public class Game {
 
     public Player getPlayer(Mark mark) {
         return players.get(mark);
-    }
-
-    public List<Player> getPlayers() {
-        if (this.players.size() != 2) {
-            return new ArrayList<>();
-        }
-        return this.players.entrySet().stream().map(Map.Entry::getValue).collect(toList());
     }
 
     public void selectPlayers(int newGameType) {
