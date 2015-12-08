@@ -31,13 +31,6 @@ public class Game {
         return players.get(mark);
     }
 
-//    public List<Player> getPlayers() {
-//        if (this.players.size() != 2) {
-//            return new ArrayList<>();
-//        }
-//        return this.players.entrySet().stream().map(Map.Entry::getValue).collect(toList());
-//    }
-
     public void selectPlayers(int newGameType) {
         ArrayList<Player> bothPlayers = playerFactory.generatePlayersFor(newGameType);
         this.players.put(Mark.X, bothPlayers.get(0));
