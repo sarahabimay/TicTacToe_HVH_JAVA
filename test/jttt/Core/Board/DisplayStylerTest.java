@@ -10,7 +10,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-public class BoardStyleTest {
+public class DisplayStylerTest {
 
     private Mark X = Mark.X;
     private Mark O = Mark.O;

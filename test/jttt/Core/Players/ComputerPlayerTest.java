@@ -1,12 +1,12 @@
 package jttt.Core.Players;
 
 import jttt.Core.Board.Board;
-import jttt.Core.Fakes.FakeCommandLineUI;
 import jttt.Core.Board.Mark;
+import jttt.Core.Fakes.FakeCommandLineUI;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,9 +61,7 @@ public class ComputerPlayerTest {
                 X, O, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        currentBoard[2] = X;
-        List<Mark> expected = arrayToList(currentBoard);
-        assertEquals(expected, computerXPlayer.playTurn(board).getCells());
+        assertEquals(X, computerXPlayer.playTurn(board).findMarkAtIndex(2));
     }
 
     @Test
@@ -74,9 +72,7 @@ public class ComputerPlayerTest {
                 O, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        currentBoard[2] = X;
-        List<Mark> expected = arrayToList(currentBoard);
-        assertEquals(expected, computerXPlayer.playTurn(board).getCells());
+        assertEquals(X, computerXPlayer.playTurn(board).findMarkAtIndex(2));
     }
 
     @Test
@@ -87,9 +83,7 @@ public class ComputerPlayerTest {
                 O, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        currentBoard[2] = X;
-        List<Mark> expected = arrayToList(currentBoard);
-        assertEquals(expected, computerXPlayer.playTurn(board).getCells());
+        assertEquals(X, computerXPlayer.playTurn(board).findMarkAtIndex(2));
     }
 
     @Test
@@ -100,9 +94,7 @@ public class ComputerPlayerTest {
                 E, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        currentBoard[2] = O;
-        List<Mark> expected = arrayToList(currentBoard);
-        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
+        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(2));
     }
 
     @Test
@@ -114,9 +106,7 @@ public class ComputerPlayerTest {
                 E, O, O, X,
         };
         Board board = new Board(4, arrayToList(currentBoard));
-        currentBoard[0] = O;
-        List<Mark> expected = arrayToList(currentBoard);
-        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
+        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(0));
     }
 
     @Test
@@ -127,9 +117,7 @@ public class ComputerPlayerTest {
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        currentBoard[0] = O;
-        List<Mark> expected = arrayToList(currentBoard);
-        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
+        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(0));
     }
 
     @Test
@@ -166,9 +154,7 @@ public class ComputerPlayerTest {
                 O, X, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        currentBoard[2] = O;
-        List<Mark> expected = arrayToList(currentBoard);
-        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
+        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(2));
     }
 
     @Test
@@ -179,9 +165,7 @@ public class ComputerPlayerTest {
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        currentBoard[6] = O;
-        List<Mark> expected = arrayToList(currentBoard);
-        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
+        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(6));
     }
 
     @Test
@@ -192,25 +176,7 @@ public class ComputerPlayerTest {
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        currentBoard[4] = O;
-        List<Mark> expected = arrayToList(currentBoard);
-        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
-    }
-
-    // FAILS BECAUSE IT TAKES THE FIRST BESTSCORE and position 9 must be
-    // returning the same score as position 2
-    @Test
-    @Ignore
-    public void aiVsPerfectPlayerMustPick9() {
-        Mark currentBoard[] = {
-                X, E, E,
-                E, O, E,
-                E, E, E
-        };
-        Board board = new Board(3, arrayToList(currentBoard));
-        currentBoard[8] = X;
-        List<Mark> expected = arrayToList(currentBoard);
-        assertEquals(expected, computerXPlayer.playTurn(board).getCells());
+        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(4));
     }
 
     @Test
@@ -221,9 +187,7 @@ public class ComputerPlayerTest {
                 E, E, X
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        currentBoard[1] = O;
-        List<Mark> expected = arrayToList(currentBoard);
-        assertEquals(expected, computerOPlayer.playTurn(board).getCells());
+        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(1));
     }
 
     @Test
@@ -234,18 +198,7 @@ public class ComputerPlayerTest {
                 O, E, X
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        currentBoard[2] = X;
-        List<Mark> expected = arrayToList(currentBoard);
-        assertEquals(expected, computerXPlayer.playTurn(board).getCells());
-    }
-
-    @Test
-    @Ignore
-    public void computerHasGeneratedAMove() {
-        fakeUI.setGameType(2);
-        ComputerPlayer player1 = new ComputerPlayer(Mark.X, fakeUI);
-        Board board = new Board(3);
-        board = player1.playTurn(board, 1);
+        assertEquals(X, computerXPlayer.playTurn(board).findMarkAtIndex(2));
     }
 
     private List<Mark> arrayToList(Mark[] initialBoard) {
