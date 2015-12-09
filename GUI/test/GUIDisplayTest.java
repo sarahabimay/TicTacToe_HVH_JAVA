@@ -1,4 +1,6 @@
+import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,6 +10,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafxgui.ClickEventHandler;
+import javafxgui.ClickableElement;
 import javafxgui.GUIDisplay;
 import jttt.Core.Board.Board;
 import org.junit.Before;
@@ -19,11 +23,13 @@ public class GUIDisplayTest {
 
     private GUIDisplay guiDisplay;
     private Scene scene;
+    private ControllerSpy controllerSpy;
 
     @Before
     public void setUp() {
         new JFXPanel();
-        guiDisplay = new GUIDisplay();
+        controllerSpy = new ControllerSpy();
+        guiDisplay = new GUIDisplay(controllerSpy);
         scene = guiDisplay.generateLandingPageScene();
     }
 
@@ -60,7 +66,7 @@ public class GUIDisplayTest {
 
     @Test
     public void displayDisabledBoard() {
-        BorderPane layout = guiDisplay.generateBorderLayout(new Board(3), true );
+        BorderPane layout = guiDisplay.generateBorderLayout(new Board(3), true);
         GridPane gameBoard = (GridPane) layout.getCenter();
         assertEquals("gameBoard", gameBoard.getId());
         assertEquals(9, gameBoard.getChildren().size());
@@ -73,10 +79,39 @@ public class GUIDisplayTest {
         assertEquals("resultTarget", footer.getChildren().get(0).getId());
     }
 
-//    @Test
-//    public void registerStartButtonEventHandler() {
-//        JavaFXButton startButton = new JavaFXButton(new Button("Start Game"));
-//        guiDisplay.registerActionWithHandler(startButton, new startGameHandler());
-//
-//    }
+    @Test
+    public void displayBoardUsingOptions() {
+        GridPane gameBoard = guiDisplay.displayBoard();
+        assertEquals(16, gameBoard.getChildren().size());
+    }
+
+    @Test
+    public void registerStartButtonEventHandler() {
+        Button startButton = new Button("Start Game");
+        VBox gameOptions = guiDisplay.gameOptions();
+//        GameOptionsButtonSpy gameOptionsButton = new GameOptionsButtonSpy(startButton, gameOptions);
+        guiDisplay.registerStartButtonWithHandler(startButton, gameOptions);
+        startButton.fire();
+        assertEquals(true, controllerSpy.hasCreateAndEnableBoardBeenCalled());
+    }
+
+    private class GameOptionsButtonSpy implements ClickableElement {
+        private VBox gameOptions;
+        private Button button;
+
+        public GameOptionsButtonSpy(Button button, VBox gameOptions) {
+            this.gameOptions = gameOptions;
+            this.button = button;
+        }
+
+        @Override
+        public void setOnAction(ClickEventHandler clickEventHandler) {
+            System.out.println("Event handler was registered");
+            ObservableList<Node> children = gameOptions.getChildren();
+            for (int i = 0; i < children.size(); i++) {
+                System.out.println(children.get(i).toString());
+            }
+            button.setOnAction(event -> clickEventHandler.action());
+        }
+    }
 }

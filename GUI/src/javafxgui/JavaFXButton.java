@@ -2,7 +2,7 @@ package javafxgui;
 
 import javafx.scene.control.Button;
 
-public class JavaFXButton {
+public class JavaFXButton implements ClickableElement {
     private final Button javafxElement;
 
     public JavaFXButton(Button button) {

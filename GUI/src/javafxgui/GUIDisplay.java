@@ -11,19 +11,43 @@ import jttt.Core.Board.Board;
 
 public class GUIDisplay {
 
+    private Controller controller;
+    private BorderPane border;
     private int DISPLAY_OFFSET = 1;
     public final String GAME_HEADER = "TIC TAC TOE GAME!";
+    private Scene scene;
+    private StackPane root;
+
+    public GUIDisplay(Controller controller) {
+        this.controller = controller;
+        this.root = new StackPane();
+        this.scene = new Scene(root, 700, 675);
+        scene.getStylesheets().add(Main.class.getResource("javafxgui.css").toExternalForm());
+        this.border = new BorderPane();
+    }
+
+    public GUIDisplay() {
+        this.controller = null;
+        this.root = new StackPane();
+        this.scene = new Scene(root, 700, 675);
+        scene.getStylesheets().add(Main.class.getResource("javafxgui.css").toExternalForm());
+        this.border = new BorderPane();
+    }
 
     public Scene generateLandingPageScene() {
-        StackPane root = new StackPane();
-        Scene scene = new Scene(root, 700, 675);
-        scene.getStylesheets().add(Main.class.getResource("javafxgui.css").toExternalForm());
-        root.getChildren().add(generateBorderLayout(new Board(3), true));
+        scene.setRoot(generateBorderLayout(new Board(3), true));
         return scene;
     }
 
+    public GridPane displayBoard() {
+        VBox gameOptions = (VBox)scene.lookup("#gameOptions");
+        GridPane board = createGameBoard(new Board(4), false);
+        border.setCenter(board);
+        scene.setRoot(border);
+        return board;
+    }
+
     public BorderPane generateBorderLayout(Board board, boolean setDisabled) {
-        BorderPane border = new BorderPane();
         border.setTop(titleHeader());
         border.setLeft(gameOptions());
         border.setCenter(createGameBoard(board, setDisabled));
@@ -48,7 +72,7 @@ public class GUIDisplay {
     private GridPane createGameBoard(Board board, boolean setDisabled) {
         GridPane boardGrid = new GridPane();
         boardGrid.setId("gameBoard");
-        boardGrid = generateBoardCells(board, boardGrid, setDisabled );
+        boardGrid = generateBoardCells(board, boardGrid, setDisabled);
         return boardGrid;
     }
 
@@ -61,7 +85,7 @@ public class GUIDisplay {
         return boardGrid;
     }
 
-    private Button boardCell(String position, boolean setDisabled){
+    private Button boardCell(String position, boolean setDisabled) {
         Button cell = new Button(position);
         cell.setId(position);
         cell.setDisable(setDisabled);
@@ -88,6 +112,7 @@ public class GUIDisplay {
         vbox = createGameType(vbox);
         vbox = createBoardDimension(vbox);
         vbox = createStartButton(vbox);
+
         return vbox;
     }
 
@@ -95,10 +120,18 @@ public class GUIDisplay {
         Button button = new Button("Start Game");
         button.setId("startButton");
         vbox.getChildren().add(button);
-        JavaFXButton javafxButton = new JavaFXButton(button);
-//        Text actiontarget = new Text();
-//        vbox.getChildren().add(actiontarget);
+        registerStartButtonWithHandler(button, vbox);
         return vbox;
+    }
+
+    public void registerStartButtonWithHandler(Button button, VBox vbox) {
+        GameOptionsButton gameOptionsButton = new GameOptionsButton(button, vbox);
+//        JavaFXButton javafxButton = new JavaFXButton(button);
+        registerElementWithEventHandler(gameOptionsButton, new StartGameEventHandler(controller));
+    }
+
+    private void registerElementWithEventHandler(ClickableElement element, ClickEventHandler eventHandler) {
+        element.setOnAction(eventHandler);
     }
 
     private VBox createBoardDimension(VBox vbox) {
@@ -155,4 +188,5 @@ public class GUIDisplay {
         vbox.setId("rightBorder");
         return vbox;
     }
+
 }

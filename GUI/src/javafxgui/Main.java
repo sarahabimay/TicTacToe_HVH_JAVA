@@ -10,7 +10,8 @@ public class Main extends Application {
 //        Parent root = FXMLLoader.load(getClass().getResource("javafxgui.fxml"));
         primaryStage.setTitle("TicTacToe");
         GUIDisplay guiDisplay = new GUIDisplay();
-        primaryStage.setScene(guiDisplay.generateLandingPageScene());
+        Controller controller = new TTTController(guiDisplay);
+        primaryStage.setScene(controller.generateLandingPageScene());
         primaryStage.show();
     }
 

@@ -9,6 +9,6 @@ public class StartGameEventHandlerTest {
         ControllerSpy controllerSpy = new ControllerSpy();
         StartGameEventHandler startHandler = new StartGameEventHandler(controllerSpy);
         startHandler.action();
-        assertEquals(true, controllerSpy.hasBoardBeenCreated());
+        assertEquals(true, controllerSpy.hasCreateAndEnableBoardBeenCalled());
     }
 }

@@ -20,9 +20,6 @@ public class ClickableElementTest {
         javaFXButton.setOnAction(controller.getStartEventHandler());
         startButton.fire();
         assertEquals(true, controller.hasStartEventHandlerBeenCalled());
-        assertEquals(true, controller.hasBoardBeenCreated());
+        assertEquals(true, controller.hasCreateAndEnableBoardBeenCalled());
     }
-
-
-
 }

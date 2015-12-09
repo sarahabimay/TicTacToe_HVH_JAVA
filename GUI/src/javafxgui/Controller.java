@@ -1,4 +1,9 @@
 package javafxgui;
 
-public class Controller {
+import javafx.scene.Scene;
+
+public interface Controller {
+    void createAndEnableBoard();
+
+    Scene generateLandingPageScene();
 }
