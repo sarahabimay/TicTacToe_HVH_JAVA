@@ -12,13 +12,13 @@ import java.util.function.IntPredicate;
 
 public class CommandLineUI implements UserInterface {
     private String ANSI_CLEAR = "\033[H\033[2J";
-    public String GREETING = "Do you want to play a game of TIC TAC TOE? Yes(1) or No(2) : \n";
-    public String GAME_TYPE_REQUEST = "Human vs Human(1) or Human vs Computer(2) or Computer vs Human(3)?:\n";
-    public String DIMENSION_REQUEST = "Please provide the dimensions of the board:\n";
-    public String POSITION_REQUEST = "Please enter the position number for your next move:\n";
-    public String DRAW_ANNOUNCE = "The game is a draw!\n";
-    public String WINNER_ANNOUNCE = "We have a Winner! Player: %s\n";
-    public String REPLAY_REQUEST = "Do you want to play again? Yes(1) or No(2) :\n";
+    public static final String GREETING = "Do you want to play a game of TIC TAC TOE? Yes(1) or No(2) : \n";
+    public static final String GAME_TYPE_REQUEST = "Human vs Human(1) or Human vs Computer(2) or Computer vs Human(3)?:\n";
+    public static final String DIMENSION_REQUEST = "Please provide the dimensions of the board:\n";
+    public static final String POSITION_REQUEST = "Please enter the position number for your next move:\n";
+    public static final String DRAW_ANNOUNCE = "The game is a draw!\n";
+    public static final String WINNER_ANNOUNCE = "We have a Winner! Player: %s\n";
+    public static final String REPLAY_REQUEST = "Do you want to play again? Yes(1) or No(2) :\n";
     private Game game;
     private DisplayStyler styler;
     private BufferedReader readStream;
