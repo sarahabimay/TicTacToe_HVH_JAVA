@@ -1,9 +1,16 @@
 package javafxgui;
 
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 
 public interface Controller {
-    void createAndEnableBoard();
+    void playMoveAtPosition(String id);
 
-    Scene generateLandingPageScene();
+    Scene displayGUI();
+
+    GridPane displayBoard();
+
+    void displayResult();
+
+    boolean foundWinOrDraw();
 }

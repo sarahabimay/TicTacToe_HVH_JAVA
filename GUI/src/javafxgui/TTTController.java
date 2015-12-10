@@ -1,25 +1,41 @@
 package javafxgui;
 
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
+import jttt.Core.Game;
 
-public class TTTController implements Controller{
-    private  GUIDisplay gameView;
+public class TTTController implements Controller {
+    private GUIDisplay gameView;
+    private Game game;
 
-    public TTTController(GUIDisplay gameView, Scene scene) {
-        this.gameView = gameView;
-    }
-
-    public TTTController(GUIDisplay guiDisplay) {
+    public TTTController(GUIDisplay guiDisplay, Game game) {
         this.gameView = guiDisplay;
+        gameView.setController(this);
+        this.game = game;
     }
 
-    @Override
-    public Scene generateLandingPageScene() {
-        return gameView.generateLandingPageScene();
+    public Scene displayGUI() {
+        return gameView.displayGUI();
     }
 
-    public void createAndEnableBoard() {
-//        gameView.generateLandingPageScene();
-        gameView.displayBoard();
+    public void playMoveAtPosition(String id) {
+        game.playMove(Integer.parseInt(id));
+        displayBoard();
+        displayResult();
+    }
+
+    public void displayResult() {
+        if (foundWinOrDraw()){
+            gameView.disableBoard();
+            gameView.displayResult(game.findWinner());
+        }
+    }
+
+    public GridPane displayBoard() {
+        return gameView.displayBoard(game.getBoard());
+    }
+
+    public boolean foundWinOrDraw() {
+        return game.isGameOver();
     }
 }

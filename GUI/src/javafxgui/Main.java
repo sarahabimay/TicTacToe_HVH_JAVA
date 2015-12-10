@@ -2,6 +2,9 @@ package javafxgui;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import jttt.Core.Board.Board;
+import jttt.Core.Game;
+import jttt.Core.Players.PlayerFactory;
 
 public class Main extends Application {
 
@@ -9,23 +12,12 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 //        Parent root = FXMLLoader.load(getClass().getResource("javafxgui.fxml"));
         primaryStage.setTitle("TicTacToe");
-        GUIDisplay guiDisplay = new GUIDisplay();
-        Controller controller = new TTTController(guiDisplay);
-        primaryStage.setScene(controller.generateLandingPageScene());
+        Controller controller = new TTTController(new GUIDisplay(), new Game(new Board(3), 1, new PlayerFactory()));
+        primaryStage.setScene(controller.displayGUI());
         primaryStage.show();
     }
 
 
-//        controller.setGameOptions(vbox);
-//        button.setOnAction(event -> controller.start(event));
-//        button.setOnAction(new EventHandler<ActionEvent>() {
-//
-//            @Override
-//            public void handle(ActionEvent e) {
-//                actiontarget.setFill(Color.FIREBRICK);
-//                actiontarget.setText("Sign in button pressed");
-//            }
-//        });
     public static void main(String[] args) {
         launch(args);
     }

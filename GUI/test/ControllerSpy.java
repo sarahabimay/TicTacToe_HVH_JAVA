@@ -1,29 +1,36 @@
 import javafx.scene.Scene;
-import javafxgui.ClickEventHandler;
+import javafx.scene.layout.GridPane;
 import javafxgui.Controller;
 
 public class ControllerSpy implements Controller {
-    private StartGameEventHandlerSpy startGameEventSpy;
-    private boolean hasCreateAndEnableBeenCalled;
+    private boolean hasReDisplayBoardBeenCalled;
+    private boolean hasSearchedForWinOrDraw;
 
-    public ClickEventHandler getStartEventHandler() {
-        startGameEventSpy = new StartGameEventHandlerSpy(this);
-        return startGameEventSpy;
-    }
-
-    public Scene generateLandingPageScene() {
+    public Scene displayGUI() {
         return null;
     }
 
-    public void createAndEnableBoard() {
-        hasCreateAndEnableBeenCalled = true;
+    public GridPane displayBoard() {
+        return null;
     }
 
-    public boolean hasStartEventHandlerBeenCalled() {
-        return startGameEventSpy.hasBeenClicked();
+    public void displayResult() {
+
     }
 
-    public boolean hasCreateAndEnableBoardBeenCalled() {
-        return hasCreateAndEnableBeenCalled;
+    public void playMoveAtPosition(String id) {
+        hasReDisplayBoardBeenCalled = true;
+    }
+
+    public boolean foundWinOrDraw() {
+        return hasSearchedForWinOrDraw = true;
+    }
+
+    public boolean hasReDisplayBoardBeenCalled() {
+        return hasReDisplayBoardBeenCalled;
+    }
+
+    public boolean hasSearchedForWinOrDraw() {
+        return hasSearchedForWinOrDraw;
     }
 }
