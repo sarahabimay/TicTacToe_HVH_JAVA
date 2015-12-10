@@ -1,19 +1,14 @@
-import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafxgui.ClickEventHandler;
-import javafxgui.ClickableElement;
 import javafxgui.GUIDisplay;
+import javafxgui.JavaFxButtonSpy;
 import jttt.Core.Board.Board;
+import jttt.Core.Board.Mark;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,8 +24,9 @@ public class GUIDisplayTest {
     public void setUp() {
         new JFXPanel();
         controllerSpy = new ControllerSpy();
-        guiDisplay = new GUIDisplay(controllerSpy);
-        scene = guiDisplay.generateLandingPageScene();
+        guiDisplay = new GUIDisplay();
+        guiDisplay.setController(controllerSpy);
+        scene = guiDisplay.displayGUI();
     }
 
     @Test
@@ -49,24 +45,8 @@ public class GUIDisplayTest {
     }
 
     @Test
-    public void displayGameMenuOptions() {
-        VBox gameOptionPanel = guiDisplay.gameOptions();
-        assertEquals("gameOptions", gameOptionPanel.getId());
-        Label gameTypeLabel = (Label) gameOptionPanel.getChildren().get(0);
-        assertEquals("gameType", gameTypeLabel.getId());
-        RadioButton gameTypeRB = (RadioButton) gameOptionPanel.getChildren().get(1);
-        assertEquals("HVH", gameTypeRB.getText());
-        Label boardDimensionLabel = (Label) gameOptionPanel.getChildren().get(4);
-        assertEquals("boardDimension", boardDimensionLabel.getId());
-        RadioButton dimensionRB = (RadioButton) gameOptionPanel.getChildren().get(5);
-        assertEquals("3x3", dimensionRB.getText());
-        Button startButton = (Button) gameOptionPanel.getChildren().get(7);
-        assertEquals("startButton", startButton.getId());
-    }
-
-    @Test
     public void displayDisabledBoard() {
-        BorderPane layout = guiDisplay.generateBorderLayout(new Board(3), true);
+        BorderPane layout = guiDisplay.generateBorderLayout(new Board(3));
         GridPane gameBoard = (GridPane) layout.getCenter();
         assertEquals("gameBoard", gameBoard.getId());
         assertEquals(9, gameBoard.getChildren().size());
@@ -81,37 +61,41 @@ public class GUIDisplayTest {
 
     @Test
     public void displayBoardUsingOptions() {
-        GridPane gameBoard = guiDisplay.displayBoard();
-        assertEquals(16, gameBoard.getChildren().size());
+        Board board = new Board(3);
+        GridPane gameBoard = guiDisplay.displayBoard(board);
+        assertEquals(9, gameBoard.getChildren().size());
     }
 
     @Test
-    public void registerStartButtonEventHandler() {
-        Button startButton = new Button("Start Game");
-        VBox gameOptions = guiDisplay.gameOptions();
-//        GameOptionsButtonSpy gameOptionsButton = new GameOptionsButtonSpy(startButton, gameOptions);
-        guiDisplay.registerStartButtonWithHandler(startButton, gameOptions);
-        startButton.fire();
-        assertEquals(true, controllerSpy.hasCreateAndEnableBoardBeenCalled());
+    public void buttonRegisteredWithHandler() {
+        Button button = new Button();
+        JavaFxButtonSpy buttonTest = new JavaFxButtonSpy(button);
+        NewPlayerMoveEventHandlerSpy handlerSpy = new NewPlayerMoveEventHandlerSpy(controllerSpy);
+        guiDisplay.registerElementWithHandler(buttonTest, handlerSpy);
+        assertEquals(true, buttonTest.hasButtonBeenAssociatedWithHandler());
+        assertEquals(false, handlerSpy.hasBeenClicked());
+        button.fire();
+        assertEquals(true, handlerSpy.hasBeenClicked());
     }
 
-    private class GameOptionsButtonSpy implements ClickableElement {
-        private VBox gameOptions;
-        private Button button;
+    @Test
+    public void displayWinningResult() {
+        guiDisplay.displayResult(Mark.X);
+        assertEquals(String.format(guiDisplay.WINNER_ANNOUNCEMENT, "X"), guiDisplay.announceWinner(Mark.X));
+        assertEquals(String.format(guiDisplay.WINNER_ANNOUNCEMENT, "X"), guiDisplay.createResultAnnouncement(Mark.X));
+    }
 
-        public GameOptionsButtonSpy(Button button, VBox gameOptions) {
-            this.gameOptions = gameOptions;
-            this.button = button;
-        }
+    @Test
+    public void displayResult() {
+        guiDisplay.displayResult(Mark.EMPTY);
+        assertEquals(guiDisplay.DRAW_ANNOUNCEMENT, guiDisplay.announceDraw());
+        assertEquals(guiDisplay.DRAW_ANNOUNCEMENT, guiDisplay.createResultAnnouncement(Mark.EMPTY));
+    }
 
-        @Override
-        public void setOnAction(ClickEventHandler clickEventHandler) {
-            System.out.println("Event handler was registered");
-            ObservableList<Node> children = gameOptions.getChildren();
-            for (int i = 0; i < children.size(); i++) {
-                System.out.println(children.get(i).toString());
-            }
-            button.setOnAction(event -> clickEventHandler.action());
-        }
+    @Test
+    public void disableBoard() {
+        guiDisplay.disableBoard();
+        Button button = (Button)guiDisplay.lookup("#1");
+        assertEquals(true, button.isDisabled());
     }
 }

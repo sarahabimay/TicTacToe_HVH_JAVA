@@ -1,30 +1,26 @@
 package javafxgui;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import jttt.Core.Board.Board;
+import jttt.Core.Board.Mark;
 
 public class GUIDisplay {
 
+    public static final String GAME_HEADER = "TIC TAC TOE GAME!";
+    public static final String WINNER_ANNOUNCEMENT = "PLAYER %s HAS WON!";
+    public static final String DRAW_ANNOUNCEMENT = "THE GAME IS A DRAW!";
+    private final int POSITION_OFFSET = 1;
     private Controller controller;
     private BorderPane border;
-    private int DISPLAY_OFFSET = 1;
-    public final String GAME_HEADER = "TIC TAC TOE GAME!";
     private Scene scene;
     private StackPane root;
-
-    public GUIDisplay(Controller controller) {
-        this.controller = controller;
-        this.root = new StackPane();
-        this.scene = new Scene(root, 700, 675);
-        scene.getStylesheets().add(Main.class.getResource("javafxgui.css").toExternalForm());
-        this.border = new BorderPane();
-    }
 
     public GUIDisplay() {
         this.controller = null;
@@ -34,23 +30,52 @@ public class GUIDisplay {
         this.border = new BorderPane();
     }
 
-    public Scene generateLandingPageScene() {
-        scene.setRoot(generateBorderLayout(new Board(3), true));
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
+    public Node lookup(String id) {
+        return scene.lookup(id);
+    }
+
+    public Scene displayGUI() {
+        root.getChildren().add(generateBorderLayout(new Board(3)));
         return scene;
     }
 
-    public GridPane displayBoard() {
-        VBox gameOptions = (VBox)scene.lookup("#gameOptions");
-        GridPane board = createGameBoard(new Board(4), false);
-        border.setCenter(board);
-        scene.setRoot(border);
-        return board;
+    public GridPane displayBoard(Board board) {
+        GridPane boardPane = createGameBoard(board);
+        border.setCenter(boardPane);
+        return boardPane;
     }
 
-    public BorderPane generateBorderLayout(Board board, boolean setDisabled) {
+    public void disableBoard() {
+        
+    }
+
+    public void displayResult(Mark winner) {
+        Text resultTarget = (Text)lookup("#resultTarget");
+        resultTarget.setText(createResultAnnouncement(winner));
+    }
+
+    public String createResultAnnouncement(Mark winner) {
+        if (winner.isEmpty()){
+            return announceDraw();
+        }
+        return announceWinner(winner);
+    }
+
+    public String announceDraw() {
+        return DRAW_ANNOUNCEMENT;
+    }
+
+    public String announceWinner(Mark winner) {
+        return String.format(WINNER_ANNOUNCEMENT, winner.toString());
+    }
+
+    public BorderPane generateBorderLayout(Board board) {
         border.setTop(titleHeader());
-        border.setLeft(gameOptions());
-        border.setCenter(createGameBoard(board, setDisabled));
+        border.setCenter(createGameBoard(board));
         border.setBottom(resultFooter());
         border.setId("borderPane");
         return border;
@@ -63,37 +88,67 @@ public class GUIDisplay {
         return resultFooter;
     }
 
+    public void registerBoardButtonWithHandler(ClickableElement clickableElement) {
+        registerElementWithHandler(clickableElement, new NewPlayerMoveEventHandler(controller));
+    }
+
+    public void registerElementWithHandler(ClickableElement clickableElement, ClickEventHandler eventHandler) {
+        clickableElement.setOnAction(eventHandler);
+    }
+
     private Text createGameResultsTarget() {
         Text resultTarget = new Text("RESULTS HERE");
         resultTarget.setId("resultTarget");
         return resultTarget;
     }
 
-    private GridPane createGameBoard(Board board, boolean setDisabled) {
+    private GridPane createGameBoard(Board board) {
         GridPane boardGrid = new GridPane();
         boardGrid.setId("gameBoard");
-        boardGrid = generateBoardCells(board, boardGrid, setDisabled);
+        boardGrid = generateBoardCells(board, boardGrid);
         return boardGrid;
     }
 
-    private GridPane generateBoardCells(Board board, GridPane boardGrid, boolean setDisabled) {
-        for (int i = 0; i < board.getDimension(); i++) {
-            for (int j = 0; j < board.getDimension(); j++) {
-                boardGrid.add(boardCell(displayPosition(i), setDisabled), j, i);
+    private GridPane generateBoardCells(Board board, GridPane boardGrid) {
+        int position = 0;
+        for (int row = 0; row < board.getDimension(); row++) {
+            for (int col = 0; col < board.getDimension(); col++) {
+                Button cell = createButtonForBoard(board, position);
+                boardGrid.add(cell, col, row);
+                registerBoardButtonWithHandler(new JavaFXButton(cell));
+                position++;
             }
         }
         return boardGrid;
     }
 
-    private Button boardCell(String position, boolean setDisabled) {
-        Button cell = new Button(position);
-        cell.setId(position);
+    private Button createButtonForBoard(Board board, int position) {
+        return boardCell(position,
+                cellForDisplay(board, position),
+                shouldBeDisabled(board, position));
+    }
+
+    private boolean shouldBeDisabled(Board board, int position) {
+        return board.findMarkAtIndex(position).isEmpty() ? false : true;
+    }
+
+    private String cellForDisplay(Board board, int position) {
+        return cellContents(position, board.findMarkAtIndex(position));
+    }
+
+    private String cellContents(int position, Mark markAtIndex) {
+        return markAtIndex.markOrPositionForDisplay(position);
+    }
+
+    private Button boardCell(int position, String text, boolean setDisabled) {
+        Button cell = new Button(text);
+        cell.setId(buttonID(position));
         cell.setDisable(setDisabled);
         return cell;
     }
 
-    private String displayPosition(int i) {
-        return String.valueOf(i + DISPLAY_OFFSET);
+    private String buttonID(int position) {
+        return String.valueOf(position + POSITION_OFFSET);
     }
 
     public HBox titleHeader() {
@@ -104,89 +159,4 @@ public class GUIDisplay {
         titleBar.getChildren().add(title);
         return titleBar;
     }
-
-    public VBox gameOptions() {
-        VBox vbox = new VBox();
-        vbox.setId("gameOptions");
-
-        vbox = createGameType(vbox);
-        vbox = createBoardDimension(vbox);
-        vbox = createStartButton(vbox);
-
-        return vbox;
-    }
-
-    private VBox createStartButton(VBox vbox) {
-        Button button = new Button("Start Game");
-        button.setId("startButton");
-        vbox.getChildren().add(button);
-        registerStartButtonWithHandler(button, vbox);
-        return vbox;
-    }
-
-    public void registerStartButtonWithHandler(Button button, VBox vbox) {
-        GameOptionsButton gameOptionsButton = new GameOptionsButton(button, vbox);
-//        JavaFXButton javafxButton = new JavaFXButton(button);
-        registerElementWithEventHandler(gameOptionsButton, new StartGameEventHandler(controller));
-    }
-
-    private void registerElementWithEventHandler(ClickableElement element, ClickEventHandler eventHandler) {
-        element.setOnAction(eventHandler);
-    }
-
-    private VBox createBoardDimension(VBox vbox) {
-        Label boardDimension = new Label("Board:");
-        boardDimension.setId("boardDimension");
-        vbox.getChildren().add(boardDimension);
-        vbox = addBoardDimensionRB(vbox);
-        return vbox;
-    }
-
-    private VBox addBoardDimensionRB(VBox vbox) {
-        ToggleGroup group = new ToggleGroup();
-
-        RadioButton rb1 = new RadioButton("3x3");
-        rb1.setToggleGroup(group);
-        rb1.setSelected(true);
-
-        RadioButton rb2 = new RadioButton("4x4");
-        rb2.setToggleGroup(group);
-
-        vbox.getChildren().add(rb1);
-        vbox.getChildren().add(rb2);
-        return vbox;
-    }
-
-    private VBox createGameType(VBox vbox) {
-        Label gameTypelabel = new Label("Game Type:");
-        gameTypelabel.setId("gameType");
-        vbox.getChildren().add(gameTypelabel);
-        vbox = addGameTypeGroup(vbox);
-        return vbox;
-    }
-
-    private VBox addGameTypeGroup(VBox vbox) {
-        ToggleGroup group = new ToggleGroup();
-        RadioButton rb1 = new RadioButton("HVH");
-        rb1.setToggleGroup(group);
-        rb1.setSelected(true);
-
-        RadioButton rb2 = new RadioButton("HVC");
-        rb2.setToggleGroup(group);
-
-        RadioButton rb3 = new RadioButton("CVH");
-        rb3.setToggleGroup(group);
-
-        vbox.getChildren().add(rb1);
-        vbox.getChildren().add(rb2);
-        vbox.getChildren().add(rb3);
-        return vbox;
-    }
-
-    private VBox rightBorder() {
-        VBox vbox = new VBox();
-        vbox.setId("rightBorder");
-        return vbox;
-    }
-
 }
