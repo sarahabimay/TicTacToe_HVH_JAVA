@@ -3,13 +3,13 @@ package javafxgui;
 import javafx.scene.control.Button;
 
 public class JavaFXButton implements ClickableElement {
-    private final Button javafxElement;
+    private final Button realJavaFXButton;
 
     public JavaFXButton(Button button) {
-        this.javafxElement = button;
+        this.realJavaFXButton = button;
     }
 
     public void setOnAction(ClickEventHandler eventHandler) {
-        javafxElement.setOnAction(event -> eventHandler.action());
+        realJavaFXButton.setOnAction(event -> eventHandler.action(realJavaFXButton.getId()));
     }
 }

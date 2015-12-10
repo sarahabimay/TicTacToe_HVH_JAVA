@@ -1,28 +1,21 @@
-import javafxgui.ClickEventHandler;
+import javafxgui.Controller;
+import javafxgui.NewPlayerMoveEventHandler;
 
-public class NewPlayerMoveEventHandlerSpy implements ClickEventHandler {
-    private ControllerSpy controller;
+public class NewPlayerMoveEventHandlerSpy extends NewPlayerMoveEventHandler {
+    private Controller controller;
     private boolean hasBeenClicked = false;
 
-    public NewPlayerMoveEventHandlerSpy() {
-        this.controller = null;
-    }
-
-    public NewPlayerMoveEventHandlerSpy(ControllerSpy controller) {
+    public NewPlayerMoveEventHandlerSpy(Controller controller) {
+        super(controller);
         this.controller = controller;
     }
 
     public void action(String id) {
         hasBeenClicked = true;
-        System.out.println("Start button pressed");
-        controller.reDisplayBoard(id);
+        this.controller.playMoveAtPosition(id);
     }
 
     public boolean hasBeenClicked() {
         return hasBeenClicked;
-    }
-
-    public void addController(ControllerSpy controller) {
-        this.controller = controller;
     }
 }

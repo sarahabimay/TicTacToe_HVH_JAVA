@@ -1,5 +1,5 @@
 package javafxgui;
 
 public interface ClickEventHandler {
-    void action();
+    void action(String id);
 }
