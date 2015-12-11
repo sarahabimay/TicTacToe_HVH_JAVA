@@ -10,7 +10,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("javafxgui.fxml"));
         primaryStage.setTitle("TicTacToe");
         Controller controller = new TTTController(new GUIDisplay(), new Game(new Board(3), 1, new PlayerFactory()));
         primaryStage.setScene(controller.displayGUI());

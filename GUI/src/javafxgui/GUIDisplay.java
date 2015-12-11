@@ -14,6 +14,9 @@ public class GUIDisplay {
     public static final String WINNER_ANNOUNCEMENT = "PLAYER %s HAS WON!";
     public static final String DRAW_ANNOUNCEMENT = "THE GAME IS A DRAW!";
     private final int POSITION_OFFSET = 1;
+    private final int DEFAULT_DIMENSION = 3;
+    private final String RESULTS_LABEL = "RESULTS HERE";
+    private final String RESULTS_TARGET_ID = "resultTarget";
     private Controller controller;
     private BorderPane border;
     private Scene scene;
@@ -36,7 +39,7 @@ public class GUIDisplay {
     }
 
     public Scene displayGUI() {
-        root.getChildren().add(generateBorderLayout(new Board(3)));
+        root.getChildren().add(generateBorderLayout(new Board(DEFAULT_DIMENSION)));
         return scene;
     }
 
@@ -68,17 +71,13 @@ public class GUIDisplay {
     }
 
     public HBox titleHeader() {
-        HBox titleBar = new HBox();
-        titleBar.setId("titleBar");
-        Text title = new Text(GAME_HEADER);
-        title.setId("gameTitle");
-        titleBar.getChildren().add(title);
+        HBox titleBar = createHBox("titleBar");
+        titleBar.getChildren().add(createTextElement(GAME_HEADER, "gameTitle"));
         return titleBar;
     }
 
     public VBox resultFooter() {
-        VBox resultFooter = new VBox();
-        resultFooter.setId("footer");
+        VBox resultFooter = createVBox("footer");
         resultFooter.getChildren().add(createGameResultsTarget());
         resultFooter.getChildren().add(createPlayAgainButtonTarget());
         return resultFooter;
@@ -104,13 +103,8 @@ public class GUIDisplay {
         switchElementVisibility(playAgain, true);
     }
 
-    public void switchElementVisibility(Node element, boolean isVisible) {
-        element.setVisible(isVisible);
-    }
-
     public Button createPlayAgainButtonTarget() {
-        Button playAgain = new Button("Play Again?");
-        playAgain.setId("playAgain");
+        Button playAgain = createButton("Play Again?", "playAgain");
         playAgain.setVisible(false);
         registerPlayAgainButtonWithHandler(new JavaFXButton(playAgain));
         return playAgain;
@@ -129,8 +123,7 @@ public class GUIDisplay {
     }
 
     private GridPane createGameBoard(Board board) {
-        GridPane boardGrid = new GridPane();
-        boardGrid.setId("gameBoard");
+        GridPane boardGrid = createGridPane("gameBoard");
         boardGrid = generateBoardCells(board, boardGrid);
         return boardGrid;
     }
@@ -167,8 +160,7 @@ public class GUIDisplay {
     }
 
     private Button boardCell(int position, String text, boolean setDisabled) {
-        Button cell = new Button(text);
-        cell.setId(buttonID(position));
+        Button cell = createButton(text, buttonID(position));
         cell.setDisable(setDisabled);
         return cell;
     }
@@ -177,9 +169,41 @@ public class GUIDisplay {
         return String.valueOf(position + POSITION_OFFSET);
     }
 
+    private void switchElementVisibility(Node element, boolean isVisible) {
+        element.setVisible(isVisible);
+    }
+
+    private GridPane createGridPane(String id) {
+        GridPane boardGrid = new GridPane();
+        boardGrid.setId(id);
+        return boardGrid;
+    }
+
+    private Button createButton(String label, String id) {
+        Button playAgain = new Button(label);
+        playAgain.setId(id);
+        return playAgain;
+    }
+
     private Text createGameResultsTarget() {
-        Text resultTarget = new Text("RESULTS HERE");
-        resultTarget.setId("resultTarget");
-        return resultTarget;
+        return createTextElement(RESULTS_LABEL, RESULTS_TARGET_ID);
+    }
+
+    private HBox createHBox(String id) {
+        HBox titleBar = new HBox();
+        titleBar.setId(id);
+        return titleBar;
+    }
+
+    private VBox createVBox(String id) {
+        VBox resultFooter = new VBox();
+        resultFooter.setId(id);
+        return resultFooter;
+    }
+
+    private Text createTextElement(String label, String id) {
+        Text title = new Text(label);
+        title.setId(id);
+        return title;
     }
 }
