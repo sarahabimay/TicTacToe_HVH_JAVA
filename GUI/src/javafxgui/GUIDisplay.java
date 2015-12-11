@@ -58,6 +58,7 @@ public class GUIDisplay {
     }
 
     public void displayResult(Mark winner) {
+        disableBoard();
         Text resultTarget = (Text) lookup("#resultTarget");
         resultTarget.setText(createResultAnnouncement(winner));
     }
