@@ -4,15 +4,19 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafxgui.GUIDisplay;
 import javafxgui.JavaFxButtonSpy;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class GUIDisplayTest {
 
@@ -54,7 +58,7 @@ public class GUIDisplayTest {
 
     @Test
     public void displayFooterBar() {
-        HBox footer = guiDisplay.resultFooter();
+        VBox footer = guiDisplay.resultFooter();
         assertEquals("footer", footer.getId());
         assertEquals("resultTarget", footer.getChildren().get(0).getId());
     }
@@ -93,9 +97,38 @@ public class GUIDisplayTest {
     }
 
     @Test
+    @Ignore
     public void disableBoard() {
         guiDisplay.disableBoard();
-        Button button = (Button)guiDisplay.lookup("#1");
+        Button button = (Button) guiDisplay.lookup("#1");
         assertEquals(true, button.isDisabled());
+    }
+
+    @Test
+    public void createPlayAgainButtonTarget() {
+        Button playAgain = guiDisplay.createPlayAgainButtonTarget();
+        assertEquals("playAgain", playAgain.getId());
+        assertEquals(false, playAgain.isVisible());
+    }
+
+    @Test
+    public void displayPlayAgainButton() {
+        Button replayButton = (Button) guiDisplay.lookup("#playAgain");
+        assertEquals(false, replayButton.isVisible());
+        guiDisplay.makePlayAgainVisible();
+        assertThat(replayButton, notNullValue());
+        assertEquals(true, replayButton.isVisible());
+    }
+
+    @Test
+    public void registerPlayAgainEventHandler() {
+        Button button = new Button();
+        JavaFxButtonSpy buttonTest = new JavaFxButtonSpy(button);
+        NewGameEventHandlerSpy handlerSpy = new NewGameEventHandlerSpy(controllerSpy);
+        guiDisplay.registerElementWithHandler(buttonTest, handlerSpy);
+        assertEquals(true, buttonTest.hasButtonBeenAssociatedWithHandler());
+        assertEquals(false, handlerSpy.hasBeenClicked());
+        button.fire();
+        assertEquals(true, handlerSpy.hasBeenClicked());
     }
 }

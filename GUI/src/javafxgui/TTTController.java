@@ -22,6 +22,13 @@ public class TTTController implements Controller {
         game.playMove(Integer.parseInt(id));
         displayBoard();
         displayResult();
+        playAgain();
+    }
+
+    private void playAgain() {
+        if (foundWinOrDraw()){
+            gameView.makePlayAgainVisible();
+        }
     }
 
     public void displayResult() {

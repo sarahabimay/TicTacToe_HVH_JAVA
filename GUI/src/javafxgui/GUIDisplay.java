@@ -3,10 +3,7 @@ package javafxgui;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
@@ -50,16 +47,45 @@ public class GUIDisplay {
     }
 
     public void disableBoard() {
-        
+        GridPane boardPane = (GridPane) border.getCenter();
+        for (int i = 0; i < boardPane.getChildren().size(); i++) {
+            boardPane.getChildren().get(i).setDisable(true);
+        }
+        border.setCenter(boardPane);
     }
 
     public void displayResult(Mark winner) {
-        Text resultTarget = (Text)lookup("#resultTarget");
+        Text resultTarget = (Text) lookup("#resultTarget");
         resultTarget.setText(createResultAnnouncement(winner));
     }
 
+    public BorderPane generateBorderLayout(Board board) {
+        border.setTop(titleHeader());
+        border.setCenter(createGameBoard(board));
+        border.setBottom(resultFooter());
+        border.setId("borderPane");
+        return border;
+    }
+
+    public HBox titleHeader() {
+        HBox titleBar = new HBox();
+        titleBar.setId("titleBar");
+        Text title = new Text(GAME_HEADER);
+        title.setId("gameTitle");
+        titleBar.getChildren().add(title);
+        return titleBar;
+    }
+
+    public VBox resultFooter() {
+        VBox resultFooter = new VBox();
+        resultFooter.setId("footer");
+        resultFooter.getChildren().add(createGameResultsTarget());
+        resultFooter.getChildren().add(createPlayAgainButtonTarget());
+        return resultFooter;
+    }
+
     public String createResultAnnouncement(Mark winner) {
-        if (winner.isEmpty()){
+        if (winner.isEmpty()) {
             return announceDraw();
         }
         return announceWinner(winner);
@@ -73,19 +99,21 @@ public class GUIDisplay {
         return String.format(WINNER_ANNOUNCEMENT, winner.toString());
     }
 
-    public BorderPane generateBorderLayout(Board board) {
-        border.setTop(titleHeader());
-        border.setCenter(createGameBoard(board));
-        border.setBottom(resultFooter());
-        border.setId("borderPane");
-        return border;
+    public void makePlayAgainVisible() {
+        Button playAgain = (Button) lookup("#playAgain");
+        switchElementVisibility(playAgain, true);
     }
 
-    public HBox resultFooter() {
-        HBox resultFooter = new HBox();
-        resultFooter.setId("footer");
-        resultFooter.getChildren().add(createGameResultsTarget());
-        return resultFooter;
+    public void switchElementVisibility(Node element, boolean isVisible) {
+        element.setVisible(isVisible);
+    }
+
+    public Button createPlayAgainButtonTarget() {
+        Button playAgain = new Button("Play Again?");
+        playAgain.setId("playAgain");
+        playAgain.setVisible(false);
+        registerPlayAgainButtonWithHandler(new JavaFXButton(playAgain));
+        return playAgain;
     }
 
     public void registerBoardButtonWithHandler(ClickableElement clickableElement) {
@@ -96,10 +124,8 @@ public class GUIDisplay {
         clickableElement.setOnAction(eventHandler);
     }
 
-    private Text createGameResultsTarget() {
-        Text resultTarget = new Text("RESULTS HERE");
-        resultTarget.setId("resultTarget");
-        return resultTarget;
+    private void registerPlayAgainButtonWithHandler(ClickableElement clickableElement) {
+
     }
 
     private GridPane createGameBoard(Board board) {
@@ -151,12 +177,9 @@ public class GUIDisplay {
         return String.valueOf(position + POSITION_OFFSET);
     }
 
-    public HBox titleHeader() {
-        HBox titleBar = new HBox();
-        titleBar.setId("titleBar");
-        Text title = new Text(GAME_HEADER);
-        title.setId("gameTitle");
-        titleBar.getChildren().add(title);
-        return titleBar;
+    private Text createGameResultsTarget() {
+        Text resultTarget = new Text("RESULTS HERE");
+        resultTarget.setId("resultTarget");
+        return resultTarget;
     }
 }

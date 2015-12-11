@@ -79,6 +79,12 @@ public class ControllerTest {
         assertEquals(true, gameView.hasResultBeenAnnounced());
     }
 
+    @Test
+    public void handleReplayRequest() {
+
+
+    }
+
     private List<Mark> arrayToList(Mark[] initialBoard) {
         List<Mark> initialCells = new ArrayList<>(initialBoard.length);
         for (int i = 0; i < initialBoard.length; i++) {
