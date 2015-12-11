@@ -120,12 +120,12 @@ public class GUIDisplay {
         registerElementWithHandler(clickableElement, new NewPlayerMoveEventHandler(controller));
     }
 
-    public void registerElementWithHandler(ClickableElement clickableElement, ClickEventHandler eventHandler) {
-        clickableElement.setOnAction(eventHandler);
+    private void registerPlayAgainButtonWithHandler(ClickableElement clickableElement) {
+        registerElementWithHandler(clickableElement, new NewGameEventHandler(controller));
     }
 
-    private void registerPlayAgainButtonWithHandler(ClickableElement clickableElement) {
-
+    public void registerElementWithHandler(ClickableElement clickableElement, ClickEventHandler eventHandler) {
+        clickableElement.setOnAction(eventHandler);
     }
 
     private GridPane createGameBoard(Board board) {

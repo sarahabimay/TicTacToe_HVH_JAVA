@@ -13,4 +13,6 @@ public interface Controller {
     void displayResult();
 
     boolean foundWinOrDraw();
+
+    void createNewGame();
 }

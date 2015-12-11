@@ -2,9 +2,13 @@ package javafxgui;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import jttt.Core.Board.Board;
 import jttt.Core.Game;
+import jttt.Core.Players.PlayerFactory;
 
 public class TTTController implements Controller {
+    private final int DEFAULT_BOARD_DIMENSION = 3;
+    private final int HVH_GAMETYPE = 1;
     private GUIDisplay gameView;
     private Game game;
 
@@ -16,6 +20,11 @@ public class TTTController implements Controller {
 
     public Scene displayGUI() {
         return gameView.displayGUI();
+    }
+
+    public void createNewGame() {
+        game = new Game(new Board(DEFAULT_BOARD_DIMENSION), HVH_GAMETYPE, new PlayerFactory());
+        displayBoard();
     }
 
     public void playMoveAtPosition(String id) {
