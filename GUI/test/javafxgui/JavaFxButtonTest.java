@@ -1,6 +1,7 @@
+package javafxgui;
+
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.Button;
-import javafxgui.JavaFXButton;
 import org.junit.Before;
 import org.junit.Test;
 

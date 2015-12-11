@@ -1,3 +1,5 @@
+package javafxgui;
+
 import javafxgui.Controller;
 import javafxgui.NewPlayerMoveEventHandler;
 

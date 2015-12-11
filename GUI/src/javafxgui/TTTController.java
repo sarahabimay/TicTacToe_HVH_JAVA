@@ -1,7 +1,6 @@
 package javafxgui;
 
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import jttt.Core.Board.Board;
 import jttt.Core.Game;
 import jttt.Core.Players.PlayerFactory;
@@ -22,22 +21,8 @@ public class TTTController implements Controller {
         return gameView.displayGUI();
     }
 
-    public void createNewGame() {
-        game = new Game(new Board(DEFAULT_BOARD_DIMENSION), HVH_GAMETYPE, new PlayerFactory());
-        displayBoard();
-    }
-
-    public void playMoveAtPosition(String id) {
-        game.playMove(Integer.parseInt(id));
-        displayBoard();
-        displayResult();
-        playAgain();
-    }
-
-    private void playAgain() {
-        if (foundWinOrDraw()){
-            gameView.makePlayAgainVisible();
-        }
+    public void displayBoard() {
+        gameView.displayBoard(game.getBoard());
     }
 
     public void displayResult() {
@@ -47,11 +32,33 @@ public class TTTController implements Controller {
         }
     }
 
-    public GridPane displayBoard() {
-        return gameView.displayBoard(game.getBoard());
+    public void playMoveAtPosition(String id) {
+        playMoveOnGameBoard(id);
+        displayBoard();
+        displayResult();
+        displayPlayAgain();
+    }
+
+    public void createNewGame() {
+        clearGameBoard();
+        displayBoard();
     }
 
     public boolean foundWinOrDraw() {
         return game.isGameOver();
+    }
+
+    private void playMoveOnGameBoard(String id) {
+        game.playMove(Integer.parseInt(id));
+    }
+
+    private void displayPlayAgain() {
+        if (foundWinOrDraw()){
+            gameView.makePlayAgainVisible();
+        }
+    }
+
+    private void clearGameBoard() {
+        game = new Game(new Board(DEFAULT_BOARD_DIMENSION), HVH_GAMETYPE, new PlayerFactory());
     }
 }

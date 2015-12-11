@@ -1,3 +1,5 @@
+package javafxgui;
+
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -6,12 +8,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafxgui.GUIDisplay;
-import javafxgui.JavaFxButtonSpy;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.notNullValue;
@@ -97,7 +96,6 @@ public class GUIDisplayTest {
     }
 
     @Test
-    @Ignore
     public void disableBoard() {
         guiDisplay.disableBoard();
         Button button = (Button) guiDisplay.lookup("#1");

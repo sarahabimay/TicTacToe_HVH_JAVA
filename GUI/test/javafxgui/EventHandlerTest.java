@@ -1,5 +1,5 @@
-import javafxgui.NewGameEventHandler;
-import javafxgui.NewPlayerMoveEventHandler;
+package javafxgui;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
