@@ -27,7 +27,6 @@ public class TTTController implements Controller {
 
     public void displayResult() {
         if (foundWinOrDraw()){
-            gameView.disableBoard();
             gameView.displayResult(game.findWinner());
         }
     }
@@ -52,7 +51,7 @@ public class TTTController implements Controller {
         game.playMove(Integer.parseInt(id));
     }
 
-    private void displayPlayAgain() {
+    public void displayPlayAgain() {
         if (foundWinOrDraw()){
             gameView.makePlayAgainVisible();
         }

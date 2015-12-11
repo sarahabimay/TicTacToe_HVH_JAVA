@@ -3,9 +3,6 @@ package javafxgui;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafxgui.Controller;
-import javafxgui.GUIDisplay;
-import javafxgui.TTTController;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 import jttt.Core.Game;
@@ -82,9 +79,20 @@ public class ControllerTest {
     }
 
     @Test
-    public void handleReplayRequest() {
-
-
+    public void handleReplayEvent() {
+        Mark X = Mark.X;
+        Mark O = Mark.O;
+        Mark currentBoard[] = {
+                X, O, O,
+                X, O, X,
+                X, X, Mark.EMPTY
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        Controller controller = new TTTController(
+                gameView,
+                new GameFake(board, 1, new PlayerFactory()));
+        controller.playMoveAtPosition("9");
+        assertEquals(true, gameView.hasReplayButtonBeenDisplayed());
     }
 
     private List<Mark> arrayToList(Mark[] initialBoard) {
@@ -100,6 +108,7 @@ public class ControllerTest {
         private boolean hasBoardBeenReDisplayed = false;
         private boolean hasBoardBeenDisabled = false;
         private boolean hasResultBeenAnnounced = false;
+        private boolean hasReplayButtonBeenDisplayed = false;
 
         public GUIDisplayViewSpy() {
             super();
@@ -113,6 +122,7 @@ public class ControllerTest {
 
         public void displayResult(Mark winner) {
             hasResultBeenAnnounced = true;
+            disableBoard();
         }
 
         public GridPane displayBoard(Board board) {
@@ -124,6 +134,9 @@ public class ControllerTest {
             hasBoardBeenDisabled = true;
         }
 
+        public void makePlayAgainVisible(){
+            hasReplayButtonBeenDisplayed = true;
+        }
         public boolean hasBoardBeenReDisplayed() {
             return hasBoardBeenReDisplayed;
         }
@@ -138,6 +151,10 @@ public class ControllerTest {
 
         public boolean hasResultBeenAnnounced() {
             return hasResultBeenAnnounced;
+        }
+
+        public boolean hasReplayButtonBeenDisplayed() {
+            return hasReplayButtonBeenDisplayed;
         }
     }
 
