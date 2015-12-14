@@ -25,10 +25,6 @@ public class BoardDisplay {
         return boardPane;
     }
 
-//    public void registerBoardButtonWithHandler(ClickableElement clickableElement) {
-//        registerElementWithHandler(clickableElement, new NewPlayerMoveEventHandler(controller));
-//    }
-
     private GridPane createGameBoard(Board board) {
         GridPane boardGrid = createGridPane("gameBoard");
         boardGrid = generateBoardCells(board, boardGrid);
@@ -47,7 +43,6 @@ public class BoardDisplay {
             for (int col = 0; col < board.getDimension(); col++) {
                 Button cell = createButtonForBoard(board, position);
                 boardGrid.add(cell, col, row);
-//                registerBoardButtonWithHandler(new JavaFXButton(cell));
                 position++;
             }
         }
@@ -59,10 +54,6 @@ public class BoardDisplay {
                 cellForDisplay(board, position),
                 shouldBeDisabled(board, position));
     }
-
-//    private void registerElementWithHandler(ClickableElement clickableElement, ClickEventHandler eventHandler) {
-//        clickableElement.setOnAction(eventHandler);
-//    }
 
     private boolean shouldBeDisabled(Board board, int position) {
         return board.findMarkAtIndex(position).isEmpty() ? false : true;

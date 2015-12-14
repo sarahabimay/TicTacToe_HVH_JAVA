@@ -16,11 +16,16 @@ public class EventRegisterTest {
 
 
     private EventRegister eventRegister;
+    private Scene scene;
+    private TTTControllerSpy controllerSpy;
 
     @Before
     public void setUp() {
         new JFXPanel();
         eventRegister = new EventRegister();
+        controllerSpy = new TTTControllerSpy(
+                new GUIDisplay(new BoardDisplay(new Board(3))),
+                new Game(new Board(3), 1, new PlayerFactory()));
     }
 
     @Test
@@ -36,14 +41,21 @@ public class EventRegisterTest {
 
     @Test
     public void registerAllBoardButtonsWithHandler() {
-       TTTControllerSpy controllerSpy = new TTTControllerSpy(
-               new GUIDisplay(new BoardDisplay(new Board(3))),
-               new Game(new Board(3), 1, new PlayerFactory()));
-        EventRegister eventRegister = new EventRegister();
-        Scene scene = controllerSpy.displayGUI();
+        scene = controllerSpy.displayGUI();
         GridPane gameBoard = (GridPane)scene.lookup("#gameBoard");
         Button button = (Button)gameBoard.getChildren().get(0);
         eventRegister.registerAllBoardButtonsWithHandler(gameBoard, controllerSpy);
+        button.fire();
+        assertEquals(true, controllerSpy.hasReDisplayBoardBeenCalled());
+    }
+
+    @Test
+    public void registerAllClickableElementsWithHandlers() {
+        scene = controllerSpy.displayGUI();
+        eventRegister.registerAllClickableElementsWithHandler(scene, controllerSpy );
+
+        GridPane gameBoard = (GridPane) scene.lookup("#gameBoard");
+        Button button = (Button)gameBoard.getChildren().get(0);
         button.fire();
         assertEquals(true, controllerSpy.hasReDisplayBoardBeenCalled());
     }

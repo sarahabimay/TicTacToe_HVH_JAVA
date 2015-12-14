@@ -26,7 +26,7 @@ public class ControllerTest {
     public void setUp() {
         Board defaultBoard = new Board(DEFAULT_BOARD_DIMENSION);
         gameView = new GUIDisplayViewSpy(new BoardDisplay(defaultBoard));
-        controller = new TTTController(gameView,
+        controller = new TTTController(gameView,new EventRegister(),
                 new Game(defaultBoard, HVH_GAMETYPE, new PlayerFactory()));
     }
 

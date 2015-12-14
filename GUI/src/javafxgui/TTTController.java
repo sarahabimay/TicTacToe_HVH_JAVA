@@ -14,7 +14,6 @@ public class TTTController implements Controller {
 
     public TTTController(GUIDisplay guiDisplay, Game game) {
         this.gameView = guiDisplay;
-//        gameView.setController(this);
         this.game = game;
     }
 

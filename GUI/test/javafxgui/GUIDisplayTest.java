@@ -8,7 +8,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 import org.junit.Before;
@@ -22,12 +21,10 @@ public class GUIDisplayTest {
 
     private GUIDisplay guiDisplay;
     private Scene scene;
-    private ControllerSpy controllerSpy;
 
     @Before
     public void setUp() {
         new JFXPanel();
-        controllerSpy = new ControllerSpy();
         guiDisplay = new GUIDisplay(new BoardDisplay(new Board(3)));
         scene = guiDisplay.displayGUI();
     }
@@ -96,18 +93,5 @@ public class GUIDisplayTest {
         guiDisplay.makePlayAgainVisible();
         assertThat(replayButton, notNullValue());
         assertEquals(true, replayButton.isVisible());
-    }
-
-    @Test
-    @Ignore
-    public void registerPlayAgainEventHandler() {
-        Button button = new Button();
-        JavaFxButtonSpy buttonTest = new JavaFxButtonSpy(button);
-        NewGameEventHandlerSpy handlerSpy = new NewGameEventHandlerSpy(controllerSpy);
-//        guiDisplay.registerElementWithHandler(buttonTest, handlerSpy);
-        assertEquals(true, buttonTest.hasButtonBeenAssociatedWithHandler());
-        assertEquals(false, handlerSpy.hasBeenClicked());
-        button.fire();
-        assertEquals(true, handlerSpy.hasBeenClicked());
     }
 }
