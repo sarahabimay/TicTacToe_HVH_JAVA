@@ -17,13 +17,17 @@ import static org.junit.Assert.assertEquals;
 
 public class ControllerTest {
 
+    private final int DEFAULT_BOARD_DIMENSION = 3;
+    private final int HVH_GAMETYPE = 1;
     private GUIDisplayViewSpy gameView;
     private TTTController controller;
 
     @Before
     public void setUp() {
-        gameView = new GUIDisplayViewSpy();
-        controller = new TTTController(gameView, new Game(new Board(3), 1, new PlayerFactory()));
+        Board defaultBoard = new Board(DEFAULT_BOARD_DIMENSION);
+        gameView = new GUIDisplayViewSpy(new BoardDisplay(defaultBoard));
+        controller = new TTTController(gameView,
+                new Game(defaultBoard, HVH_GAMETYPE, new PlayerFactory()));
     }
 
     @Test
@@ -104,8 +108,8 @@ public class ControllerTest {
         private boolean hasResultBeenAnnounced = false;
         private boolean hasReplayButtonBeenDisplayed = false;
 
-        public GUIDisplayViewSpy() {
-            super();
+        public GUIDisplayViewSpy(BoardDisplay boardDisplay) {
+            super(boardDisplay);
         }
 
         public Scene displayGUI() {

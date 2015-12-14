@@ -8,13 +8,20 @@ import jttt.Core.Players.PlayerFactory;
 public class TTTController implements Controller {
     private final int DEFAULT_BOARD_DIMENSION = 3;
     private final int HVH_GAMETYPE = 1;
+    private EventRegister eventRegister;
     private GUIDisplay gameView;
     private Game game;
 
     public TTTController(GUIDisplay guiDisplay, Game game) {
         this.gameView = guiDisplay;
-        gameView.setController(this);
+//        gameView.setController(this);
         this.game = game;
+    }
+
+    public TTTController(GUIDisplay gameView, EventRegister eventRegister, Game game) {
+        this.gameView = gameView;
+        this.eventRegister = eventRegister;
+        this.game = game;;
     }
 
     public Scene displayGUI() {

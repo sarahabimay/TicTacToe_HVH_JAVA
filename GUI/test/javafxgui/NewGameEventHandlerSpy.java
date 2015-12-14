@@ -1,8 +1,5 @@
 package javafxgui;
 
-import javafxgui.ClickEventHandler;
-import javafxgui.Controller;
-
 public class NewGameEventHandlerSpy implements ClickEventHandler {
     private Controller controller;
     private boolean hasBeenClicked = false;

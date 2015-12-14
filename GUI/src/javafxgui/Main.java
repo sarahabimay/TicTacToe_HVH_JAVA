@@ -11,7 +11,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("TicTacToe");
-        Controller controller = new TTTController(new GUIDisplay(), new Game(new Board(3), 1, new PlayerFactory()));
+        Board defaultBoard = new Board(3);
+        int HVH_GAMETYPE = 1;
+        Controller controller = new TTTController(
+                new GUIDisplay(new BoardDisplay(defaultBoard)),
+                new Game(defaultBoard, HVH_GAMETYPE, new PlayerFactory()));
         primaryStage.setScene(controller.displayGUI());
         primaryStage.show();
     }
