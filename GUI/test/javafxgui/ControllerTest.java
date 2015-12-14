@@ -45,33 +45,29 @@ public class ControllerTest {
 
     @Test
     public void resultIsAWin() {
-        Mark X = Mark.X;
-        Mark O = Mark.O;
         Mark currentBoard[] = {
-                X, O, O,
-                X, O, X,
-                X, X, O
+                Mark.X, Mark.O, Mark.O,
+                Mark.X, Mark.O, Mark.X,
+                Mark.X, Mark.X, Mark.O
         };
         Board board = new Board(3, arrayToList(currentBoard));
         Controller controller = new TTTController(
                 gameView,
-                new GameFake(board, 1, new PlayerFactory()));
+                new Game(board, 1, new PlayerFactory()));
         assertEquals(true, controller.foundWinOrDraw());
     }
 
     @Test
     public void tellGUIDisplayToDisableBoard() {
-        Mark X = Mark.X;
-        Mark O = Mark.O;
         Mark currentBoard[] = {
-                X, O, O,
-                X, O, X,
-                X, X, O
+                Mark.X, Mark.O, Mark.O,
+                Mark.X, Mark.O, Mark.X,
+                Mark.X, Mark.X, Mark.O
         };
         Board board = new Board(3, arrayToList(currentBoard));
         Controller controller = new TTTController(
                 gameView,
-                new GameFake(board, 1, new PlayerFactory()));
+                new Game(board, 1, new PlayerFactory()));
         controller.displayGUI();
         controller.displayResult();
         assertEquals(true, gameView.hasBoardBeenDisabled());
@@ -80,17 +76,15 @@ public class ControllerTest {
 
     @Test
     public void handleReplayEvent() {
-        Mark X = Mark.X;
-        Mark O = Mark.O;
         Mark currentBoard[] = {
-                X, O, O,
-                X, O, X,
-                X, X, Mark.EMPTY
+                Mark.X, Mark.O, Mark.O,
+                Mark.X, Mark.O, Mark.X,
+                Mark.X, Mark.X, Mark.EMPTY
         };
         Board board = new Board(3, arrayToList(currentBoard));
         Controller controller = new TTTController(
                 gameView,
-                new GameFake(board, 1, new PlayerFactory()));
+                new Game(board, 1, new PlayerFactory()));
         controller.playMoveAtPosition("9");
         assertEquals(true, gameView.hasReplayButtonBeenDisplayed());
     }
@@ -156,12 +150,5 @@ public class ControllerTest {
         public boolean hasReplayButtonBeenDisplayed() {
             return hasReplayButtonBeenDisplayed;
         }
-    }
-
-    private class GameFake extends Game {
-        public GameFake(Board board, int gameType, PlayerFactory playerFactory) {
-            super(board, gameType, playerFactory);
-        }
-
     }
 }
