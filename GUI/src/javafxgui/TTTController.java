@@ -1,6 +1,7 @@
 package javafxgui;
 
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 import jttt.Core.Board.Board;
 import jttt.Core.Game;
 import jttt.Core.Players.PlayerFactory;
@@ -12,11 +13,6 @@ public class TTTController implements Controller {
     private GUIDisplay gameView;
     private Game game;
 
-    public TTTController(GUIDisplay guiDisplay, Game game) {
-        this.gameView = guiDisplay;
-        this.game = game;
-    }
-
     public TTTController(GUIDisplay gameView, EventRegister eventRegister, Game game) {
         this.gameView = gameView;
         this.eventRegister = eventRegister;
@@ -24,11 +20,13 @@ public class TTTController implements Controller {
     }
 
     public Scene displayGUI() {
-        return gameView.displayGUI();
+        Scene scene = gameView.displayGUI();
+        registerEventHandlers(scene);
+        return scene;
     }
 
-    public void displayBoard() {
-        gameView.displayBoard(game.getBoard());
+    public GridPane displayBoard() {
+        return gameView.displayBoard(game.getBoard());
     }
 
     public void displayResult() {
@@ -39,28 +37,36 @@ public class TTTController implements Controller {
 
     public void playMoveAtPosition(String id) {
         playMoveOnGameBoard(id);
-        displayBoard();
+        registerBoardEventHandlers(displayBoard());
         displayResult();
         displayPlayAgain();
     }
 
     public void createNewGame() {
         clearGameBoard();
-        displayBoard();
+        registerBoardEventHandlers(displayBoard());
     }
 
     public boolean foundWinOrDraw() {
         return game.isGameOver();
     }
 
-    private void playMoveOnGameBoard(String id) {
-        game.playMove(Integer.parseInt(id));
-    }
-
     public void displayPlayAgain() {
         if (foundWinOrDraw()){
             gameView.makePlayAgainVisible();
         }
+    }
+
+    private void registerEventHandlers(Scene scene) {
+        eventRegister.registerAllClickableElementsWithHandler(scene, this);
+    }
+
+    private void registerBoardEventHandlers(GridPane board) {
+        eventRegister.registerAllBoardButtonsWithHandler(board, this);
+    }
+
+    private void playMoveOnGameBoard(String id) {
+        game.playMove(Integer.parseInt(id));
     }
 
     private void clearGameBoard() {

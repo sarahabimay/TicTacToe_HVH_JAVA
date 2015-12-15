@@ -8,7 +8,7 @@ public interface Controller {
 
     Scene displayGUI();
 
-    void displayBoard();
+    GridPane displayBoard();
 
     void displayResult();
 

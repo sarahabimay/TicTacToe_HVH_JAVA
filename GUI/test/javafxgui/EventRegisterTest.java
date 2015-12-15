@@ -25,6 +25,7 @@ public class EventRegisterTest {
         eventRegister = new EventRegister();
         controllerSpy = new TTTControllerSpy(
                 new GUIDisplay(new BoardDisplay(new Board(3))),
+                new EventRegister(),
                 new Game(new Board(3), 1, new PlayerFactory()));
     }
 
@@ -34,7 +35,7 @@ public class EventRegisterTest {
         JavaFxButtonSpy buttonTest = new JavaFxButtonSpy(button);
         ControllerSpy controllerSpy = new ControllerSpy();
         NewPlayerMoveEventHandlerSpy eventHandlerSpy = new NewPlayerMoveEventHandlerSpy(controllerSpy);
-        eventRegister.registerBoardButtonWithHandler(buttonTest, eventHandlerSpy);
+        eventRegister.registerABoardButtonWithHandler(buttonTest, eventHandlerSpy);
         button.fire();
         assertEquals(true, controllerSpy.hasReDisplayBoardBeenCalled());
     }

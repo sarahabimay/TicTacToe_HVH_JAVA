@@ -15,6 +15,7 @@ public class Main extends Application {
         int HVH_GAMETYPE = 1;
         Controller controller = new TTTController(
                 new GUIDisplay(new BoardDisplay(defaultBoard)),
+                new EventRegister(),
                 new Game(defaultBoard, HVH_GAMETYPE, new PlayerFactory()));
         primaryStage.setScene(controller.displayGUI());
         primaryStage.show();

@@ -6,25 +6,26 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
 public class EventRegister {
-    public void registerBoardButtonWithHandler(ClickableElement clickableElement, ClickEventHandler eventHandler) {
+    public void registerABoardButtonWithHandler(ClickableElement clickableElement, ClickEventHandler eventHandler) {
         clickableElement.setOnAction(eventHandler);
     }
 
     public void registerAllBoardButtonsWithHandler(GridPane board, Controller controller) {
-        for (Node button : board.getChildren()){
-            JavaFXButton javaFXButton = new JavaFXButton((Button)button);
-           registerBoardButtonWithHandler(javaFXButton, new NewPlayerMoveEventHandler(controller));
+        for (Node button : board.getChildren()) {
+            JavaFXButton javaFXButton = new JavaFXButton((Button) button);
+            registerABoardButtonWithHandler(javaFXButton, new NewPlayerMoveEventHandler(controller));
         }
-
     }
 
     public void registerAllClickableElementsWithHandler(Scene scene, Controller controller) {
-        registerBoard(scene, controller);
-//        registerReplayButton(scene, controller);
+        registerBoard(extractGameBoard(scene), controller);
     }
 
-    private void registerBoard(Scene scene, Controller controller) {
-        GridPane gameBoard = (GridPane) scene.lookup("#gameBoard");
-        registerAllBoardButtonsWithHandler(gameBoard, controller);
+    private void registerBoard(GridPane gameBoard, Controller controller) {
+        registerAllBoardButtonsWithHandler((GridPane) gameBoard.lookup("#gameBoard"), controller);
+    }
+
+    private GridPane extractGameBoard(Scene scene) {
+        return (GridPane) scene.lookup("#gameBoard");
     }
 }

@@ -1,5 +1,6 @@
 package javafxgui;
 
+import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -26,8 +27,9 @@ public class ControllerTest {
     public void setUp() {
         Board defaultBoard = new Board(DEFAULT_BOARD_DIMENSION);
         gameView = new GUIDisplayViewSpy(new BoardDisplay(defaultBoard));
-        controller = new TTTController(gameView,new EventRegister(),
+        controller = new TTTController(gameView, new EventRegister(),
                 new Game(defaultBoard, HVH_GAMETYPE, new PlayerFactory()));
+        new JFXPanel();
     }
 
     @Test
@@ -56,7 +58,7 @@ public class ControllerTest {
         };
         Board board = new Board(3, arrayToList(currentBoard));
         Controller controller = new TTTController(
-                gameView,
+                gameView, new EventRegister(),
                 new Game(board, 1, new PlayerFactory()));
         assertEquals(true, controller.foundWinOrDraw());
     }
@@ -70,12 +72,26 @@ public class ControllerTest {
         };
         Board board = new Board(3, arrayToList(currentBoard));
         Controller controller = new TTTController(
-                gameView,
+                gameView, new EventRegister(),
                 new Game(board, 1, new PlayerFactory()));
         controller.displayGUI();
         controller.displayResult();
         assertEquals(true, gameView.hasBoardBeenDisabled());
         assertEquals(true, gameView.hasResultBeenAnnounced());
+    }
+
+    @Test
+    public void registerAllClickableElementsWithEventHandler() {
+        new JFXPanel();
+        EventRegisterSpy eventRegisterSpy = new EventRegisterSpy();
+        Board board = new Board(3);
+        Controller controller = new TTTController(
+                new GUIDisplay(new BoardDisplay(board)), eventRegisterSpy,
+                new Game(board, 1, new PlayerFactory()));
+        controller.displayGUI();
+        assertEquals(true, eventRegisterSpy.haveBoardButtonsBeenRegistered());
+        assertEquals(true, eventRegisterSpy.hasAllElementsBeenRegistered());
+        assertEquals(9, eventRegisterSpy.howManyBoardButtonsRegistered());
     }
 
     @Test
@@ -88,6 +104,7 @@ public class ControllerTest {
         Board board = new Board(3, arrayToList(currentBoard));
         Controller controller = new TTTController(
                 gameView,
+                new EventRegister(),
                 new Game(board, 1, new PlayerFactory()));
         controller.playMoveAtPosition("9");
         assertEquals(true, gameView.hasReplayButtonBeenDisplayed());
@@ -107,15 +124,20 @@ public class ControllerTest {
         private boolean hasBoardBeenDisabled = false;
         private boolean hasResultBeenAnnounced = false;
         private boolean hasReplayButtonBeenDisplayed = false;
+        private Scene scene;
+        private StackPane root;
 
         public GUIDisplayViewSpy(BoardDisplay boardDisplay) {
             super(boardDisplay);
+            this.root = new StackPane();
+            this.scene = new Scene(root, 700, 675);
+            scene.getStylesheets().add(Main.class.getResource("javafxgui.css").toExternalForm());
         }
 
         public Scene displayGUI() {
             hasLandingPageBeenRendered = true;
-            StackPane root = new StackPane();
-            return new Scene(root, 700, 675);
+            root.getChildren().add(generateBorderLayout());
+            return scene;
         }
 
         public void displayResult(Mark winner) {
@@ -132,9 +154,10 @@ public class ControllerTest {
             hasBoardBeenDisabled = true;
         }
 
-        public void makePlayAgainVisible(){
+        public void makePlayAgainVisible() {
             hasReplayButtonBeenDisplayed = true;
         }
+
         public boolean hasBoardBeenReDisplayed() {
             return hasBoardBeenReDisplayed;
         }
@@ -153,6 +176,40 @@ public class ControllerTest {
 
         public boolean hasReplayButtonBeenDisplayed() {
             return hasReplayButtonBeenDisplayed;
+        }
+    }
+
+    private class EventRegisterSpy extends EventRegister {
+        private boolean hasRegisteredAllBoardButtons = false;
+        private boolean hasRegisteredAllClickableElements = false;
+        private int countOfBoardButtonsRegistered = 0;
+
+        @Override
+        public void registerABoardButtonWithHandler(ClickableElement clickableElement, ClickEventHandler eventHandler) {
+            countOfBoardButtonsRegistered++;
+            super.registerABoardButtonWithHandler(clickableElement, eventHandler);
+        }
+
+        @Override
+        public void registerAllBoardButtonsWithHandler(GridPane board, Controller controller) {
+            hasRegisteredAllBoardButtons= true;
+            super.registerAllBoardButtonsWithHandler(board, controller);
+        }
+
+        @Override
+        public void registerAllClickableElementsWithHandler(Scene scene, Controller controller) {
+            hasRegisteredAllClickableElements = true;
+            super.registerAllClickableElementsWithHandler(scene, controller);
+        }
+
+        public boolean haveBoardButtonsBeenRegistered() {
+            return hasRegisteredAllBoardButtons;
+        }
+        public int howManyBoardButtonsRegistered(){
+            return countOfBoardButtonsRegistered;
+        }
+        public boolean hasAllElementsBeenRegistered(){
+            return hasRegisteredAllClickableElements;
         }
     }
 }

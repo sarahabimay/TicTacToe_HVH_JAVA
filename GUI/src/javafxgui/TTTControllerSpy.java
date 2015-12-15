@@ -5,8 +5,8 @@ import jttt.Core.Game;
 public class TTTControllerSpy extends TTTController {
     private boolean hasReDisplayBoardBeenCalled;
 
-    public TTTControllerSpy(GUIDisplay guiDisplay, Game game) {
-        super(guiDisplay, game);
+    public TTTControllerSpy(GUIDisplay guiDisplay, EventRegister eventRegister, Game game) {
+        super(guiDisplay, eventRegister, game);
     }
 
     public void playMoveAtPosition(String id) {

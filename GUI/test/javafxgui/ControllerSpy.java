@@ -1,6 +1,7 @@
 package javafxgui;
 
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 
 public class ControllerSpy implements Controller {
     private boolean hasReDisplayBoardBeenCalled = false;
@@ -10,7 +11,8 @@ public class ControllerSpy implements Controller {
         return null;
     }
 
-    public void displayBoard() {
+    public GridPane displayBoard() {
+        return null;
     }
 
     public void displayResult() {
