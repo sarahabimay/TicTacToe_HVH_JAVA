@@ -110,6 +110,25 @@ public class ControllerTest {
         assertEquals(true, gameView.hasReplayButtonBeenDisplayed());
     }
 
+    @Test
+    public void clickingReplayButtonGeneratesANewGame() {
+        Mark currentBoard[] = {
+                Mark.X, Mark.O, Mark.O,
+                Mark.X, Mark.O, Mark.X,
+                Mark.X, Mark.X, Mark.EMPTY
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        Game game = new Game(board, 1, new PlayerFactory());
+        Controller controller = new TTTController(
+                gameView,
+                new EventRegister(),
+                game);
+        controller.playMoveAtPosition("9");
+        assertEquals(true, controller.foundWinOrDraw());
+        controller.createNewGame();
+        assertEquals(false, controller.foundWinOrDraw());
+    }
+
     private List<Mark> arrayToList(Mark[] initialBoard) {
         List<Mark> initialCells = new ArrayList<>(initialBoard.length);
         for (int i = 0; i < initialBoard.length; i++) {

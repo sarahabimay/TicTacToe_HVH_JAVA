@@ -19,6 +19,7 @@ public class EventRegister {
 
     public void registerAllClickableElementsWithHandler(Scene scene, Controller controller) {
         registerBoard(extractGameBoard(scene), controller);
+//        registerReplayButton(extractReplayButton(scene), controller);
     }
 
     private void registerBoard(GridPane gameBoard, Controller controller) {
