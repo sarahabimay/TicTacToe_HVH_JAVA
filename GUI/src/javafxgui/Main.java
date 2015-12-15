@@ -15,11 +15,10 @@ public class Main extends Application {
         primaryStage.setTitle("TicTacToe");
         Scene scene = new Scene(new StackPane(), 700, 675);
         scene.getStylesheets().add(Main.class.getResource("javafxgui.css").toExternalForm());
-        Board defaultBoard = new Board(3);
         Controller controller = new TTTController(
                 new GUIDisplay(scene, new BoardDisplay()),
                 new EventRegister(),
-                new Game(defaultBoard, HVH_GAMETYPE, new PlayerFactory()));
+                new Game(new Board(3), HVH_GAMETYPE, new PlayerFactory()));
         primaryStage.setScene(controller.displayGUI());
         primaryStage.show();
     }
