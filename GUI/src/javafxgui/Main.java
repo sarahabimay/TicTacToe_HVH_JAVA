@@ -1,20 +1,23 @@
 package javafxgui;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import jttt.Core.Board.Board;
 import jttt.Core.Game;
 import jttt.Core.Players.PlayerFactory;
 
 public class Main extends Application {
-
+    private final int HVH_GAMETYPE = 1;
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("TicTacToe");
+        Scene scene = new Scene(new StackPane(), 700, 675);
+        scene.getStylesheets().add(Main.class.getResource("javafxgui.css").toExternalForm());
         Board defaultBoard = new Board(3);
-        int HVH_GAMETYPE = 1;
         Controller controller = new TTTController(
-                new GUIDisplay(new BoardDisplay(defaultBoard)),
+                new GUIDisplay(scene, new BoardDisplay()),
                 new EventRegister(),
                 new Game(defaultBoard, HVH_GAMETYPE, new PlayerFactory()));
         primaryStage.setScene(controller.displayGUI());

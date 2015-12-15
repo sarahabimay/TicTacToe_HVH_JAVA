@@ -7,17 +7,12 @@ import jttt.Core.Board.Mark;
 
 public class BoardDisplay {
     private final int POSITION_OFFSET = 1;
-    private Board board;
 
-    public BoardDisplay(Board board) {
-        this.board = board;
-    }
-
-    public GridPane getBoardForDisplay() {
+    public GridPane getBoardForDisplay(Board board) {
         return createGameBoard(board);
     }
 
-    public GridPane getDisabledBoard() {
+    public GridPane getDisabledBoard(Board board) {
         GridPane boardPane = createGameBoard(board);
         for (int i = 0; i < boardPane.getChildren().size(); i++) {
             boardPane.getChildren().get(i).setDisable(true);

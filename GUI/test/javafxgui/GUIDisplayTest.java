@@ -3,10 +3,7 @@ package javafxgui;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
@@ -25,13 +22,14 @@ public class GUIDisplayTest {
     @Before
     public void setUp() {
         new JFXPanel();
-        guiDisplay = new GUIDisplay(new BoardDisplay(new Board(3)));
-        scene = guiDisplay.displayGUI();
+        Board defaultBoard = new Board(3);
+        guiDisplay = new GUIDisplay(new Scene(new StackPane(),700, 600), new BoardDisplay());
+        scene = guiDisplay.displayGUI(defaultBoard);
     }
 
     @Test
     public void initialDisplay() {
-        BorderPane borderPane = (BorderPane) scene.getRoot().getChildrenUnmodifiable().get(0);
+        BorderPane borderPane = (BorderPane) scene.getRoot();
         assertEquals("borderPane", borderPane.getId());
     }
 
@@ -46,7 +44,7 @@ public class GUIDisplayTest {
 
     @Test
     public void displayDisabledBoard() {
-        BorderPane layout = guiDisplay.generateBorderLayout();
+        BorderPane layout = guiDisplay.generateBorderLayout(new Board(3));
         GridPane gameBoard = (GridPane) layout.getCenter();
         assertEquals("gameBoard", gameBoard.getId());
     }

@@ -26,7 +26,7 @@ public class EventRegister {
     }
 
     private void registerBoard(GridPane gameBoard, Controller controller) {
-        registerAllBoardButtonsWithHandler((GridPane) gameBoard.lookup("#gameBoard"), controller);
+        registerAllBoardButtonsWithHandler(gameBoard, controller);
     }
 
     private Button extractReplayButton(Scene scene) {

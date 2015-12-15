@@ -4,6 +4,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import jttt.Core.Board.Board;
 import jttt.Core.Game;
 import jttt.Core.Players.PlayerFactory;
@@ -24,7 +25,7 @@ public class EventRegisterTest {
         new JFXPanel();
         eventRegister = new EventRegister();
         controllerSpy = new TTTControllerSpy(
-                new GUIDisplay(new BoardDisplay(new Board(3))),
+                new GUIDisplay(new Scene(new StackPane(),700, 600), new BoardDisplay()),
                 new EventRegister(),
                 new Game(new Board(3), 1, new PlayerFactory()));
     }
@@ -33,7 +34,6 @@ public class EventRegisterTest {
     public void registerASingleBoardButtonWithPlayMoveHandler() {
         Button button = new Button();
         JavaFxButtonSpy buttonTest = new JavaFxButtonSpy(button);
-        ControllerSpy controllerSpy = new ControllerSpy();
         NewPlayerMoveEventHandlerSpy eventHandlerSpy = new NewPlayerMoveEventHandlerSpy(controllerSpy);
         eventRegister.registerClickableElementWithHandler(buttonTest, eventHandlerSpy);
         button.fire();

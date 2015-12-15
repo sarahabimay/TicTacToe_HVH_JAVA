@@ -26,10 +26,9 @@ public class ControllerTest {
 
     @Before
     public void setUp() {
-        Board defaultBoard = new Board(DEFAULT_BOARD_DIMENSION);
-        gameView = new GUIDisplayViewSpy(new BoardDisplay(defaultBoard));
+        gameView = new GUIDisplayViewSpy(new Scene(new StackPane(),700, 600), new BoardDisplay());
         controller = new TTTController(gameView, new EventRegister(),
-                new Game(defaultBoard, HVH_GAMETYPE, new PlayerFactory()));
+                new Game(new Board(DEFAULT_BOARD_DIMENSION), HVH_GAMETYPE, new PlayerFactory()));
         new JFXPanel();
     }
 
@@ -85,10 +84,9 @@ public class ControllerTest {
     public void registerAllBoardButtonsWithEventHandler() {
         new JFXPanel();
         EventRegisterSpy eventRegisterSpy = new EventRegisterSpy();
-        Board board = new Board(3);
         Controller controller = new TTTController(
-                new GUIDisplay(new BoardDisplay(board)), eventRegisterSpy,
-                new Game(board, 1, new PlayerFactory()));
+                new GUIDisplay(new Scene(new StackPane(),700, 600), new BoardDisplay()), eventRegisterSpy,
+                new Game(new Board(3), 1, new PlayerFactory()));
         controller.displayGUI();
         assertEquals(true, eventRegisterSpy.haveBoardButtonsBeenRegistered());
         assertEquals(true, eventRegisterSpy.hasAllElementsBeenRegistered());
@@ -99,10 +97,9 @@ public class ControllerTest {
     public void registerReplayButtonWithEventHandler() {
         new JFXPanel();
         EventRegisterSpy eventRegisterSpy = new EventRegisterSpy();
-        Board board = new Board(3);
         Controller controller = new TTTController(
-                new GUIDisplay(new BoardDisplay(board)), eventRegisterSpy,
-                new Game(board, 1, new PlayerFactory()));
+                new GUIDisplay(new Scene(new StackPane(), 700, 600), new BoardDisplay()), eventRegisterSpy,
+                new Game(new Board(3), 1, new PlayerFactory()));
         controller.displayGUI();
         assertEquals(true, eventRegisterSpy.hasReplayButtonBeenRegistered());
         assertEquals(true, eventRegisterSpy.hasAllElementsBeenRegistered());
@@ -160,16 +157,16 @@ public class ControllerTest {
         private Scene scene;
         private StackPane root;
 
-        public GUIDisplayViewSpy(BoardDisplay boardDisplay) {
-            super(boardDisplay);
+        public GUIDisplayViewSpy(Scene scene, BoardDisplay boardDisplay) {
+            super(scene, boardDisplay);
             this.root = new StackPane();
             this.scene = new Scene(root, 700, 675);
-            scene.getStylesheets().add(Main.class.getResource("javafxgui.css").toExternalForm());
+            this.scene.getStylesheets().add(Main.class.getResource("javafxgui.css").toExternalForm());
         }
 
-        public Scene displayGUI() {
+        public Scene displayGUI(Board board) {
             hasLandingPageBeenRendered = true;
-            root.getChildren().add(generateBorderLayout());
+            root.getChildren().add(generateBorderLayout(board));
             return scene;
         }
 

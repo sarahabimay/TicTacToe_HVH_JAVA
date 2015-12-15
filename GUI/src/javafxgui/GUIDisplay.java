@@ -18,13 +18,10 @@ public class GUIDisplay {
     private BoardDisplay boardDisplay;
     private BorderPane border;
     private Scene scene;
-    private StackPane root;
 
-    public GUIDisplay(BoardDisplay boardDisplay) {
+    public GUIDisplay(Scene scene, BoardDisplay boardDisplay) {
+        this.scene = scene;
         this.boardDisplay = boardDisplay;
-        this.root = new StackPane();
-        this.scene = new Scene(root, 700, 675);
-        scene.getStylesheets().add(Main.class.getResource("javafxgui.css").toExternalForm());
         this.border = new BorderPane();
     }
 
@@ -32,36 +29,39 @@ public class GUIDisplay {
         return scene.lookup(id);
     }
 
-    public Scene displayGUI() {
-        root.getChildren().add(generateBorderLayout());
+    public Scene getScene() {
         return scene;
     }
 
-    public BorderPane generateBorderLayout() {
-        border.setTop(titleHeader());
-        border.setCenter(createGameBoard());
-        border.setBottom(resultFooter());
-        border.setId("borderPane");
-        return border;
-    }
-
-    private GridPane createGameBoard() {
-        return boardDisplay.getBoardForDisplay();
+    public Scene displayGUI(Board board) {
+        scene.setRoot(generateBorderLayout(board));
+        return scene;
     }
 
     public GridPane displayBoard(Board board) {
-        GridPane boardPane = boardDisplay.getBoardForDisplay();
+        GridPane boardPane = createGameBoard(board);
         border.setCenter(boardPane);
         return boardPane;
     }
 
     public void displayResult(Mark winner) {
-        disableBoard();
         announceResult(winner);
     }
 
-    private void disableBoard() {
-        GridPane boardPane = boardDisplay.getDisabledBoard();
+    public BorderPane generateBorderLayout(Board board) {
+        border.setTop(titleHeader());
+        border.setCenter(createGameBoard(board));
+        border.setBottom(resultFooter());
+        border.setId("borderPane");
+        return border;
+    }
+
+    private GridPane createGameBoard(Board board) {
+        return boardDisplay.getBoardForDisplay(board);
+    }
+
+    public void disableBoard(Board board) {
+        GridPane boardPane = boardDisplay.getDisabledBoard(board);
         border.setCenter(boardPane);
     }
 
@@ -106,23 +106,13 @@ public class GUIDisplay {
     public Button createPlayAgainButtonTarget() {
         Button playAgain = createButton("Play Again?", "playAgain");
         playAgain.setVisible(false);
-//        registerPlayAgainButtonWithHandler(new JavaFXButton(playAgain));
         return playAgain;
     }
-
-//    private void registerPlayAgainButtonWithHandler(ClickableElement clickableElement) {
-//        registerElementWithHandler(clickableElement, new NewGameEventHandler(controller));
-//    }
-//
-//    public void registerElementWithHandler(ClickableElement clickableElement, ClickEventHandler eventHandler) {
-//        clickableElement.setOnAction(eventHandler);
-//    }
 
 
     private void switchElementVisibility(Node element, boolean isVisible) {
         element.setVisible(isVisible);
     }
-
 
     private Button createButton(String label, String id) {
         Button playAgain = new Button(label);

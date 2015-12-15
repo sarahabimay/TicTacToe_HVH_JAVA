@@ -20,7 +20,7 @@ public class TTTController implements Controller {
     }
 
     public Scene displayGUI() {
-        Scene scene = gameView.displayGUI();
+        Scene scene = gameView.displayGUI(game.getBoard());
         registerEventHandlers(scene);
         return scene;
     }
@@ -31,6 +31,7 @@ public class TTTController implements Controller {
 
     public void displayResult() {
         if (foundWinOrDraw()){
+            gameView.disableBoard(game.getBoard());
             gameView.displayResult(game.findWinner());
         }
     }
@@ -44,7 +45,7 @@ public class TTTController implements Controller {
 
     public void createNewGame() {
         clearGameBoard();
-        registerBoardEventHandlers(displayBoard());
+        registerEventHandlers(gameView.displayGUI(game.getBoard()));
     }
 
     public boolean foundWinOrDraw() {
@@ -71,5 +72,6 @@ public class TTTController implements Controller {
 
     private void clearGameBoard() {
         game = new Game(new Board(DEFAULT_BOARD_DIMENSION), HVH_GAMETYPE, new PlayerFactory());
+        gameView = new GUIDisplay(gameView.getScene(), new BoardDisplay());
     }
 }
