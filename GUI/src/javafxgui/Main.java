@@ -1,30 +1,30 @@
 package javafxgui;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import jttt.Core.Board.Board;
+import jttt.Core.Game;
+import jttt.Core.Players.PlayerFactory;
 
 public class Main extends Application {
-
+    private final int HVH_GAMETYPE = 1;
     @Override
     public void start(Stage primaryStage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("javafxgui.fxml"));
         primaryStage.setTitle("TicTacToe");
-        GUIDisplay guiDisplay = new GUIDisplay();
-        primaryStage.setScene(guiDisplay.generateLandingPageScene());
+        Scene scene = new Scene(new StackPane(), 700, 675);
+        scene.getStylesheets().add(Main.class.getResource("javafxgui.css").toExternalForm());
+        Board defaultBoard = new Board(3);
+        Controller controller = new TTTController(
+                new GUIDisplay(scene, new BoardDisplay()),
+                new EventRegister(),
+                new Game(defaultBoard, HVH_GAMETYPE, new PlayerFactory()));
+        primaryStage.setScene(controller.displayGUI());
         primaryStage.show();
     }
 
 
-//        controller.setGameOptions(vbox);
-//        button.setOnAction(event -> controller.start(event));
-//        button.setOnAction(new EventHandler<ActionEvent>() {
-//
-//            @Override
-//            public void handle(ActionEvent e) {
-//                actiontarget.setFill(Color.FIREBRICK);
-//                actiontarget.setText("Sign in button pressed");
-//            }
-//        });
     public static void main(String[] args) {
         launch(args);
     }
