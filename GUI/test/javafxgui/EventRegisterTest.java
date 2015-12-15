@@ -35,7 +35,7 @@ public class EventRegisterTest {
         JavaFxButtonSpy buttonTest = new JavaFxButtonSpy(button);
         ControllerSpy controllerSpy = new ControllerSpy();
         NewPlayerMoveEventHandlerSpy eventHandlerSpy = new NewPlayerMoveEventHandlerSpy(controllerSpy);
-        eventRegister.registerABoardButtonWithHandler(buttonTest, eventHandlerSpy);
+        eventRegister.registerClickableElementWithHandler(buttonTest, eventHandlerSpy);
         button.fire();
         assertEquals(true, controllerSpy.hasReDisplayBoardBeenCalled());
     }
@@ -43,21 +43,33 @@ public class EventRegisterTest {
     @Test
     public void registerAllBoardButtonsWithHandler() {
         scene = controllerSpy.displayGUI();
-        GridPane gameBoard = (GridPane)scene.lookup("#gameBoard");
-        Button button = (Button)gameBoard.getChildren().get(0);
+        GridPane gameBoard = (GridPane) scene.lookup("#gameBoard");
+        Button button = (Button) gameBoard.getChildren().get(0);
         eventRegister.registerAllBoardButtonsWithHandler(gameBoard, controllerSpy);
         button.fire();
         assertEquals(true, controllerSpy.hasReDisplayBoardBeenCalled());
     }
 
     @Test
+    public void registerReplayButtonWithHandler() {
+        scene = controllerSpy.displayGUI();
+        Button replayButton = (Button) scene.lookup("#playAgain");
+        eventRegister.registerReplayButtonWithHandler(replayButton, controllerSpy);
+        replayButton.fire();
+        assertEquals(true, controllerSpy.hasReplayGameBeenSelected());
+    }
+
+    @Test
     public void registerAllClickableElementsWithHandlers() {
         scene = controllerSpy.displayGUI();
-        eventRegister.registerAllClickableElementsWithHandler(scene, controllerSpy );
+        eventRegister.registerAllClickableElementsWithHandler(scene, controllerSpy);
 
         GridPane gameBoard = (GridPane) scene.lookup("#gameBoard");
-        Button button = (Button)gameBoard.getChildren().get(0);
+        Button button = (Button) gameBoard.getChildren().get(0);
         button.fire();
         assertEquals(true, controllerSpy.hasReDisplayBoardBeenCalled());
+        Button replayButton  = (Button) scene.lookup("#playAgain");
+        replayButton.fire();
+        assertEquals(true, controllerSpy.hasReplayGameBeenSelected());
     }
 }

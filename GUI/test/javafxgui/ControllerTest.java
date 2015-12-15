@@ -2,6 +2,7 @@ package javafxgui;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import jttt.Core.Board.Board;
@@ -81,7 +82,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void registerAllClickableElementsWithEventHandler() {
+    public void registerAllBoardButtonsWithEventHandler() {
         new JFXPanel();
         EventRegisterSpy eventRegisterSpy = new EventRegisterSpy();
         Board board = new Board(3);
@@ -91,7 +92,20 @@ public class ControllerTest {
         controller.displayGUI();
         assertEquals(true, eventRegisterSpy.haveBoardButtonsBeenRegistered());
         assertEquals(true, eventRegisterSpy.hasAllElementsBeenRegistered());
-        assertEquals(9, eventRegisterSpy.howManyBoardButtonsRegistered());
+        assertEquals(10, eventRegisterSpy.howManyButtonsRegistered());
+    }
+
+    @Test
+    public void registerReplayButtonWithEventHandler() {
+        new JFXPanel();
+        EventRegisterSpy eventRegisterSpy = new EventRegisterSpy();
+        Board board = new Board(3);
+        Controller controller = new TTTController(
+                new GUIDisplay(new BoardDisplay(board)), eventRegisterSpy,
+                new Game(board, 1, new PlayerFactory()));
+        controller.displayGUI();
+        assertEquals(true, eventRegisterSpy.hasReplayButtonBeenRegistered());
+        assertEquals(true, eventRegisterSpy.hasAllElementsBeenRegistered());
     }
 
     @Test
@@ -202,16 +216,17 @@ public class ControllerTest {
         private boolean hasRegisteredAllBoardButtons = false;
         private boolean hasRegisteredAllClickableElements = false;
         private int countOfBoardButtonsRegistered = 0;
+        private boolean hasReplayButtonBeenRegistered= false;
 
         @Override
-        public void registerABoardButtonWithHandler(ClickableElement clickableElement, ClickEventHandler eventHandler) {
+        public void registerClickableElementWithHandler(ClickableElement clickableElement, ClickEventHandler eventHandler) {
             countOfBoardButtonsRegistered++;
-            super.registerABoardButtonWithHandler(clickableElement, eventHandler);
+            super.registerClickableElementWithHandler(clickableElement, eventHandler);
         }
 
         @Override
         public void registerAllBoardButtonsWithHandler(GridPane board, Controller controller) {
-            hasRegisteredAllBoardButtons= true;
+            hasRegisteredAllBoardButtons = true;
             super.registerAllBoardButtonsWithHandler(board, controller);
         }
 
@@ -221,14 +236,26 @@ public class ControllerTest {
             super.registerAllClickableElementsWithHandler(scene, controller);
         }
 
+        @Override
+        public void registerReplayButtonWithHandler(Button replayButton, Controller controller) {
+            hasReplayButtonBeenRegistered = true;
+            super.registerReplayButtonWithHandler(replayButton, controller);
+        }
+
         public boolean haveBoardButtonsBeenRegistered() {
             return hasRegisteredAllBoardButtons;
         }
-        public int howManyBoardButtonsRegistered(){
+
+        public int howManyButtonsRegistered() {
             return countOfBoardButtonsRegistered;
         }
-        public boolean hasAllElementsBeenRegistered(){
+
+        public boolean hasAllElementsBeenRegistered() {
             return hasRegisteredAllClickableElements;
+        }
+
+        public boolean hasReplayButtonBeenRegistered() {
+            return hasReplayButtonBeenRegistered;
         }
     }
 }
