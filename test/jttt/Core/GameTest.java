@@ -71,15 +71,9 @@ public class GameTest {
     }
 
     @Test
-    public void gameAskedForComputerMove() {
+    public void playAllMoves() {
         Game game = new Game(new Board(DEFAULT_DIMENSION), CVH_GAME_TYPE, new PlayerFactory());
-        Player playerA = game.getNextPlayer();
-        // maybe defaultGame.getNextPlayerMove() then defaultGame.playMove() but then
-        // either the UI would need to know about player types or
-        // the jttt.Core.Players.Player will need to know about the UI
-        // I can't yet see yet how this should go
-        game.playAIMove();
-        assertEquals(Mark.X, game.getBoard().getCells().get(0));
+        game.playCurrentPlayerMove();
     }
 
     @Test

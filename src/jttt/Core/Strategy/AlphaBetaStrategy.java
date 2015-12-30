@@ -99,7 +99,7 @@ public class AlphaBetaStrategy implements AIMoveStrategy {
         } else {
             score = varyScoreUsingDepth(-depth, -score);
         }
-        return new Result((int)score, -1);
+        return new Result((int) score, -1);
     }
 
     private boolean hasWinner(Board currentBoard, Mark empty) {

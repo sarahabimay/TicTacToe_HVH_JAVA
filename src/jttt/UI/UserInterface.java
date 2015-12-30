@@ -1,5 +1,6 @@
 package jttt.UI;
 
+import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 
 import java.util.function.IntPredicate;
@@ -12,7 +13,7 @@ public interface UserInterface {
 
     int requestGameType();
 
-    int requestNextPosition();
+    int requestNextPosition(Board board);
 
     boolean requestPlayAgain();
 
@@ -24,7 +25,7 @@ public interface UserInterface {
 
     boolean validateDimension(int dimension);
 
-    boolean validPosition(int position);
+    boolean validBoardPosition(int oneIndexedPosition, Board board);
 
     boolean validReplayChoice(int instruction);
 

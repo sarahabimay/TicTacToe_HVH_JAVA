@@ -142,32 +142,6 @@ public class BoardTest {
         assertEquals(EMPTY, board.findWinner());
     }
 
-//    @Test
-//    public void createListOfRowLines() {
-//        Mark currentBoard[] = {
-//                X, X, X,
-//                O, O, X,
-//                O, O, X
-//        };
-//        Board board = new Board(3, arrayToList(currentBoard));
-//        assertEquals(3, board.getRows().size());
-//        assertEquals(true, board.getRows().get(0).hasAWinner());
-//    }
-//
-//    @Test
-//    public void createListOfColumnLines() {
-//        Mark currentBoard[] = {
-//                X, X, X,
-//                O, O, X,
-//                O, O, X
-//        };
-//
-//        Board board = new Board(3, arrayToList(currentBoard));
-//        assertEquals(3, board.getColumns().size());
-//        assertEquals(true, board.getColumns().get(2).hasAWinner());
-//    }
-
-
     @Test
     public void getSeveralRemainingPositions() {
         Mark currentBoard[] = {

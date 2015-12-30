@@ -4,19 +4,18 @@ import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 import jttt.Core.Strategy.AIMoveStrategy;
 import jttt.Core.Strategy.AIStrategyFactory;
-import jttt.UI.UserInterface;
 
 public class ComputerPlayer extends Player {
     private AIStrategyFactory strategyFactory;
 
-    public ComputerPlayer(Mark mark, UserInterface userInterface) {
-        super(mark, Type.AI , userInterface);
+    public ComputerPlayer(Mark mark) {
+        super(mark, Type.AI, null);
         strategyFactory = new AIStrategyFactory();
     }
 
-    public Board playTurn(Board board) {
+    public int getNextPosition(Board board) {
         AIMoveStrategy strategy = strategyFactory.selectStrategyByBoardSize(board.boardSize());
-        return board.playCounterInPosition(strategy.calculateNextMove(board, mark), mark);
+        return strategy.calculateNextMove(board, mark);
     }
 
     public Board playTurn(Board board, int newPosition) {

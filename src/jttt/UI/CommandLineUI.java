@@ -2,9 +2,8 @@ package jttt.UI;
 
 import jttt.Core.Board.Board;
 import jttt.Core.Board.DisplayStyler;
-import jttt.Core.Game;
 import jttt.Core.Board.Mark;
-import jttt.Core.Players.Player;
+import jttt.Core.Game;
 import jttt.Core.Players.PlayerFactory;
 
 import java.io.*;
@@ -55,8 +54,14 @@ public class CommandLineUI implements UserInterface {
         return request(GAME_TYPE_REQUEST, this::validGameType);
     }
 
-    public int requestNextPosition() {
-        return request(POSITION_REQUEST, this::validPosition);
+    public int requestNextPosition(Board board) {
+        int inputValue = -1;
+        while (!validBoardPosition(inputValue, board)) {
+            displayToOutput(POSITION_REQUEST);
+            inputValue = readInput();
+        }
+        clearDisplay();
+        return inputValue;
     }
 
     public boolean requestPlayAgain() {
@@ -100,8 +105,9 @@ public class CommandLineUI implements UserInterface {
         return dimension >= 3;
     }
 
-    public boolean validPosition(int position) {
-        return position > 0;
+    public boolean validBoardPosition(int oneIndexedPosition, Board board) {
+        return (0 < oneIndexedPosition && oneIndexedPosition <= board.boardSize()) &&
+                !board.cellIsOccupied(oneIndexedPosition - 1);
     }
 
     public boolean validReplayChoice(int instruction) {
@@ -116,16 +122,12 @@ public class CommandLineUI implements UserInterface {
         game = new Game(
                 new Board(dimension),
                 gameType,
-                new PlayerFactory());
+                new PlayerFactory(this));
     }
 
     private void playAllMoves() {
         while (!game.isGameOver()) {
-            if (nextPlayerIsAI()) {
-                game.playAIMove();
-            } else {
-                game.playMove(requestNextPosition());
-            }
+            game.playCurrentPlayerMove();
             displayBoard();
         }
     }
@@ -157,10 +159,6 @@ public class CommandLineUI implements UserInterface {
 
     private boolean continueToPlayGame(int choice) {
         return BinaryChoice.YES.equalsChoice(choice);
-    }
-
-    private boolean nextPlayerIsAI() {
-        return game.getNextPlayerType() == Player.Type.AI;
     }
 
     private void announceWinner(Mark winner) {
