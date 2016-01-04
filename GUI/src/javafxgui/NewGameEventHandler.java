@@ -1,13 +1,13 @@
 package javafxgui;
 
 public class NewGameEventHandler implements ClickEventHandler{
-    private final Controller controller;
+    private final GUIView guiView;
 
-    public NewGameEventHandler(Controller controller) {
-        this.controller = controller;
+    public NewGameEventHandler(GUIView guiView) {
+        this.guiView = guiView;
     }
 
-    public void action(String id) {
-        controller.createNewGame();
+    public void action(String displayPositionId) {
+        guiView.createNewGame();
     }
 }

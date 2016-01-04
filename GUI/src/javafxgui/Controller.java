@@ -4,9 +4,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 
 public interface Controller {
-    Scene displayGUI();
+    void displayGUI();
 
-    GridPane displayBoard();
+    void displayBoard();
 
     void displayResult();
 

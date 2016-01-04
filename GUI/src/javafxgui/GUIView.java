@@ -8,7 +8,7 @@ import javafx.scene.text.Text;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 
-public class GUIDisplay {
+public class GUIView {
 
     public static final String GAME_HEADER = "TIC TAC TOE GAME!";
     public static final String WINNER_ANNOUNCEMENT = "PLAYER %s HAS WON!";
@@ -18,11 +18,19 @@ public class GUIDisplay {
     private BoardDisplay boardDisplay;
     private BorderPane border;
     private Scene scene;
+    private EventRegister eventRegister;
+    private Controller controller;
 
-    public GUIDisplay(Scene scene, BoardDisplay boardDisplay) {
+    public GUIView(Scene scene, BoardDisplay boardDisplay, EventRegister eventRegister) {
         this.scene = scene;
         this.boardDisplay = boardDisplay;
+        this.eventRegister = eventRegister;
+        this.controller = null;
         this.border = new BorderPane();
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
     public Node lookup(String id) {
@@ -35,17 +43,27 @@ public class GUIDisplay {
 
     public Scene displayGUI(Board board) {
         scene.setRoot(generateBorderLayout(board));
+        registerEventHandlers(scene);
         return scene;
     }
 
     public GridPane displayBoard(Board board) {
         GridPane boardPane = createGameBoard(board);
+        registerBoardEventHandlers(boardPane);
         border.setCenter(boardPane);
         return boardPane;
     }
 
     public void displayResult(Mark winner) {
         announceResult(winner);
+    }
+
+    public void newMovePlayedAtPosition(String newMovePosition) {
+        controller.playMoveAtPosition(newMovePosition);
+    }
+
+    public void createNewGame() {
+        controller.createNewGame();
     }
 
     public BorderPane generateBorderLayout(Board board) {
@@ -94,6 +112,7 @@ public class GUIDisplay {
         return DRAW_ANNOUNCEMENT;
     }
 
+
     public String announceWinner(Mark winner) {
         return String.format(WINNER_ANNOUNCEMENT, winner.toString());
     }
@@ -108,7 +127,6 @@ public class GUIDisplay {
         playAgain.setVisible(false);
         return playAgain;
     }
-
 
     private void switchElementVisibility(Node element, boolean isVisible) {
         element.setVisible(isVisible);
@@ -140,5 +158,13 @@ public class GUIDisplay {
         Text title = new Text(label);
         title.setId(id);
         return title;
+    }
+
+    private void registerEventHandlers(Scene scene) {
+        eventRegister.registerAllClickableElementsWithHandler(scene, this);
+    }
+
+    private void registerBoardEventHandlers(GridPane board) {
+        eventRegister.registerAllBoardButtonsWithHandler(board, this);
     }
 }
