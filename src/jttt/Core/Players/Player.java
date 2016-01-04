@@ -34,11 +34,7 @@ public abstract class Player {
         return Mark.EMPTY;
     }
 
-    public Type getPlayerType() {
-        return playerType;
-    }
-
-    abstract public Board playTurn(Board board);
+    abstract public int getNextPosition(Board board);
 
     abstract public Board playTurn(Board board, int newPosition);
 }

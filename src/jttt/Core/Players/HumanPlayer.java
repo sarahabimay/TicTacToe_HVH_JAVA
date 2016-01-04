@@ -10,12 +10,8 @@ public class HumanPlayer extends Player {
         super(mark, Type.HUMAN, userInterface);
     }
 
-    public Board playTurn(Board board) {
-        int nextPosition = userInterface.requestNextPosition();
-        while (!board.validPosition(nextPosition)) {
-            nextPosition = userInterface.requestNextPosition();
-        }
-        return board.playCounterInPosition(nextPosition, mark);
+    public int getNextPosition(Board board) {
+        return userInterface.requestNextPosition(board);
     }
 
     public Board playTurn(Board board, int newPosition) {

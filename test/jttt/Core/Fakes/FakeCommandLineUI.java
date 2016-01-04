@@ -3,7 +3,6 @@ package jttt.Core.Fakes;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 import jttt.Core.Game;
-import jttt.Core.Players.Player;
 import jttt.Core.Players.PlayerFactory;
 import jttt.UI.UserInterface;
 
@@ -40,6 +39,22 @@ public class FakeCommandLineUI implements UserInterface {
     }
 
     @Override
+    public int requestNextPosition(Board board) {
+        int nextMove = dummyInputs.remove(0);
+        while (!validBoardPosition(nextMove, board)) {
+            nextMove = dummyInputs.size() > 0 ? dummyInputs.remove(0) : -1;
+        }
+        userHasBeenAskedForNextPosition = true;
+        return nextMove;
+    }
+
+    @Override
+    public boolean validBoardPosition(int oneIndexedPosition, Board board) {
+        return (0 < oneIndexedPosition && oneIndexedPosition <= board.boardSize()) &&
+                !board.cellIsOccupied(oneIndexedPosition - 1);
+    }
+
+    @Override
     public int displayGreetingRequest() {
         return 1;
     }
@@ -60,15 +75,6 @@ public class FakeCommandLineUI implements UserInterface {
             playerType = -1;
         }
         return playerType;
-    }
-
-    public int requestNextPosition() {
-        int nextMove = dummyInputs.remove(0);
-        while (!validDummyPosition(nextMove)) {
-            nextMove = dummyInputs.size() > 0 ? dummyInputs.remove(0) : -1;
-        }
-        userHasBeenAskedForNextPosition = true;
-        return nextMove;
     }
 
     public boolean requestPlayAgain() {
@@ -101,10 +107,6 @@ public class FakeCommandLineUI implements UserInterface {
         return dimension >= 3;
     }
 
-    public boolean validPosition(int position) {
-        return position > 0;
-    }
-
     public boolean validReplayChoice(int instruction) {
         return 0 < instruction && instruction < 3;
     }
@@ -134,11 +136,7 @@ public class FakeCommandLineUI implements UserInterface {
 
     private void playAllMoves() {
         while (!game.isGameOver()) {
-            if (game.getNextPlayerType() == Player.Type.AI) {
-                game.playAIMove();
-            } else {
-                game.playMove(requestNextPosition());
-            }
+            game.playCurrentPlayerMove();
             displayBoard();
         }
     }
@@ -166,9 +164,5 @@ public class FakeCommandLineUI implements UserInterface {
 
     private int calculateDimension(Board board) {
         return (int) Math.sqrt(board.boardSize());
-    }
-
-    private boolean validDummyPosition(int nextMove) {
-        return validate(nextMove, this::validPosition);//&& nextMove <= numberOfInputs;
     }
 }

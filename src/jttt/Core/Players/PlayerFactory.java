@@ -44,8 +44,8 @@ public class PlayerFactory {
 
     void registerGameTypeWithPlayerTypes() {
         gameTypeOptionToPlayers.put(GameType.HVH, createPlayers(new HumanPlayer(Mark.X, userInterface), new HumanPlayer(Mark.O, userInterface)));
-        gameTypeOptionToPlayers.put(GameType.HVC, createPlayers(new HumanPlayer(Mark.X, userInterface), new ComputerPlayer(Mark.O, userInterface)));
-        gameTypeOptionToPlayers.put(GameType.CVH, createPlayers(new ComputerPlayer(Mark.X, userInterface), new HumanPlayer(Mark.O, userInterface)));
+        gameTypeOptionToPlayers.put(GameType.HVC, createPlayers(new HumanPlayer(Mark.X, userInterface), new ComputerPlayer(Mark.O)));
+        gameTypeOptionToPlayers.put(GameType.CVH, createPlayers(new ComputerPlayer(Mark.X), new HumanPlayer(Mark.O, userInterface)));
     }
 
     ArrayList<Player> createPlayers(Player player1, Player player2) {

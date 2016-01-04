@@ -26,21 +26,21 @@ public class ComputerPlayerTest {
     @Before
     public void setUp() {
         fakeUI = new FakeCommandLineUI();
-        computerXPlayer = new ComputerPlayer(Mark.X, fakeUI);
-        computerOPlayer = new ComputerPlayer(Mark.O, fakeUI);
+        computerXPlayer = new ComputerPlayer(Mark.X);
+        computerOPlayer = new ComputerPlayer(Mark.O);
     }
 
     @Test
     public void createComputerPlayerType() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1));
         fakeUI.addDummyHumanMoves(initialState);
-        ComputerPlayer computer = new ComputerPlayer(Mark.X, fakeUI);
+        ComputerPlayer computer = new ComputerPlayer(Mark.X);
         Assert.assertEquals(ComputerPlayer.class, computer.getClass());
     }
 
     @Test
     public void getPlayersOpponent() {
-        Player computerPlayer = new ComputerPlayer(Mark.O, fakeUI);
+        Player computerPlayer = new ComputerPlayer(Mark.O);
         Assert.assertEquals(Mark.X, computerPlayer.opponentCounter());
     }
 
@@ -49,8 +49,9 @@ public class ComputerPlayerTest {
         fakeUI.addDummyDimension(3);
         fakeUI.setGameType(2);
         Board board = new Board(3);
-        board = computerXPlayer.playTurn(board);
-        Assert.assertEquals(1, board.findPositions(Mark.X).size());
+        int nextMove = computerXPlayer.getNextPosition(board);
+        board.playCounterInPosition(nextMove, Mark.X);
+        assertEquals(computerXPlayer.getMark(), board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
@@ -61,7 +62,9 @@ public class ComputerPlayerTest {
                 X, O, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(X, computerXPlayer.playTurn(board).findMarkAtIndex(2));
+        int nextMove = computerXPlayer.getNextPosition(board);
+        board.playCounterInPosition(nextMove, Mark.X);
+        assertEquals(X, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
@@ -72,7 +75,9 @@ public class ComputerPlayerTest {
                 O, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(X, computerXPlayer.playTurn(board).findMarkAtIndex(2));
+        int nextMove = computerXPlayer.getNextPosition(board);
+        board.playCounterInPosition(nextMove, Mark.X);
+        assertEquals(X, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
@@ -83,7 +88,9 @@ public class ComputerPlayerTest {
                 O, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(X, computerXPlayer.playTurn(board).findMarkAtIndex(2));
+        int nextMove = computerXPlayer.getNextPosition(board);
+        board.playCounterInPosition(nextMove, Mark.X);
+        assertEquals(X, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
@@ -94,7 +101,9 @@ public class ComputerPlayerTest {
                 E, O, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(2));
+        int nextMove = computerOPlayer.getNextPosition(board);
+        board.playCounterInPosition(nextMove, Mark.O);
+        assertEquals(O, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
@@ -106,22 +115,26 @@ public class ComputerPlayerTest {
                 E, O, O, X,
         };
         Board board = new Board(4, arrayToList(currentBoard));
-        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(0));
+        int nextMove = computerOPlayer.getNextPosition(board);
+        board.playCounterInPosition(nextMove, Mark.O);
+        assertEquals(O, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
-    public void firstMoveIsAICounterlphaBetaAlphaBeta_3x3() {
+    public void firstMoveIsAI_3x3() {
         Mark currentBoard[] = {
                 E, E, E,
                 E, E, E,
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(0));
+        int nextMove = computerOPlayer.getNextPosition(board);
+        board.playCounterInPosition(nextMove, Mark.O);
+        assertEquals(O, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
-    public void firstMoveIsRandomlySelected_4x4() {
+    public void firstMoveIsAI_RandomlySelectedStrategy_4x4() {
         Mark currentBoard[] = {
                 E, E, E, E,
                 E, E, E, E,
@@ -129,54 +142,58 @@ public class ComputerPlayerTest {
                 E, E, E, E,
         };
         Board board = new Board(4, arrayToList(currentBoard));
-        List<Mark> result = computerXPlayer.playTurn(board).getCells();
-        assertThat(result, hasItem(X) );
+        int nextMove = computerXPlayer.getNextPosition(board);
+        board = board.playCounterInPosition(nextMove, Mark.X);
+        assertThat(board.getCells(), hasItem(X) );
     }
 
     @Test
-    public void firstMoveIsCounterOppAlphaBetaAlphaBeta_4x4() {
-        Mark currentBoard[] = {
-                E, E, E, E,
-                E, E, E, E,
-                E, E, E, E,
-                E, E, E, X,
-        };
-        Board board = new Board(4, arrayToList(currentBoard));
-        List<Mark> result = computerOPlayer.playTurn(board).getCells();
-        assertThat(result, hasItem(O) );
-    }
-
-    @Test
-    public void alphaBetaShouldPickPositionToBlockOpponentWin() {
+    public void aiPlayerShouldBlockOpponentWin_1() {
         Mark currentBoard[] = {
                 X, X, E,
                 E, O, X,
                 O, X, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(2));
+        int nextMove = computerOPlayer.getNextPosition(board);
+        assertEquals(3, nextMove);
     }
 
     @Test
-    public void computerChoosesPositionToBlockOpponent() {
+    public void aiPlayerShouldBlockOpponentWin_2() {
         Mark currentBoard[] = {
                 E, E, X,
                 O, X, E,
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(6));
+        int nextMove = computerOPlayer.getNextPosition(board);
+        assertEquals(7, nextMove);
     }
 
     @Test
-    public void oppStartsOnCornerAIPicksCenter() {
+    public void aiPlayerShouldChooseWinningPosition() {
+        Mark currentBoard[] = {
+                X, E, E,
+                E, O, E,
+                O, E, X
+        };
+        Board board = new Board(3, arrayToList(currentBoard));
+        int nextMove = computerOPlayer.getNextPosition(board);
+        assertEquals(3, nextMove);
+    }
+
+    @Test
+    public void aiPlayerShouldPicksCenter() {
         Mark currentBoard[] = {
                 X, E, E,
                 E, E, E,
                 E, E, E
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(4));
+        int nextMove = computerOPlayer.getNextPosition(board);
+        board.playCounterInPosition(nextMove, Mark.O);
+        assertEquals(O, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
@@ -187,18 +204,9 @@ public class ComputerPlayerTest {
                 E, E, X
         };
         Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(O, computerOPlayer.playTurn(board).findMarkAtIndex(1));
-    }
-
-    @Test
-    public void mustBlockOpponent() {
-        Mark currentBoard[] = {
-                X, E, E,
-                E, O, E,
-                O, E, X
-        };
-        Board board = new Board(3, arrayToList(currentBoard));
-        assertEquals(X, computerXPlayer.playTurn(board).findMarkAtIndex(2));
+        int nextMove = computerOPlayer.getNextPosition(board);
+        board.playCounterInPosition(nextMove, Mark.O);
+        assertEquals(O, board.findMarkAtDisplayPosition(nextMove));
     }
 
     private List<Mark> arrayToList(Mark[] initialBoard) {

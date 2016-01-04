@@ -104,7 +104,7 @@ public class CommandLineUITest {
         CommandLineUI cli = new CommandLineUI(
                 game, new DisplayStyler(),
                 inputStream, writer);
-        assertEquals(9, cli.requestNextPosition());
+        assertEquals(9, cli.requestNextPosition(game.getBoard()));
         assertThat(output.toString(), containsString(cli.POSITION_REQUEST));
     }
 

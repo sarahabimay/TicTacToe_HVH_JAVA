@@ -40,9 +40,10 @@ public class HumanPlayerTest {
         fakeUI.addDummyDimension(3);
         fakeUI.addDummyHumanMoves(initialState);
         fakeUI.setGameType(1);
-        Player player1 = new HumanPlayer(Mark.X, fakeUI);
+        Player humanPlayer = new HumanPlayer(Mark.X, fakeUI);
         Board board = new Board(3);
-        board = player1.playTurn(board);
-        Assert.assertEquals(Mark.X, board.findMarkAtIndex(0));
+        int nextMove = humanPlayer.getNextPosition(board);
+        board = board.playCounterInPosition(nextMove, Mark.X);
+        Assert.assertEquals(Mark.X, board.findMarkAtDisplayPosition(nextMove));
     }
 }

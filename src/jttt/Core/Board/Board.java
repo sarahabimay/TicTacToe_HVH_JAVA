@@ -13,6 +13,7 @@ import static java.util.stream.IntStream.range;
 public class Board {
     private static final int POSITIVE_OFFSET = 1;
     private static final int NEGATIVE_OFFSET = -1;
+    private static final int DISPLAY_POSITION_OFFSET = 1;
     private int dimension;
     private List<Mark> cells;
 
@@ -38,9 +39,9 @@ public class Board {
         return dimension * dimension;
     }
 
-    public Board playCounterInPosition(int position, Mark mark) {
-        if (validPosition(position)) {
-            cells.set(position - POSITIVE_OFFSET, mark);
+    public Board playCounterInPosition(int displayPositionIndex, Mark mark) {
+        if (validDisplayPosition(displayPositionIndex)) {
+            cells.set(toZeroIndexedPosition(displayPositionIndex), mark);
         }
         return new Board(dimension, cells);
     }
@@ -66,12 +67,12 @@ public class Board {
         return (lineOptional.isPresent()) ? lineOptional.get().findWinner() : Mark.EMPTY;
     }
 
-    public boolean validPosition(int position) {
-        return positionIsWithinRange(position) && !cellIsOccupied(position - POSITIVE_OFFSET);
+    public boolean validDisplayPosition(int displayPositionIndex) {
+        return positionIsWithinRange(displayPositionIndex) && !cellIsOccupied(toZeroIndexedPosition(displayPositionIndex));
     }
 
-    public boolean cellIsOccupied(int cellIndex) {
-        return cells.get(cellIndex) == Mark.X || cells.get(cellIndex) == Mark.O;
+    public boolean cellIsOccupied(int zeroIndexedPosition) {
+        return cells.get(zeroIndexedPosition) == Mark.X || cells.get(zeroIndexedPosition) == Mark.O;
     }
 
     public List<Integer> remainingPositions() {
@@ -98,8 +99,12 @@ public class Board {
         return counterPositions;
     }
 
-    public Mark findMarkAtIndex(int startIndex) {
-        return cells.get(startIndex);
+    public Mark findMarkAtDisplayPosition(int displayPositionIndex) {
+        return findMarkAtIndex(toZeroIndexedPosition(displayPositionIndex));
+    }
+
+    public Mark findMarkAtIndex(int zeroIndexedPosition) {
+        return cells.get(zeroIndexedPosition);
     }
 
     public int numberOfOpenPositions() {
@@ -129,6 +134,10 @@ public class Board {
 
     List<Line> getDiagonals() {
         return Arrays.stream(new int[]{0, dimension - 1}).mapToObj(i -> new Line(getDiagonalCells(i))).collect(toList());
+    }
+
+    private int toZeroIndexedPosition(int displayPositionIndex) {
+        return displayPositionIndex - DISPLAY_POSITION_OFFSET;
     }
 
     private List<Mark> copyOfCells() {
@@ -166,21 +175,21 @@ public class Board {
         return findPositions(Mark.X).size() + findPositions(Mark.O).size();
     }
 
-    private boolean positionIsWithinRange(int position) {
-        return 0 < position && position <= boardSize();
+    private boolean positionIsWithinRange(int displayPositionIndex) {
+        return 0 < displayPositionIndex && displayPositionIndex <= boardSize();
     }
 
-    private int determineLastIndexForDiagonal(int startIndex) {
-        return boardSize() + determineDiagonalIndexDirection(startIndex);
+    private int determineLastIndexForDiagonal(int zeroIndexedPosition) {
+        return boardSize() + determineDiagonalIndexDirection(zeroIndexedPosition);
     }
 
-    private int determineNextDiagonalCellIncrement(int startIndex) {
-        int directionalOffset = determineDiagonalIndexDirection(startIndex);
-        return startIndex == 0 ? dimension + directionalOffset : dimension + (directionalOffset);
+    private int determineNextDiagonalCellIncrement(int zeroIndexedPosition) {
+        int directionalOffset = determineDiagonalIndexDirection(zeroIndexedPosition);
+        return zeroIndexedPosition == 0 ? dimension + directionalOffset : dimension + (directionalOffset);
     }
 
-    private int determineDiagonalIndexDirection(int startIndex) {
-        return startIndex == 0 ? POSITIVE_OFFSET : NEGATIVE_OFFSET;
+    private int determineDiagonalIndexDirection(int zeroIndexedPosition) {
+        return zeroIndexedPosition == 0 ? POSITIVE_OFFSET : NEGATIVE_OFFSET;
     }
 
     private List<Mark> generateEmptyCells() {
@@ -190,5 +199,4 @@ public class Board {
         }
         return initialCells;
     }
-
 }

@@ -48,10 +48,6 @@ public class Game {
         return players.get(board.findNextCounter());
     }
 
-    public Player.Type getNextPlayerType() {
-        return getNextPlayer().getPlayerType();
-    }
-
     public Board getBoard() {
         return board;
     }
@@ -61,16 +57,18 @@ public class Game {
         board = currentPlayer.playTurn(board, newPosition);
     }
 
-    public void playAIMove() {
-        Player currentPlayer = getNextPlayer();
-        board = currentPlayer.playTurn(board);
-    }
-
     public boolean isGameOver() {
         return board.isGameOver();
     }
 
     public Mark findWinner() {
         return board.findWinner();
+    }
+
+    public void playCurrentPlayerMove() {
+        Player currentPlayer = getNextPlayer();
+        board.playCounterInPosition(
+                currentPlayer.getNextPosition(board),
+                currentPlayer.getMark());
     }
 }
