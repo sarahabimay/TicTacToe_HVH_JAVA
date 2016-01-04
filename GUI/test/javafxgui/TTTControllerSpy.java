@@ -6,8 +6,8 @@ public class TTTControllerSpy extends TTTController {
     private boolean hasReDisplayBoardBeenCalled = false;
     private boolean hasReplayGameBeenSelected = false;
 
-    public TTTControllerSpy(GUIDisplay guiDisplay, EventRegister eventRegister, Game game) {
-        super(guiDisplay, eventRegister, game);
+    public TTTControllerSpy(GUIView guiView, Game game) {
+        super(guiView, game);
     }
 
     public void createNewGame() {

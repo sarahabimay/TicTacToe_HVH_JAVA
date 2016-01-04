@@ -1,20 +1,14 @@
 package javafxgui;
 
-import javafxgui.Controller;
-import javafxgui.NewPlayerMoveEventHandler;
-
 public class NewPlayerMoveEventHandlerSpy extends NewPlayerMoveEventHandler {
-    private Controller controller;
     private boolean hasBeenClicked = false;
 
-    public NewPlayerMoveEventHandlerSpy(Controller controller) {
-        super(controller);
-        this.controller = controller;
+    public NewPlayerMoveEventHandlerSpy(GUIView guiView) {
+        super(null);
     }
 
-    public void action(String id) {
+    public void action(String displayPositionId) {
         hasBeenClicked = true;
-        this.controller.playMoveAtPosition(id);
     }
 
     public boolean hasBeenClicked() {

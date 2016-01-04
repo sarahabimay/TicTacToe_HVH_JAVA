@@ -6,8 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import jttt.Core.Board.Board;
-import jttt.Core.Game;
-import jttt.Core.Players.PlayerFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,58 +16,45 @@ public class EventRegisterTest {
 
     private EventRegister eventRegister;
     private Scene scene;
-    private TTTControllerSpy controllerSpy;
+    private GUIViewSpy guiViewSpy;
 
     @Before
     public void setUp() {
         new JFXPanel();
         eventRegister = new EventRegister();
-        controllerSpy = new TTTControllerSpy(
-                new GUIDisplay(new Scene(new StackPane(),700, 600), new BoardDisplay()),
-                new EventRegister(),
-                new Game(new Board(3), 1, new PlayerFactory()));
-    }
-
-    @Test
-    public void registerASingleBoardButtonWithPlayMoveHandler() {
-        Button button = new Button();
-        JavaFxButtonSpy buttonTest = new JavaFxButtonSpy(button);
-        NewPlayerMoveEventHandlerSpy eventHandlerSpy = new NewPlayerMoveEventHandlerSpy(controllerSpy);
-        eventRegister.registerClickableElementWithHandler(buttonTest, eventHandlerSpy);
-        button.fire();
-        assertEquals(true, controllerSpy.hasReDisplayBoardBeenCalled());
+        guiViewSpy = new GUIViewSpy(new Scene(new StackPane(), 700, 600), new BoardDisplay(), new EventRegister());
     }
 
     @Test
     public void registerAllBoardButtonsWithHandler() {
-        scene = controllerSpy.displayGUI();
+        scene = guiViewSpy.displayGUI(new Board(3));
         GridPane gameBoard = (GridPane) scene.lookup("#gameBoard");
         Button button = (Button) gameBoard.getChildren().get(0);
-        eventRegister.registerAllBoardButtonsWithHandler(gameBoard, controllerSpy);
+        eventRegister.registerAllBoardButtonsWithHandler(gameBoard, guiViewSpy);
         button.fire();
-        assertEquals(true, controllerSpy.hasReDisplayBoardBeenCalled());
+        assertEquals(true, guiViewSpy.hasBoardButtonBeenClicked());
     }
 
     @Test
     public void registerReplayButtonWithHandler() {
-        scene = controllerSpy.displayGUI();
+        scene = guiViewSpy.displayGUI(new Board(3));
         Button replayButton = (Button) scene.lookup("#playAgain");
-        eventRegister.registerReplayButtonWithHandler(replayButton, controllerSpy);
+        eventRegister.registerAllClickableElementsWithHandler(scene, guiViewSpy);
         replayButton.fire();
-        assertEquals(true, controllerSpy.hasReplayGameBeenSelected());
+        assertEquals(true, guiViewSpy.hasReplayGameBeenSelected());
     }
 
     @Test
     public void registerAllClickableElementsWithHandlers() {
-        scene = controllerSpy.displayGUI();
-        eventRegister.registerAllClickableElementsWithHandler(scene, controllerSpy);
+        scene = guiViewSpy.displayGUI(new Board(3));
+        eventRegister.registerAllClickableElementsWithHandler(scene, guiViewSpy);
 
         GridPane gameBoard = (GridPane) scene.lookup("#gameBoard");
         Button button = (Button) gameBoard.getChildren().get(0);
         button.fire();
-        assertEquals(true, controllerSpy.hasReDisplayBoardBeenCalled());
+        assertEquals(true, guiViewSpy.hasBoardButtonBeenClicked());
         Button replayButton  = (Button) scene.lookup("#playAgain");
         replayButton.fire();
-        assertEquals(true, controllerSpy.hasReplayGameBeenSelected());
+        assertEquals(true, guiViewSpy.hasReplayGameBeenSelected());
     }
 }

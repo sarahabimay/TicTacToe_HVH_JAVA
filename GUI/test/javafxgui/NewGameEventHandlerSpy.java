@@ -8,7 +8,7 @@ public class NewGameEventHandlerSpy implements ClickEventHandler {
         this.controller = controller;
     }
 
-    public void action(String id) {
+    public void action(String displayPositionId) {
         hasBeenClicked = true;
         this.controller.createNewGame();
     }

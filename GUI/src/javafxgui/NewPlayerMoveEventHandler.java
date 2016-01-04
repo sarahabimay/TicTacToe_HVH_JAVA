@@ -1,13 +1,13 @@
 package javafxgui;
 
 public class NewPlayerMoveEventHandler implements ClickEventHandler {
-    private Controller controller;
+    private GUIView guiView;
 
-    public NewPlayerMoveEventHandler(Controller controller) {
-        this.controller = controller;
+    public NewPlayerMoveEventHandler(GUIView guiView) {
+        this.guiView = guiView;
     }
 
-    public void action(String id) {
-        controller.playMoveAtPosition(id);
+    public void action(String displayPositionId) {
+        guiView.newMovePlayedAtPosition(displayPositionId);
     }
 }
