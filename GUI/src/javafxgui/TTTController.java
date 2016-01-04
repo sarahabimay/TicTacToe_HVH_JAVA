@@ -59,6 +59,5 @@ public class TTTController implements Controller {
 
     private void clearGameBoard() {
         game = new Game(new Board(DEFAULT_BOARD_DIMENSION), HVH_GAMETYPE, new PlayerFactory());
-//        guiView = new GUIView(guiView.getScene(), new BoardDisplay(), new EventRegister());
     }
 }
