@@ -6,6 +6,7 @@ import javafx.scene.layout.StackPane;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 import jttt.Core.Game;
+import jttt.Core.GameType;
 import jttt.Core.Players.PlayerFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +19,6 @@ import static org.junit.Assert.assertEquals;
 public class TTTControllerTest {
 
     private final int DEFAULT_BOARD_DIMENSION = 3;
-    private final int HVH_GAMETYPE = 1;
     private GUIViewSpy gameViewSpy;
     private TTTController controller;
 
@@ -26,7 +26,7 @@ public class TTTControllerTest {
     public void setUp() {
         gameViewSpy = new GUIViewSpy(new Scene(new StackPane(), 700, 600), new BoardDisplay(), null);
         controller = new TTTController(gameViewSpy,
-                new Game(new Board(DEFAULT_BOARD_DIMENSION), HVH_GAMETYPE, new PlayerFactory()));
+                new Game(new Board(DEFAULT_BOARD_DIMENSION), GameType.GUI_HVH.getGameTypeOption(), new PlayerFactory()));
         new JFXPanel();
     }
 
@@ -34,12 +34,6 @@ public class TTTControllerTest {
     public void displayBoard() {
         controller.displayGUI();
         assertEquals(true, gameViewSpy.hasLandingPageBeenRendered());
-    }
-
-    @Test
-    public void playMoveSelectedByHuman() {
-        controller.playMoveAtPosition("1");
-        assertEquals(true, gameViewSpy.hasBoardBeenReDisplayed());
     }
 
     @Test
@@ -68,10 +62,11 @@ public class TTTControllerTest {
                 Mark.X, Mark.O, Mark.X,
                 Mark.X, Mark.X, Mark.O
         };
-        Board board = new Board(3, arrayToList(currentBoard));
-        Controller controller = new TTTController(
-                gameViewSpy,
-                new Game(board, 1, new PlayerFactory()));
+
+        Board board = new Board(DEFAULT_BOARD_DIMENSION, arrayToList(currentBoard));
+        Game game = new Game(board, GameType.GUI_HVH.getGameTypeOption(), new PlayerFactory());
+        Controller controller = new TTTController(gameViewSpy, game);
+
         controller.displayGUI();
         controller.displayResult();
         assertEquals(true, gameViewSpy.hasBoardBeenDisabled());
@@ -85,11 +80,12 @@ public class TTTControllerTest {
                 Mark.X, Mark.O, Mark.X,
                 Mark.X, Mark.X, Mark.EMPTY
         };
-        Board board = new Board(3, arrayToList(currentBoard));
-        Controller controller = new TTTController(
-                gameViewSpy,
-                new Game(board, 1, new PlayerFactory()));
-        controller.playMoveAtPosition("9");
+
+        Board board = new Board(DEFAULT_BOARD_DIMENSION, arrayToList(currentBoard));
+        Game game = new Game(board, GameType.GUI_HVH.getGameTypeOption(), new PlayerFactory());
+        Controller controller = new TTTController(gameViewSpy, game);
+
+        controller.playGame();
         assertEquals(true, gameViewSpy.hasReplayButtonBeenDisplayed());
     }
 
@@ -100,10 +96,10 @@ public class TTTControllerTest {
                 Mark.X, Mark.O, Mark.X,
                 Mark.X, Mark.X, Mark.EMPTY
         };
-        Board board = new Board(3, arrayToList(currentBoard));
-        Game game = new Game(board, 1, new PlayerFactory());
+        Board board = new Board(DEFAULT_BOARD_DIMENSION, arrayToList(currentBoard));
+        Game game = new Game(board, GameType.GUI_HVH.getGameTypeOption(), new PlayerFactory());
         Controller controller = new TTTController(gameViewSpy, game);
-        controller.playMoveAtPosition("9");
+        controller.playGame();
         assertEquals(true, controller.foundWinOrDraw());
         controller.createNewGame();
         assertEquals(false, controller.foundWinOrDraw());

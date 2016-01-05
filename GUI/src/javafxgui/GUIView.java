@@ -3,10 +3,14 @@ package javafxgui;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
+import jttt.Core.Players.Player;
 
 public class GUIView {
 
@@ -33,12 +37,12 @@ public class GUIView {
         this.controller = controller;
     }
 
-    public Node lookup(String id) {
-        return scene.lookup(id);
+    public Player getCurrentPlayer() {
+        return controller.getCurrentPlayer();
     }
 
-    public Scene getScene() {
-        return scene;
+    public Node lookup(String id) {
+        return scene.lookup(id);
     }
 
     public Scene displayGUI(Board board) {
@@ -58,8 +62,8 @@ public class GUIView {
         announceResult(winner);
     }
 
-    public void newMovePlayedAtPosition(String newMovePosition) {
-        controller.playMoveAtPosition(newMovePosition);
+    public void playGame() {
+        controller.playGame();
     }
 
     public void createNewGame() {
@@ -111,7 +115,6 @@ public class GUIView {
     public String announceDraw() {
         return DRAW_ANNOUNCEMENT;
     }
-
 
     public String announceWinner(Mark winner) {
         return String.format(WINNER_ANNOUNCEMENT, winner.toString());

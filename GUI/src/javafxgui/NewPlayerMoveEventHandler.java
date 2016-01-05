@@ -1,5 +1,8 @@
 package javafxgui;
 
+import jttt.Core.Players.GUIHumanPlayer;
+import jttt.Core.Players.Player;
+
 public class NewPlayerMoveEventHandler implements ClickEventHandler {
     private GUIView guiView;
 
@@ -8,6 +11,13 @@ public class NewPlayerMoveEventHandler implements ClickEventHandler {
     }
 
     public void action(String displayPositionId) {
-        guiView.newMovePlayedAtPosition(displayPositionId);
+        updateCurrentPlayerWithMove(displayPositionId);
+        guiView.playGame();
+    }
+
+    private void updateCurrentPlayerWithMove(String displayPositionId) {
+        Player currentPlayer = guiView.getCurrentPlayer();
+        GUIHumanPlayer guiHumanPlayer = (GUIHumanPlayer)currentPlayer;
+        guiHumanPlayer.setNextUserMove(displayPositionId);
     }
 }

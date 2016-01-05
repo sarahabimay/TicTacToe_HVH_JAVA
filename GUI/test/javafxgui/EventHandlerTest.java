@@ -10,16 +10,18 @@ import static org.junit.Assert.assertEquals;
 public class EventHandlerTest {
 
     private GUIViewSpy guiViewSpy;
+    private NewPlayerMoveEventHandler newMoveEventHandler;
 
     @Before
     public void setUp() {
         guiViewSpy = new GUIViewSpy(new Scene(new StackPane(), 700, 600), new BoardDisplay(), new EventRegister());
+        newMoveEventHandler = new NewPlayerMoveEventHandler(guiViewSpy);
     }
 
     @Test
     public void handleNewMoveEvent() {
-        NewPlayerMoveEventHandler startHandler = new NewPlayerMoveEventHandler(guiViewSpy);
-        startHandler.action("1");
+        newMoveEventHandler.action("1");
+        assertEquals(true, guiViewSpy.hasNextGUIPlayerBeenFound());
         assertEquals(true, guiViewSpy.hasBoardButtonBeenClicked());
     }
 

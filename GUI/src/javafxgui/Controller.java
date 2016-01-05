@@ -1,7 +1,6 @@
 package javafxgui;
 
-import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
+import jttt.Core.Players.Player;
 
 public interface Controller {
     void displayGUI();
@@ -10,11 +9,13 @@ public interface Controller {
 
     void displayResult();
 
-    void playMoveAtPosition(String id);
+    void playGame();
 
     void createNewGame();
 
     boolean foundWinOrDraw();
 
     void displayPlayAgain();
+
+    Player getCurrentPlayer();
 }

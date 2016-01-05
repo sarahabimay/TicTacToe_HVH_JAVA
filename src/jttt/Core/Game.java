@@ -52,11 +52,6 @@ public class Game {
         return board;
     }
 
-    public void playMove(int newPosition) {
-        Player currentPlayer = getNextPlayer();
-        board = currentPlayer.playTurn(board, newPosition);
-    }
-
     public boolean isGameOver() {
         return board.isGameOver();
     }

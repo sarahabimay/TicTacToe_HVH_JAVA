@@ -6,6 +6,7 @@ import jttt.Core.Players.HumanPlayer;
 import jttt.Core.Players.Player;
 import jttt.Core.Players.PlayerFactory;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -58,19 +59,7 @@ public class GameTest {
     }
 
     @Test
-    public void gameAskedToUpdateBoardWithHumanPlayerMove() {
-        defaultGame.playMove(1);
-        assertEquals(Mark.X, defaultGame.getBoard().getCells().get(0));
-    }
-
-    @Test
-    public void askedForNextPlayer() {
-        defaultGame.playMove(1);
-        Player playerB = defaultGame.getNextPlayer();
-        assertEquals(Mark.O, playerB.getMark());
-    }
-
-    @Test
+    @Ignore
     public void playAllMoves() {
         Game game = new Game(new Board(DEFAULT_DIMENSION), CVH_GAME_TYPE, new PlayerFactory());
         game.playCurrentPlayerMove();
@@ -80,19 +69,5 @@ public class GameTest {
     public void gameAskedForBoard() {
         Board board = new Board(DEFAULT_DIMENSION);
         assertEquals(board.isEmpty(), defaultGame.getBoard().isEmpty());
-    }
-
-    @Test
-    public void gameAskedForResult() {
-        Mark currentBoard[] = {
-                X, O, X,
-                O, O, X,
-                O, X, X
-        };
-        for (int i = 0; i < currentBoard.length; i++){
-            defaultGame.playMove(i + 1);
-        }
-        assertEquals(true, defaultGame.isGameOver());
-        assertEquals(X, defaultGame.findWinner());
     }
 }

@@ -14,7 +14,7 @@ public class TTTControllerSpy extends TTTController {
         hasReplayGameBeenSelected = true;
     }
 
-    public void playMoveAtPosition(String id) {
+    public void playGame() {
         hasReDisplayBoardBeenCalled = true;
     }
 

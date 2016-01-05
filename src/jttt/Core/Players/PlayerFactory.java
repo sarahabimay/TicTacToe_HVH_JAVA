@@ -1,7 +1,7 @@
 package jttt.Core.Players;
 
-import jttt.Core.GameType;
 import jttt.Core.Board.Mark;
+import jttt.Core.GameType;
 import jttt.UI.UserInterface;
 
 import java.util.ArrayList;
@@ -23,8 +23,13 @@ public class PlayerFactory {
         registerOptionsToGameType();
     }
 
-    public static boolean validPlayerTypes(int choice) {
-        return optionToGameType.containsKey(choice);
+    public static boolean isValidGameType(int choice) {
+        for (GameType game : GameType.values()){
+            if (game.equalsChoice(choice)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isPlayerTypeAvailable(GameType gameType) {
@@ -40,12 +45,14 @@ public class PlayerFactory {
         optionToGameType.put(1, GameType.HVH);
         optionToGameType.put(2, GameType.HVC);
         optionToGameType.put(3, GameType.CVH);
+        optionToGameType.put(4, GameType.GUI_HVH);
     }
 
     void registerGameTypeWithPlayerTypes() {
         gameTypeOptionToPlayers.put(GameType.HVH, createPlayers(new HumanPlayer(Mark.X, userInterface), new HumanPlayer(Mark.O, userInterface)));
         gameTypeOptionToPlayers.put(GameType.HVC, createPlayers(new HumanPlayer(Mark.X, userInterface), new ComputerPlayer(Mark.O)));
         gameTypeOptionToPlayers.put(GameType.CVH, createPlayers(new ComputerPlayer(Mark.X), new HumanPlayer(Mark.O, userInterface)));
+        gameTypeOptionToPlayers.put(GameType.GUI_HVH, createPlayers(new GUIHumanPlayer(Mark.X), new GUIHumanPlayer(Mark.O)));
     }
 
     ArrayList<Player> createPlayers(Player player1, Player player2) {
