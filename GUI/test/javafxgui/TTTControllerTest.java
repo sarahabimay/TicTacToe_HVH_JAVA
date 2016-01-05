@@ -14,17 +14,20 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jttt.Core.Board.Mark.*;
 import static org.junit.Assert.assertEquals;
 
 public class TTTControllerTest {
 
     private final int DEFAULT_BOARD_DIMENSION = 3;
+    private final int GUI_WINDOW_HEIGHT = 700;
+    private final int GUI_WINDOW_WIDTH = 600;
     private GUIViewSpy gameViewSpy;
     private TTTController controller;
 
     @Before
     public void setUp() {
-        gameViewSpy = new GUIViewSpy(new Scene(new StackPane(), 700, 600), new BoardDisplay(), null);
+        gameViewSpy = new GUIViewSpy(new Scene(new StackPane(), GUI_WINDOW_HEIGHT, GUI_WINDOW_WIDTH), new BoardDisplay(), null);
         controller = new TTTController(gameViewSpy,
                 new Game(new Board(DEFAULT_BOARD_DIMENSION), GameType.GUI_HVH.getGameTypeOption(), new PlayerFactory()));
         new JFXPanel();
@@ -44,9 +47,9 @@ public class TTTControllerTest {
     @Test
     public void resultIsAWin() {
         Mark currentBoard[] = {
-                Mark.X, Mark.O, Mark.O,
-                Mark.X, Mark.O, Mark.X,
-                Mark.X, Mark.X, Mark.O
+                X, O, O,
+                X, O, X,
+                X, X, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
         Controller controller = new TTTController(
@@ -58,9 +61,9 @@ public class TTTControllerTest {
     @Test
     public void tellGUIDisplayToDisableBoard() {
         Mark currentBoard[] = {
-                Mark.X, Mark.O, Mark.O,
-                Mark.X, Mark.O, Mark.X,
-                Mark.X, Mark.X, Mark.O
+                X, O, O,
+                X, O, X,
+                X, X, O
         };
 
         Board board = new Board(DEFAULT_BOARD_DIMENSION, arrayToList(currentBoard));
@@ -76,9 +79,9 @@ public class TTTControllerTest {
     @Test
     public void handleReplayEvent() {
         Mark currentBoard[] = {
-                Mark.X, Mark.O, Mark.O,
-                Mark.X, Mark.O, Mark.X,
-                Mark.X, Mark.X, Mark.EMPTY
+                X, O, O,
+                X, O, X,
+                X, X, EMPTY
         };
 
         Board board = new Board(DEFAULT_BOARD_DIMENSION, arrayToList(currentBoard));
@@ -92,9 +95,9 @@ public class TTTControllerTest {
     @Test
     public void clickingReplayButtonGeneratesANewGame() {
         Mark currentBoard[] = {
-                Mark.X, Mark.O, Mark.O,
-                Mark.X, Mark.O, Mark.X,
-                Mark.X, Mark.X, Mark.EMPTY
+                X, O, O,
+                X, O, X,
+                X, X, EMPTY
         };
         Board board = new Board(DEFAULT_BOARD_DIMENSION, arrayToList(currentBoard));
         Game game = new Game(board, GameType.GUI_HVH.getGameTypeOption(), new PlayerFactory());

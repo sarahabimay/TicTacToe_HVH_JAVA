@@ -9,12 +9,14 @@ import static org.junit.Assert.assertEquals;
 
 public class EventHandlerTest {
 
+    private final int GUI_WINDOW_HEIGHT = 700;
+    private final int GUI_WINDOW_WIDTH = 600;
     private GUIViewSpy guiViewSpy;
     private NewPlayerMoveEventHandler newMoveEventHandler;
 
     @Before
     public void setUp() {
-        guiViewSpy = new GUIViewSpy(new Scene(new StackPane(), 700, 600), new BoardDisplay(), new EventRegister());
+        guiViewSpy = new GUIViewSpy(new Scene(new StackPane(), GUI_WINDOW_WIDTH, GUI_WINDOW_HEIGHT), new BoardDisplay(), new EventRegister());
         newMoveEventHandler = new NewPlayerMoveEventHandler(guiViewSpy);
     }
 

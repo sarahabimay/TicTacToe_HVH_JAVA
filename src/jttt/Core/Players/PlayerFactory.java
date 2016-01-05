@@ -23,15 +23,6 @@ public class PlayerFactory {
         registerOptionsToGameType();
     }
 
-    public static boolean isValidGameType(int choice) {
-        for (GameType game : GameType.values()){
-            if (game.equalsChoice(choice)){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public boolean isPlayerTypeAvailable(GameType gameType) {
         return gameTypeOptionToPlayers.get(gameType) != null;
     }

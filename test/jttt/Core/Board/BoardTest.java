@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static jttt.Core.Board.Mark.*;
 import static org.junit.Assert.assertEquals;
 
 public class BoardTest {
-    Mark X = Mark.X;
-    Mark O = Mark.O;
-    Mark EMPTY = Mark.EMPTY;
 
     @Test
     public void threeByThreeGameHasNineOpenPositions() {
@@ -42,29 +40,29 @@ public class BoardTest {
     @Test
     public void counterPlayedInOccupiedPosition() {
         Mark currentBoard[] = {
-                X, EMPTY, EMPTY,
-                EMPTY, EMPTY, EMPTY,
-                EMPTY, EMPTY, EMPTY
+                X,      EMPTY, EMPTY,
+                EMPTY,  EMPTY, EMPTY,
+                EMPTY,  EMPTY, EMPTY
         };
         Board board = new Board(3, arrayToList(currentBoard));
         board = board.playCounterInPosition(1, O);
         assertEquals(Arrays.asList(
-                X, EMPTY, EMPTY,
-                EMPTY, EMPTY, EMPTY,
-                EMPTY, EMPTY, EMPTY
+                X,      EMPTY, EMPTY,
+                EMPTY,  EMPTY, EMPTY,
+                EMPTY,  EMPTY, EMPTY
         ), board.getCells());
     }
 
     @Test
     public void foundRowWinInRow1_3x3Game() {
         Mark currentBoard[] = {
-                X, X, X,
-                O, O, EMPTY,
-                EMPTY, EMPTY, EMPTY
+                X,      X,      X,
+                O,      O,      EMPTY,
+                EMPTY,  EMPTY,  EMPTY
         };
         Board playerXRowWin = new Board(3, arrayToList(currentBoard));
         assertEquals(true, playerXRowWin.hasAWinner());
-        assertEquals(Mark.X, playerXRowWin.findWinner());
+        assertEquals(X, playerXRowWin.findWinner());
     }
 
     @Test
@@ -77,7 +75,7 @@ public class BoardTest {
         };
         Board playerXRowWin = new Board(4, arrayToList(currentBoard));
         assertEquals(true, playerXRowWin.hasAWinner());
-        assertEquals(Mark.X, playerXRowWin.findWinner());
+        assertEquals(X, playerXRowWin.findWinner());
     }
 
     @Test
@@ -89,7 +87,7 @@ public class BoardTest {
         };
         Board playerXColumnWin = new Board(3, arrayToList(currentBoard));
         assertEquals(true, playerXColumnWin.hasAWinner());
-        assertEquals(Mark.X, playerXColumnWin.findWinner());
+        assertEquals(X, playerXColumnWin.findWinner());
     }
 
     @Test
@@ -101,7 +99,7 @@ public class BoardTest {
                 X, X, O, X
         };
         Board playerXColumnWin = new Board(4, arrayToList(currentBoard));
-        assertEquals(Mark.X, playerXColumnWin.findWinner());
+        assertEquals(X, playerXColumnWin.findWinner());
         assertEquals(true, playerXColumnWin.hasAWinner());
     }
 
@@ -113,7 +111,7 @@ public class BoardTest {
                 O, O, X
         };
         Board playerXDiagonalWin = new Board(3, arrayToList(currentBoard));
-        assertEquals(Mark.X, playerXDiagonalWin.findWinner());
+        assertEquals(X, playerXDiagonalWin.findWinner());
         assertEquals(true, playerXDiagonalWin.hasAWinner());
     }
 
@@ -126,7 +124,7 @@ public class BoardTest {
                 X, O, O, O
         };
         Board playerXDiagonalWin = new Board(4, arrayToList(currentBoard));
-        assertEquals(Mark.X, playerXDiagonalWin.findWinner());
+        assertEquals(X, playerXDiagonalWin.findWinner());
         assertEquals(true, playerXDiagonalWin.hasAWinner());
     }
 

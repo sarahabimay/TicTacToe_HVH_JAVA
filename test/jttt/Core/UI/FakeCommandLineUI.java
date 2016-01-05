@@ -1,9 +1,11 @@
-package jttt.Core.Fakes;
+package jttt.Core.UI;
 
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 import jttt.Core.Game;
+import jttt.Core.GameType;
 import jttt.Core.Players.PlayerFactory;
+import jttt.UI.BinaryChoice;
 import jttt.UI.UserInterface;
 
 import java.util.ArrayList;
@@ -11,26 +13,20 @@ import java.util.List;
 import java.util.function.IntPredicate;
 
 public class FakeCommandLineUI implements UserInterface {
-    private int DEFAULT_DIMENSION = 3;
-    private int DEFAULT_GAME_TYPE = 3;
+    private final int DEFAULT_DIMENSION = 3;
     private Game game;
-    private List<Integer> dummyInputs = new ArrayList<>();
-    private int playerType = 1;
-    private final int doNotPlayAgainOption = 2;
-    private Mark winner = Mark.EMPTY;
-    private boolean userHasBeenAskedForDimension = false;
-    private boolean userHasBeenAskedForNextPosition = false;
-    private boolean haveDisplayedBoardToUser = false;
-    private boolean haveDisplayedResultToUser = false;
-    private boolean haveAskedUserToQuitGame = false;
-    private boolean haveAskedUserForGameType = false;
-    private boolean haveValidatedGameType = false;
-    private int dummyDimension = 0;
+    private List<Integer> dummyInputs;
+    private int playerType;
+    private int dummyDimension;
 
     public FakeCommandLineUI() {
-        this.game = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAME_TYPE, new PlayerFactory());
+        this.game = new Game(new Board(DEFAULT_DIMENSION), GameType.HVH.getGameTypeOption(), new PlayerFactory());
+        this.playerType = -1;
+        this.dummyDimension = 0;
+        this.dummyInputs = new ArrayList<>();
     }
 
+    @Override
     public void start() {
         createNewGame(requestBoardDimension(), requestGameType());
         playAllMoves();
@@ -44,7 +40,6 @@ public class FakeCommandLineUI implements UserInterface {
         while (!validBoardPosition(nextMove, board)) {
             nextMove = dummyInputs.size() > 0 ? dummyInputs.remove(0) : -1;
         }
-        userHasBeenAskedForNextPosition = true;
         return nextMove;
     }
 
@@ -64,27 +59,50 @@ public class FakeCommandLineUI implements UserInterface {
         return false;
     }
 
+    @Override
     public int requestBoardDimension() {
-        userHasBeenAskedForDimension = true;
         return dummyDimension;
     }
 
+    @Override
     public int requestGameType() {
-        haveAskedUserForGameType = true;
         if (!validate(playerType, this::validGameType)) {
             playerType = -1;
         }
         return playerType;
     }
 
+    @Override
     public int requestPlayAgain() {
-        haveAskedUserToQuitGame = true;
-        return doNotPlayAgainOption;
+        return BinaryChoice.NO.getChoiceOption();
+    }
+
+    @Override
+    public boolean validate(int choiceFromInput, IntPredicate isValidChoice) {
+        return isValidChoice.test(choiceFromInput);
+    }
+
+    @Override
+    public boolean validateDimension(int dimension) {
+        return dimension >= 3;
+    }
+
+    @Override
+    public boolean validReplayChoice(int instruction) {
+        return 0 < instruction && instruction < 3;
+    }
+
+    @Override
+    public boolean validGameType(int choice) {
+        return choice == 1 || choice == 2 || choice == 3;
+    }
+
+    @Override
+    public void displayResult(Mark winner) {
     }
 
     public String displayBoard() {
         String output = boardForDisplay(game.getBoard());
-        haveDisplayedBoardToUser = true;
         return output;
     }
 
@@ -100,33 +118,9 @@ public class FakeCommandLineUI implements UserInterface {
         dummyInputs = inputs;
     }
 
-    public boolean validate(int choiceFromInput, IntPredicate isValidChoice) {
-        return isValidChoice.test(choiceFromInput);
-    }
-
-    public boolean validateDimension(int dimension) {
-        return dimension >= 3;
-    }
-
-    public boolean validReplayChoice(int instruction) {
-        return 0 < instruction && instruction < 3;
-    }
-
-    public boolean validGameType(int choice) {
-        haveValidatedGameType = true;
-        return choice == 1 || choice == 2 || choice == 3;
-    }
-
-    public void displayResult(Mark winner) {
-        if (!winner.isEmpty()) {
-            this.winner = winner;
-        }
-        haveDisplayedResultToUser = true;
-    }
-
     private void playAgain() {
         if (userWantsToPlay(requestPlayAgain())) {
-            game = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAME_TYPE, new PlayerFactory());
+            game = new Game(new Board(DEFAULT_DIMENSION), GameType.HVH.getGameTypeOption(), new PlayerFactory());
             start();
         }
     }
@@ -169,19 +163,5 @@ public class FakeCommandLineUI implements UserInterface {
 
     private boolean userWantsToPlay(int choice) {
         return BinaryChoice.YES.equalsChoice(choice);
-    }
-    private enum BinaryChoice {
-        YES(1),
-        NO(2);
-
-        private int choiceOption;
-
-        BinaryChoice(int choiceOption) {
-            this.choiceOption = choiceOption;
-        }
-
-        public boolean equalsChoice(int choice) {
-            return choiceOption == choice;
-        }
     }
 }

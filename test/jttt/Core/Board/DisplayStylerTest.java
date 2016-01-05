@@ -5,6 +5,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jttt.Core.Board.Mark.EMPTY;
+import static jttt.Core.Board.Mark.O;
+import static jttt.Core.Board.Mark.X;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
@@ -12,9 +15,6 @@ import static org.junit.Assert.assertThat;
 
 public class DisplayStylerTest {
 
-    private Mark X = Mark.X;
-    private Mark O = Mark.O;
-    private Mark E = Mark.EMPTY;
     private String ANSI_RESET = "\u001B[0m";
     private String ANSI_BLUE = "\u001B[34m";
     private String ANSI_RED = "\u001B[31m";
@@ -23,10 +23,10 @@ public class DisplayStylerTest {
     @Test
     public void emptyElementDisplayed() {
         Mark currentBoard[] = {
-                E, E, E, E,
-                E, E, E, E,
-                E, E, X, E,
-                E, E, O, X,
+                EMPTY, EMPTY, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY, EMPTY,
+                EMPTY, EMPTY, X,     EMPTY,
+                EMPTY, EMPTY, EMPTY, X,
         };
         Board board = new Board(4, arrayToList(currentBoard));
         DisplayStyler styler = new DisplayStyler();
@@ -42,10 +42,11 @@ public class DisplayStylerTest {
     @Test
     public void alternateMarkColours() {
         Mark currentBoard[] = {
-                X, O, E, E,
-                E, X, E, E,
-                E, O, X, E,
-                E, E, O, X,
+                X,      O,      EMPTY,  EMPTY,
+                X,      O,      EMPTY,  EMPTY,
+                EMPTY,  X,      EMPTY,  EMPTY,
+                EMPTY,  O,      X,      EMPTY,
+                EMPTY,  EMPTY,  O,      X,
         };
         Board board = new Board(4, arrayToList(currentBoard));
         DisplayStyler styler = new DisplayStyler();
@@ -60,10 +61,10 @@ public class DisplayStylerTest {
     @Test
     public void markElementDisplayed() {
         Mark currentBoard[] = {
-                E, E, E, E,
-                E, E, E, E,
-                E, E, X, O,
-                E, E, O, X,
+                EMPTY, EMPTY, EMPTY,    EMPTY,
+                EMPTY, EMPTY, EMPTY,    EMPTY,
+                EMPTY, EMPTY, X,        O,
+                EMPTY, EMPTY, O,        X,
         };
         Board board = new Board(4, arrayToList(currentBoard));
         DisplayStyler styler = new DisplayStyler();
