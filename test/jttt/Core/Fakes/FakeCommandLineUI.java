@@ -16,7 +16,7 @@ public class FakeCommandLineUI implements UserInterface {
     private Game game;
     private List<Integer> dummyInputs = new ArrayList<>();
     private int playerType = 1;
-    private boolean playAgain = false;
+    private final int doNotPlayAgainOption = 2;
     private Mark winner = Mark.EMPTY;
     private boolean userHasBeenAskedForDimension = false;
     private boolean userHasBeenAskedForNextPosition = false;
@@ -77,9 +77,9 @@ public class FakeCommandLineUI implements UserInterface {
         return playerType;
     }
 
-    public boolean requestPlayAgain() {
+    public int requestPlayAgain() {
         haveAskedUserToQuitGame = true;
-        return playAgain;
+        return doNotPlayAgainOption;
     }
 
     public String displayBoard() {
@@ -87,6 +87,7 @@ public class FakeCommandLineUI implements UserInterface {
         haveDisplayedBoardToUser = true;
         return output;
     }
+
     public void setGameType(int gameType) {
         this.playerType = gameType;
     }
@@ -124,14 +125,14 @@ public class FakeCommandLineUI implements UserInterface {
     }
 
     private void playAgain() {
-        if (requestPlayAgain()) {
+        if (userWantsToPlay(requestPlayAgain())) {
             game = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAME_TYPE, new PlayerFactory());
             start();
         }
     }
 
     private void createNewGame(int dimension, int gameType) {
-        game = new Game(new Board(dimension), gameType, new PlayerFactory() );
+        game = new Game(new Board(dimension), gameType, new PlayerFactory());
     }
 
     private void playAllMoves() {
@@ -164,5 +165,23 @@ public class FakeCommandLineUI implements UserInterface {
 
     private int calculateDimension(Board board) {
         return (int) Math.sqrt(board.boardSize());
+    }
+
+    private boolean userWantsToPlay(int choice) {
+        return BinaryChoice.YES.equalsChoice(choice);
+    }
+    private enum BinaryChoice {
+        YES(1),
+        NO(2);
+
+        private int choiceOption;
+
+        BinaryChoice(int choiceOption) {
+            this.choiceOption = choiceOption;
+        }
+
+        public boolean equalsChoice(int choice) {
+            return choiceOption == choice;
+        }
     }
 }

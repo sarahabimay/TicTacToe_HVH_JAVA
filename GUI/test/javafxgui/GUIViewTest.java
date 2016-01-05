@@ -7,6 +7,11 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
+import jttt.Core.Game;
+import jttt.Core.GameType;
+import jttt.Core.Players.GUIHumanPlayer;
+import jttt.Core.Players.Player;
+import jttt.Core.Players.PlayerFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,7 +31,7 @@ public class GUIViewTest {
         new JFXPanel();
         defaultBoard = new Board(3);
         eventRegisterSpy = new EventRegisterSpy();
-        guiView = new GUIView(new Scene(new StackPane(),700, 600), new BoardDisplay(), eventRegisterSpy);
+        guiView = new GUIView(new Scene(new StackPane(), 700, 600), new BoardDisplay(), eventRegisterSpy);
         scene = guiView.displayGUI(defaultBoard);
     }
 
@@ -95,6 +100,19 @@ public class GUIViewTest {
         assertThat(replayButton, notNullValue());
         assertEquals(true, replayButton.isVisible());
     }
+
+    @Test
+    public void getCurrentGUIHumanPlayer() {
+        guiView.setController(new TTTControllerSpy(guiView,
+                new Game(new Board(3),
+                        GameType.GUI_HVH.getGameTypeOption(),
+                        new PlayerFactory())));
+        Player currentPlayer = guiView.getCurrentPlayer();
+        assertEquals(GUIHumanPlayer.class, currentPlayer.getClass());
+        assertEquals(Mark.X, currentPlayer.getMark());
+        assertEquals(Mark.O, currentPlayer.opponentCounter());
+    }
+
     @Test
     public void registerAllBoardButtonsWithEventHandler() {
         guiView.displayBoard(defaultBoard);

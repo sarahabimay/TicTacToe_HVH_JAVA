@@ -17,7 +17,8 @@ import static org.junit.Assert.assertThat;
 
 public class CommandLineUITest {
 
-    private final int CVH_GAME_TYPE = 3;
+    private final int CVH_GAME_TYPE_OPTION = 3;
+    private final int NO = 2;
     private int DEFAULT_GAMETYPE = 1;
     private final int DEFAULT_DIMENSION = 3;
     private OutputStream output;
@@ -63,10 +64,10 @@ public class CommandLineUITest {
     public void userChoosesToQuit() {
         InputStream inputStream = new ByteArrayInputStream("2\n".getBytes());
         CommandLineUI cli = new CommandLineUI(
-                new Game(new Board(DEFAULT_DIMENSION), CVH_GAME_TYPE, new PlayerFactory()),
+                new Game(new Board(DEFAULT_DIMENSION), CVH_GAME_TYPE_OPTION, new PlayerFactory()),
                 new DisplayStyler(),
                 inputStream, writer);
-        assertEquals(false, cli.requestPlayAgain());
+        assertEquals(NO, cli.requestPlayAgain());
         assertThat(output.toString(), containsString(cli.REPLAY_REQUEST));
     }
 
@@ -74,7 +75,7 @@ public class CommandLineUITest {
     public void userChoosesToReplay() {
         InputStream inputStream = new ByteArrayInputStream("1\n".getBytes());
         CommandLineUI cli = new CommandLineUI(
-                new Game(new Board(DEFAULT_DIMENSION), CVH_GAME_TYPE, new PlayerFactory()),
+                new Game(new Board(DEFAULT_DIMENSION), CVH_GAME_TYPE_OPTION, new PlayerFactory()),
                 new DisplayStyler(),
                 inputStream, writer);
         assertEquals(true, cli.playAgain());
@@ -85,7 +86,7 @@ public class CommandLineUITest {
     public void requestBoardSizeCalled() {
         InputStream inputStream = new ByteArrayInputStream("3\n".getBytes());
         CommandLineUI cli = new CommandLineUI(
-                new Game(new Board(DEFAULT_DIMENSION), CVH_GAME_TYPE, new PlayerFactory()),
+                new Game(new Board(DEFAULT_DIMENSION), CVH_GAME_TYPE_OPTION, new PlayerFactory()),
                 new DisplayStyler(),
                 inputStream, writer);
         assertEquals(3, cli.requestBoardDimension());

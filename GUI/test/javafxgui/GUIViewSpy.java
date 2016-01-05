@@ -5,6 +5,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
+import jttt.Core.Players.GUIHumanPlayer;
+import jttt.Core.Players.Player;
 
 class GUIViewSpy extends GUIView {
     private boolean hasLandingPageBeenRendered = false;
@@ -16,11 +18,17 @@ class GUIViewSpy extends GUIView {
     private StackPane root;
     private boolean hasButtonBeenClicked = false;
     private boolean hasReplayButtonBeenSelected = false;
+    private boolean hasNextGUIPlayerBeenFound = false;
 
     public GUIViewSpy(Scene scene, BoardDisplay boardDisplay, EventRegister eventRegister) {
         super(scene, boardDisplay, null);
         this.root = new StackPane();
         this.scene = new Scene(root, 700, 675);
+    }
+
+    public Player getCurrentPlayer() {
+        hasNextGUIPlayerBeenFound = true;
+        return new GUIHumanPlayer(Mark.X);
     }
 
     public Scene displayGUI(Board board) {
@@ -44,7 +52,7 @@ class GUIViewSpy extends GUIView {
     }
 
     @Override
-    public void newMovePlayedAtPosition(String newMovePosition) {
+    public void playGame() {
         hasButtonBeenClicked = true;
     }
 
@@ -83,5 +91,9 @@ class GUIViewSpy extends GUIView {
 
     public boolean hasReplayGameBeenSelected() {
         return hasReplayButtonBeenSelected;
+    }
+
+    public boolean hasNextGUIPlayerBeenFound() {
+        return hasNextGUIPlayerBeenFound;
     }
 }

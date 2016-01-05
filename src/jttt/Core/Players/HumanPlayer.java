@@ -6,15 +6,14 @@ import jttt.UI.UserInterface;
 
 public class HumanPlayer extends Player {
 
+    private final UserInterface userInterface;
+
     public HumanPlayer(Mark mark, UserInterface userInterface) {
-        super(mark, Type.HUMAN, userInterface);
+        super(mark, Type.HUMAN);
+        this.userInterface = userInterface;
     }
 
     public int getNextPosition(Board board) {
         return userInterface.requestNextPosition(board);
-    }
-
-    public Board playTurn(Board board, int newPosition) {
-        return board.playCounterInPosition(newPosition, mark);
     }
 }

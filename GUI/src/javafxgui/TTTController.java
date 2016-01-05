@@ -2,11 +2,12 @@ package javafxgui;
 
 import jttt.Core.Board.Board;
 import jttt.Core.Game;
+import jttt.Core.GameType;
+import jttt.Core.Players.Player;
 import jttt.Core.Players.PlayerFactory;
 
 public class TTTController implements Controller {
     private final int DEFAULT_BOARD_DIMENSION = 3;
-    private final int HVH_GAMETYPE = 1;
     private GUIView guiView;
     private Game game;
 
@@ -14,6 +15,10 @@ public class TTTController implements Controller {
         this.guiView = guiView;
         guiView.setController(this);
         this.game = game;
+    }
+
+    public Player getCurrentPlayer() {
+        return game.getNextPlayer();
     }
 
     public void displayGUI() {
@@ -25,14 +30,14 @@ public class TTTController implements Controller {
     }
 
     public void displayResult() {
-        if (foundWinOrDraw()){
+        if (foundWinOrDraw()) {
             guiView.disableBoard(game.getBoard());
             guiView.displayResult(game.findWinner());
         }
     }
 
-    public void playMoveAtPosition(String id) {
-        playMoveOnGameBoard(id);
+    public void playGame() {
+        playMoveOnGameBoard();
         displayBoard();
         displayResult();
         displayPlayAgain();
@@ -48,16 +53,16 @@ public class TTTController implements Controller {
     }
 
     public void displayPlayAgain() {
-        if (foundWinOrDraw()){
+        if (foundWinOrDraw()) {
             guiView.makePlayAgainVisible();
         }
     }
 
-    private void playMoveOnGameBoard(String id) {
-        game.playMove(Integer.parseInt(id));
+    private void playMoveOnGameBoard() {
+        game.playCurrentPlayerMove();
     }
 
     private void clearGameBoard() {
-        game = new Game(new Board(DEFAULT_BOARD_DIMENSION), HVH_GAMETYPE, new PlayerFactory());
+        game = new Game(new Board(DEFAULT_BOARD_DIMENSION), GameType.GUI_HVH.getGameTypeOption(), new PlayerFactory());
     }
 }

@@ -15,7 +15,7 @@ public interface UserInterface {
 
     int requestNextPosition(Board board);
 
-    boolean requestPlayAgain();
+    int requestPlayAgain();
 
     void displayResult(Mark winner);
 

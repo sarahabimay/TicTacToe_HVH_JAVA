@@ -12,6 +12,7 @@ import static org.junit.Assert.assertEquals;
 
 public class PlayerFactoryTest {
 
+    private final int GAME_TYPE_CVH = 3;
     public PlayerFactory playerFactory;
 
     @Before
@@ -22,14 +23,15 @@ public class PlayerFactoryTest {
 
     @Test
     public void invalidGameTypeChoice() {
-        Assert.assertEquals(false, playerFactory.validPlayerTypes(0));
+        Assert.assertEquals(false, playerFactory.isValidGameType(0));
     }
 
     @Test
     public void validGameTypeChoice() {
-        Assert.assertEquals(true, playerFactory.validPlayerTypes(1));
-        Assert.assertEquals(true, playerFactory.validPlayerTypes(2));
-        Assert.assertEquals(true, playerFactory.validPlayerTypes(3));
+        Assert.assertEquals(true, playerFactory.isValidGameType(1));
+        Assert.assertEquals(true, playerFactory.isValidGameType(2));
+        Assert.assertEquals(true, playerFactory.isValidGameType(3));
+        Assert.assertEquals(true, playerFactory.isValidGameType(4));
     }
 
     @Test
@@ -48,28 +50,38 @@ public class PlayerFactoryTest {
     }
 
     @Test
-    public void requestHVHPlayer() {
+    public void requestHVHPlayers() {
         PlayerFactory playerFactory = new PlayerFactory(new FakeCommandLineUI());
-        ArrayList<Player> players = playerFactory.generatePlayersFor(1);
+        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.HVH.getGameTypeOption());
         assertEquals(2, players.size());
         Assert.assertEquals(HumanPlayer.class, players.get(0).getClass());
         Assert.assertEquals(HumanPlayer.class, players.get(1).getClass());
     }
 
     @Test
-    public void requestHVCPlayer() {
+    public void requestHVCPlayers() {
         PlayerFactory playerFactory = new PlayerFactory(new FakeCommandLineUI());
-        ArrayList<Player> players = playerFactory.generatePlayersFor(2);
+        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.HVC.getGameTypeOption());
         assertEquals(2, players.size());
         Assert.assertEquals(HumanPlayer.class, players.get(0).getClass());
         Assert.assertEquals(ComputerPlayer.class, players.get(1).getClass());
     }
+
     @Test
-    public void requestCVHPlayer() {
+    public void requestCVHPlayers() {
         PlayerFactory playerFactory = new PlayerFactory(new FakeCommandLineUI());
-        ArrayList<Player> players = playerFactory.generatePlayersFor(2);
+        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.CVH.getGameTypeOption());
         assertEquals(2, players.size());
-        Assert.assertEquals(ComputerPlayer.class, players.get(1).getClass());
-        Assert.assertEquals(HumanPlayer.class, players.get(0).getClass());
+        Assert.assertEquals(ComputerPlayer.class, players.get(0).getClass());
+        Assert.assertEquals(HumanPlayer.class, players.get(1).getClass());
+    }
+
+    @Test
+    public void requestGUIHumanVGUIHumanPlayers() {
+        PlayerFactory playerFactory = new PlayerFactory();
+        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.GUI_HVH.getGameTypeOption());
+        assertEquals(2, players.size());
+        Assert.assertEquals(GUIHumanPlayer.class, players.get(0).getClass());
+        Assert.assertEquals(GUIHumanPlayer.class, players.get(1).getClass());
     }
 }
