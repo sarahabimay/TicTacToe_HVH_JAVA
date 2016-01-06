@@ -2,7 +2,7 @@ package jttt.Core.Players;
 
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
-import jttt.Core.Fakes.FakeCommandLineUI;
+import jttt.Core.UI.FakeCommandLineUI;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

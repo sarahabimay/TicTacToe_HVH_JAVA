@@ -182,19 +182,4 @@ public class CommandLineUI implements UserInterface {
         }
         return 0;
     }
-
-    private enum BinaryChoice {
-        YES(1),
-        NO(2);
-
-        private int choiceOption;
-
-        BinaryChoice(int choiceOption) {
-            this.choiceOption = choiceOption;
-        }
-
-        public boolean equalsChoice(int choice) {
-            return choiceOption == choice;
-        }
-    }
 }

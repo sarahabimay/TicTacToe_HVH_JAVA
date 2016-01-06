@@ -21,6 +21,8 @@ import static org.junit.Assert.assertThat;
 
 public class GUIViewTest {
 
+    private final int WINDOW_HEIGHT = 700;
+    private final int WINDOW_WIDTH = 600;
     private GUIView guiView;
     private Scene scene;
     private Board defaultBoard;
@@ -31,7 +33,7 @@ public class GUIViewTest {
         new JFXPanel();
         defaultBoard = new Board(3);
         eventRegisterSpy = new EventRegisterSpy();
-        guiView = new GUIView(new Scene(new StackPane(), 700, 600), new BoardDisplay(), eventRegisterSpy);
+        guiView = new GUIView(new Scene(new StackPane(), WINDOW_HEIGHT, WINDOW_WIDTH), new BoardDisplay(), eventRegisterSpy);
         scene = guiView.displayGUI(defaultBoard);
     }
 
@@ -103,7 +105,7 @@ public class GUIViewTest {
 
     @Test
     public void getCurrentGUIHumanPlayer() {
-        guiView.setController(new TTTControllerSpy(guiView,
+        guiView.setController(new TTTControllerStub(guiView,
                 new Game(new Board(3),
                         GameType.GUI_HVH.getGameTypeOption(),
                         new PlayerFactory())));

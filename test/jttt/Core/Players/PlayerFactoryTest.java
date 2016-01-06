@@ -1,6 +1,6 @@
 package jttt.Core.Players;
 
-import jttt.Core.Fakes.FakeCommandLineUI;
+import jttt.Core.UI.FakeCommandLineUI;
 import jttt.Core.GameType;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,26 +12,12 @@ import static org.junit.Assert.assertEquals;
 
 public class PlayerFactoryTest {
 
-    private final int GAME_TYPE_CVH = 3;
     public PlayerFactory playerFactory;
 
     @Before
     public void setUp() throws Exception {
         playerFactory = new PlayerFactory();
         playerFactory.registerGameTypeWithPlayerTypes();
-    }
-
-    @Test
-    public void invalidGameTypeChoice() {
-        Assert.assertEquals(false, playerFactory.isValidGameType(0));
-    }
-
-    @Test
-    public void validGameTypeChoice() {
-        Assert.assertEquals(true, playerFactory.isValidGameType(1));
-        Assert.assertEquals(true, playerFactory.isValidGameType(2));
-        Assert.assertEquals(true, playerFactory.isValidGameType(3));
-        Assert.assertEquals(true, playerFactory.isValidGameType(4));
     }
 
     @Test

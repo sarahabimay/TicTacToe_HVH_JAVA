@@ -10,10 +10,13 @@ import jttt.Core.GameType;
 import jttt.Core.Players.PlayerFactory;
 
 public class Main extends Application {
+    private final int GUI_WINDOW_HEIGHT = 700;
+    private final int GUI_WINDOW_WIDTH = 675;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("TicTacToe");
-        Scene scene = new Scene(new StackPane(), 700, 675);
+        Scene scene = new Scene(new StackPane(), GUI_WINDOW_HEIGHT, GUI_WINDOW_WIDTH);
         scene.getStylesheets().add(Main.class.getResource("javafxgui.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();

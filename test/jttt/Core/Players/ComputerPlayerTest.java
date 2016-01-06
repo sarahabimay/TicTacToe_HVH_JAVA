@@ -2,7 +2,7 @@ package jttt.Core.Players;
 
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
-import jttt.Core.Fakes.FakeCommandLineUI;
+import jttt.Core.UI.FakeCommandLineUI;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static jttt.Core.Board.Mark.*;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -19,29 +20,26 @@ public class ComputerPlayerTest {
     private FakeCommandLineUI fakeUI;
     private ComputerPlayer computerXPlayer;
     private ComputerPlayer computerOPlayer;
-    private Mark X = Mark.X;
-    private Mark O = Mark.O;
-    private Mark E = Mark.EMPTY;
 
     @Before
     public void setUp() {
         fakeUI = new FakeCommandLineUI();
-        computerXPlayer = new ComputerPlayer(Mark.X);
-        computerOPlayer = new ComputerPlayer(Mark.O);
+        computerXPlayer = new ComputerPlayer(X);
+        computerOPlayer = new ComputerPlayer(O);
     }
 
     @Test
     public void createComputerPlayerType() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(1));
         fakeUI.addDummyHumanMoves(initialState);
-        ComputerPlayer computer = new ComputerPlayer(Mark.X);
+        ComputerPlayer computer = new ComputerPlayer(X);
         Assert.assertEquals(ComputerPlayer.class, computer.getClass());
     }
 
     @Test
     public void getPlayersOpponent() {
-        Player computerPlayer = new ComputerPlayer(Mark.O);
-        Assert.assertEquals(Mark.X, computerPlayer.opponentCounter());
+        Player computerPlayer = new ComputerPlayer(O);
+        Assert.assertEquals(X, computerPlayer.opponentCounter());
     }
 
     @Test
@@ -50,109 +48,109 @@ public class ComputerPlayerTest {
         fakeUI.setGameType(2);
         Board board = new Board(3);
         int nextMove = computerXPlayer.getNextPosition(board);
-        board.playCounterInPosition(nextMove, Mark.X);
+        board.playCounterInPosition(nextMove, X);
         assertEquals(computerXPlayer.getMark(), board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
     public void oneChoiceForAlphaBetaAlgorithm() {
         Mark currentBoard[] = {
-                X, O, E,
+                X, O, EMPTY,
                 O, X, X,
                 X, O, O
         };
         Board board = new Board(3, arrayToList(currentBoard));
         int nextMove = computerXPlayer.getNextPosition(board);
-        board.playCounterInPosition(nextMove, Mark.X);
+        board.playCounterInPosition(nextMove, X);
         assertEquals(X, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
     public void twoChoicesForAlphaBetaAlgorithm() {
         Mark currentBoard[] = {
-                X, X, E,
+                X, X, EMPTY,
                 X, O, X,
-                O, O, E
+                O, O, EMPTY
         };
         Board board = new Board(3, arrayToList(currentBoard));
         int nextMove = computerXPlayer.getNextPosition(board);
-        board.playCounterInPosition(nextMove, Mark.X);
+        board.playCounterInPosition(nextMove, X);
         assertEquals(X, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
     public void threeChoicesForAlphaBetaAlgorithm() {
         Mark currentBoard[] = {
-                X, X, E,
-                E, O, X,
-                O, O, E
+                X,      X,  EMPTY,
+                EMPTY,  O,  X,
+                O,      O,  EMPTY
         };
         Board board = new Board(3, arrayToList(currentBoard));
         int nextMove = computerXPlayer.getNextPosition(board);
-        board.playCounterInPosition(nextMove, Mark.X);
+        board.playCounterInPosition(nextMove, X);
         assertEquals(X, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
     public void fourChoicesForAlphaBetaAlgorithm() {
         Mark currentBoard[] = {
-                X, X, E,
-                E, O, X,
-                E, O, E
+                X,      X,  EMPTY,
+                EMPTY,  O,  X,
+                EMPTY,  O,  EMPTY
         };
         Board board = new Board(3, arrayToList(currentBoard));
         int nextMove = computerOPlayer.getNextPosition(board);
-        board.playCounterInPosition(nextMove, Mark.O);
+        board.playCounterInPosition(nextMove, O);
         assertEquals(O, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
     public void elevenOptionsAlphaBetaAlphaBeta_4x4() {
         Mark currentBoard[] = {
-                E, E, E, E,
-                E, X, E, E,
-                E, E, X, E,
-                E, O, O, X,
+                EMPTY,  EMPTY,   EMPTY,  EMPTY,
+                EMPTY,  X,       EMPTY,  EMPTY,
+                EMPTY,  EMPTY,   X,      EMPTY,
+                EMPTY,  O,       O,      X,
         };
         Board board = new Board(4, arrayToList(currentBoard));
         int nextMove = computerOPlayer.getNextPosition(board);
-        board.playCounterInPosition(nextMove, Mark.O);
+        board.playCounterInPosition(nextMove, O);
         assertEquals(O, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
     public void firstMoveIsAI_3x3() {
         Mark currentBoard[] = {
-                E, E, E,
-                E, E, E,
-                E, E, E
+                EMPTY, EMPTY, EMPTY ,
+                EMPTY, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY
         };
         Board board = new Board(3, arrayToList(currentBoard));
         int nextMove = computerOPlayer.getNextPosition(board);
-        board.playCounterInPosition(nextMove, Mark.O);
+        board.playCounterInPosition(nextMove, O);
         assertEquals(O, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
     public void firstMoveIsAI_RandomlySelectedStrategy_4x4() {
         Mark currentBoard[] = {
-                E, E, E, E,
-                E, E, E, E,
-                E, E, E, E,
-                E, E, E, E,
+                EMPTY, EMPTY, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY, EMPTY,
+                EMPTY, EMPTY, EMPTY, EMPTY,
         };
         Board board = new Board(4, arrayToList(currentBoard));
         int nextMove = computerXPlayer.getNextPosition(board);
-        board = board.playCounterInPosition(nextMove, Mark.X);
-        assertThat(board.getCells(), hasItem(X) );
+        board = board.playCounterInPosition(nextMove, X);
+        assertThat(board.getCells(), hasItem(X));
     }
 
     @Test
     public void aiPlayerShouldBlockOpponentWin_1() {
         Mark currentBoard[] = {
-                X, X, E,
-                E, O, X,
-                O, X, O
+                X,      X,  EMPTY,
+                EMPTY,  O,  X,
+                O,      X,  O
         };
         Board board = new Board(3, arrayToList(currentBoard));
         int nextMove = computerOPlayer.getNextPosition(board);
@@ -162,9 +160,9 @@ public class ComputerPlayerTest {
     @Test
     public void aiPlayerShouldBlockOpponentWin_2() {
         Mark currentBoard[] = {
-                E, E, X,
-                O, X, E,
-                E, E, E
+                EMPTY,  EMPTY,  X,
+                O,      X,      EMPTY,
+                EMPTY,  EMPTY,  EMPTY
         };
         Board board = new Board(3, arrayToList(currentBoard));
         int nextMove = computerOPlayer.getNextPosition(board);
@@ -174,9 +172,9 @@ public class ComputerPlayerTest {
     @Test
     public void aiPlayerShouldChooseWinningPosition() {
         Mark currentBoard[] = {
-                X, E, E,
-                E, O, E,
-                O, E, X
+                X,      EMPTY,  EMPTY,
+                EMPTY,  O,      EMPTY,
+                O,      EMPTY,  X
         };
         Board board = new Board(3, arrayToList(currentBoard));
         int nextMove = computerOPlayer.getNextPosition(board);
@@ -186,26 +184,26 @@ public class ComputerPlayerTest {
     @Test
     public void aiPlayerShouldPicksCenter() {
         Mark currentBoard[] = {
-                X, E, E,
-                E, E, E,
-                E, E, E
+                X,      EMPTY, EMPTY,
+                EMPTY,  EMPTY, EMPTY,
+                EMPTY,  EMPTY, EMPTY,
         };
         Board board = new Board(3, arrayToList(currentBoard));
         int nextMove = computerOPlayer.getNextPosition(board);
-        board.playCounterInPosition(nextMove, Mark.O);
+        board.playCounterInPosition(nextMove, O);
         assertEquals(O, board.findMarkAtDisplayPosition(nextMove));
     }
 
     @Test
     public void aiVsPerfectPlayerAIMustPickAnEdge() {
         Mark currentBoard[] = {
-                X, E, E,
-                E, O, E,
-                E, E, X
+                X,      EMPTY,  EMPTY,
+                EMPTY,  O,      EMPTY,
+                EMPTY,  EMPTY,  X
         };
         Board board = new Board(3, arrayToList(currentBoard));
         int nextMove = computerOPlayer.getNextPosition(board);
-        board.playCounterInPosition(nextMove, Mark.O);
+        board.playCounterInPosition(nextMove, O);
         assertEquals(O, board.findMarkAtDisplayPosition(nextMove));
     }
 

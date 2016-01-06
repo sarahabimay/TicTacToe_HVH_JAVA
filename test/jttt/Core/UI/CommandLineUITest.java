@@ -4,7 +4,9 @@ import jttt.Core.Board.Board;
 import jttt.Core.Board.DisplayStyler;
 import jttt.Core.Board.Mark;
 import jttt.Core.Game;
+import jttt.Core.GameType;
 import jttt.Core.Players.PlayerFactory;
+import jttt.UI.BinaryChoice;
 import jttt.UI.CommandLineUI;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,9 +19,6 @@ import static org.junit.Assert.assertThat;
 
 public class CommandLineUITest {
 
-    private final int CVH_GAME_TYPE_OPTION = 3;
-    private final int NO = 2;
-    private int DEFAULT_GAMETYPE = 1;
     private final int DEFAULT_DIMENSION = 3;
     private OutputStream output;
     private InputStream inputStream;
@@ -32,7 +31,7 @@ public class CommandLineUITest {
         output = new ByteArrayOutputStream();
         writer = new OutputStreamWriter(output);
         inputStream = new ByteArrayInputStream("1".getBytes());
-        game = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAMETYPE, new PlayerFactory());
+        game = new Game(new Board(DEFAULT_DIMENSION), GameType.HVH.getGameTypeOption(), new PlayerFactory());
         cli = new CommandLineUI(game, new DisplayStyler(), inputStream, writer);
     }
 
@@ -53,7 +52,7 @@ public class CommandLineUITest {
                 new Game(new Board(DEFAULT_DIMENSION), DEFAULT_DIMENSION, new PlayerFactory()),
                 new DisplayStylerFake(),
                 inputStream, writer);
-        cli.createNewGame(DEFAULT_GAMETYPE, DEFAULT_DIMENSION);
+        cli.createNewGame(GameType.HVH.getGameTypeOption(), DEFAULT_DIMENSION);
         cli.displayBoard();
         assertThat(output.toString(),
                 containsString(String.format("Board Size: %s, Empty Positions: %s",
@@ -64,10 +63,10 @@ public class CommandLineUITest {
     public void userChoosesToQuit() {
         InputStream inputStream = new ByteArrayInputStream("2\n".getBytes());
         CommandLineUI cli = new CommandLineUI(
-                new Game(new Board(DEFAULT_DIMENSION), CVH_GAME_TYPE_OPTION, new PlayerFactory()),
+                new Game(new Board(DEFAULT_DIMENSION), GameType.CVH.getGameTypeOption(), new PlayerFactory()),
                 new DisplayStyler(),
                 inputStream, writer);
-        assertEquals(NO, cli.requestPlayAgain());
+        assertEquals(BinaryChoice.NO.getChoiceOption(), cli.requestPlayAgain());
         assertThat(output.toString(), containsString(cli.REPLAY_REQUEST));
     }
 
@@ -75,7 +74,7 @@ public class CommandLineUITest {
     public void userChoosesToReplay() {
         InputStream inputStream = new ByteArrayInputStream("1\n".getBytes());
         CommandLineUI cli = new CommandLineUI(
-                new Game(new Board(DEFAULT_DIMENSION), CVH_GAME_TYPE_OPTION, new PlayerFactory()),
+                new Game(new Board(DEFAULT_DIMENSION), GameType.CVH.getGameTypeOption(), new PlayerFactory()),
                 new DisplayStyler(),
                 inputStream, writer);
         assertEquals(true, cli.playAgain());
@@ -86,7 +85,7 @@ public class CommandLineUITest {
     public void requestBoardSizeCalled() {
         InputStream inputStream = new ByteArrayInputStream("3\n".getBytes());
         CommandLineUI cli = new CommandLineUI(
-                new Game(new Board(DEFAULT_DIMENSION), CVH_GAME_TYPE_OPTION, new PlayerFactory()),
+                new Game(new Board(DEFAULT_DIMENSION), GameType.CVH.getGameTypeOption(), new PlayerFactory()),
                 new DisplayStyler(),
                 inputStream, writer);
         assertEquals(3, cli.requestBoardDimension());

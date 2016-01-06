@@ -15,8 +15,4 @@ public enum GameType {
     public int getGameTypeOption() {
         return gameTypeOption;
     }
-
-    public boolean equalsChoice(int choice) {
-        return gameTypeOption == choice;
-    }
 }

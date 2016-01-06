@@ -9,13 +9,13 @@ import jttt.Core.Players.GUIHumanPlayer;
 import jttt.Core.Players.Player;
 
 class GUIViewSpy extends GUIView {
+    private Scene scene;
+    private StackPane root;
     private boolean hasLandingPageBeenRendered = false;
     private boolean hasBoardBeenReDisplayed = false;
     private boolean hasBoardBeenDisabled = false;
     private boolean hasResultBeenAnnounced = false;
     private boolean hasReplayButtonBeenDisplayed = false;
-    private Scene scene;
-    private StackPane root;
     private boolean hasButtonBeenClicked = false;
     private boolean hasReplayButtonBeenSelected = false;
     private boolean hasNextGUIPlayerBeenFound = false;

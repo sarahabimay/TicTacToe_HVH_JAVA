@@ -13,20 +13,15 @@ import static org.junit.Assert.assertEquals;
 
 public class GameTest {
 
-    private int CVH_GAME_TYPE = 3;
-    private int DEFAULT_DIMENSION = 3;
+    private final int DEFAULT_DIMENSION = 3;
     private final int ZERO_DIMENSION_BOARD = 0;
-    private int DEFAULT_GAMETYPE = 1;
     private Game defaultGame;
     private Game zeroGame;
-    Mark X = Mark.X;
-    Mark O = Mark.O;
-    Mark EMPTY = Mark.EMPTY;
 
     @Before
     public void setUp() {
-        zeroGame = new Game(new Board(ZERO_DIMENSION_BOARD), DEFAULT_GAMETYPE, new PlayerFactory());
-        defaultGame = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAMETYPE, new PlayerFactory());
+        zeroGame = new Game(new Board(ZERO_DIMENSION_BOARD), GameType.HVH.getGameTypeOption(), new PlayerFactory());
+        defaultGame = new Game(new Board(DEFAULT_DIMENSION), GameType.HVH.getGameTypeOption(), new PlayerFactory());
     }
 
     @Test
@@ -61,7 +56,7 @@ public class GameTest {
     @Test
     @Ignore
     public void playAllMoves() {
-        Game game = new Game(new Board(DEFAULT_DIMENSION), CVH_GAME_TYPE, new PlayerFactory());
+        Game game = new Game(new Board(DEFAULT_DIMENSION), GameType.CVH.getGameTypeOption(), new PlayerFactory());
         game.playCurrentPlayerMove();
     }
 
