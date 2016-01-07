@@ -36,6 +36,16 @@ public class PlayerFactoryTest {
     }
 
     @Test
+    public void checkFactoryCanCreateGUIHVHPlayers() {
+        Assert.assertEquals(true, playerFactory.isPlayerTypeAvailable(GameType.GUI_HVH));
+    }
+
+    @Test
+    public void checkFactoryCanCreateCVGUI_HPlayers() {
+        Assert.assertEquals(true, playerFactory.isPlayerTypeAvailable(GameType.CVGUI));
+    }
+
+    @Test
     public void requestHVHPlayers() {
         PlayerFactory playerFactory = new PlayerFactory(new FakeCommandLineUI());
         ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.HVH.getGameTypeOption());
@@ -68,6 +78,15 @@ public class PlayerFactoryTest {
         ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.GUI_HVH.getGameTypeOption());
         assertEquals(2, players.size());
         Assert.assertEquals(GUIHumanPlayer.class, players.get(0).getClass());
+        Assert.assertEquals(GUIHumanPlayer.class, players.get(1).getClass());
+    }
+
+    @Test
+    public void requestCVGUIPlayers() {
+        PlayerFactory playerFactory = new PlayerFactory();
+        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.CVGUI.getGameTypeOption());
+        assertEquals(2, players.size());
+        Assert.assertEquals(ComputerPlayer.class, players.get(0).getClass());
         Assert.assertEquals(GUIHumanPlayer.class, players.get(1).getClass());
     }
 }

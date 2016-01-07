@@ -37,6 +37,7 @@ public class PlayerFactory {
         optionToGameType.put(2, GameType.HVC);
         optionToGameType.put(3, GameType.CVH);
         optionToGameType.put(4, GameType.GUI_HVH);
+        optionToGameType.put(5, GameType.CVGUI);
     }
 
     void registerGameTypeWithPlayerTypes() {
@@ -44,6 +45,7 @@ public class PlayerFactory {
         gameTypeOptionToPlayers.put(GameType.HVC, createPlayers(new HumanPlayer(Mark.X, userInterface), new ComputerPlayer(Mark.O)));
         gameTypeOptionToPlayers.put(GameType.CVH, createPlayers(new ComputerPlayer(Mark.X), new HumanPlayer(Mark.O, userInterface)));
         gameTypeOptionToPlayers.put(GameType.GUI_HVH, createPlayers(new GUIHumanPlayer(Mark.X), new GUIHumanPlayer(Mark.O)));
+        gameTypeOptionToPlayers.put(GameType.CVGUI, createPlayers(new ComputerPlayer(Mark.X), new GUIHumanPlayer(Mark.O)));
     }
 
     ArrayList<Player> createPlayers(Player player1, Player player2) {
