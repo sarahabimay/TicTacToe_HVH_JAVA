@@ -18,6 +18,10 @@ public abstract class Player {
         this.mark = mark;
     }
 
+    public Type getType(){
+        return playerType;
+    }
+
     public Mark getMark() {
         return mark;
     }
@@ -30,6 +34,10 @@ public abstract class Player {
             return Mark.X;
         }
         return Mark.EMPTY;
+    }
+
+    public boolean isReady(){
+        return true;
     }
 
     abstract public int getNextPosition(Board board);

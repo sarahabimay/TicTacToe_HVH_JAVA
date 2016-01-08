@@ -1,6 +1,8 @@
-package javafxgui;
+package javafxgui.JavaFXComponents;
 
 import javafx.scene.control.Button;
+import javafxgui.ClickEventHandler;
+import javafxgui.ClickableElement;
 
 public class JavaFXButton implements ClickableElement {
     private final Button realJavaFXButton;

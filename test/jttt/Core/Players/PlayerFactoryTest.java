@@ -42,7 +42,7 @@ public class PlayerFactoryTest {
 
     @Test
     public void checkFactoryCanCreateCVGUI_HPlayers() {
-        Assert.assertEquals(true, playerFactory.isPlayerTypeAvailable(GameType.CVGUI));
+        Assert.assertEquals(true, playerFactory.isPlayerTypeAvailable(GameType.GUI_CVH));
     }
 
     @Test
@@ -82,11 +82,20 @@ public class PlayerFactoryTest {
     }
 
     @Test
-    public void requestCVGUIPlayers() {
+    public void requestComputerVGUIPlayers() {
         PlayerFactory playerFactory = new PlayerFactory();
-        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.CVGUI.getGameTypeOption());
+        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.GUI_CVH.getGameTypeOption());
         assertEquals(2, players.size());
         Assert.assertEquals(ComputerPlayer.class, players.get(0).getClass());
         Assert.assertEquals(GUIHumanPlayer.class, players.get(1).getClass());
+    }
+
+    @Test
+    public void requestGUIvCPlayers() {
+        PlayerFactory playerFactory = new PlayerFactory();
+        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.GUI_HVC.getGameTypeOption());
+        assertEquals(2, players.size());
+        Assert.assertEquals(GUIHumanPlayer.class, players.get(0).getClass());
+        Assert.assertEquals(ComputerPlayer.class, players.get(1).getClass());
     }
 }

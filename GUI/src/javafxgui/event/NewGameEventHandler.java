@@ -1,6 +1,9 @@
-package javafxgui;
+package javafxgui.event;
 
-public class NewGameEventHandler implements ClickEventHandler{
+import javafxgui.ClickEventHandler;
+import javafxgui.GUIView;
+
+public class NewGameEventHandler implements ClickEventHandler {
     private final GUIView guiView;
 
     public NewGameEventHandler(GUIView guiView) {
