@@ -12,18 +12,16 @@ import java.io.OutputStreamWriter;
 
 public class Main {
 
-
     public static void main(String[] args) {
         final int DEFAULT_DIMENSION = 0;
         CommandLineUI ui = new CommandLineUI(
                 new Game(
                         new Board(DEFAULT_DIMENSION),
-                        GameType.HVH.getGameTypeOption(),
+                        GameType.HVH.getNumericGameType(),
                         new PlayerFactory()),
                 new DisplayStyler(),
                 new BufferedInputStream(System.in),
                 new OutputStreamWriter(System.out));
         ui.start();
-
     }
 }

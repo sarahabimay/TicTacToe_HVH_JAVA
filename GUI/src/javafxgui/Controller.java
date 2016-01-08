@@ -1,11 +1,10 @@
 package javafxgui;
 
+import jttt.Core.GameType;
 import jttt.Core.Players.Player;
 
 public interface Controller {
-    void displayGUI();
-
-    void displayBoard();
+    void displayGameLayout();
 
     void displayResult();
 
@@ -19,9 +18,9 @@ public interface Controller {
 
     Player getCurrentPlayer();
 
-    void initializeGame(int gameType, int boardDimension);
+    void initializeGame(GameType gameType, int boardDimension);
 
-    void startGame(int gameType, int boardDimension);
+    void startGame(GameType gameType, int boardDimension);
 
     void presentGameOptions();
 }

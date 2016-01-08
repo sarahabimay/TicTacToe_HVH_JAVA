@@ -20,7 +20,7 @@ public class FakeCommandLineUI implements UserInterface {
     private int dummyDimension;
 
     public FakeCommandLineUI() {
-        this.game = new Game(new Board(DEFAULT_DIMENSION), GameType.HVH.getGameTypeOption(), new PlayerFactory());
+        this.game = new Game(new Board(DEFAULT_DIMENSION), GameType.HVH.getNumericGameType(), new PlayerFactory());
         this.playerType = -1;
         this.dummyDimension = 0;
         this.dummyInputs = new ArrayList<>();
@@ -120,7 +120,7 @@ public class FakeCommandLineUI implements UserInterface {
 
     private void playAgain() {
         if (userWantsToPlay(requestPlayAgain())) {
-            game = new Game(new Board(DEFAULT_DIMENSION), GameType.HVH.getGameTypeOption(), new PlayerFactory());
+            game = new Game(new Board(DEFAULT_DIMENSION), GameType.HVH.getNumericGameType(), new PlayerFactory());
             start();
         }
     }

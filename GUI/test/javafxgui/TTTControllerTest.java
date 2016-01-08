@@ -34,16 +34,16 @@ public class TTTControllerTest {
     public void setUp() {
         gameViewSpy = new GUIViewSpy(new Scene(new StackPane(), GUI_WINDOW_HEIGHT, GUI_WINDOW_WIDTH), new BoardDisplay(), null);
         controller = new TTTController(gameViewSpy,
-                new Game(new Board(DEFAULT_BOARD_DIMENSION), GameType.GUI_HVH.getGameTypeOption(), new PlayerFactory()));
+                new Game(new Board(DEFAULT_BOARD_DIMENSION), GameType.GUI_HVH.getNumericGameType(), new PlayerFactory()));
         new JFXPanel();
     }
 
     @Test
     public void startGameWithGameTypeAndDimension() {
         Controller controller = new TTTController(gameViewSpy);
-        controller.startGame(GameType.GUI_HVC.getGameTypeOption(), DEFAULT_BOARD_DIMENSION);
+        controller.startGame(GameType.GUI_HVC, DEFAULT_BOARD_DIMENSION);
         assertEquals(Player.Type.GUI, controller.getCurrentPlayer().getType());
-        assertEquals(true, gameViewSpy.hasBoardBeenDisplayed());
+        assertEquals(false, gameViewSpy.hasResultBeenAnnounced());
     }
 
     @Test
@@ -55,8 +55,8 @@ public class TTTControllerTest {
 
     @Test
     public void displayGUI() {
-        controller.displayGUI();
-        assertEquals(true, gameViewSpy.hasLandingPageBeenRendered());
+        controller.displayGameLayout();
+        assertEquals(true, gameViewSpy.hasGameLayoutBeenRendered());
     }
 
     @Test
@@ -87,10 +87,10 @@ public class TTTControllerTest {
         };
 
         Board board = new Board(DEFAULT_BOARD_DIMENSION, arrayToList(currentBoard));
-        Game game = new Game(board, GameType.GUI_HVH.getGameTypeOption(), new PlayerFactory());
+        Game game = new Game(board, GameType.GUI_HVH.getNumericGameType(), new PlayerFactory());
         Controller controller = new TTTController(gameViewSpy, game);
 
-        controller.displayGUI();
+        controller.displayGameLayout();
         controller.displayResult();
         assertEquals(true, gameViewSpy.hasBoardBeenDisabled());
         assertEquals(true, gameViewSpy.hasResultBeenAnnounced());
@@ -105,7 +105,7 @@ public class TTTControllerTest {
         };
 
         Board board = new Board(DEFAULT_BOARD_DIMENSION, arrayToList(currentBoard));
-        Game game = new Game(board, GameType.GUI_HVH.getGameTypeOption(), new PlayerFactory());
+        Game game = new Game(board, GameType.GUI_HVH.getNumericGameType(), new PlayerFactory());
         Controller controller = new TTTController(gameViewSpy, game);
 
         controller.playGame();
@@ -120,7 +120,7 @@ public class TTTControllerTest {
                 X, X, EMPTY
         };
         Board board = new Board(DEFAULT_BOARD_DIMENSION, arrayToList(currentBoard));
-        Game game = new Game(board, GameType.GUI_HVH.getGameTypeOption(), new PlayerFactory());
+        Game game = new Game(board, GameType.GUI_HVH.getNumericGameType(), new PlayerFactory());
         Controller controller = new TTTController(gameViewSpy, game);
         controller.playGame();
         assertEquals(true, controller.foundWinOrDraw());
@@ -133,8 +133,8 @@ public class TTTControllerTest {
         Board board = new Board(DEFAULT_BOARD_DIMENSION);
         PlayerFactoryFake playerFactoryFake = new PlayerFactoryFake();
         String guiMove = "3";
-        playerFactoryFake.setNextGUIHumanMove("3");
-        Game game = new Game(board, GameType.GUI_CVH.getGameTypeOption(), playerFactoryFake);
+        playerFactoryFake.setNextGUIHumanMove(guiMove);
+        Game game = new Game(board, GameType.GUI_CVH.getNumericGameType(), playerFactoryFake);
         Controller controller = new TTTController(gameViewSpy, game);
         controller.playGame();
         assertEquals(false, controller.foundWinOrDraw());
@@ -144,11 +144,14 @@ public class TTTControllerTest {
 
     @Test
     public void playGUIHumanVersusComputerPlayer() {
-        Board board = new Board(DEFAULT_BOARD_DIMENSION);
         PlayerFactoryFake playerFactoryFake = new PlayerFactoryFake();
         String guiMove = "3";
         playerFactoryFake.setNextGUIHumanMove(guiMove);
-        Game game = new Game(board, GameType.GUI_HVC.getGameTypeOption(), playerFactoryFake);
+
+        Game game = new Game(
+                new Board(DEFAULT_BOARD_DIMENSION),
+                GameType.GUI_HVC.getNumericGameType(),
+                playerFactoryFake);
         Controller controller = new TTTController(gameViewSpy, game);
         controller.playGame();
         assertEquals(false, controller.foundWinOrDraw());

@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafxgui.event.EventRegister;
+import javafxgui.view.BoardDisplay;
 import jttt.Core.Board.Board;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +29,7 @@ public class EventRegisterTest {
 
     @Test
     public void registerAllBoardButtonsWithHandler() {
-        scene = guiViewSpy.displayGUI(new Board(3));
+        scene = guiViewSpy.displayGameLayoutComponent(new Board(3));
         GridPane gameBoard = (GridPane) scene.lookup("#gameBoard");
         Button button = (Button) gameBoard.getChildren().get(0);
         eventRegister.registerAllBoardButtonsWithHandler(gameBoard, guiViewSpy);
@@ -37,7 +39,7 @@ public class EventRegisterTest {
 
     @Test
     public void registerReplayButtonWithHandler() {
-        scene = guiViewSpy.displayGUI(new Board(3));
+        scene = guiViewSpy.displayGameLayoutComponent(new Board(3));
         Button replayButton = (Button) scene.lookup("#playAgain");
         eventRegister.registerAllClickableElementsWithHandler(scene, guiViewSpy);
         replayButton.fire();
@@ -46,7 +48,7 @@ public class EventRegisterTest {
 
     @Test
     public void registerAllClickableElementsWithHandlers() {
-        scene = guiViewSpy.displayGUI(new Board(3));
+        scene = guiViewSpy.displayGameLayoutComponent(new Board(3));
         eventRegister.registerAllClickableElementsWithHandler(scene, guiViewSpy);
 
         GridPane gameBoard = (GridPane) scene.lookup("#gameBoard");

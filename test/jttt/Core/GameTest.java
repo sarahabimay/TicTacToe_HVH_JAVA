@@ -19,8 +19,8 @@ public class GameTest {
 
     @Before
     public void setUp() {
-        zeroGame = new Game(new Board(ZERO_DIMENSION_BOARD), GameType.HVH.getGameTypeOption(), new PlayerFactory());
-        defaultGame = new Game(new Board(DEFAULT_DIMENSION), GameType.HVH.getGameTypeOption(), new PlayerFactory());
+        zeroGame = new Game(new Board(ZERO_DIMENSION_BOARD), GameType.HVH.getNumericGameType(), new PlayerFactory());
+        defaultGame = new Game(new Board(DEFAULT_DIMENSION), GameType.HVH.getNumericGameType(), new PlayerFactory());
     }
 
     @Test

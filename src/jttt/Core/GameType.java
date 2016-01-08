@@ -1,5 +1,7 @@
 package jttt.Core;
 
+import java.util.HashMap;
+
 public enum GameType {
     HVH(1),
     HVC(2),
@@ -8,13 +10,24 @@ public enum GameType {
     GUI_CVH(5),
     GUI_HVC(6);
 
-    private final int gameTypeOption;
+    private final int numericGameType;
 
-    GameType(int option) {
-        this.gameTypeOption = option;
+    private static HashMap<GameType, String> optionsForDisplay = new HashMap<>();
+    static {
+        optionsForDisplay.put(GameType.GUI_HVH, "Human Vs Human Game");
+        optionsForDisplay.put(GameType.GUI_HVC, "Human Vs AI Game");
+        optionsForDisplay.put(GameType.GUI_CVH, "AI Vs Human Game");
     }
 
-    public int getGameTypeOption() {
-        return gameTypeOption;
+    GameType(int option) {
+        this.numericGameType = option;
+    }
+
+    public int getNumericGameType() {
+        return numericGameType;
+    }
+
+    public static HashMap<GameType, String> getOptionsForDisplay() {
+        return optionsForDisplay;
     }
 }

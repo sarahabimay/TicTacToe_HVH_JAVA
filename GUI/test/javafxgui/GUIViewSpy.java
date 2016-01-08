@@ -1,24 +1,26 @@
 package javafxgui;
 
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafxgui.event.EventRegister;
+import javafxgui.view.BoardDisplay;
+import javafxgui.view.GUIView;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 import jttt.Core.Players.GUIHumanPlayer;
 import jttt.Core.Players.Player;
 
-class GUIViewSpy extends GUIView {
+public class GUIViewSpy extends GUIView {
     private Scene scene;
     private StackPane root;
-    private boolean hasLandingPageBeenRendered = false;
-    private boolean hasBoardBeenReDisplayed = false;
+    private boolean hasGameLayoutBeenRendered = false;
     private boolean hasBoardBeenDisabled = false;
     private boolean hasResultBeenAnnounced = false;
     private boolean hasReplayButtonBeenDisplayed = false;
     private boolean hasButtonBeenClicked = false;
     private boolean hasReplayButtonBeenSelected = false;
     private boolean hasNextGUIPlayerBeenFound = false;
+    private boolean hasGameOptionsBeenPresented = false;
 
     public GUIViewSpy(Scene scene, BoardDisplay boardDisplay, EventRegister eventRegister) {
         super(scene, boardDisplay, null);
@@ -31,19 +33,18 @@ class GUIViewSpy extends GUIView {
         return new GUIHumanPlayer(Mark.X);
     }
 
-    public Scene displayGUI(Board board) {
-        hasLandingPageBeenRendered = true;
-        root.getChildren().add(generateBorderLayout(board));
+    @Override
+    public void displayGameOptions() {
+        hasGameOptionsBeenPresented = true;
+    }
+
+    public Scene displayGameLayoutComponent(Board board) {
+        hasGameLayoutBeenRendered = true;
         return scene;
     }
 
     public void displayResult(Mark winner) {
         hasResultBeenAnnounced = true;
-    }
-
-    public GridPane displayBoard(Board board) {
-        hasBoardBeenReDisplayed = true;
-        return null;
     }
 
     @Override
@@ -65,12 +66,8 @@ class GUIViewSpy extends GUIView {
         hasReplayButtonBeenDisplayed = true;
     }
 
-    public boolean hasBoardBeenReDisplayed() {
-        return hasBoardBeenReDisplayed;
-    }
-
-    public boolean hasLandingPageBeenRendered() {
-        return hasLandingPageBeenRendered;
+    public boolean hasGameLayoutBeenRendered() {
+        return hasGameLayoutBeenRendered;
     }
 
     public boolean hasBoardBeenDisabled() {
@@ -95,5 +92,9 @@ class GUIViewSpy extends GUIView {
 
     public boolean hasNextGUIPlayerBeenFound() {
         return hasNextGUIPlayerBeenFound;
+    }
+
+    public boolean hasGameOptionsBeenPresented() {
+        return hasGameOptionsBeenPresented;
     }
 }

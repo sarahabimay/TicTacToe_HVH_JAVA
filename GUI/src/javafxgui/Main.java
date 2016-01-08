@@ -4,10 +4,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import jttt.Core.Board.Board;
-import jttt.Core.Game;
-import jttt.Core.GameType;
-import jttt.Core.Players.PlayerFactory;
+import javafxgui.event.EventRegister;
+import javafxgui.view.BoardDisplay;
+import javafxgui.view.GUIView;
 
 public class Main extends Application {
     private final int GUI_WINDOW_HEIGHT = 700;
@@ -21,9 +20,8 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         TTTController controller = new TTTController(
-                new GUIView(scene, new BoardDisplay(), new EventRegister()),
-                new Game(new Board(3), GameType.GUI_HVH.getGameTypeOption(), new PlayerFactory()));
-        controller.displayGUI();
+                new GUIView(scene, new BoardDisplay(), new EventRegister()));
+        controller.presentGameOptions();
     }
 
 

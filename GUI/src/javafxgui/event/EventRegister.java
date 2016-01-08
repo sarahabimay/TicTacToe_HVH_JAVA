@@ -4,8 +4,9 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import javafxgui.*;
+import javafxgui.javafxcomponents.ClickableElement;
 import javafxgui.javafxcomponents.JavaFXButton;
+import javafxgui.view.GUIView;
 
 public class EventRegister {
     public void registerAllClickableElementsWithHandler(Scene scene, GUIView guiView) {
