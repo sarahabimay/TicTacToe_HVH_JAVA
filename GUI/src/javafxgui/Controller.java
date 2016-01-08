@@ -18,4 +18,10 @@ public interface Controller {
     void displayPlayAgain();
 
     Player getCurrentPlayer();
+
+    void initializeGame(int gameType, int boardDimension);
+
+    void startGame(int gameType, int boardDimension);
+
+    void presentGameOptions();
 }
