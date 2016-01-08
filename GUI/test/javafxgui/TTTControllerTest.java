@@ -3,11 +3,14 @@ package javafxgui;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafxgui.view.BoardDisplay;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 import jttt.Core.Game;
 import jttt.Core.GameType;
+import jttt.Core.Players.Player;
 import jttt.Core.Players.PlayerFactory;
+import jttt.Core.Players.PlayerFactoryFake;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static jttt.Core.Board.Mark.*;
+import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 public class TTTControllerTest {
 
@@ -34,7 +39,22 @@ public class TTTControllerTest {
     }
 
     @Test
-    public void displayBoard() {
+    public void startGameWithGameTypeAndDimension() {
+        Controller controller = new TTTController(gameViewSpy);
+        controller.startGame(GameType.GUI_HVC.getGameTypeOption(), DEFAULT_BOARD_DIMENSION);
+        assertEquals(Player.Type.GUI, controller.getCurrentPlayer().getType());
+        assertEquals(true, gameViewSpy.hasBoardBeenDisplayed());
+    }
+
+    @Test
+    public void presentGameOptions() {
+        Controller controller = new TTTController(gameViewSpy);
+        controller.presentGameOptions();
+        assertEquals(true, gameViewSpy.hasGameOptionsBeenPresented());
+    }
+
+    @Test
+    public void displayGUI() {
         controller.displayGUI();
         assertEquals(true, gameViewSpy.hasLandingPageBeenRendered());
     }
@@ -106,6 +126,38 @@ public class TTTControllerTest {
         assertEquals(true, controller.foundWinOrDraw());
         controller.createNewGame();
         assertEquals(false, controller.foundWinOrDraw());
+    }
+
+    @Test
+    public void playAIVersusGUIHumanPlayer() {
+        Board board = new Board(DEFAULT_BOARD_DIMENSION);
+        PlayerFactoryFake playerFactoryFake = new PlayerFactoryFake();
+        String guiMove = "3";
+        playerFactoryFake.setNextGUIHumanMove("3");
+        Game game = new Game(board, GameType.GUI_CVH.getGameTypeOption(), playerFactoryFake);
+        Controller controller = new TTTController(gameViewSpy, game);
+        controller.playGame();
+        assertEquals(false, controller.foundWinOrDraw());
+        assertEquals(2, game.getBoard().findPositions(X).size());
+        assertThat(game.getBoard().findPositions(O), contains(zeroIndexed(guiMove)));
+    }
+
+    @Test
+    public void playGUIHumanVersusComputerPlayer() {
+        Board board = new Board(DEFAULT_BOARD_DIMENSION);
+        PlayerFactoryFake playerFactoryFake = new PlayerFactoryFake();
+        String guiMove = "3";
+        playerFactoryFake.setNextGUIHumanMove(guiMove);
+        Game game = new Game(board, GameType.GUI_HVC.getGameTypeOption(), playerFactoryFake);
+        Controller controller = new TTTController(gameViewSpy, game);
+        controller.playGame();
+        assertEquals(false, controller.foundWinOrDraw());
+        assertThat(game.getBoard().findPositions(X), contains(zeroIndexed(guiMove)));
+        assertThat(game.getBoard().findPositions(O), contains(zeroIndexed("5")));
+    }
+
+    private int zeroIndexed(String guiMove) {
+        return Integer.parseInt(guiMove) - 1;
     }
 
     private List<Mark> arrayToList(Mark[] initialBoard) {
