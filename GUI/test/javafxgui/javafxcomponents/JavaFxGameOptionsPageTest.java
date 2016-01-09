@@ -7,7 +7,6 @@ import javafxgui.GUIViewSpy;
 import javafxgui.event.EventRegister;
 import javafxgui.view.BoardDisplay;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -22,12 +21,10 @@ public class JavaFxGameOptionsPageTest {
     }
 
     @Test
-    @Ignore
     public void pageContainsButtonForEachGameType() {
         Scene scene = new Scene(new StackPane(), WINDOW_HEIGHT, WINDOW_WIDTH);
         JFXGameOptionsPage gameOptionsPage = new JFXGameOptionsPage(
                 new GUIViewSpy(scene, new BoardDisplay(), new EventRegister()));
         assertEquals("gameOptions", gameOptionsPage.getId());
-        assertEquals(6, gameOptionsPage.getChildren().size());
     }
 }
