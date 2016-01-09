@@ -5,8 +5,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import javafxgui.event.EventRegister;
+import javafxgui.view.BoardDisplay;
+import javafxgui.view.GUIView;
 import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
 import jttt.Core.Game;
 import jttt.Core.GameType;
 import jttt.Core.Players.GUIHumanPlayer;
@@ -15,6 +17,7 @@ import jttt.Core.Players.PlayerFactory;
 import org.junit.Before;
 import org.junit.Test;
 
+import static jttt.Core.Board.Mark.*;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -27,18 +30,36 @@ public class GUIViewTest {
     private Scene scene;
     private Board defaultBoard;
     private EventRegisterSpy eventRegisterSpy;
+    private TTTControllerStub controllerStub;
 
     @Before
     public void setUp() {
         new JFXPanel();
         defaultBoard = new Board(3);
         eventRegisterSpy = new EventRegisterSpy();
-        guiView = new GUIView(new Scene(new StackPane(), WINDOW_HEIGHT, WINDOW_WIDTH), new BoardDisplay(), eventRegisterSpy);
-        scene = guiView.displayGUI(defaultBoard);
+        scene = new Scene(new StackPane(), WINDOW_HEIGHT, WINDOW_WIDTH);
+        guiView = new GUIView(scene, new BoardDisplay(), eventRegisterSpy);
+//        this.scene = guiView.displayGUI(defaultBoard);
+        controllerStub = new TTTControllerStub(guiView);
+    }
+
+    @Test
+    public void displayGameOptions() {
+        guiView.displayGameOptions();
+        assertEquals("gameOptions", scene.getRoot().getId());
+    }
+
+    @Test
+    public void getBoardComponentForDisplay() {
+        guiView.prepareGameForStart(GameType.GUI_HVC);
+        BorderPane borderPane = (BorderPane)scene.getRoot();
+        assertEquals("gameBoard", borderPane.getCenter().getId());
+        assertEquals(true, controllerStub.hasGameStartBeenCalled());
     }
 
     @Test
     public void initialDisplay() {
+        guiView.displayGameLayoutComponent(defaultBoard);
         BorderPane borderPane = (BorderPane) scene.getRoot();
         assertEquals("borderPane", borderPane.getId());
     }
@@ -53,13 +74,6 @@ public class GUIViewTest {
     }
 
     @Test
-    public void displayDisabledBoard() {
-        BorderPane layout = guiView.generateBorderLayout(new Board(3));
-        GridPane gameBoard = (GridPane) layout.getCenter();
-        assertEquals("gameBoard", gameBoard.getId());
-    }
-
-    @Test
     public void displayFooterBar() {
         VBox footer = guiView.resultFooter();
         assertEquals("footer", footer.getId());
@@ -67,24 +81,19 @@ public class GUIViewTest {
     }
 
     @Test
-    public void displayBoardUsingOptions() {
-        Board board = new Board(3);
-        GridPane gameBoard = guiView.displayBoard(board);
-        assertEquals(9, gameBoard.getChildren().size());
-    }
-
-    @Test
     public void displayWinningResult() {
-        guiView.displayResult(Mark.X);
-        assertEquals(String.format(guiView.WINNER_ANNOUNCEMENT, "X"), guiView.announceWinner(Mark.X));
-        assertEquals(String.format(guiView.WINNER_ANNOUNCEMENT, "X"), guiView.createResultAnnouncement(Mark.X));
+        guiView.displayGameLayoutComponent(defaultBoard);
+        guiView.displayResult(X);
+        assertEquals(String.format(guiView.WINNER_ANNOUNCEMENT, "X"), guiView.announceWinner(X));
+        assertEquals(String.format(guiView.WINNER_ANNOUNCEMENT, "X"), guiView.createResultAnnouncement(X));
     }
 
     @Test
     public void displayResult() {
-        guiView.displayResult(Mark.EMPTY);
+        guiView.displayGameLayoutComponent(defaultBoard);
+        guiView.displayResult(EMPTY);
         assertEquals(guiView.DRAW_ANNOUNCEMENT, guiView.announceDraw());
-        assertEquals(guiView.DRAW_ANNOUNCEMENT, guiView.createResultAnnouncement(Mark.EMPTY));
+        assertEquals(guiView.DRAW_ANNOUNCEMENT, guiView.createResultAnnouncement(EMPTY));
     }
 
     @Test
@@ -96,6 +105,7 @@ public class GUIViewTest {
 
     @Test
     public void displayPlayAgainButton() {
+        guiView.displayGameLayoutComponent(defaultBoard);
         Button replayButton = (Button) guiView.lookup("#playAgain");
         assertEquals(false, replayButton.isVisible());
         guiView.makePlayAgainVisible();
@@ -107,23 +117,17 @@ public class GUIViewTest {
     public void getCurrentGUIHumanPlayer() {
         guiView.setController(new TTTControllerStub(guiView,
                 new Game(new Board(3),
-                        GameType.GUI_HVH.getGameTypeOption(),
+                        GameType.GUI_HVH.getNumericGameType(),
                         new PlayerFactory())));
         Player currentPlayer = guiView.getCurrentPlayer();
         assertEquals(GUIHumanPlayer.class, currentPlayer.getClass());
-        assertEquals(Mark.X, currentPlayer.getMark());
-        assertEquals(Mark.O, currentPlayer.opponentCounter());
-    }
-
-    @Test
-    public void registerAllBoardButtonsWithEventHandler() {
-        guiView.displayBoard(defaultBoard);
-        assertEquals(true, eventRegisterSpy.haveBoardButtonsBeenRegistered());
+        assertEquals(X, currentPlayer.getMark());
+        assertEquals(O, currentPlayer.opponentCounter());
     }
 
     @Test
     public void registerAllElementsWithEventHandler() {
-        guiView.displayGUI(defaultBoard);
+        guiView.displayGameLayoutComponent(defaultBoard);
         assertEquals(true, eventRegisterSpy.hasAllElementsBeenRegistered());
     }
 

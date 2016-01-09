@@ -1,7 +1,6 @@
 package javafxgui.event;
 
-import javafxgui.ClickEventHandler;
-import javafxgui.GUIView;
+import javafxgui.view.GUIView;
 import jttt.Core.Players.GUIHumanPlayer;
 import jttt.Core.Players.Player;
 

@@ -5,7 +5,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafxgui.GUIViewSpy;
 import javafxgui.event.EventRegister;
-import javafxgui.javafxcomponents.JFXGameOptionsPage;
 import javafxgui.view.BoardDisplay;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -28,7 +27,7 @@ public class JavaFxGameOptionsPageTest {
         Scene scene = new Scene(new StackPane(), WINDOW_HEIGHT, WINDOW_WIDTH);
         JFXGameOptionsPage gameOptionsPage = new JFXGameOptionsPage(
                 new GUIViewSpy(scene, new BoardDisplay(), new EventRegister()));
+        assertEquals("gameOptions", gameOptionsPage.getId());
         assertEquals(6, gameOptionsPage.getChildren().size());
-
     }
 }

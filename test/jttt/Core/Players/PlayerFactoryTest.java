@@ -48,7 +48,7 @@ public class PlayerFactoryTest {
     @Test
     public void requestHVHPlayers() {
         PlayerFactory playerFactory = new PlayerFactory(new FakeCommandLineUI());
-        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.HVH.getGameTypeOption());
+        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.HVH.getNumericGameType());
         assertEquals(2, players.size());
         Assert.assertEquals(HumanPlayer.class, players.get(0).getClass());
         Assert.assertEquals(HumanPlayer.class, players.get(1).getClass());
@@ -57,7 +57,7 @@ public class PlayerFactoryTest {
     @Test
     public void requestHVCPlayers() {
         PlayerFactory playerFactory = new PlayerFactory(new FakeCommandLineUI());
-        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.HVC.getGameTypeOption());
+        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.HVC.getNumericGameType());
         assertEquals(2, players.size());
         Assert.assertEquals(HumanPlayer.class, players.get(0).getClass());
         Assert.assertEquals(ComputerPlayer.class, players.get(1).getClass());
@@ -66,7 +66,7 @@ public class PlayerFactoryTest {
     @Test
     public void requestCVHPlayers() {
         PlayerFactory playerFactory = new PlayerFactory(new FakeCommandLineUI());
-        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.CVH.getGameTypeOption());
+        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.CVH.getNumericGameType());
         assertEquals(2, players.size());
         Assert.assertEquals(ComputerPlayer.class, players.get(0).getClass());
         Assert.assertEquals(HumanPlayer.class, players.get(1).getClass());
@@ -75,7 +75,7 @@ public class PlayerFactoryTest {
     @Test
     public void requestGUIHumanVGUIHumanPlayers() {
         PlayerFactory playerFactory = new PlayerFactory();
-        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.GUI_HVH.getGameTypeOption());
+        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.GUI_HVH.getNumericGameType());
         assertEquals(2, players.size());
         Assert.assertEquals(GUIHumanPlayer.class, players.get(0).getClass());
         Assert.assertEquals(GUIHumanPlayer.class, players.get(1).getClass());
@@ -84,7 +84,7 @@ public class PlayerFactoryTest {
     @Test
     public void requestComputerVGUIPlayers() {
         PlayerFactory playerFactory = new PlayerFactory();
-        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.GUI_CVH.getGameTypeOption());
+        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.GUI_CVH.getNumericGameType());
         assertEquals(2, players.size());
         Assert.assertEquals(ComputerPlayer.class, players.get(0).getClass());
         Assert.assertEquals(GUIHumanPlayer.class, players.get(1).getClass());
@@ -93,7 +93,7 @@ public class PlayerFactoryTest {
     @Test
     public void requestGUIvCPlayers() {
         PlayerFactory playerFactory = new PlayerFactory();
-        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.GUI_HVC.getGameTypeOption());
+        ArrayList<Player> players = playerFactory.generatePlayersFor(GameType.GUI_HVC.getNumericGameType());
         assertEquals(2, players.size());
         Assert.assertEquals(GUIHumanPlayer.class, players.get(0).getClass());
         Assert.assertEquals(ComputerPlayer.class, players.get(1).getClass());

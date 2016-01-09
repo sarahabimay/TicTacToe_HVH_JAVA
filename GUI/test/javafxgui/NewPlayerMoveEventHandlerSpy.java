@@ -1,5 +1,8 @@
 package javafxgui;
 
+import javafxgui.event.NewPlayerMoveEventHandler;
+import javafxgui.view.GUIView;
+
 public class NewPlayerMoveEventHandlerSpy extends NewPlayerMoveEventHandler {
     private boolean hasBeenClicked = false;
 

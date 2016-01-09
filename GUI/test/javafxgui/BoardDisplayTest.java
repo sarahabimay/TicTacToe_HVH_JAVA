@@ -2,6 +2,7 @@ package javafxgui;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.layout.GridPane;
+import javafxgui.view.BoardDisplay;
 import jttt.Core.Board.Board;
 import org.junit.Before;
 import org.junit.Test;

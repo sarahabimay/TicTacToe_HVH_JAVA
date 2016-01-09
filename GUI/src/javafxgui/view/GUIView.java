@@ -13,6 +13,7 @@ import javafxgui.event.EventRegister;
 import javafxgui.javafxcomponents.JFXGameOptionsPage;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
+import jttt.Core.GameType;
 import jttt.Core.Players.Player;
 
 public class GUIView {
@@ -20,6 +21,7 @@ public class GUIView {
     public static final String GAME_HEADER = "TIC TAC TOE GAME!";
     public static final String WINNER_ANNOUNCEMENT = "PLAYER %s HAS WON!";
     public static final String DRAW_ANNOUNCEMENT = "THE GAME IS A DRAW!";
+    private final int DEFAULT_BOARD_DIMENSION = 3;
     private final String RESULTS_LABEL = "RESULTS HERE";
     private final String RESULTS_TARGET_ID = "resultTarget";
     private BoardDisplay boardDisplay;
@@ -52,17 +54,15 @@ public class GUIView {
         scene.setRoot(new JFXGameOptionsPage(this));
     }
 
-    public Scene displayGUI(Board board) {
+    public Scene displayGameLayoutComponent(Board board) {
         scene.setRoot(generateBorderLayout(board));
         registerEventHandlers(scene);
         return scene;
     }
 
-    public GridPane displayBoard(Board board) {
-        GridPane boardPane = createGameBoard(board);
-        registerBoardEventHandlers(boardPane);
-        border.setCenter(boardPane);
-        return boardPane;
+    public void prepareGameForStart(GameType gameTypeOption) {
+        displayGameLayoutComponent(new Board(DEFAULT_BOARD_DIMENSION));
+        controller.startGame(gameTypeOption, DEFAULT_BOARD_DIMENSION);
     }
 
     public void displayResult(Mark winner) {
@@ -172,9 +172,5 @@ public class GUIView {
 
     private void registerEventHandlers(Scene scene) {
         eventRegister.registerAllClickableElementsWithHandler(scene, this);
-    }
-
-    private void registerBoardEventHandlers(GridPane board) {
-        eventRegister.registerAllBoardButtonsWithHandler(board, this);
     }
 }
