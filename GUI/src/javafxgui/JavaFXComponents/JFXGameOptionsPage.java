@@ -33,7 +33,7 @@ public class JFXGameOptionsPage extends GridPane {
     private void addGameOptionButtons(GUIView guiView) {
         Map<GameType, String> optionsForDisplay = GameType.getOptionsForDisplay();
         for (Map.Entry<GameType, String> option : optionsForDisplay.entrySet()) {
-            JavaFXGameOptionButton optionButton = new JavaFXGameOptionButton(option);
+            javafxgui.javafxcomponents.JavaFXGameOptionButton optionButton = new javafxgui.javafxcomponents.JavaFXGameOptionButton(option);
             add(optionButton, 20, rowNumber++);
             addClickEventHandler(optionButton, guiView);
         }
