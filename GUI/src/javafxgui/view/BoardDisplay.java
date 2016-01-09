@@ -1,4 +1,4 @@
-package javafxgui;
+package javafxgui.view;
 
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;

@@ -1,5 +1,6 @@
 package javafxgui;
 
+import javafxgui.view.GUIView;
 import jttt.Core.Board.Board;
 import jttt.Core.Game;
 import jttt.Core.GameType;
@@ -15,6 +16,28 @@ public class TTTController implements Controller {
         this.guiView = guiView;
         guiView.setController(this);
         this.game = game;
+    }
+
+    public TTTController(GUIView guiView) {
+        this.guiView = guiView;
+        guiView.setController(this);
+        this.game = null;
+    }
+
+    @Override
+    public void presentGameOptions() {
+        guiView.displayGameOptions();
+    }
+
+    @Override
+    public void initializeGame(int gameType, int boardDimension) {
+        this.game = new Game(new Board(boardDimension), gameType, new PlayerFactory());
+    }
+
+    @Override
+    public void startGame(int gameType, int boardDimension) {
+        initializeGame(gameType, boardDimension);
+        guiView.displayBoard(game.getBoard());
     }
 
     public Player getCurrentPlayer() {
@@ -37,8 +60,10 @@ public class TTTController implements Controller {
     }
 
     public void playGame() {
-        playMoveOnGameBoard();
-        displayBoard();
+        while (!game.isGameOver() && game.getNextPlayer().isReady()) {
+            playMoveOnGameBoard();
+            displayBoard();
+        }
         displayResult();
         displayPlayAgain();
     }

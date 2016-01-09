@@ -12,6 +12,11 @@ public class GUIHumanPlayer extends Player {
     }
 
     @Override
+    public boolean isReady() {
+        return hasNewMove();
+    }
+
+    @Override
     public int getNextPosition(Board board) {
         int playedMove = -1;
         if(hasNewMove()){

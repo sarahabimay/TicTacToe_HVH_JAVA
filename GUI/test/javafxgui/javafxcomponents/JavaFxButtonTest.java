@@ -1,7 +1,9 @@
-package javafxgui;
+package javafxgui.javafxcomponents;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.control.Button;
+import javafxgui.NewPlayerMoveEventHandlerSpy;
+import javafxgui.javafxcomponents.JavaFXButton;
 import org.junit.Before;
 import org.junit.Test;
 

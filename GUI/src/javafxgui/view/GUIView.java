@@ -1,4 +1,4 @@
-package javafxgui;
+package javafxgui.view;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -8,6 +8,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafxgui.Controller;
+import javafxgui.event.EventRegister;
+import javafxgui.javafxcomponents.JFXGameOptionsPage;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 import jttt.Core.Players.Player;
@@ -43,6 +46,10 @@ public class GUIView {
 
     public Node lookup(String id) {
         return scene.lookup(id);
+    }
+
+    public void displayGameOptions() {
+        scene.setRoot(new JFXGameOptionsPage(this));
     }
 
     public Scene displayGUI(Board board) {

@@ -6,7 +6,6 @@ import jttt.Core.Players.HumanPlayer;
 import jttt.Core.Players.Player;
 import jttt.Core.Players.PlayerFactory;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -51,13 +50,6 @@ public class GameTest {
     public void askedForFirstPlayer() {
         Player playerA = defaultGame.getNextPlayer();
         assertEquals(Mark.X, playerA.getMark());
-    }
-
-    @Test
-    @Ignore
-    public void playAllMoves() {
-        Game game = new Game(new Board(DEFAULT_DIMENSION), GameType.CVH.getGameTypeOption(), new PlayerFactory());
-        game.playCurrentPlayerMove();
     }
 
     @Test
