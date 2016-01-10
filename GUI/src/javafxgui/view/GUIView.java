@@ -85,10 +85,6 @@ public class GUIView {
         return border;
     }
 
-    private GridPane createGameBoard(Board board) {
-        return boardDisplay.getBoardForDisplay(board);
-    }
-
     public void disableBoard(Board board) {
         GridPane boardPane = boardDisplay.getDisabledBoard(board);
         border.setCenter(boardPane);
@@ -103,6 +99,10 @@ public class GUIView {
         HBox titleBar = createHBox("titleBar");
         titleBar.getChildren().add(createTextElement(GAME_HEADER, "gameTitle"));
         return titleBar;
+    }
+
+    private GridPane createGameBoard(Board board) {
+        return boardDisplay.getBoardForDisplay(board);
     }
 
     public VBox resultFooter() {

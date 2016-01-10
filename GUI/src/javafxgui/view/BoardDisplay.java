@@ -36,7 +36,7 @@ public class BoardDisplay {
         int position = 0;
         for (int row = 0; row < board.getDimension(); row++) {
             for (int col = 0; col < board.getDimension(); col++) {
-                Button cell = createButtonForBoard(board, position);
+                Button cell = createButtonForBoard(position, board);
                 boardGrid.add(cell, col, row);
                 position++;
             }
@@ -44,22 +44,10 @@ public class BoardDisplay {
         return boardGrid;
     }
 
-    private Button createButtonForBoard(Board board, int position) {
+    private Button createButtonForBoard(int position, Board board) {
         return boardCell(position,
-                cellForDisplay(board, position),
-                shouldBeDisabled(board, position));
-    }
-
-    private boolean shouldBeDisabled(Board board, int position) {
-        return board.findMarkAtIndex(position).isEmpty() ? false : true;
-    }
-
-    private String cellForDisplay(Board board, int position) {
-        return cellContents(position, board.findMarkAtIndex(position));
-    }
-
-    private String cellContents(int position, Mark markAtIndex) {
-        return markAtIndex.markOrPositionForDisplay(position);
+                cellForDisplay(position, board),
+                shouldBeDisabled(position, board));
     }
 
     private Button boardCell(int position, String text, boolean setDisabled) {
@@ -68,13 +56,25 @@ public class BoardDisplay {
         return cell;
     }
 
-    private String buttonID(int position) {
-        return String.valueOf(position + POSITION_OFFSET);
+    private Button createButton(String label, String id) {
+        Button positionButton = new Button(label);
+        positionButton.setId(id);
+        return positionButton;
     }
 
-    private Button createButton(String label, String id) {
-        Button playAgain = new Button(label);
-        playAgain.setId(id);
-        return playAgain;
+    private String cellForDisplay(int position, Board board) {
+        return cellContents(position, board.findMarkAtIndex(position));
+    }
+
+    private boolean shouldBeDisabled(int position, Board board) {
+        return board.findMarkAtIndex(position).isEmpty() ? false : true;
+    }
+
+    private String cellContents(int position, Mark markAtIndex) {
+        return markAtIndex.markOrPositionForDisplay(position);
+    }
+
+    private String buttonID(int position) {
+        return String.valueOf(position + POSITION_OFFSET);
     }
 }
