@@ -51,9 +51,13 @@ public class JavaFxGameLayoutComponent extends BorderPane {
         Button playAgain = new Button(PLAY_AGAIN_LABEL);
         playAgain.setId(PLAY_AGAIN_ID);
         playAgain.setVisible(false);
+        registerButtonWithEventHandler(playAgain);
+        return playAgain;
+    }
+
+    private void registerButtonWithEventHandler(Button playAgain) {
         JavaFXButton replayButton = new JavaFXButton(playAgain);
         replayButton.setOnAction(new NewGameEventHandler(guiView));
-        return playAgain;
     }
 
     private Text createGameResultsTarget() {
