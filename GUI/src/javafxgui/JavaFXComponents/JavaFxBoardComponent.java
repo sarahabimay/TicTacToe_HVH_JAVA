@@ -7,8 +7,8 @@ import jttt.Core.Board.Board;
 
 public class JavaFxBoardComponent extends GridPane {
     private final String GAME_BOARD_ID = "gameBoard";
+    private final int POSITION_OFFSET = 1;
     private final ClickEventHandler eventHandler;
-    private int POSITION_OFFSET = 1;
 
     public JavaFxBoardComponent(Board board, ClickEventHandler eventHandler) {
         setId(GAME_BOARD_ID);
