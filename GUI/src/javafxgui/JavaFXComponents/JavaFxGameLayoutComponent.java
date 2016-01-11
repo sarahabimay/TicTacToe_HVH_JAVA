@@ -13,8 +13,8 @@ import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 
 public class JavaFxGameLayoutComponent extends BorderPane {
-    private static final String GAME_TITLE = "TIC TAC TOE GAME!";
-    private static final String RESULTS_LABEL = "RESULTS HERE";
+    public static final String GAME_TITLE = "TIC TAC TOE GAME!";
+    public static final String RESULTS_LABEL = "RESULTS HERE";
     public static final String RESULTS_TARGET_ID = "resultTarget";
     public static final String BORDER_PANE_ID = "borderPane";
     public static final String TITLE_BAR_ID = "titleBar";
