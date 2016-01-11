@@ -4,8 +4,6 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafxgui.GUIViewSpy;
-import javafxgui.event.EventRegister;
-import javafxgui.view.BoardDisplay;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +22,7 @@ public class JavaFxGameOptionsPageTest {
     public void pageContainsButtonForEachGameType() {
         Scene scene = new Scene(new StackPane(), WINDOW_HEIGHT, WINDOW_WIDTH);
         JFXGameOptionsPage gameOptionsPage = new JFXGameOptionsPage(
-                new GUIViewSpy(scene, new BoardDisplay(), new EventRegister()));
+                new GUIViewSpy(scene));
         assertEquals("gameOptions", gameOptionsPage.getId());
     }
 }

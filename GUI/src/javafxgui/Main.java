@@ -4,8 +4,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafxgui.event.EventRegister;
-import javafxgui.view.BoardDisplay;
 import javafxgui.view.GUIView;
 
 public class Main extends Application {
@@ -19,8 +17,7 @@ public class Main extends Application {
         scene.getStylesheets().add(Main.class.getResource("javafxgui.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
-        TTTController controller = new TTTController(
-                new GUIView(scene, new BoardDisplay(), new EventRegister()));
+        TTTController controller = new TTTController(new GUIView(scene));
         controller.presentGameOptions();
     }
 

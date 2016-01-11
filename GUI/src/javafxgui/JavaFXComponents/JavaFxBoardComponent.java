@@ -6,7 +6,7 @@ import javafxgui.event.ClickEventHandler;
 import jttt.Core.Board.Board;
 
 public class JavaFxBoardComponent extends GridPane {
-    private final String GAME_BOARD_ID = "gameBoard";
+    public static final String GAME_BOARD_ID = "gameBoard";
     private final int POSITION_OFFSET = 1;
     private final ClickEventHandler eventHandler;
 
@@ -14,6 +14,10 @@ public class JavaFxBoardComponent extends GridPane {
         setId(GAME_BOARD_ID);
         this.eventHandler = eventHandler;
         addBoardCells(board);
+    }
+
+    public void disableBoard() {
+        setDisable(true);
     }
 
     private void addBoardCells(Board board) {

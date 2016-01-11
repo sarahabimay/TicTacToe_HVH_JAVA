@@ -2,8 +2,6 @@ package javafxgui;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-import javafxgui.event.EventRegister;
-import javafxgui.view.BoardDisplay;
 import javafxgui.view.GUIView;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
@@ -22,8 +20,8 @@ public class GUIViewSpy extends GUIView {
     private boolean hasNextGUIPlayerBeenFound = false;
     private boolean hasGameOptionsBeenPresented = false;
 
-    public GUIViewSpy(Scene scene, BoardDisplay boardDisplay, EventRegister eventRegister) {
-        super(scene, boardDisplay, null);
+    public GUIViewSpy(Scene scene) {
+        super(scene);
         this.root = new StackPane();
         this.scene = new Scene(root, 700, 675);
     }

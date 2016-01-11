@@ -9,7 +9,7 @@ import javafxgui.NewPlayerMoveEventHandlerSpy;
 import jttt.Core.Board.Board;
 import org.junit.Before;
 import org.junit.Test;
-
+import static javafxgui.javafxcomponents.JavaFxBoardComponent.GAME_BOARD_ID;
 import static org.junit.Assert.assertEquals;
 
 public class JavaFxBoardComponentTest {
@@ -23,7 +23,7 @@ public class JavaFxBoardComponentTest {
     @Before
     public void setUp() {
         new JFXPanel();
-        guiViewSpy = new GUIViewSpy(new Scene(new StackPane(), GUI_WINDOW_HEIGHT, GUI_WINDOW_WIDTH), null, null);
+        guiViewSpy = new GUIViewSpy(new Scene(new StackPane(), GUI_WINDOW_HEIGHT, GUI_WINDOW_WIDTH));
         eventHandlerSpy = new NewPlayerMoveEventHandlerSpy(guiViewSpy);
         javaFxBoardComponent = new JavaFxBoardComponent(
                 new Board(DEFAULT_BOARD_DIMENSION),
@@ -32,7 +32,7 @@ public class JavaFxBoardComponentTest {
 
     @Test
     public void checkBoardHasCorrectId() {
-        assertEquals("gameBoard", javaFxBoardComponent.getId());
+        assertEquals(GAME_BOARD_ID, javaFxBoardComponent.getId());
     }
 
     @Test
@@ -42,14 +42,24 @@ public class JavaFxBoardComponentTest {
 
     @Test
     public void checkButtonHasIdAsExpected() {
-        Button button = (Button)javaFxBoardComponent.getChildren().get(0);
+        Button button = (Button) javaFxBoardComponent.getChildren().get(0);
         assertEquals("1", button.getId());
     }
 
     @Test
     public void checkEventRegistration() {
-        Button button = (Button)javaFxBoardComponent.getChildren().get(0);
+        Button button = (Button) javaFxBoardComponent.getChildren().get(0);
         button.fire();
         assertEquals(true, eventHandlerSpy.hasBeenClicked());
+    }
+
+    @Test
+    public void createADisabledBoard() {
+        JavaFxBoardComponent javaFxBoardComponent = new JavaFxBoardComponent(
+                new Board(DEFAULT_BOARD_DIMENSION),
+                eventHandlerSpy);
+        javaFxBoardComponent.setDisable(true);
+        Button button = (Button) javaFxBoardComponent.getChildren().get(0);
+        assertEquals(true, button.isDisabled());
     }
 }

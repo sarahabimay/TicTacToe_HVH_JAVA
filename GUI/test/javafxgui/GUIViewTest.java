@@ -3,10 +3,8 @@ package javafxgui;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import javafxgui.event.EventRegister;
-import javafxgui.view.BoardDisplay;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafxgui.view.GUIView;
 import jttt.Core.Board.Board;
 import jttt.Core.Game;
@@ -17,7 +15,8 @@ import jttt.Core.Players.PlayerFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import static jttt.Core.Board.Mark.*;
+import static jttt.Core.Board.Mark.O;
+import static jttt.Core.Board.Mark.X;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -29,17 +28,14 @@ public class GUIViewTest {
     private GUIView guiView;
     private Scene scene;
     private Board defaultBoard;
-    private EventRegisterSpy eventRegisterSpy;
     private TTTControllerStub controllerStub;
 
     @Before
     public void setUp() {
         new JFXPanel();
         defaultBoard = new Board(3);
-        eventRegisterSpy = new EventRegisterSpy();
         scene = new Scene(new StackPane(), WINDOW_HEIGHT, WINDOW_WIDTH);
-        guiView = new GUIView(scene, new BoardDisplay(), eventRegisterSpy);
-//        this.scene = guiView.displayGUI(defaultBoard);
+        guiView = new GUIView(scene);
         controllerStub = new TTTControllerStub(guiView);
     }
 
@@ -52,7 +48,7 @@ public class GUIViewTest {
     @Test
     public void getBoardComponentForDisplay() {
         guiView.prepareGameForStart(GameType.GUI_HVC);
-        BorderPane borderPane = (BorderPane)scene.getRoot();
+        BorderPane borderPane = (BorderPane) scene.getRoot();
         assertEquals("gameBoard", borderPane.getCenter().getId());
         assertEquals(true, controllerStub.hasGameStartBeenCalled());
     }
@@ -62,45 +58,6 @@ public class GUIViewTest {
         guiView.displayGameLayoutComponent(defaultBoard);
         BorderPane borderPane = (BorderPane) scene.getRoot();
         assertEquals("borderPane", borderPane.getId());
-    }
-
-    @Test
-    public void displayHasTitle() {
-        HBox titleBar = guiView.titleHeader();
-        assertEquals("titleBar", titleBar.getId());
-
-        Text gameTitle = (Text) titleBar.getChildren().get(0);
-        assertEquals(guiView.GAME_HEADER, gameTitle.getText());
-    }
-
-    @Test
-    public void displayFooterBar() {
-        VBox footer = guiView.resultFooter();
-        assertEquals("footer", footer.getId());
-        assertEquals("resultTarget", footer.getChildren().get(0).getId());
-    }
-
-    @Test
-    public void displayWinningResult() {
-        guiView.displayGameLayoutComponent(defaultBoard);
-        guiView.displayResult(X);
-        assertEquals(String.format(guiView.WINNER_ANNOUNCEMENT, "X"), guiView.announceWinner(X));
-        assertEquals(String.format(guiView.WINNER_ANNOUNCEMENT, "X"), guiView.createResultAnnouncement(X));
-    }
-
-    @Test
-    public void displayResult() {
-        guiView.displayGameLayoutComponent(defaultBoard);
-        guiView.displayResult(EMPTY);
-        assertEquals(guiView.DRAW_ANNOUNCEMENT, guiView.announceDraw());
-        assertEquals(guiView.DRAW_ANNOUNCEMENT, guiView.createResultAnnouncement(EMPTY));
-    }
-
-    @Test
-    public void createPlayAgainButtonTarget() {
-        Button playAgain = guiView.createPlayAgainButtonTarget();
-        assertEquals("playAgain", playAgain.getId());
-        assertEquals(false, playAgain.isVisible());
     }
 
     @Test
@@ -123,34 +80,5 @@ public class GUIViewTest {
         assertEquals(GUIHumanPlayer.class, currentPlayer.getClass());
         assertEquals(X, currentPlayer.getMark());
         assertEquals(O, currentPlayer.opponentCounter());
-    }
-
-    @Test
-    public void registerAllElementsWithEventHandler() {
-        guiView.displayGameLayoutComponent(defaultBoard);
-        assertEquals(true, eventRegisterSpy.hasAllElementsBeenRegistered());
-    }
-
-    private class EventRegisterSpy extends EventRegister {
-        private boolean hasRegisteredAllBoardButtons = false;
-        private boolean hasRegisteredAllClickableElements = false;
-
-        @Override
-        public void registerAllBoardButtonsWithHandler(GridPane board, GUIView guiView) {
-            hasRegisteredAllBoardButtons = true;
-        }
-
-        @Override
-        public void registerAllClickableElementsWithHandler(Scene scene, GUIView guiView) {
-            hasRegisteredAllClickableElements = true;
-        }
-
-        public boolean haveBoardButtonsBeenRegistered() {
-            return hasRegisteredAllBoardButtons;
-        }
-
-        public boolean hasAllElementsBeenRegistered() {
-            return hasRegisteredAllClickableElements;
-        }
     }
 }

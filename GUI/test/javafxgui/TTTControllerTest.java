@@ -3,7 +3,6 @@ package javafxgui;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-import javafxgui.view.BoardDisplay;
 import jttt.Core.Board.Board;
 import jttt.Core.Board.Mark;
 import jttt.Core.Game;
@@ -32,7 +31,7 @@ public class TTTControllerTest {
 
     @Before
     public void setUp() {
-        gameViewSpy = new GUIViewSpy(new Scene(new StackPane(), GUI_WINDOW_HEIGHT, GUI_WINDOW_WIDTH), new BoardDisplay(), null);
+        gameViewSpy = new GUIViewSpy(new Scene(new StackPane(), GUI_WINDOW_HEIGHT, GUI_WINDOW_WIDTH));
         controller = new TTTController(gameViewSpy,
                 new Game(new Board(DEFAULT_BOARD_DIMENSION), GameType.GUI_HVH.getNumericGameType(), new PlayerFactory()));
         new JFXPanel();
@@ -71,7 +70,7 @@ public class TTTControllerTest {
                 X, O, X,
                 X, X, O
         };
-        Board board = new Board(3, arrayToList(currentBoard));
+        Board board = new Board(DEFAULT_BOARD_DIMENSION, arrayToList(currentBoard));
         Controller controller = new TTTController(
                 gameViewSpy,
                 new Game(board, 1, new PlayerFactory()));
