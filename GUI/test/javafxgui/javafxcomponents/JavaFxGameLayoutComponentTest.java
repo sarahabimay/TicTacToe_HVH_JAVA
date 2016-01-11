@@ -33,22 +33,22 @@ public class JavaFxGameLayoutComponentTest {
     }
 
     @Test
-    public void checkLayoutHasThreePanels() {
+    public void layoutHasThreePanels() {
         assertEquals(3, layout.getChildren().size());
     }
 
     @Test
-    public void checkThereIsATitleBar() {
+    public void thereIsATitleBar() {
         assertEquals(TITLE_BAR_ID, layout.getTop().getId());
     }
 
     @Test
-    public void checkThereIsAFooter() {
+    public void thereIsAFooter() {
         assertEquals(FOOTER_ID, layout.getBottom().getId());
     }
 
     @Test
-    public void checkTheFooterHasTwoChildren() {
+    public void theFooterHasTwoChildren() {
         VBox results = (VBox) layout.getBottom();
         assertEquals(2, results.getChildren().size());
         assertEquals(RESULTS_TARGET_ID, results.getChildren().get(0).getId());
@@ -63,7 +63,7 @@ public class JavaFxGameLayoutComponentTest {
     }
 
     @Test
-    public void checkPlayAgainButtonIsDisplayed() {
+    public void playAgainButtonIsDisplayed() {
         layout.displayPlayAgainButton();
         VBox results = (VBox) layout.getBottom();
         Button playAgain = (Button) results.getChildren().get(1);
@@ -71,7 +71,7 @@ public class JavaFxGameLayoutComponentTest {
     }
 
     @Test
-    public void checkThePlayAgainButtonHasEventHandler() {
+    public void thePlayAgainButtonHasEventHandler() {
         VBox results = (VBox) layout.getBottom();
         Button button = (Button) results.getChildren().get(1);
         assertEquals(PLAY_AGAIN_ID, button.getId());
@@ -80,7 +80,7 @@ public class JavaFxGameLayoutComponentTest {
     }
 
     @Test
-    public void checkThereIsAGridPaneInCenter() {
+    public void thereIsAGridPaneInCenter() {
         assertEquals(GAME_BOARD_ID, layout.getCenter().getId());
     }
 

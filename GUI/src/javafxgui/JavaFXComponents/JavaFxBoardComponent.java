@@ -24,7 +24,7 @@ public class JavaFxBoardComponent extends GridPane {
         int position = 0;
         for (int row = 0; row < board.getDimension(); row++) {
             for (int col = 0; col < board.getDimension(); col++) {
-                Button cell = getButton(board, position);
+                Button cell = createButton(board, position);
                 registerButtonWithEventHandler(cell);
                 add(cell, col, row);
                 position++;
@@ -32,7 +32,7 @@ public class JavaFxBoardComponent extends GridPane {
         }
     }
 
-    private Button getButton(Board board, int position) {
+    private Button createButton(Board board, int position) {
         Button button = new Button(board.findMarkAtIndex(position).markOrPositionForDisplay(position));
         button.setId(generateButtonId(position));
         return button;
