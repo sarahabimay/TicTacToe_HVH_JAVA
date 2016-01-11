@@ -31,23 +31,23 @@ public class JavaFxBoardComponentTest {
     }
 
     @Test
-    public void checkBoardHasCorrectId() {
+    public void boardHasCorrectId() {
         assertEquals(GAME_BOARD_ID, javaFxBoardComponent.getId());
     }
 
     @Test
-    public void checkBoardHasNineChildren() {
+    public void boardHasNineChildren() {
         assertEquals(9, javaFxBoardComponent.getChildren().size());
     }
 
     @Test
-    public void checkButtonHasIdAsExpected() {
+    public void buttonHasIdAsExpected() {
         Button button = (Button) javaFxBoardComponent.getChildren().get(0);
         assertEquals("1", button.getId());
     }
 
     @Test
-    public void checkEventRegistration() {
+    public void eventRegistration() {
         Button button = (Button) javaFxBoardComponent.getChildren().get(0);
         button.fire();
         assertEquals(true, eventHandlerSpy.hasBeenClicked());
