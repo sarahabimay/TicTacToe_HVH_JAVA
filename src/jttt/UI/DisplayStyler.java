@@ -1,4 +1,7 @@
-package jttt.Core.Board;
+package jttt.UI;
+
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
 
 public class DisplayStyler {
     private String ANSI_RESET = "\u001B[0m";
@@ -7,7 +10,7 @@ public class DisplayStyler {
     private String ANSI_GREEN = "\u001B[32m";
 
 
-    public String formatBoardForDisplay(Board board) {
+    public String createBoardForDisplay(Board board) {
         String output = "";
         for (int i = 0; i < board.boardSize(); i++) {
             output += formatMarkForDisplay(i, board);

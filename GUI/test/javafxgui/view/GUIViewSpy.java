@@ -1,12 +1,11 @@
-package javafxgui;
+package javafxgui.view;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-import javafxgui.view.GUIView;
-import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
-import jttt.Core.Players.GUIHumanPlayer;
-import jttt.Core.Players.Player;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
+import javafxgui.GUIHumanPlayer;
+import jttt.core.players.Player;
 
 public class GUIViewSpy extends GUIView {
     private Scene scene;

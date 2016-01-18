@@ -1,7 +1,7 @@
-package javafxgui;
+package javafxgui.controller;
 
-import jttt.Core.GameType;
-import jttt.Core.Players.Player;
+import jttt.core.game.GameType;
+import jttt.core.players.Player;
 
 public interface Controller {
     void displayGameLayout();

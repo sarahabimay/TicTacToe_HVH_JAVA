@@ -1,7 +1,7 @@
-package jttt.Core.Players;
+package jttt.core.players;
 
-import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
 
 public abstract class Player {
     public enum Type {

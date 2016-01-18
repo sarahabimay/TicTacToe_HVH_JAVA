@@ -1,13 +1,15 @@
-package jttt.Core.Board;
+package jttt.UI;
 
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static jttt.Core.Board.Mark.EMPTY;
-import static jttt.Core.Board.Mark.O;
-import static jttt.Core.Board.Mark.X;
+import static jttt.core.board.Mark.EMPTY;
+import static jttt.core.board.Mark.O;
+import static jttt.core.board.Mark.X;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;

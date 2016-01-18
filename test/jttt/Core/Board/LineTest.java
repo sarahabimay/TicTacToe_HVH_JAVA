@@ -1,7 +1,5 @@
-package jttt.Core.Board;
+package jttt.core.board;
 
-import jttt.Core.Board.Line;
-import jttt.Core.Board.Mark;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,6 @@
-package jttt.Core.Strategy;
-import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
+package jttt.core.strategy;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
 import java.util.Random;
 
 public class FourByFourAlphaBetaStrategy extends AlphaBetaStrategy {

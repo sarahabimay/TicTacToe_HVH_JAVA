@@ -1,11 +1,11 @@
-package jttt.Core.Board;
+package jttt.core.board;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static jttt.Core.Board.Mark.*;
+import static jttt.core.board.Mark.*;
 import static org.junit.Assert.assertEquals;
 
 public class BoardTest {

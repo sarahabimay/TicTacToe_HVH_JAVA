@@ -1,7 +1,8 @@
-package jttt.Core.Strategy;
+package jttt.core.strategy;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class AIStrategyFactory {
 
@@ -17,7 +18,8 @@ public class AIStrategyFactory {
     }
 
     public AIMoveStrategy selectStrategyByBoardSize(int boardSize) {
-        if (strategies.get(boardSize) != null) {
+        AIMoveStrategy aiMoveStrategy = strategies.get(boardSize);
+        if (Optional.ofNullable(aiMoveStrategy).isPresent()) {
             return strategies.get(boardSize);
         }
         return strategies.get(DEFAULT_STRATEGY);

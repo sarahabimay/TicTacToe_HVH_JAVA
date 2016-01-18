@@ -2,13 +2,13 @@ package javafxgui.view;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafxgui.Controller;
+import javafxgui.controller.Controller;
 import javafxgui.javafxcomponents.JFXGameOptionsPage;
 import javafxgui.javafxcomponents.JavaFxGameLayoutComponent;
-import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
-import jttt.Core.GameType;
-import jttt.Core.Players.Player;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
+import jttt.core.game.GameType;
+import jttt.core.players.Player;
 
 public class GUIView {
 

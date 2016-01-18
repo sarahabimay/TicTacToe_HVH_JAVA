@@ -1,7 +1,8 @@
-package jttt.Core.Players;
+package javafxgui;
 
-import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
+import jttt.core.players.Player;
 
 public class GUIHumanPlayer extends Player {
     private int nextMove;
@@ -19,7 +20,7 @@ public class GUIHumanPlayer extends Player {
     @Override
     public int getNextPosition(Board board) {
         int playedMove = -1;
-        if(hasNewMove()){
+        if (hasNewMove()) {
             playedMove = nextMove;
             nextMove = -1;
         }

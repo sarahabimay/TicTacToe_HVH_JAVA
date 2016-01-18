@@ -1,7 +1,7 @@
 package jttt.UI;
 
-import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
 
 import java.util.function.IntPredicate;
 
@@ -32,4 +32,8 @@ public interface UserInterface {
     boolean validateContinueChoice(int playOrQuit);
 
     void start();
+
+    void displayBoardToUser(String boardForDisplay);
+
+    void createNewGameFromOptions(int gameType, int defaultDimension);
 }
