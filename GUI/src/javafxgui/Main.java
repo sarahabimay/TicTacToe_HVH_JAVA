@@ -5,7 +5,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafxgui.controller.TTTController;
-import javafxgui.view.GUIView;
+import javafxgui.gamemaker.GUIGameMaker;
+import javafxgui.javafxcomponents.GUIView;
+import javafxgui.players.GUIPlayerFactory;
 
 public class Main extends Application {
     private final int GUI_WINDOW_HEIGHT = 700;

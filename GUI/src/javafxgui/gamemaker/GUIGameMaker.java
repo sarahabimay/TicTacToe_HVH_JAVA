@@ -1,5 +1,6 @@
-package javafxgui;
+package javafxgui.gamemaker;
 
+import javafxgui.javafxcomponents.GUIDisplayer;
 import jttt.UI.UserInterface;
 import jttt.core.game.GameMaker;
 import jttt.core.board.Board;

@@ -1,6 +1,6 @@
-package javafxgui;
+package javafxgui.javafxcomponents;
 
-import jttt.core.Displayer;
+import jttt.core.displayer.Displayer;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

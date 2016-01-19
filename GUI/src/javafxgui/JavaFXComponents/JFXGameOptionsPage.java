@@ -2,7 +2,6 @@ package javafxgui.javafxcomponents;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import javafxgui.view.GUIView;
 import jttt.core.game.GameType;
 
 import java.util.Map;

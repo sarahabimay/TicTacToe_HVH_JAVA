@@ -1,6 +1,6 @@
 package jttt.UI;
 
-import jttt.core.Displayer;
+import jttt.core.displayer.Displayer;
 import jttt.core.board.Board;
 
 public class UIDisplayer implements Displayer {

@@ -1,12 +1,9 @@
 package jttt.core.game;
 
-import javafxgui.GUIDisplayer;
-import javafxgui.GUIHumanPlayer;
-import jttt.UI.HumanPlayer;
-import jttt.UI.FakeCommandLineUI;
-import jttt.UI.UIDisplayerSpy;
+import javafxgui.javafxcomponents.GUIDisplayer;
+import javafxgui.players.GUIHumanPlayer;
+import jttt.UI.*;
 import jttt.core.board.Board;
-import jttt.UI.DisplayStylerSpy;
 import jttt.core.players.*;
 import org.junit.Before;
 import org.junit.Test;

@@ -3,7 +3,6 @@ package jttt.UI;
 import jttt.core.board.Board;
 import jttt.core.game.Game;
 import jttt.core.game.GameMaker;
-import jttt.core.players.ConsolePlayerFactory;
 import jttt.core.players.Player;
 
 import java.util.List;

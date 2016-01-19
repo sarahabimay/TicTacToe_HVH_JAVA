@@ -1,9 +1,10 @@
-package jttt.core.players;
+package jttt.UI;
 
-import jttt.UI.HumanPlayer;
-import jttt.UI.UserInterface;
 import jttt.core.board.Mark;
 import jttt.core.game.GameType;
+import jttt.core.players.ComputerPlayer;
+import jttt.core.players.Player;
+import jttt.core.players.PlayerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import static jttt.core.game.GameType.*;
-import static jttt.core.game.GameType.lookupGameType;
 
 public class ConsolePlayerFactory implements PlayerFactory {
     static final Map<GameType, List<Player>> gameTypeOptionToPlayers = new HashMap<>();

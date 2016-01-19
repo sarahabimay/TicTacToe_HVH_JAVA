@@ -1,4 +1,4 @@
-package javafxgui;
+package javafxgui.players;
 
 import jttt.core.game.GameType;
 import jttt.core.players.ComputerPlayer;

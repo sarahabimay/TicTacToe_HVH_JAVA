@@ -1,6 +1,6 @@
 package javafxgui.controller;
 
-import javafxgui.view.GUIView;
+import javafxgui.javafxcomponents.GUIView;
 import jttt.core.game.GameMaker;
 import jttt.core.game.GameType;
 

@@ -1,5 +1,6 @@
 package jttt.core.players;
 
+import jttt.UI.ConsolePlayerFactory;
 import jttt.UI.HumanPlayer;
 import jttt.UI.FakeCommandLineUI;
 import org.junit.Before;

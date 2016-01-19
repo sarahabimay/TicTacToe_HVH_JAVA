@@ -1,4 +1,4 @@
-package javafxgui;
+package javafxgui.players;
 
 import jttt.core.board.Board;
 import jttt.core.board.Mark;

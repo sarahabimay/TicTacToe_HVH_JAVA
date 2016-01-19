@@ -4,7 +4,6 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
-import javafxgui.view.GUIViewSpy;
 import javafxgui.event.NewPlayerMoveEventHandlerSpy;
 import jttt.core.board.Board;
 import org.junit.Before;

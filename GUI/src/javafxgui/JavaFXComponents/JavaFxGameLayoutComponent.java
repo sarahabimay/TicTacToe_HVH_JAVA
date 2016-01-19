@@ -8,7 +8,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafxgui.event.NewGameEventHandler;
 import javafxgui.event.NewPlayerMoveEventHandler;
-import javafxgui.view.GUIView;
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
 

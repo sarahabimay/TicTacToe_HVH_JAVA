@@ -1,16 +1,16 @@
-package javafxgui.view;
+package javafxgui.javafxcomponents;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafxgui.GUIGameMaker;
-import javafxgui.GUIPlayerFactory;
+import javafxgui.gamemaker.GUIGameMaker;
+import javafxgui.players.GUIPlayerFactory;
 import javafxgui.controller.TTTControllerStub;
 import jttt.core.board.Board;
 import jttt.core.game.GameType;
-import javafxgui.GUIHumanPlayer;
+import javafxgui.players.GUIHumanPlayer;
 import jttt.core.players.Player;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,7 +1,7 @@
 package javafxgui.event;
 
-import javafxgui.view.GUIView;
-import javafxgui.GUIHumanPlayer;
+import javafxgui.javafxcomponents.GUIView;
+import javafxgui.players.GUIHumanPlayer;
 import jttt.core.players.Player;
 
 public class NewPlayerMoveEventHandler implements ClickEventHandler {

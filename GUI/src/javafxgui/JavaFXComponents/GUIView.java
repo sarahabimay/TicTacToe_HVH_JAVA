@@ -1,10 +1,8 @@
-package javafxgui.view;
+package javafxgui.javafxcomponents;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafxgui.controller.Controller;
-import javafxgui.javafxcomponents.JFXGameOptionsPage;
-import javafxgui.javafxcomponents.JavaFxGameLayoutComponent;
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
 import jttt.core.game.GameType;
