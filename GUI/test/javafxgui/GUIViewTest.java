@@ -6,7 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafxgui.controller.TTTControllerStub;
-import javafxgui.view.GUIView;
+import javafxgui.gamemaker.GUIGameMaker;
+import javafxgui.javafxcomponents.GUIView;
+import javafxgui.players.GUIHumanPlayer;
+import javafxgui.players.GUIPlayerFactory;
 import jttt.core.board.Board;
 import jttt.core.game.GameType;
 import jttt.core.players.Player;
@@ -36,7 +39,6 @@ public class GUIViewTest {
         scene = new Scene(new StackPane(), WINDOW_HEIGHT, WINDOW_WIDTH);
         guiView = new GUIView(scene);
         controllerStub = new TTTControllerStub(guiView, new GUIGameMaker(new GUIPlayerFactory()));
-
     }
 
     @Test

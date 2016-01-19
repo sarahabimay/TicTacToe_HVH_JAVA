@@ -3,7 +3,6 @@ package javafxgui.javafxcomponents;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-import javafxgui.view.GUIViewSpy;
 import org.junit.Before;
 import org.junit.Test;
 

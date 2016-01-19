@@ -1,9 +1,8 @@
-package jttt.core.players;
+package jttt.UI;
 
-import jttt.UI.HumanPlayer;
-import jttt.UI.FakeCommandLineUI;
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
+import jttt.core.players.Player;
 import org.junit.Before;
 import org.junit.Test;
 

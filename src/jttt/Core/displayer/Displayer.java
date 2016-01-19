@@ -1,4 +1,4 @@
-package jttt.core;
+package jttt.core.displayer;
 
 import jttt.core.board.Board;
 

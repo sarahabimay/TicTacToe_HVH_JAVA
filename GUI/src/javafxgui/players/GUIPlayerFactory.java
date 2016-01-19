@@ -1,4 +1,4 @@
-package javafxgui;
+package javafxgui.players;
 
 import jttt.core.game.GameType;
 import jttt.core.players.ComputerPlayer;
@@ -15,7 +15,7 @@ import static jttt.core.board.Mark.X;
 import static jttt.core.game.GameType.lookupGameType;
 
 public class GUIPlayerFactory implements PlayerFactory {
-    static final Map<GameType, List<Player>> gameTypeOptionToPlayers = new HashMap<>();
+    public static final Map<GameType, List<Player>> gameTypeOptionToPlayers = new HashMap<>();
 
     @Override
     public List<Player> findPlayersFor(int gameType) {
@@ -31,7 +31,7 @@ public class GUIPlayerFactory implements PlayerFactory {
 
     }
 
-    List<Player> createPlayers(Player player1, Player player2) {
+    public List<Player> createPlayers(Player player1, Player player2) {
         ArrayList<Player> players = new ArrayList<>();
         players.add(player1);
         players.add(player2);

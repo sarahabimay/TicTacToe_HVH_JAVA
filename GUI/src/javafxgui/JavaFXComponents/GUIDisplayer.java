@@ -1,6 +1,6 @@
-package javafxgui;
+package javafxgui.javafxcomponents;
 
-import jttt.core.Displayer;
+import jttt.core.displayer.Displayer;
 import jttt.core.board.Board;
 
 public class GUIDisplayer implements Displayer {

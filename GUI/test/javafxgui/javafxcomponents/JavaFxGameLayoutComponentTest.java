@@ -7,7 +7,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafxgui.view.GUIViewSpy;
 import jttt.core.board.Board;
 import org.junit.Before;
 import org.junit.Test;

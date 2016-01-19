@@ -1,5 +1,8 @@
-package javafxgui;
+package javafxgui.gamemaker;
 
+import javafxgui.gamemaker.GUIGameMaker;
+import javafxgui.players.GUIHumanPlayer;
+import javafxgui.players.GUIPlayerFactory;
 import jttt.core.game.Game;
 import org.junit.Test;
 

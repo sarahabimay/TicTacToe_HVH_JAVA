@@ -1,6 +1,6 @@
 package jttt.core.game;
 
-import jttt.core.Displayer;
+import jttt.core.displayer.Displayer;
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
 import jttt.core.players.Player;
