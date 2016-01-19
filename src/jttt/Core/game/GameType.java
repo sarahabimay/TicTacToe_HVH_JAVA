@@ -1,4 +1,4 @@
-package jttt.Core;
+package jttt.core.game;
 
 import java.util.HashMap;
 
@@ -8,7 +8,8 @@ public enum GameType {
     CVH(3),
     GUI_HVH(4),
     GUI_CVH(5),
-    GUI_HVC(6);
+    GUI_HVC(6),
+    INVALID(7);
 
     private final int numericGameType;
 
@@ -27,6 +28,15 @@ public enum GameType {
         return numericGameType;
     }
 
+    public static GameType lookupGameType(int gameType){
+        GameType[] gameTypes = values();
+        for (GameType type : gameTypes){
+            if (type.getNumericGameType() == gameType){
+               return type;
+            }
+        }
+        return INVALID;
+    }
     public static HashMap<GameType, String> getOptionsForDisplay() {
         return optionsForDisplay;
     }

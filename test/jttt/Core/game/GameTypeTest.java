@@ -1,4 +1,4 @@
-package jttt.Core;
+package jttt.core.game;
 
 import org.junit.Test;
 

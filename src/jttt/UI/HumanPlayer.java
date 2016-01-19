@@ -1,8 +1,8 @@
-package jttt.Core.Players;
+package jttt.UI;
 
-import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
-import jttt.UI.UserInterface;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
+import jttt.core.players.Player;
 
 public class HumanPlayer extends Player {
 

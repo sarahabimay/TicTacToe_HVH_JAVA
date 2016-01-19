@@ -1,21 +1,22 @@
-package javafxgui;
+package javafxgui.view;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafxgui.GUIGameMaker;
+import javafxgui.GUIPlayerFactory;
 import javafxgui.controller.TTTControllerStub;
-import javafxgui.view.GUIView;
 import jttt.core.board.Board;
 import jttt.core.game.GameType;
+import javafxgui.GUIHumanPlayer;
 import jttt.core.players.Player;
 import org.junit.Before;
 import org.junit.Test;
 
 import static jttt.core.board.Mark.O;
 import static jttt.core.board.Mark.X;
-import static jttt.core.game.GameType.GUI_HVC;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -36,7 +37,6 @@ public class GUIViewTest {
         scene = new Scene(new StackPane(), WINDOW_HEIGHT, WINDOW_WIDTH);
         guiView = new GUIView(scene);
         controllerStub = new TTTControllerStub(guiView, new GUIGameMaker(new GUIPlayerFactory()));
-
     }
 
     @Test
@@ -47,7 +47,7 @@ public class GUIViewTest {
 
     @Test
     public void getBoardComponentForDisplay() {
-        guiView.prepareGameForStart(GUI_HVC);
+        guiView.prepareGameForStart(GameType.GUI_HVC);
         BorderPane borderPane = (BorderPane) scene.getRoot();
         assertEquals("gameBoard", borderPane.getCenter().getId());
         assertEquals(true, controllerStub.hasGameStartBeenCalled());

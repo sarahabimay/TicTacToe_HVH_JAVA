@@ -9,8 +9,8 @@ import javafx.scene.text.Text;
 import javafxgui.event.NewGameEventHandler;
 import javafxgui.event.NewPlayerMoveEventHandler;
 import javafxgui.view.GUIView;
-import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
 
 public class JavaFxGameLayoutComponent extends BorderPane {
     public static final String GAME_TITLE = "TIC TAC TOE GAME!";

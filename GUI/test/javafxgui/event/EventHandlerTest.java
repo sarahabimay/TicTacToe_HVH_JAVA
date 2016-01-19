@@ -1,9 +1,8 @@
-package javafxgui;
+package javafxgui.event;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-import javafxgui.event.NewGameEventHandler;
-import javafxgui.event.NewPlayerMoveEventHandler;
+import javafxgui.view.GUIViewSpy;
 import org.junit.Before;
 import org.junit.Test;
 

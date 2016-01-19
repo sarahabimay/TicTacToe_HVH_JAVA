@@ -1,15 +1,15 @@
-package jttt.Core.Strategy;
+package jttt.core.strategy;
 
-import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static jttt.Core.Board.Mark.*;
-import static jttt.Core.Board.Mark.EMPTY;
+import static jttt.core.board.Mark.*;
+import static jttt.core.board.Mark.EMPTY;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 

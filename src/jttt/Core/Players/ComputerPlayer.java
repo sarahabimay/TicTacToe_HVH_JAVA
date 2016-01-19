@@ -1,9 +1,9 @@
-package jttt.Core.Players;
+package jttt.core.players;
 
-import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
-import jttt.Core.Strategy.AIMoveStrategy;
-import jttt.Core.Strategy.AIStrategyFactory;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
+import jttt.core.strategy.AIMoveStrategy;
+import jttt.core.strategy.AIStrategyFactory;
 
 public class ComputerPlayer extends Player {
     private AIStrategyFactory strategyFactory;

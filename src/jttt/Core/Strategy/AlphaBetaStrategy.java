@@ -1,7 +1,7 @@
-package jttt.Core.Strategy;
+package jttt.core.strategy;
 
-import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;

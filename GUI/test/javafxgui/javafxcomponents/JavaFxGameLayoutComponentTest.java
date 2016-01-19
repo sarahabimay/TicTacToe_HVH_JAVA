@@ -7,15 +7,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafxgui.GUIViewSpy;
-import jttt.Core.Board.Board;
+import javafxgui.view.GUIViewSpy;
+import jttt.core.board.Board;
 import org.junit.Before;
 import org.junit.Test;
 
 import static javafxgui.javafxcomponents.JavaFxBoardComponent.GAME_BOARD_ID;
 import static javafxgui.javafxcomponents.JavaFxGameLayoutComponent.*;
-import static jttt.Core.Board.Mark.EMPTY;
-import static jttt.Core.Board.Mark.X;
+import static jttt.core.board.Mark.EMPTY;
+import static jttt.core.board.Mark.X;
 import static org.junit.Assert.assertEquals;
 
 public class JavaFxGameLayoutComponentTest {

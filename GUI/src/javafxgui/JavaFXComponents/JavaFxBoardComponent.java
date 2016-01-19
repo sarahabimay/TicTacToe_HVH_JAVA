@@ -3,7 +3,7 @@ package javafxgui.javafxcomponents;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafxgui.event.ClickEventHandler;
-import jttt.Core.Board.Board;
+import jttt.core.board.Board;
 
 public class JavaFxBoardComponent extends GridPane {
     public static final String GAME_BOARD_ID = "gameBoard";

@@ -1,4 +1,4 @@
-package javafxgui;
+package javafxgui.event;
 
 import javafxgui.event.NewPlayerMoveEventHandler;
 import javafxgui.view.GUIView;

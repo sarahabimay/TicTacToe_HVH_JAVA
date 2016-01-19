@@ -1,7 +1,7 @@
-package jttt.Core.Players;
+package javafxgui;
 
-import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
 import org.junit.Before;
 import org.junit.Test;
 

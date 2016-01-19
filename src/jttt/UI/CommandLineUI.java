@@ -1,10 +1,9 @@
 package jttt.UI;
 
-import jttt.Core.Board.Board;
-import jttt.Core.Board.DisplayStyler;
-import jttt.Core.Board.Mark;
-import jttt.Core.Game;
-import jttt.Core.Players.PlayerFactory;
+import jttt.core.game.GameMaker;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
+import jttt.core.game.Game;
 
 import java.io.*;
 import java.util.function.IntPredicate;
@@ -18,24 +17,23 @@ public class CommandLineUI implements UserInterface {
     public static final String DRAW_ANNOUNCE = "The game is a draw!\n";
     public static final String WINNER_ANNOUNCE = "We have a Winner! Player: %s\n";
     public static final String REPLAY_REQUEST = "Do you want to play again? Yes(1) or No(2) :\n";
+    private GameMaker gameMaker;
     private Game game;
-    private DisplayStyler styler;
     private BufferedReader readStream;
     private Writer writeStream;
 
-    public CommandLineUI(Game game, DisplayStyler boardStyle, InputStream inputStream, Writer writer) {
+    public CommandLineUI(GameMaker gameMaker, InputStream inputStream, Writer writer) {
         this.readStream = new BufferedReader(new InputStreamReader(inputStream));
         this.writeStream = writer;
-        this.game = game;
-        this.styler = boardStyle;
+        this.gameMaker = gameMaker;
+        this.game = null;
     }
 
     public void start() {
         clearDisplay();
         boolean playGame = userWantsToPlay(displayGreetingRequest());
         while (playGame) {
-            createNewGame(requestGameType(), requestBoardDimension());
-            displayBoard();
+            createNewGameFromOptions(requestGameType(), requestBoardDimension());
             playAllMoves();
             displayResult(game.findWinner());
             playGame = playAgain();
@@ -68,11 +66,10 @@ public class CommandLineUI implements UserInterface {
         return request(REPLAY_REQUEST, this::validReplayChoice);
     }
 
-    public String displayBoard() {
+    @Override
+    public void displayBoardToUser(String boardForDisplay) {
         clearDisplay();
-        String output = styler.formatBoardForDisplay(game.getBoard());
-        displayMessage(output);
-        return output;
+        displayMessage(boardForDisplay);
     }
 
     public void displayResult(Mark winner) {
@@ -86,7 +83,6 @@ public class CommandLineUI implements UserInterface {
     public boolean playAgain() {
         if (userWantsToPlay(requestPlayAgain())) {
             clearDisplay();
-            resetGame();
             return true;
         }
         return false;
@@ -117,18 +113,13 @@ public class CommandLineUI implements UserInterface {
         return BinaryChoice.YES.equalsChoice(playOrQuit) || BinaryChoice.NO.equalsChoice(playOrQuit);
     }
 
-    public void createNewGame(int gameType, int dimension) {
-        game = new Game(
-                new Board(dimension),
-                gameType,
-                new PlayerFactory(this));
+    @Override
+    public void createNewGameFromOptions(int gameType, int dimension) {
+        game = gameMaker.initializeGame(dimension, gameType, this);
     }
 
     private void playAllMoves() {
-        while (!game.isGameOver()) {
-            game.playCurrentPlayerMove();
-            displayBoard();
-        }
+        game.playAllAvailableMoves();
     }
 
     private void displayMessage(String messageToDisplay) {
@@ -153,7 +144,7 @@ public class CommandLineUI implements UserInterface {
     private void resetGame() {
         int DEFAULT_DIMENSION = 3;
         int DEFAULT_GAME_TYPE = 1;
-        game = new Game(new Board(DEFAULT_DIMENSION), DEFAULT_GAME_TYPE, new PlayerFactory());
+        game = gameMaker.initializeGame(DEFAULT_DIMENSION, DEFAULT_GAME_TYPE, this);
     }
 
     private boolean userWantsToPlay(int choice) {

@@ -2,7 +2,7 @@ package javafxgui.javafxcomponents;
 
 
 import javafx.scene.control.Button;
-import jttt.Core.GameType;
+import jttt.core.game.GameType;
 
 import java.util.Map;
 

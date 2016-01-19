@@ -1,4 +1,4 @@
-package jttt.Core.Board;
+package jttt.core.board;
 
 import java.util.ArrayList;
 import java.util.List;

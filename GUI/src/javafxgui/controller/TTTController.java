@@ -1,25 +1,20 @@
-package javafxgui;
+package javafxgui.controller;
 
 import javafxgui.view.GUIView;
-import jttt.Core.Board.Board;
-import jttt.Core.Game;
-import jttt.Core.GameType;
-import jttt.Core.Players.Player;
-import jttt.Core.Players.PlayerFactory;
+import jttt.core.game.GameMaker;
+import jttt.core.game.Game;
+import jttt.core.game.GameType;
+import jttt.core.players.Player;
 
 public class TTTController implements Controller {
+    private GameMaker gameMaker;
     private GUIView guiView;
     private Game game;
 
-    public TTTController(GUIView guiView, Game game) {
+    public TTTController(GUIView guiView, GameMaker gameMaker) {
         this.guiView = guiView;
         guiView.setController(this);
-        this.game = game;
-    }
-
-    public TTTController(GUIView guiView) {
-        this.guiView = guiView;
-        guiView.setController(this);
+        this.gameMaker = gameMaker;
         this.game = null;
     }
 
@@ -60,31 +55,28 @@ public class TTTController implements Controller {
 
     @Override
     public void initializeGame(GameType gameType, int boardDimension) {
-        this.game = new Game(new Board(boardDimension), gameType.getNumericGameType(), new PlayerFactory());
+        this.game = gameMaker.initializeGame(boardDimension, gameType.getNumericGameType(), null);
     }
 
     @Override
     public void playGame() {
-        while (!game.isGameOver() && game.getNextPlayer().isReady()) {
-            playMoveOnGameBoard();
-            displayGameLayout();
-        }
+        playMoveOnGameBoard();
+        displayGameLayout();
         displayResult();
         displayPlayAgain();
     }
 
     @Override
     public void createNewGame() {
-        game = null;
         presentGameOptions();
     }
 
     @Override
     public boolean foundWinOrDraw() {
-        return game != null && game.isGameOver();
+        return game.isGameOver();
     }
 
     private void playMoveOnGameBoard() {
-        game.playCurrentPlayerMove();
+        game.playAllAvailableMoves();
     }
 }

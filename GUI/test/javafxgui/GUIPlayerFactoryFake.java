@@ -1,24 +1,20 @@
-package jttt.Core.Players;
+package javafxgui;
 
-import jttt.Core.GameType;
+import jttt.core.game.GameType;
+import jttt.core.players.ComputerPlayer;
 
-import static jttt.Core.Board.Mark.O;
-import static jttt.Core.Board.Mark.X;
+import static jttt.core.board.Mark.O;
+import static jttt.core.board.Mark.X;
 
-public class PlayerFactoryFake extends PlayerFactory {
-    private String nextGUIHumanMove;
-
-    public PlayerFactoryFake() {
-        super();
-        this.nextGUIHumanMove = null;
-    }
+public class GUIPlayerFactoryFake extends GUIPlayerFactory {
+    private String nextGUIHumanMove = "";
 
     public void setNextGUIHumanMove(String displayPositionId) {
         this.nextGUIHumanMove = displayPositionId;
     }
 
     @Override
-    void registerGameTypeWithPlayerTypes() {
+    public void registerGameTypeWithPlayerTypes() {
         GUIHumanPlayer guiHumanPlayerX = new GUIHumanPlayer(X);
         GUIHumanPlayer guiHumanPlayerO = new GUIHumanPlayer(O);
         guiHumanPlayerX.setNextUserMove(nextGUIHumanMove);

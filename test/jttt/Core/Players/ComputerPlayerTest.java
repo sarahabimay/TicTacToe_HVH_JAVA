@@ -1,17 +1,18 @@
-package jttt.Core.Players;
+package jttt.core.players;
 
-import jttt.Core.Board.Board;
-import jttt.Core.Board.Mark;
-import jttt.Core.UI.FakeCommandLineUI;
+import jttt.UI.FakeCommandLineUI;
+import jttt.core.board.Board;
+import jttt.core.board.Mark;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static jttt.Core.Board.Mark.*;
+import static jttt.core.board.Mark.*;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -20,10 +21,16 @@ public class ComputerPlayerTest {
     private FakeCommandLineUI fakeUI;
     private ComputerPlayer computerXPlayer;
     private ComputerPlayer computerOPlayer;
+    private OutputStream output;
+    private InputStream inputStream;
+    private Writer writer;
 
     @Before
     public void setUp() {
-        fakeUI = new FakeCommandLineUI();
+        output = new ByteArrayOutputStream();
+        writer = new OutputStreamWriter(output);
+        inputStream = new ByteArrayInputStream("1".getBytes());
+        fakeUI = new FakeCommandLineUI(null, inputStream, writer);
         computerXPlayer = new ComputerPlayer(X);
         computerOPlayer = new ComputerPlayer(O);
     }
