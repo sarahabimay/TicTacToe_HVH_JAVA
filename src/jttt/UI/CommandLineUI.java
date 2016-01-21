@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.function.IntPredicate;
 
 public class CommandLineUI implements UserInterface {
-    private final String ANSI_CLEAR = "\033[H\033[2J";
+    public static final String ANSI_CLEAR = "\033[H\033[2J";
     public static final String GREETING = "Do you want to play a game of TIC TAC TOE? Yes(1) or No(2) : \n";
     public static final String GAME_TYPE_REQUEST = "Human vs Human(1) or Human vs Computer(2) or Computer vs Human(3)?:\n";
     public static final String DIMENSION_REQUEST = "Please provide the dimensions of the board:\n";
@@ -17,6 +17,7 @@ public class CommandLineUI implements UserInterface {
     public static final String DRAW_ANNOUNCE = "The game is a draw!\n";
     public static final String WINNER_ANNOUNCE = "We have a Winner! Player: %s\n";
     public static final String REPLAY_REQUEST = "Do you want to play again? Yes(1) or No(2) :\n";
+
     private GameMaker gameMaker;
     private Game game;
     private BufferedReader readStream;
@@ -26,9 +27,9 @@ public class CommandLineUI implements UserInterface {
         this.readStream = new BufferedReader(new InputStreamReader(inputStream));
         this.writeStream = writer;
         this.gameMaker = gameMaker;
-        this.game = null;
     }
 
+    @Override
     public void start() {
         clearDisplay();
         boolean playGame = userWantsToPlay(displayGreetingRequest());
@@ -40,18 +41,22 @@ public class CommandLineUI implements UserInterface {
         }
     }
 
+    @Override
     public int displayGreetingRequest() {
         return request(GREETING, this::validateContinueChoice);
     }
 
+    @Override
     public int requestBoardDimension() {
         return request(DIMENSION_REQUEST, this::validateDimension);
     }
 
+    @Override
     public int requestGameType() {
         return request(GAME_TYPE_REQUEST, this::validGameType);
     }
 
+    @Override
     public int requestNextPosition(Board board) {
         int inputValue = -1;
         while (!validBoardPosition(inputValue, board)) {
@@ -62,6 +67,7 @@ public class CommandLineUI implements UserInterface {
         return inputValue;
     }
 
+    @Override
     public int requestPlayAgain() {
         return request(REPLAY_REQUEST, this::validReplayChoice);
     }
@@ -72,6 +78,7 @@ public class CommandLineUI implements UserInterface {
         displayMessage(boardForDisplay);
     }
 
+    @Override
     public void displayResult(Mark winner) {
         if (winner.isEmpty()) {
             announceDraw();
@@ -113,7 +120,6 @@ public class CommandLineUI implements UserInterface {
         return BinaryChoice.YES.equalsChoice(playOrQuit) || BinaryChoice.NO.equalsChoice(playOrQuit);
     }
 
-    @Override
     public void createNewGameFromOptions(int gameType, int dimension) {
         game = gameMaker.initializeGame(dimension, gameType, this);
     }
@@ -139,12 +145,6 @@ public class CommandLineUI implements UserInterface {
         }
         clearDisplay();
         return inputValue;
-    }
-
-    private void resetGame() {
-        int DEFAULT_DIMENSION = 3;
-        int DEFAULT_GAME_TYPE = 1;
-        game = gameMaker.initializeGame(DEFAULT_DIMENSION, DEFAULT_GAME_TYPE, this);
     }
 
     private boolean userWantsToPlay(int choice) {
