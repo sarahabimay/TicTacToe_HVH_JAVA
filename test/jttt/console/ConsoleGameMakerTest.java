@@ -1,8 +1,6 @@
-package jttt.core.game;
+package jttt.console;
 
-import jttt.UI.ConsoleGameMaker;
-import jttt.UI.FakeCommandLineUI;
-import jttt.UI.HumanPlayer;
+import jttt.core.game.Game;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ConsoleGameMakerTest {
     private static final int DEFAULT_BOARD_DIMENSION = 3;
-    private FakeCommandLineUI uiSpy;
+    private FakeConsoleController uiSpy;
     private OutputStream output;
     private InputStream inputStream;
     private Writer writer;
@@ -25,13 +23,17 @@ public class ConsoleGameMakerTest {
         output = new ByteArrayOutputStream();
         writer = new OutputStreamWriter(output);
         inputStream = new ByteArrayInputStream("1".getBytes());
-        uiSpy = new FakeCommandLineUI(null, inputStream, writer);
+        uiSpy = new FakeConsoleController(null, inputStream, writer);
     }
 
     @Test
     public void createAThreeByThreeHVHGame() {
         ConsoleGameMaker gameMaker = new ConsoleGameMaker();
-        Game game = gameMaker.initializeGame(DEFAULT_BOARD_DIMENSION, HVH.getNumericGameType(), uiSpy);
+        Game game = gameMaker.initializeGame(
+                DEFAULT_BOARD_DIMENSION,
+                HVH.getNumericGameType(),
+                new ConsolePlayerFactory(uiSpy),
+                new ConsoleBoardDisplayer(uiSpy));
         assertEquals(9, game.getBoardSize());
         assertEquals(HumanPlayer.class, game.getPlayer(X).getClass());
         assertEquals(HumanPlayer.class, game.getPlayer(O).getClass());

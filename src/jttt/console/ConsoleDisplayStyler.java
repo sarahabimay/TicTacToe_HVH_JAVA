@@ -1,9 +1,9 @@
-package jttt.UI;
+package jttt.console;
 
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
 
-public class DisplayStyler {
+public class ConsoleDisplayStyler {
     private String ANSI_RESET = "\u001B[0m";
     private String ANSI_BLUE = "\u001B[34m";
     private String ANSI_RED = "\u001B[31m";

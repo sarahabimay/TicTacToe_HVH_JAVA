@@ -23,8 +23,8 @@ public class EventHandlerTest {
     public void handleNewMoveEvent() {
         NewPlayerMoveEventHandler newMoveEventHandler = new NewPlayerMoveEventHandler(guiViewSpy);
         newMoveEventHandler.action("1");
-        assertEquals(true, guiViewSpy.hasNextGUIPlayerBeenFound());
-        assertEquals(true, guiViewSpy.hasBoardButtonBeenClicked());
+        assertEquals(true, guiViewSpy.hasHumanPlayerMadeAMove());
+//        assertEquals(true, guiViewSpy.hasBoardButtonBeenClicked());
     }
 
     @Test

@@ -1,14 +1,17 @@
-package jttt.UI;
+package jttt.console;
 
-import jttt.core.game.GameMaker;
+import jttt.core.UIReader;
+import jttt.core.UIPresenter;
+import jttt.core.UIAppControls;
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
 import jttt.core.game.Game;
+import jttt.core.game.GameMaker;
 
 import java.io.*;
 import java.util.function.IntPredicate;
 
-public class CommandLineUI implements UserInterface {
+public class ConsoleController implements UIAppControls, UIReader, UIPresenter {
     public static final String ANSI_CLEAR = "\033[H\033[2J";
     public static final String GREETING = "Do you want to play a game of TIC TAC TOE? Yes(1) or No(2) : \n";
     public static final String GAME_TYPE_REQUEST = "Human vs Human(1) or Human vs Computer(2) or Computer vs Human(3)?:\n";
@@ -17,31 +20,37 @@ public class CommandLineUI implements UserInterface {
     public static final String DRAW_ANNOUNCE = "The game is a draw!\n";
     public static final String WINNER_ANNOUNCE = "We have a Winner! Player: %s\n";
     public static final String REPLAY_REQUEST = "Do you want to play again? Yes(1) or No(2) :\n";
+    private final ConsoleDisplayStyler consoleStyler;
 
     private GameMaker gameMaker;
     private Game game;
     private BufferedReader readStream;
     private Writer writeStream;
 
-    public CommandLineUI(GameMaker gameMaker, InputStream inputStream, Writer writer) {
+    public ConsoleController(GameMaker gameMaker, InputStream inputStream, Writer writer) {
         this.readStream = new BufferedReader(new InputStreamReader(inputStream));
         this.writeStream = writer;
         this.gameMaker = gameMaker;
+        this.consoleStyler = new ConsoleDisplayStyler();
     }
 
     @Override
-    public void start() {
+    public void startGame() {
         clearDisplay();
         boolean playGame = userWantsToPlay(displayGreetingRequest());
         while (playGame) {
-            createNewGameFromOptions(requestGameType(), requestBoardDimension());
+            displayGameOptions();
             playAllMoves();
-            displayResult(game.findWinner());
-            playGame = playAgain();
+            displayResult();
+            playGame = userWantsToPlay(displayPlayAgainOption());
         }
     }
 
     @Override
+    public void displayGameOptions() {
+        createNewGameFromOptions(requestGameType(), requestBoardDimension());
+    }
+
     public int displayGreetingRequest() {
         return request(GREETING, this::validateContinueChoice);
     }
@@ -57,29 +66,24 @@ public class CommandLineUI implements UserInterface {
     }
 
     @Override
-    public int requestNextPosition(Board board) {
-        int inputValue = -1;
-        while (!validBoardPosition(inputValue, board)) {
-            displayMessage(POSITION_REQUEST);
-            inputValue = readInput();
-        }
-        clearDisplay();
-        return inputValue;
+    public int requestNextPosition() {
+        return request(POSITION_REQUEST, this::validBoardPosition);
     }
 
     @Override
-    public int requestPlayAgain() {
+    public int displayPlayAgainOption() {
         return request(REPLAY_REQUEST, this::validReplayChoice);
     }
 
     @Override
-    public void displayBoardToUser(String boardForDisplay) {
+    public void displayGameLayout(Board board) {
         clearDisplay();
-        displayMessage(boardForDisplay);
+        displayMessage(consoleStyler.createBoardForDisplay(board));
     }
 
     @Override
-    public void displayResult(Mark winner) {
+    public void displayResult() {
+        Mark winner = game.findWinner();
         if (winner.isEmpty()) {
             announceDraw();
         } else {
@@ -88,7 +92,7 @@ public class CommandLineUI implements UserInterface {
     }
 
     public boolean playAgain() {
-        if (userWantsToPlay(requestPlayAgain())) {
+        if (userWantsToPlay(displayPlayAgainOption())) {
             clearDisplay();
             return true;
         }
@@ -107,9 +111,9 @@ public class CommandLineUI implements UserInterface {
         return dimension >= 3;
     }
 
-    public boolean validBoardPosition(int oneIndexedPosition, Board board) {
-        return (0 < oneIndexedPosition && oneIndexedPosition <= board.boardSize()) &&
-                !board.cellIsOccupied(oneIndexedPosition - 1);
+    public boolean validBoardPosition(int oneIndexedPosition) {
+        return (0 < oneIndexedPosition && oneIndexedPosition <= game.getBoard().boardSize()) &&
+                !game.getBoard().cellIsOccupied(oneIndexedPosition - 1);
     }
 
     public boolean validReplayChoice(int instruction) {
@@ -121,7 +125,11 @@ public class CommandLineUI implements UserInterface {
     }
 
     public void createNewGameFromOptions(int gameType, int dimension) {
-        game = gameMaker.initializeGame(dimension, gameType, this);
+        game = gameMaker.initializeGame(
+                dimension,
+                gameType,
+                new ConsolePlayerFactory(this),
+                new ConsoleBoardDisplayer(this));
     }
 
     private void playAllMoves() {

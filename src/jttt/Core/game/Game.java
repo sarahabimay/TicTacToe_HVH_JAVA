@@ -1,6 +1,6 @@
 package jttt.core.game;
 
-import jttt.core.displayer.Displayer;
+import jttt.core.boarddisplayer.BoardDisplayer;
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
 import jttt.core.players.Player;
@@ -9,13 +9,13 @@ import java.util.HashMap;
 
 public class Game {
 
-    private Displayer displayer;
+    private BoardDisplayer boardDisplayer;
     private Board board;
     private HashMap<Mark, Player> players;
 
-    public Game(Board board, Player player1, Player player2, Displayer displayer) {
+    public Game(Board board, Player player1, Player player2, BoardDisplayer boardDisplayer) {
         this.board = board;
-        this.displayer = displayer;
+        this.boardDisplayer = boardDisplayer;
         this.players = new HashMap<>();
         this.players.put(player1.getMark(), player1);
         this.players.put(player2.getMark(), player2);
@@ -49,13 +49,13 @@ public class Game {
     }
 
     public void playAllAvailableMoves() {
-        displayer.updateBoardDisplay(board);
+        boardDisplayer.updateBoardDisplay(board);
         Player currentPlayer = getNextPlayer();
         while (!isGameOver() && currentPlayer.isReady()) {
             board.playCounterInPosition(
                     currentPlayer.getNextPosition(board),
                     currentPlayer.getMark());
-            displayer.updateBoardDisplay(board);
+            boardDisplayer.updateBoardDisplay(board);
             currentPlayer = getNextPlayer();
         }
     }

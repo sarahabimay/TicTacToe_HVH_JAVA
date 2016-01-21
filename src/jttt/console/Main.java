@@ -1,7 +1,4 @@
-package jttt;
-
-import jttt.UI.CommandLineUI;
-import jttt.UI.ConsoleGameMaker;
+package jttt.console;
 
 import java.io.BufferedInputStream;
 import java.io.OutputStreamWriter;
@@ -9,10 +6,10 @@ import java.io.OutputStreamWriter;
 public class Main {
 
     public static void main(String[] args) {
-        CommandLineUI ui = new CommandLineUI(
+        ConsoleController ui = new ConsoleController(
                 new ConsoleGameMaker(),
                 new BufferedInputStream(System.in),
                 new OutputStreamWriter(System.out));
-        ui.start();
+        ui.startGame();
     }
 }

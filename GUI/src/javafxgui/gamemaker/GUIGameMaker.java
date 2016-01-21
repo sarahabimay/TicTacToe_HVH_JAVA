@@ -1,25 +1,20 @@
 package javafxgui.gamemaker;
 
-import javafxgui.javafxcomponents.GUIDisplayer;
-import jttt.UI.UserInterface;
-import jttt.core.game.GameMaker;
+import javafxgui.javafxcomponents.GUIBoardDisplayer;
 import jttt.core.board.Board;
+import jttt.core.boarddisplayer.BoardDisplayer;
 import jttt.core.game.Game;
+import jttt.core.game.GameMaker;
 import jttt.core.players.Player;
 import jttt.core.players.PlayerFactory;
 
 import java.util.List;
 
 public class GUIGameMaker implements GameMaker {
-    private final PlayerFactory playerFactory;
-
-    public GUIGameMaker(PlayerFactory playerFactory) {
-        this.playerFactory = playerFactory;
-    }
 
     @Override
-    public Game initializeGame(int boardDimension, int gameTypeOption, UserInterface ui) {
+    public Game initializeGame(int boardDimension, int gameTypeOption, PlayerFactory playerFactory, BoardDisplayer boardDisplayer) {
         List<Player> players = playerFactory.findPlayersFor(gameTypeOption);
-        return new Game(new Board(boardDimension), players.get(0), players.get(1), new GUIDisplayer());
+        return new Game(new Board(boardDimension), players.get(0), players.get(1), new GUIBoardDisplayer());
     }
 }

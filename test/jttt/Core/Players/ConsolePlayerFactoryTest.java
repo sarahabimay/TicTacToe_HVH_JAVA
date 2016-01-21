@@ -1,8 +1,8 @@
 package jttt.core.players;
 
-import jttt.UI.ConsolePlayerFactory;
-import jttt.UI.HumanPlayer;
-import jttt.UI.FakeCommandLineUI;
+import jttt.console.ConsolePlayerFactory;
+import jttt.console.HumanPlayer;
+import jttt.console.FakeConsoleController;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class ConsolePlayerFactoryTest {
 
     public ConsolePlayerFactory playerFactory;
-    private FakeCommandLineUI fakeUI;
+    private FakeConsoleController fakeUI;
     private OutputStream output;
     private InputStream inputStream;
     private Writer writer;
@@ -25,7 +25,7 @@ public class ConsolePlayerFactoryTest {
         output = new ByteArrayOutputStream();
         writer = new OutputStreamWriter(output);
         inputStream = new ByteArrayInputStream("1".getBytes());
-        fakeUI = new FakeCommandLineUI(null, inputStream, writer);
+        fakeUI = new FakeConsoleController(null, inputStream, writer);
         playerFactory = new ConsolePlayerFactory(fakeUI);
         playerFactory.registerGameTypeWithPlayerTypes();
     }

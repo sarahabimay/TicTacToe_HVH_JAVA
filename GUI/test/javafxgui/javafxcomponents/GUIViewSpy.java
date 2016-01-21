@@ -2,10 +2,8 @@ package javafxgui.javafxcomponents;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-import javafxgui.players.GUIHumanPlayer;
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
-import jttt.core.players.Player;
 
 public class GUIViewSpy extends GUIView {
     private Scene scene;
@@ -16,18 +14,13 @@ public class GUIViewSpy extends GUIView {
     private boolean hasReplayButtonBeenDisplayed = false;
     private boolean hasButtonBeenClicked = false;
     private boolean hasReplayButtonBeenSelected = false;
-    private boolean hasNextGUIPlayerBeenFound = false;
     private boolean hasGameOptionsBeenPresented = false;
+    private boolean hasHumanPlayerMadeAMove = false;
 
     public GUIViewSpy(Scene scene) {
         super(scene);
         this.root = new StackPane();
         this.scene = new Scene(root, 700, 675);
-    }
-
-    public Player getCurrentPlayer() {
-        hasNextGUIPlayerBeenFound = true;
-        return new GUIHumanPlayer(Mark.X);
     }
 
     @Override
@@ -50,12 +43,12 @@ public class GUIViewSpy extends GUIView {
     }
 
     @Override
-    public void playGame() {
-        hasButtonBeenClicked = true;
+    public void playNewMove(String displayPositionId) {
+        hasHumanPlayerMadeAMove = true;
     }
 
     @Override
-    public void createNewGame() {
+    public void presentGameOptions() {
         hasReplayButtonBeenSelected = true;
     }
 
@@ -87,11 +80,11 @@ public class GUIViewSpy extends GUIView {
         return hasReplayButtonBeenSelected;
     }
 
-    public boolean hasNextGUIPlayerBeenFound() {
-        return hasNextGUIPlayerBeenFound;
-    }
-
     public boolean hasGameOptionsBeenPresented() {
         return hasGameOptionsBeenPresented;
+    }
+
+    public boolean hasHumanPlayerMadeAMove(){
+        return hasHumanPlayerMadeAMove;
     }
 }

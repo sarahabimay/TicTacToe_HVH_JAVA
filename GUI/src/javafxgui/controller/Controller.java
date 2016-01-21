@@ -1,26 +1,17 @@
 package javafxgui.controller;
 
 import jttt.core.game.GameType;
-import jttt.core.players.Player;
 
 public interface Controller {
+    void displayGameOptions();
+
     void displayGameLayout();
 
     void displayResult();
 
-    void playGame();
-
-    void createNewGame();
-
-    boolean foundWinOrDraw();
-
-    void displayPlayAgain();
-
-    Player getCurrentPlayer();
-
-    void initializeGame(GameType gameType, int boardDimension);
+    void displayPlayAgainOption();
 
     void startGame(GameType gameType, int boardDimension);
 
-    void presentGameOptions();
+    void registerPlayerMove(String displayPositionId);
 }

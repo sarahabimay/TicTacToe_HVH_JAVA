@@ -1,4 +1,4 @@
-package jttt.UI;
+package jttt.console;
 
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class HumanPlayerTest {
 
-    public FakeCommandLineUI fakeUI;
+    public FakeConsoleController fakeUI;
     private OutputStream output;
     private InputStream inputStream;
     private Writer writer;
@@ -25,7 +25,7 @@ public class HumanPlayerTest {
         output = new ByteArrayOutputStream();
         writer = new OutputStreamWriter(output);
         inputStream = new ByteArrayInputStream("1".getBytes());
-        fakeUI = new FakeCommandLineUI(null, inputStream, writer);
+        fakeUI = new FakeConsoleController(null, inputStream, writer);
     }
 
     @Test

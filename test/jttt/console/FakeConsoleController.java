@@ -1,4 +1,4 @@
-package jttt.UI;
+package jttt.console;
 
 import jttt.core.game.GameMaker;
 import jttt.core.board.Board;
@@ -10,7 +10,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FakeCommandLineUI extends CommandLineUI{
+public class FakeConsoleController extends ConsoleController {
     private final int DEFAULT_DIMENSION = 3;
     private Game game;
     private List<Integer> dummyInputs;
@@ -19,35 +19,35 @@ public class FakeCommandLineUI extends CommandLineUI{
     private boolean hasBoardBeenDisplayedToUI = false;
     private boolean hasGameBeenCreated = false;
 
-    public FakeCommandLineUI(GameMaker gameMaker, InputStream inputStream, Writer writer) {
+    public FakeConsoleController(GameMaker gameMaker, InputStream inputStream, Writer writer) {
         super(gameMaker, inputStream, writer);
 
         this.game = new Game(new Board(DEFAULT_DIMENSION),
                 new HumanPlayer(Mark.X, this),
                 new HumanPlayer(Mark.O, this),
-                new UIDisplayer(this, new DisplayStyler()));
+                new ConsoleBoardDisplayer(this));
         this.playerType = -1;
         this.dummyDimension = 0;
         this.dummyInputs = new ArrayList<>();
     }
 
     @Override
-    public void start() {
+    public void startGame() {
     }
 
     @Override
-    public int requestNextPosition(Board board) {
+    public int requestNextPosition() {
         int nextMove = dummyInputs.remove(0);
-        while (!validBoardPosition(nextMove, board)) {
+        while (!validBoardPosition(nextMove)) {
             nextMove = dummyInputs.size() > 0 ? dummyInputs.remove(0) : -1;
         }
         return nextMove;
     }
 
     @Override
-    public boolean validBoardPosition(int oneIndexedPosition, Board board) {
-        return (0 < oneIndexedPosition && oneIndexedPosition <= board.boardSize()) &&
-                !board.cellIsOccupied(oneIndexedPosition - 1);
+    public boolean validBoardPosition(int oneIndexedPosition) {
+        return (0 < oneIndexedPosition && oneIndexedPosition <= game.getBoard().boardSize()) &&
+                !game.getBoard().cellIsOccupied(oneIndexedPosition - 1);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class FakeCommandLineUI extends CommandLineUI{
     }
 
     @Override
-    public int requestPlayAgain() {
+    public int displayPlayAgainOption() {
         return BinaryChoice.NO.getChoiceOption();
     }
 
@@ -94,11 +94,11 @@ public class FakeCommandLineUI extends CommandLineUI{
     }
 
     @Override
-    public void displayResult(Mark winner) {
+    public void displayResult() {
     }
 
     @Override
-    public void displayBoardToUser(String boardForDisplay) {
+    public void displayGameLayout(Board board) {
         hasBoardBeenDisplayedToUI = true;
     }
 

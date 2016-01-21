@@ -5,18 +5,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafxgui.controller.GUIAppControllerStub;
 import javafxgui.gamemaker.GUIGameMaker;
-import javafxgui.players.GUIPlayerFactory;
-import javafxgui.controller.TTTControllerStub;
 import jttt.core.board.Board;
 import jttt.core.game.GameType;
-import javafxgui.players.GUIHumanPlayer;
-import jttt.core.players.Player;
 import org.junit.Before;
 import org.junit.Test;
 
-import static jttt.core.board.Mark.O;
-import static jttt.core.board.Mark.X;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -28,7 +23,7 @@ public class GUIViewTest {
     private GUIView guiView;
     private Scene scene;
     private Board defaultBoard;
-    private TTTControllerStub controllerStub;
+    private GUIAppControllerStub controllerStub;
 
     @Before
     public void setUp() {
@@ -36,7 +31,7 @@ public class GUIViewTest {
         defaultBoard = new Board(3);
         scene = new Scene(new StackPane(), WINDOW_HEIGHT, WINDOW_WIDTH);
         guiView = new GUIView(scene);
-        controllerStub = new TTTControllerStub(guiView, new GUIGameMaker(new GUIPlayerFactory()));
+        controllerStub = new GUIAppControllerStub(guiView, new GUIGameMaker());
     }
 
     @Test
@@ -68,18 +63,5 @@ public class GUIViewTest {
         guiView.makePlayAgainVisible();
         assertThat(replayButton, notNullValue());
         assertEquals(true, replayButton.isVisible());
-    }
-
-    @Test
-    public void getCurrentGUIHumanPlayer() {
-        TTTControllerStub controller = new TTTControllerStub(guiView,
-                new GUIGameMaker(new GUIPlayerFactory()));
-        controller.initializeGame(GameType.GUI_HVH, 3);
-        guiView.setController(controller);
-
-        Player currentPlayer = guiView.getCurrentPlayer();
-        assertEquals(GUIHumanPlayer.class, currentPlayer.getClass());
-        assertEquals(X, currentPlayer.getMark());
-        assertEquals(O, currentPlayer.opponentCounter());
     }
 }

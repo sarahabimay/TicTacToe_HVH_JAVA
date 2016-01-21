@@ -1,8 +1,8 @@
 package jttt.core.game;
 
-import javafxgui.javafxcomponents.GUIDisplayer;
+import javafxgui.javafxcomponents.GUIBoardDisplayer;
 import javafxgui.players.GUIHumanPlayer;
-import jttt.UI.*;
+import jttt.console.*;
 import jttt.core.board.Board;
 import jttt.core.players.*;
 import org.junit.Before;
@@ -24,7 +24,7 @@ public class GameTest {
     private final int ZERO_DIMENSION_BOARD = 0;
     private Game defaultGame;
     private Game zeroGame;
-    private FakeCommandLineUI uiSpy;
+    private FakeConsoleController uiSpy;
     private OutputStream output;
     private InputStream inputStream;
     private Writer writer;
@@ -34,11 +34,11 @@ public class GameTest {
         output = new ByteArrayOutputStream();
         writer = new OutputStreamWriter(output);
         inputStream = new ByteArrayInputStream("1".getBytes());
-        uiSpy = new FakeCommandLineUI(null, inputStream, writer);
+        uiSpy = new FakeConsoleController(null, inputStream, writer);
         ConsolePlayerFactory playerFactory = new ConsolePlayerFactory(uiSpy);
         List<Player> players = playerFactory.findPlayersFor(HVH.getNumericGameType());
-        zeroGame = new Game(new Board(ZERO_DIMENSION_BOARD), players.get(0), players.get(1), new GUIDisplayer());
-        defaultGame = new Game(new Board(DEFAULT_DIMENSION), players.get(0), players.get(1), new GUIDisplayer());
+        zeroGame = new Game(new Board(ZERO_DIMENSION_BOARD), players.get(0), players.get(1), new GUIBoardDisplayer());
+        defaultGame = new Game(new Board(DEFAULT_DIMENSION), players.get(0), players.get(1), new GUIBoardDisplayer());
     }
 
     @Test
@@ -80,7 +80,7 @@ public class GameTest {
     public void displayBoard() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(10, 1, 2, 3, 4, 5, 6, 7, 8, 9));
         uiSpy.addDummyHumanMoves(initialState);
-        UIDisplayerSpy displayer = new UIDisplayerSpy(null, null);
+        ConsoleBoardDisplayerSpy displayer = new ConsoleBoardDisplayerSpy(null, null);
         Game game = new Game(new Board(DEFAULT_DIMENSION),
                 new HumanPlayer(X, uiSpy),
                 new ComputerPlayer(O),
@@ -93,7 +93,7 @@ public class GameTest {
     public void createConsolePlayerGameExplicitlyWithPlayers() {
         List<Integer> initialState = new ArrayList<>(Arrays.asList(10, 1, 2, 3, 4, 5, 6, 7, 8, 9));
         uiSpy.addDummyHumanMoves(initialState);
-        UIDisplayerSpy displayer = new UIDisplayerSpy(uiSpy, new DisplayStylerSpy());
+        ConsoleBoardDisplayerSpy displayer = new ConsoleBoardDisplayerSpy(uiSpy, new ConsoleDisplayStylerSpy());
         Game game = new Game(new Board(DEFAULT_DIMENSION),
                 new HumanPlayer(X, uiSpy),
                 new HumanPlayer(O, uiSpy),
@@ -114,7 +114,7 @@ public class GameTest {
         Game game = new Game(board,
                 guiHumanPlayerX,
                 guiHumanPlayerO,
-                new GUIDisplayer());
+                new GUIBoardDisplayer());
 
         game.playAllAvailableMoves();
         assertEquals(false, game.getBoard().isGameOver());
