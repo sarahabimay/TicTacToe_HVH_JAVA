@@ -1,5 +1,6 @@
-package jttt.UI;
+package jttt.console;
 
+import jttt.core.UIReader;
 import jttt.core.board.Mark;
 import jttt.core.game.GameType;
 import jttt.core.players.ComputerPlayer;
@@ -15,10 +16,10 @@ import static jttt.core.game.GameType.*;
 
 public class ConsolePlayerFactory implements PlayerFactory {
     static final Map<GameType, List<Player>> gameTypeOptionToPlayers = new HashMap<>();
-    public UserInterface userInterface;
+    public UIReader uiReader;
 
-    public ConsolePlayerFactory(UserInterface userInterface) {
-        this.userInterface = userInterface;
+    public ConsolePlayerFactory(UIReader uiReader) {
+        this.uiReader = uiReader;
     }
 
     public List<Player> findPlayersFor(int gameType) {
@@ -27,9 +28,9 @@ public class ConsolePlayerFactory implements PlayerFactory {
     }
 
     public void registerGameTypeWithPlayerTypes() {
-        gameTypeOptionToPlayers.put(HVH, createPlayers(new HumanPlayer(Mark.X, userInterface), new HumanPlayer(Mark.O, userInterface)));
-        gameTypeOptionToPlayers.put(HVC, createPlayers(new HumanPlayer(Mark.X, userInterface), new ComputerPlayer(Mark.O)));
-        gameTypeOptionToPlayers.put(CVH, createPlayers(new ComputerPlayer(Mark.X), new HumanPlayer(Mark.O, userInterface)));
+        gameTypeOptionToPlayers.put(HVH, createPlayers(new HumanPlayer(Mark.X, uiReader), new HumanPlayer(Mark.O, uiReader)));
+        gameTypeOptionToPlayers.put(HVC, createPlayers(new HumanPlayer(Mark.X, uiReader), new ComputerPlayer(Mark.O)));
+        gameTypeOptionToPlayers.put(CVH, createPlayers(new ComputerPlayer(Mark.X), new HumanPlayer(Mark.O, uiReader)));
     }
 
     List<Player> createPlayers(Player player1, Player player2) {

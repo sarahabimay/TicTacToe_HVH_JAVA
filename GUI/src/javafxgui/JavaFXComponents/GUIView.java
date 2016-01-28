@@ -2,17 +2,16 @@ package javafxgui.javafxcomponents;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafxgui.controller.Controller;
+import javafxgui.controller.GUIAppController;
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
 import jttt.core.game.GameType;
-import jttt.core.players.Player;
 
 public class GUIView {
 
     private final int DEFAULT_BOARD_DIMENSION = 3;
     private Scene scene;
-    private Controller controller;
+    private GUIAppController controller; // IS THIS OKAY TO DO SINCE IT'S UNLIKELY ANY OTHER GUIAPP COULD BE USED ?
     private JavaFxGameLayoutComponent gameLayoutWindow;
 
     public GUIView(Scene scene) {
@@ -20,12 +19,8 @@ public class GUIView {
         this.controller = null;
     }
 
-    public void setController(Controller controller) {
+    public void setController(GUIAppController controller) {
         this.controller = controller;
-    }
-
-    public Player getCurrentPlayer() {
-        return controller.getCurrentPlayer();
     }
 
     public Node lookup(String id) {
@@ -51,12 +46,8 @@ public class GUIView {
         gameLayoutWindow.displayResult(winner);
     }
 
-    public void playGame() {
-        controller.playGame();
-    }
-
-    public void createNewGame() {
-        controller.createNewGame();
+    public void presentGameOptions() {
+        controller.displayGameOptions();
     }
 
     public void disableBoard(Board board) {
@@ -65,5 +56,10 @@ public class GUIView {
 
     public void makePlayAgainVisible() {
         gameLayoutWindow.displayPlayAgainButton();
+    }
+
+    public void playNewMove(String displayPositionId) {
+        controller.registerPlayerMove(displayPositionId);
+        controller.startGame();
     }
 }

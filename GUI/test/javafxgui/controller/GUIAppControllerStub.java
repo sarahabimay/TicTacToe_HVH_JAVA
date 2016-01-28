@@ -2,18 +2,17 @@ package javafxgui.controller;
 
 import javafxgui.javafxcomponents.GUIView;
 import jttt.core.game.GameMaker;
-import jttt.core.game.GameType;
 
-public class TTTControllerStub extends TTTController {
+public class GUIAppControllerStub extends GUIAppController {
 
     private boolean hasGameStartBeenCalled = false;
 
-    public TTTControllerStub(GUIView guiView, GameMaker gameMaker) {
-        super(guiView, gameMaker);
+    public GUIAppControllerStub(GUIView guiView, GameMaker gameMaker) {
+        super(gameMaker, guiView);
     }
 
     @Override
-    public void startGame(GameType gameType, int boardDimension) {
+    public void startGame() {
         hasGameStartBeenCalled = true;
     }
 

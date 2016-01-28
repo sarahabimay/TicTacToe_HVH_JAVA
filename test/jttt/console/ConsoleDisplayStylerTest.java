@@ -1,4 +1,4 @@
-package jttt.UI;
+package jttt.console;
 
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
@@ -15,7 +15,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-public class DisplayStylerTest {
+public class ConsoleDisplayStylerTest {
 
     private String ANSI_RESET = "\u001B[0m";
     private String ANSI_BLUE = "\u001B[34m";
@@ -31,7 +31,7 @@ public class DisplayStylerTest {
                 EMPTY, EMPTY, EMPTY, X,
         };
         Board board = new Board(4, arrayToList(currentBoard));
-        DisplayStyler styler = new DisplayStyler();
+        ConsoleDisplayStyler styler = new ConsoleDisplayStyler();
         String expected = "[1]";
         assertEquals(expected, styler.formatMarkForDisplay(0, board));
         assertEquals(2, styler.appendSpaces(0, board).length());
@@ -51,7 +51,7 @@ public class DisplayStylerTest {
                 EMPTY,  EMPTY,  O,      X,
         };
         Board board = new Board(4, arrayToList(currentBoard));
-        DisplayStyler styler = new DisplayStyler();
+        ConsoleDisplayStyler styler = new ConsoleDisplayStyler();
         String cellForDisplay = board.findMarkAtIndex(0).markOrPositionForDisplay(0);
         String cell = styler.setDisplayColor(cellForDisplay);
         assertThat(cell, is(String.format("%s%s%s", ANSI_RED, "X", ANSI_RESET)));
@@ -69,7 +69,7 @@ public class DisplayStylerTest {
                 EMPTY, EMPTY, O,        X,
         };
         Board board = new Board(4, arrayToList(currentBoard));
-        DisplayStyler styler = new DisplayStyler();
+        ConsoleDisplayStyler styler = new ConsoleDisplayStyler();
         String expected = String.format("[%s]", styler.setDisplayColor("O"));
         assertEquals(expected, styler.formatMarkForDisplay(11, board));
         assertEquals(0, styler.appendSpaces(11, board).length());

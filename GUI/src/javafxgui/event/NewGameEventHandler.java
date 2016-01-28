@@ -10,6 +10,6 @@ public class NewGameEventHandler implements ClickEventHandler {
     }
 
     public void action(String displayPositionId) {
-        guiView.createNewGame();
+        guiView.presentGameOptions();
     }
 }

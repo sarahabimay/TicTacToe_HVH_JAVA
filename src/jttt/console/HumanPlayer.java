@@ -1,19 +1,20 @@
-package jttt.UI;
+package jttt.console;
 
+import jttt.core.UIReader;
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
 import jttt.core.players.Player;
 
 public class HumanPlayer extends Player {
 
-    private final UserInterface userInterface;
+    private final UIReader uiReader;
 
-    public HumanPlayer(Mark mark, UserInterface userInterface) {
+    public HumanPlayer(Mark mark, UIReader uiReader) {
         super(mark, Type.HUMAN);
-        this.userInterface = userInterface;
+        this.uiReader = uiReader;
     }
 
     public int getNextPosition(Board board) {
-        return userInterface.requestNextPosition(board);
+        return uiReader.requestNextPosition();
     }
 }

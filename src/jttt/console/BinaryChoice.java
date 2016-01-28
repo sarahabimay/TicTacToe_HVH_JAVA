@@ -1,4 +1,4 @@
-package jttt.UI;
+package jttt.console;
 
 public enum BinaryChoice {
     YES(1),

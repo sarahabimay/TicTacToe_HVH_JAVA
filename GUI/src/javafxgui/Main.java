@@ -4,10 +4,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafxgui.controller.TTTController;
+import javafxgui.controller.GUIAppController;
 import javafxgui.gamemaker.GUIGameMaker;
 import javafxgui.javafxcomponents.GUIView;
-import javafxgui.players.GUIPlayerFactory;
 
 public class Main extends Application {
     private final int GUI_WINDOW_HEIGHT = 700;
@@ -22,8 +21,8 @@ public class Main extends Application {
         scene.getStylesheets().add(Main.class.getResource(CSS_SCRIPT).toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
-        TTTController controller = new TTTController(new GUIView(scene), new GUIGameMaker(new GUIPlayerFactory()));
-        controller.presentGameOptions();
+        GUIAppController controller = new GUIAppController(new GUIGameMaker(), new GUIView(scene));
+        controller.displayGameOptions();
     }
 
     public static void main(String[] args) {

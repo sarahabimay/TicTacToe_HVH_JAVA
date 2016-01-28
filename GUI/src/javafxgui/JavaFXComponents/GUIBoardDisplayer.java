@@ -1,9 +1,9 @@
 package javafxgui.javafxcomponents;
 
-import jttt.core.displayer.Displayer;
+import jttt.core.boarddisplayer.BoardDisplayer;
 import jttt.core.board.Board;
 
-public class GUIDisplayer implements Displayer {
+public class GUIBoardDisplayer implements BoardDisplayer {
     @Override
     public void updateBoardDisplay(Board board) {
     }

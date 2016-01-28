@@ -1,12 +1,13 @@
-package jttt.UI;
+package jttt.console;
 
+import jttt.core.UIPresenter;
 import jttt.core.board.Board;
 
-public class UIDisplayerSpy extends UIDisplayer {
+public class ConsoleBoardDisplayerSpy extends ConsoleBoardDisplayer {
     private boolean hasBoardBeenDisplayed = false;
 
-    public UIDisplayerSpy(UserInterface userInterface, DisplayStyler styler) {
-        super(userInterface, styler);
+    public ConsoleBoardDisplayerSpy(UIPresenter uiPresenter, ConsoleDisplayStyler styler) {
+        super(uiPresenter);
     }
 
     @Override

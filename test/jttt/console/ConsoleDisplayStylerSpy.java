@@ -1,8 +1,8 @@
-package jttt.UI;
+package jttt.console;
 
 import jttt.core.board.Board;
 
-public class DisplayStylerSpy extends DisplayStyler {
+public class ConsoleDisplayStylerSpy extends ConsoleDisplayStyler {
     private boolean hasBoardBeenStyledForDisplay = false;
 
     @Override
