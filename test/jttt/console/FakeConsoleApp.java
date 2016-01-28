@@ -10,7 +10,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FakeConsoleController extends ConsoleController {
+public class FakeConsoleApp extends ConsoleApp {
     private final int DEFAULT_DIMENSION = 3;
     private Game game;
     private List<Integer> dummyInputs;
@@ -19,7 +19,7 @@ public class FakeConsoleController extends ConsoleController {
     private boolean hasBoardBeenDisplayedToUI = false;
     private boolean hasGameBeenCreated = false;
 
-    public FakeConsoleController(GameMaker gameMaker, InputStream inputStream, Writer writer) {
+    public FakeConsoleApp(GameMaker gameMaker, InputStream inputStream, Writer writer) {
         super(gameMaker, inputStream, writer);
 
         this.game = new Game(new Board(DEFAULT_DIMENSION),
@@ -71,11 +71,6 @@ public class FakeConsoleController extends ConsoleController {
             playerType = -1;
         }
         return playerType;
-    }
-
-    @Override
-    public int displayPlayAgainOption() {
-        return BinaryChoice.NO.getChoiceOption();
     }
 
     @Override

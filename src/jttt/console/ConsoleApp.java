@@ -11,7 +11,7 @@ import jttt.core.game.GameMaker;
 import java.io.*;
 import java.util.function.IntPredicate;
 
-public class ConsoleController implements UIAppControls, UIReader, UIPresenter {
+public class ConsoleApp implements UIAppControls, UIReader, UIPresenter {
     public static final String ANSI_CLEAR = "\033[H\033[2J";
     public static final String GREETING = "Do you want to play a game of TIC TAC TOE? Yes(1) or No(2) : \n";
     public static final String GAME_TYPE_REQUEST = "Human vs Human(1) or Human vs Computer(2) or Computer vs Human(3)?:\n";
@@ -27,7 +27,7 @@ public class ConsoleController implements UIAppControls, UIReader, UIPresenter {
     private BufferedReader readStream;
     private Writer writeStream;
 
-    public ConsoleController(GameMaker gameMaker, InputStream inputStream, Writer writer) {
+    public ConsoleApp(GameMaker gameMaker, InputStream inputStream, Writer writer) {
         this.readStream = new BufferedReader(new InputStreamReader(inputStream));
         this.writeStream = writer;
         this.gameMaker = gameMaker;
@@ -42,7 +42,7 @@ public class ConsoleController implements UIAppControls, UIReader, UIPresenter {
             displayGameOptions();
             playAllMoves();
             displayResult();
-            playGame = userWantsToPlay(displayPlayAgainOption());
+            playGame = userWantsToPlay(requestPlayAgainChoice());
         }
     }
 
@@ -71,7 +71,7 @@ public class ConsoleController implements UIAppControls, UIReader, UIPresenter {
     }
 
     @Override
-    public int displayPlayAgainOption() {
+    public int requestPlayAgainChoice() {
         return request(REPLAY_REQUEST, this::validReplayChoice);
     }
 
@@ -92,7 +92,7 @@ public class ConsoleController implements UIAppControls, UIReader, UIPresenter {
     }
 
     public boolean playAgain() {
-        if (userWantsToPlay(displayPlayAgainOption())) {
+        if (userWantsToPlay(requestPlayAgainChoice())) {
             clearDisplay();
             return true;
         }

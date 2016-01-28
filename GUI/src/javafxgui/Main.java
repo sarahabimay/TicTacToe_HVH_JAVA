@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafxgui.controller.GUIAppController;
+import javafxgui.app.GUIApp;
 import javafxgui.gamemaker.GUIGameMaker;
 import javafxgui.javafxcomponents.GUIView;
 
@@ -21,8 +21,8 @@ public class Main extends Application {
         scene.getStylesheets().add(Main.class.getResource(CSS_SCRIPT).toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
-        GUIAppController controller = new GUIAppController(new GUIGameMaker(), new GUIView(scene));
-        controller.displayGameOptions();
+        GUIApp guiApp = new GUIApp(new GUIGameMaker(), new GUIView(scene));
+        guiApp.displayGameOptions();
     }
 
     public static void main(String[] args) {

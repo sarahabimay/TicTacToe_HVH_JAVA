@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ConsoleGameMakerTest {
     private static final int DEFAULT_BOARD_DIMENSION = 3;
-    private FakeConsoleController uiSpy;
+    private FakeConsoleApp uiSpy;
     private OutputStream output;
     private InputStream inputStream;
     private Writer writer;
@@ -23,7 +23,7 @@ public class ConsoleGameMakerTest {
         output = new ByteArrayOutputStream();
         writer = new OutputStreamWriter(output);
         inputStream = new ByteArrayInputStream("1".getBytes());
-        uiSpy = new FakeConsoleController(null, inputStream, writer);
+        uiSpy = new FakeConsoleApp(null, inputStream, writer);
     }
 
     @Test

@@ -2,6 +2,7 @@ package javafxgui.javafxcomponents;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafxgui.app.GUIApp;
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
 
@@ -28,15 +29,6 @@ public class GUIViewSpy extends GUIView {
         hasGameOptionsBeenPresented = true;
     }
 
-    public Scene displayGameLayoutComponent(Board board) {
-        hasGameLayoutBeenRendered = true;
-        return scene;
-    }
-
-    public void displayResult(Mark winner) {
-        hasResultBeenAnnounced = true;
-    }
-
     @Override
     public void disableBoard(Board board) {
         hasBoardBeenDisabled = true;
@@ -50,6 +42,19 @@ public class GUIViewSpy extends GUIView {
     @Override
     public void presentGameOptions() {
         hasReplayButtonBeenSelected = true;
+    }
+
+    public void setGuiApp(GUIApp guiApp) {
+
+    }
+
+    public Scene displayGameLayoutComponent(Board board) {
+        hasGameLayoutBeenRendered = true;
+        return scene;
+    }
+
+    public void displayResult(Mark winner) {
+        hasResultBeenAnnounced = true;
     }
 
     public void makePlayAgainVisible() {

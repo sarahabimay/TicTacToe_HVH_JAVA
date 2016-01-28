@@ -1,6 +1,6 @@
 package jttt.core.players;
 
-import jttt.console.FakeConsoleController;
+import jttt.console.FakeConsoleApp;
 import jttt.core.board.Board;
 import jttt.core.board.Mark;
 import org.junit.Assert;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class ComputerPlayerTest {
-    private FakeConsoleController fakeUI;
+    private FakeConsoleApp fakeUI;
     private ComputerPlayer computerXPlayer;
     private ComputerPlayer computerOPlayer;
     private OutputStream output;
@@ -30,7 +30,7 @@ public class ComputerPlayerTest {
         output = new ByteArrayOutputStream();
         writer = new OutputStreamWriter(output);
         inputStream = new ByteArrayInputStream("1".getBytes());
-        fakeUI = new FakeConsoleController(null, inputStream, writer);
+        fakeUI = new FakeConsoleApp(null, inputStream, writer);
         computerXPlayer = new ComputerPlayer(X);
         computerOPlayer = new ComputerPlayer(O);
     }

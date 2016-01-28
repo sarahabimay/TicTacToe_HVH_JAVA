@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ConsoleBoardDisplayerTest {
 
-    private FakeConsoleController uiSpy;
+    private FakeConsoleApp uiSpy;
     private ConsoleDisplayStylerSpy stylerSpy;
     private BoardDisplayer boardDisplayer;
     private OutputStream output;
@@ -23,14 +23,9 @@ public class ConsoleBoardDisplayerTest {
         output = new ByteArrayOutputStream();
         writer = new OutputStreamWriter(output);
         inputStream = new ByteArrayInputStream("1".getBytes());
-        uiSpy = new FakeConsoleController(null, inputStream, writer);
+        uiSpy = new FakeConsoleApp(null, inputStream, writer);
         stylerSpy = new ConsoleDisplayStylerSpy();
         boardDisplayer = new ConsoleBoardDisplayer(uiSpy);
-    }
-
-    @Test
-    public void uiDisplayerIsAKindOfDisplayer() {
-        assertEquals(true, boardDisplayer instanceof BoardDisplayer);
     }
 
     @Test

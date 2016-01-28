@@ -1,4 +1,4 @@
-package javafxgui.controller;
+package javafxgui.app;
 
 import javafxgui.javafxcomponents.GUIBoardDisplayer;
 import javafxgui.javafxcomponents.GUIView;
@@ -10,22 +10,21 @@ import jttt.core.board.Board;
 import jttt.core.game.Game;
 import jttt.core.game.GameMaker;
 import jttt.core.game.GameType;
-import jttt.core.players.Player;
 
-public class GUIAppController implements UIAppControls, UIPresenter{
+public class GUIApp implements UIAppControls, UIPresenter{
     private GameMaker gameMaker;
     private GUIView guiView;
     private Game game;
 
-    public GUIAppController(GameMaker gameMaker, GUIView guiView) {
+    public GUIApp(GameMaker gameMaker, GUIView guiView) {
         this.guiView = guiView;
-        guiView.setController(this);
+        guiView.setGuiApp(this);
         this.gameMaker = gameMaker;
         this.game = null;
     }
 
-    public Player getCurrentPlayer() {
-        return game.getNextPlayer();
+    public GUIHumanPlayer getCurrentPlayer() {
+        return (GUIHumanPlayer)game.getNextPlayer();
     }
 
     @Override
@@ -42,19 +41,6 @@ public class GUIAppController implements UIAppControls, UIPresenter{
     }
 
     @Override
-    public int displayPlayAgainOption() {
-        if (foundWinOrDraw()) {
-            guiView.makePlayAgainVisible();
-        }
-        return 0; //Potential LSP violation as return value isn't used in GUI
-    }
-
-    public void registerPlayerMove(String displayPositionId) {
-        GUIHumanPlayer guiHuman = (GUIHumanPlayer) getCurrentPlayer();
-        guiHuman.setNextUserMove(displayPositionId);
-    }
-
-    @Override
     public void displayGameOptions() {
         guiView.displayGameOptions();
     }
@@ -62,9 +48,18 @@ public class GUIAppController implements UIAppControls, UIPresenter{
     @Override
     public void startGame() {
         playMoveOnGameBoard();
-        displayGameLayout(game.getBoard());
         displayResult();
         displayPlayAgainOption();
+    }
+
+    public void displayPlayAgainOption() {
+        if (foundWinOrDraw()) {
+            guiView.makePlayAgainVisible();
+        }
+    }
+
+    public void registerPlayerMove(String displayPositionId) {
+        getCurrentPlayer().setNextUserMove(displayPositionId);
     }
 
     public void startGame(GameType gameType, int boardDimension){
@@ -77,7 +72,7 @@ public class GUIAppController implements UIAppControls, UIPresenter{
                 boardDimension,
                 gameType.getNumericGameType(),
                 new GUIPlayerFactory(),
-                new GUIBoardDisplayer());
+                new GUIBoardDisplayer(this));
     }
 
     public boolean foundWinOrDraw() {

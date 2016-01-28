@@ -8,7 +8,4 @@ public interface UIPresenter {
     void displayGameLayout(Board board);
 
     void displayResult();
-
-    int displayPlayAgainOption();
-
 }
