@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafxgui.controller.GUIAppControllerStub;
+import javafxgui.app.GUIAppSpy;
 import javafxgui.gamemaker.GUIGameMaker;
 import jttt.core.board.Board;
 import jttt.core.game.GameType;
@@ -23,7 +23,7 @@ public class GUIViewTest {
     private GUIView guiView;
     private Scene scene;
     private Board defaultBoard;
-    private GUIAppControllerStub controllerStub;
+    private GUIAppSpy guiAppSpy;
 
     @Before
     public void setUp() {
@@ -31,7 +31,7 @@ public class GUIViewTest {
         defaultBoard = new Board(3);
         scene = new Scene(new StackPane(), WINDOW_HEIGHT, WINDOW_WIDTH);
         guiView = new GUIView(scene);
-        controllerStub = new GUIAppControllerStub(guiView, new GUIGameMaker());
+        guiAppSpy = new GUIAppSpy(new GUIGameMaker(), guiView);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class GUIViewTest {
         guiView.prepareGameForStart(GameType.GUI_HVC);
         BorderPane borderPane = (BorderPane) scene.getRoot();
         assertEquals("gameBoard", borderPane.getCenter().getId());
-        assertEquals(true, controllerStub.hasGameStartBeenCalled());
+        assertEquals(true, guiAppSpy.hasGameStartBeenCalled());
     }
 
     @Test

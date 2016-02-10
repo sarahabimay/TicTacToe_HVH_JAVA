@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 public class HumanPlayerTest {
 
-    public FakeConsoleController fakeUI;
+    public FakeConsoleApp fakeUI;
     private OutputStream output;
     private InputStream inputStream;
     private Writer writer;
@@ -25,7 +25,7 @@ public class HumanPlayerTest {
         output = new ByteArrayOutputStream();
         writer = new OutputStreamWriter(output);
         inputStream = new ByteArrayInputStream("1".getBytes());
-        fakeUI = new FakeConsoleController(null, inputStream, writer);
+        fakeUI = new FakeConsoleApp(null, inputStream, writer);
     }
 
     @Test

@@ -1,6 +1,5 @@
 package javafxgui.gamemaker;
 
-import javafxgui.javafxcomponents.GUIBoardDisplayer;
 import jttt.core.board.Board;
 import jttt.core.boarddisplayer.BoardDisplayer;
 import jttt.core.game.Game;
@@ -15,6 +14,6 @@ public class GUIGameMaker implements GameMaker {
     @Override
     public Game initializeGame(int boardDimension, int gameTypeOption, PlayerFactory playerFactory, BoardDisplayer boardDisplayer) {
         List<Player> players = playerFactory.findPlayersFor(gameTypeOption);
-        return new Game(new Board(boardDimension), players.get(0), players.get(1), new GUIBoardDisplayer());
+        return new Game(new Board(boardDimension), players.get(0), players.get(1), boardDisplayer);
     }
 }

@@ -24,7 +24,6 @@ public class EventHandlerTest {
         NewPlayerMoveEventHandler newMoveEventHandler = new NewPlayerMoveEventHandler(guiViewSpy);
         newMoveEventHandler.action("1");
         assertEquals(true, guiViewSpy.hasHumanPlayerMadeAMove());
-//        assertEquals(true, guiViewSpy.hasBoardButtonBeenClicked());
     }
 
     @Test

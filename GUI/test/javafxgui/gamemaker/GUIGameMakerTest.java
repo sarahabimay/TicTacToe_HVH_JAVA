@@ -1,6 +1,8 @@
 package javafxgui.gamemaker;
 
+import javafxgui.app.GUIAppSpy;
 import javafxgui.javafxcomponents.GUIBoardDisplayer;
+import javafxgui.javafxcomponents.GUIViewSpy;
 import javafxgui.players.GUIHumanPlayer;
 import javafxgui.players.GUIPlayerFactory;
 import jttt.core.game.Game;
@@ -20,7 +22,10 @@ public class GUIGameMakerTest {
         Game game = gameMaker.initializeGame(DEFAULT_BOARD_DIMENSION,
                 GUI_HVH.getNumericGameType(),
                 new GUIPlayerFactory(),
-                new GUIBoardDisplayer());
+                new GUIBoardDisplayer(
+                        new GUIAppSpy(
+                        new GUIGameMakerFake(),
+                        new GUIViewSpy(null))));
         assertEquals(9, game.getBoardSize());
         assertEquals(GUIHumanPlayer.class, game.getPlayer(X).getClass());
         assertEquals(GUIHumanPlayer.class, game.getPlayer(O).getClass());

@@ -1,10 +1,14 @@
 package jttt.core.game;
 
+import javafxgui.gamemaker.GUIGameMakerFake;
+import javafxgui.app.GUIAppSpy;
 import javafxgui.javafxcomponents.GUIBoardDisplayer;
+import javafxgui.javafxcomponents.GUIViewSpy;
 import javafxgui.players.GUIHumanPlayer;
 import jttt.console.*;
 import jttt.core.board.Board;
-import jttt.core.players.*;
+import jttt.core.players.ComputerPlayer;
+import jttt.core.players.Player;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,7 +28,7 @@ public class GameTest {
     private final int ZERO_DIMENSION_BOARD = 0;
     private Game defaultGame;
     private Game zeroGame;
-    private FakeConsoleController uiSpy;
+    private FakeConsoleApp uiSpy;
     private OutputStream output;
     private InputStream inputStream;
     private Writer writer;
@@ -34,15 +38,26 @@ public class GameTest {
         output = new ByteArrayOutputStream();
         writer = new OutputStreamWriter(output);
         inputStream = new ByteArrayInputStream("1".getBytes());
-        uiSpy = new FakeConsoleController(null, inputStream, writer);
+        uiSpy = new FakeConsoleApp(null, inputStream, writer);
         ConsolePlayerFactory playerFactory = new ConsolePlayerFactory(uiSpy);
         List<Player> players = playerFactory.findPlayersFor(HVH.getNumericGameType());
-        zeroGame = new Game(new Board(ZERO_DIMENSION_BOARD), players.get(0), players.get(1), new GUIBoardDisplayer());
-        defaultGame = new Game(new Board(DEFAULT_DIMENSION), players.get(0), players.get(1), new GUIBoardDisplayer());
+
+        defaultGame = new Game(
+                new Board(DEFAULT_DIMENSION),
+                players.get(0),
+                players.get(1),
+                new ConsoleBoardDisplayer(new FakeConsoleApp(new ConsoleGameMaker(), inputStream, writer)));
     }
 
     @Test
     public void noBoardCreatedYet() {
+        ConsolePlayerFactory playerFactory = new ConsolePlayerFactory(uiSpy);
+        List<Player> players = playerFactory.findPlayersFor(HVH.getNumericGameType());
+        zeroGame = new Game(
+                new Board(ZERO_DIMENSION_BOARD),
+                players.get(0),
+                players.get(1),
+                new ConsoleBoardDisplayer(new ConsoleApp(new ConsoleGameMakerSpy(), inputStream, writer)));
         assertEquals(0, zeroGame.getBoardSize());
     }
 
@@ -114,7 +129,7 @@ public class GameTest {
         Game game = new Game(board,
                 guiHumanPlayerX,
                 guiHumanPlayerO,
-                new GUIBoardDisplayer());
+                new GUIBoardDisplayer(new GUIAppSpy(new GUIGameMakerFake(), new GUIViewSpy(null))));
 
         game.playAllAvailableMoves();
         assertEquals(false, game.getBoard().isGameOver());

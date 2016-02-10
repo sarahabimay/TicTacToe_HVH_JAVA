@@ -6,7 +6,7 @@ import java.io.OutputStreamWriter;
 public class Main {
 
     public static void main(String[] args) {
-        ConsoleController ui = new ConsoleController(
+        ConsoleApp ui = new ConsoleApp(
                 new ConsoleGameMaker(),
                 new BufferedInputStream(System.in),
                 new OutputStreamWriter(System.out));
