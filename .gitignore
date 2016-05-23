@@ -4,5 +4,5 @@ copy
 .DS_Store
 GUI/.DS_Store
 GUI/src/.DS_Store
-GUI/src/javafxgui/.DS_Store
+GUI/src/guiapp/.DS_Store
 *.jar
